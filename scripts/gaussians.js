@@ -7,7 +7,7 @@
 var global_vars = ['pdfGenerator'];
 
 var svg = d3.select('svg#chart'),
-    svgWidth = 600, // svg.style(svg) - 'px'
+    svgWidth = 600, // svg.style('width') - 'px'
     svgHeight = 600,
     margin = {left: 50, right: 20, top: 20, bottom: 20},
     plots = [],
@@ -88,19 +88,21 @@ plots[0].append("path").attr("class", "graph")
 
 plots[0].append("path").attr("class", "graph")
     .attr("d", lineGenerator(pX2)(xData))
-    .style("stroke", "crimson")
-    .style("stroke-opacity", 0.5)
-    .style("stroke-dasharray", 3);
+    .style("stroke", "crimson");
 
 plots[0].append("path").attr("class", "graph").attr("id", "pX2m")
     .attr("d", lineGenerator(pX2m_gen(0))(xData))
-    .style("stroke", "crimson");
+    .style("stroke", "crimson")
+    .style("stroke-opacity", 0.5)
+    .style("stroke-dasharray", 3);
 
 plots[1].append("path").attr("class", "graph")
     .attr("d", lineGenerator(pX1pX2m_gen(0))(xData))
     .style("stroke", "purple")
     .style("fill", "purple")
-    .style("fill-opacity", 0.5);
+    .style("fill-opacity", 0.5)
+    .style("stroke-opacity", 0.5)
+    .style("stroke-dasharray", 3);
 
 plots[2].append("path").attr("class", "graph")
     .attr("d", lineGenerator(pZ)(xData));

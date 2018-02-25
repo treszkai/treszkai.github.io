@@ -1,0 +1,45 @@
+#chart {
+    width: 600px;
+    height: 600px;
+    border: 1px black solid;
+}
+
+.axis path,
+.axis line {
+    shape-rendering: crispEdges;
+    stroke: #000;
+    stroke-opacity: 0.3;
+    fill: none;
+}
+
+.axis text {
+    fill-opacity: 0.3
+}
+
+.axis-x path {
+    /* display: none; */
+}
+
+.graph {
+    stroke: steelblue;
+    stroke-width: 1.5px;
+    fill: none;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.focus text {
+    font: 10px;
+    font-family: serif;
+    /* font-style: italic; */
+    text-anchor: middle;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}

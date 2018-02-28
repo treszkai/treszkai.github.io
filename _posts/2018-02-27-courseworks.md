@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Select courseworks and other files"
+title:  "Select technical writings"
 categories: math, ML
 ---
 

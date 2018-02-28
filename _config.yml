@@ -23,6 +23,9 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  treszkai
 permalink: /:year-:month-:day-:title
 
+# Google Analytics
+google_analytics: UA-114915944-1
+
 # Build settings
 markdown: kramdown
 theme: minima

@@ -4,7 +4,7 @@ title:  "Select technical writings"
 categories: math, ML
 ---
 
-This page links to a few courseworks that I submitted through my academic career.
+This page links to a few courseworks that I submitted during my academic career.
 
 ## Mathematical logic
 

@@ -24,14 +24,13 @@ github_username:  treszkai
 permalink: /:year-:month-:day-:title
 
 # Google Analytics
-google_analytics: UA-114915944-1
+# google_analytics: UA-114915944-1
 
 # Build settings
 markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-  - katex
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

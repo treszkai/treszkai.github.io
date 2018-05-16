@@ -23,4 +23,4 @@ A two-semester course taught by Steve Renals about deep learning at the Universi
 
 ## Informatics Research Review
 
-My [IRR](/files/2018-01-irr.pdf) at the University of Edinburgh, where I collected literature on noise-contrastive estimation, negative sampling, and generative adversarial nets, and aimed to give a fair comparison of these methods, trying to give a citation for every statement I make.
+My [IRR](/files/2018-01-irr.pdf) at the University of Edinburgh, where I collected literature on noise-contrastive estimation, negative sampling, and generative adversarial nets, and aimed to give a fair comparison of these methods, while trying to give a citation for every statement I make.

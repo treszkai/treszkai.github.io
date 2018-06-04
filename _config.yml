@@ -28,6 +28,8 @@ permalink: /:year-:month-:day-:title
 
 # Build settings
 markdown: kramdown
+kramdown:
+ math_engine: nil
 theme: minima
 plugins:
   - jekyll-feed

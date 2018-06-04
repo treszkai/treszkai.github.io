@@ -2,18 +2,35 @@
 layout: post
 title:  "KaTeX test"
 katex:
-  enabled: true
   macros:
-    \RR: \mathbb R
+    - \t: \mathbb{R}
+    - \bb: \mathbf
 ---
 
 The katex: tags at the top are for the server-side rendering with `_plugin/katex.rb`
 
-Test inline: \( whoo-waa_i^6 \min_4 \)
+<!-- lalala -->
 
-\\[E=mc^2 \min_4 \\]
+Test inline, one backslash: (( whoo-waa_i^6 \min_4 ))
 
-Not inline.
-$ E=mc^2 $
+Test sub: fawfaw yeah jfawfawk
 
-$$E=mc^2$$
+(( V^* ))
+
+\\[ E=mc^2 \min_4 * b * c_{a_d} \\]
+
+$$ E=mc^2 \min_4 *b* $$
+
+Dollars: $50, $40.
+
+small inline: ((a)), ((F=ma))
+
+parentheses: (a)
+
+small inline: \\(a\\), \\(F=ma \\{ \\} \\)
+
+I love my reals \\(\t RR\\).
+
+This is bold: \\(\mathbf{bold}\\).
+
+This is bold too: \\(\bb{bold}\\).

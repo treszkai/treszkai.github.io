@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "IWSGL, Tutorial 3: Multilinear Algebra"
+title: "IWSGL, Tutorial 3: Multilinear Algebra (Exercise 1)"
 categories: math
 tags: IWSGL
 ---
@@ -87,12 +87,12 @@ _A change of basis does not change the tensor components._
 
 c) Given a basis for a \\(d\\)-dimensional vector space \\(V\\),􏲽
 
-one can find exactly \\(d^2\\)-different dual bases for the corresponding dual vector space \\(V^∗\\).
+one can find exactly \\(d^2\\)-different dual bases for the corresponding dual vector space \\(V^*\\).
 
-by removing one basis vector of the basis of \\(V\\), a basis for a \\((d − 1)\\)-dimensional vector space \\(V_1\\) is obtained.
+by removing one basis vector of the basis of \\(V\\), a basis for a \\((d - 1)\\)-dimensional vector space \\(V_1\\) is obtained.
 
 the continuity of a map \\(f : V \rightarrow W\\) depends on the choice of basis for the vector space \\(W\\).
 
-one can extract the components of the elements of the dual vector space \\(V^∗\\).
+one can extract the components of the elements of the dual vector space \\(V^*\\).
 
 each vector of \\(V\\) can be reconstructed from its components.

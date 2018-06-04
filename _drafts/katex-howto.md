@@ -55,6 +55,22 @@ https://github.com/Khan/KaTeX/blob/master/contrib/auto-render/README.md
 ```
 {% endraw %}
 
+## Parsing options for MathJax
+
+```
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['((','))'], ["\\(","\\)"] ],
+      processEscapes: true
+    },
+  });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+```
+
+[Source: MathJax doc](https://docs.mathjax.org/en/latest/configuration.html).
+
 ## Optionally: Reducing the number of backslashes
 
 Wrapping small inline blocks with `\\(` and `\\)` is quite annoying.

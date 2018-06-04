@@ -13,7 +13,7 @@ _Tick the correct statements, but not the incorrect ones._
 
 ## Notation
 
-In this exercise, I'll speak of a vector space \\((V,+,\cdot)\\) over a field \\(K\\), where \\(+: V\times V \rightarrow V\\) is the addition and \\(\cdot: K \times V \rightarrow V\\) is called (scalar) multiplication or S-multiplication, and the field \\((K, \color{red}{+}, \color{red}{\cdot})\\) has \\(\color{red}{+}:K\times K \rightarrow K\\) as addition and \\(\color{red}{\cdot}:K\times K \rightarrow K\\) as multiplication operations. The dot is often omitted, i.e. \\(a \mathbf v\\) is short for \\(a \cdot \mathbf v\\), \\(a b\\) is short for \\(a \color{red}{\cdot} b\\). (Note that the lecture dealt with real vector spaces, i.e. the field \\(K\\) was always the set of reals \\(\mathbb R\\).)
+In this exercise, I'll speak of a vector space \\( (V,+,\cdot)\\) over a field \\(K\\), where \\(+: V\times V \rightarrow V\\) is the addition and \\(\cdot: K \times V \rightarrow V\\) is called (scalar) multiplication or S-multiplication, and the field (((K, \color{red}{+}, \color{red}{\cdot}))) has \\(\color{red}{+}:K\times K \rightarrow K\\) as addition and \\(\color{red}{\cdot}:K\times K \rightarrow K\\) as multiplication operations. The dot is often omitted, i.e. \\(a \mathbf v\\) is short for \\(a \cdot \mathbf v\\), \\(a b\\) is short for \\(a \color{red}{\cdot} b\\). (Note that the lecture dealt with real vector spaces, i.e. the field \\(K\\) was always the set of reals \\(\mathbb R\\).)
 The scalars, i.e. the elements of \\(K\\), are denoted with normal letters \\(a,b\\), and the vectors, i.e. the elements of \\(V\\), are denoted with boldface letters \\(\mathbf u, \mathbf v, \mathbf w\\).
 
 _a) Which statements on vector spaces are correct?_
@@ -75,24 +75,108 @@ b) What is true about tensors and their components?
 
 _The tensor product of two tensors is a tensor._
 
-https://en.wikipedia.org/wiki/Tensor#Tensor_product
+_Answer:_ true.
+
+Clarification:
+ - The lecture didn't mention tensor products, so a definition is in order. The product of an (( (l,k) ))-tensor ((S)) and an (( (n,m) ))-tensor ((T)) is an (( (l+n,k+m) ))-tensor (( S \otimes T )), whose (( (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) ))-th component is the product of the relevant components of ((S)) and ((T)):
+
+$$
+ (S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}_ {j_1, \ldots, j_k, j_{k+1}, \ldots, j_{k+m} } =
+   S^{i_1, \ldots, i_l}_ {j_1, \ldots, j_k}
+   T^{i_{1}, \ldots, i_{n}}_ {j_{1}, \ldots, j_{m}}.
+$$
+
+[Source: Wikipedia](https://en.wikipedia.org/wiki/Tensor#Tensor_product)
+
+This means that if the arguments of (( S \otimes T )) are
+ - the ((l+n)) linear maps ((f^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i)) for ((1 \le p \le l+n)), and
+ - the ((k+m)) vectors \\( v^{(q)} = \sum^{dim V}_{j=1} v_{(q)}^j e_j \\) for ((1 \le q \le k+m))
+
+(with some particular choice of basis vectors ((\{e_i\}_i)) and \\(\{\epsilon^i\}_i\\) ), then
+
+$$
+(S\otimes T) (f^{(1)}, \ldots, f^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) = \\
+  S (f^{(1)}, \ldots, f^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
+  T (f^{(l+1)}, \ldots, f^{(l+n)}, v_{(k+1)}, \ldots, v_{(k+m)}) = \\
+  \Bigg(
+      \sum_{(i_1)}^{\dim V} \cdots \sum_{(i_l)}^{\dim V}
+      \sum_{(j_1)}^{\dim V} \cdots \sum_{(j_k)}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Bigg) \cdot \\
+  \Bigg(
+      \sum_{(i_{l+1})}^{\dim V} \cdots \sum_{(i_{l+n})}^{\dim V}
+      \sum_{(j_{k+1})}^{\dim V} \cdots \sum_{(j_{k+m})}^{\dim V}
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Bigg) = \\
+      \sum_{(i_1)}^{\dim V} \cdots \sum_{(i_{l+n})}^{\dim V}
+      \sum_{(j_1)}^{\dim V} \cdots \sum_{(j_{k+m})}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+$$
+
+These (( (l+n+k+m) )) summations are quite a mess, but the above derivation shows that the [Einstein summation convention](http://mathworld.wolfram.com/EinsteinSummation.html) works for tensor products as well:
+
+$$
+(S\otimes T) (f^{(1)}, \ldots, f^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) = \\
+  S (f^{(1)}, \ldots, f^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
+  T (f^{(l+1)}, \ldots, f^{(l+n)}, v_{(k+1)}, \ldots, v_{(k+m)}) = \\
+  \Big(
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Big)
+  \Big(
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Big) = \\
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+$$
 
 _You can always reconstruct a tensor from its components and the corresponding basis._
 
+_Answer:_ true.
+
+Clarification:
+ - If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case ((V)) is not finite dimensional).
+
 _The number of indices of the tensor components depends on dimension._
+
+_Answer:_ true.
+
+Clarification:
+ - An (( (n,m) )) tensor ((T)) has (( (\dim V)^{n+m} )) many components; (( \dim V )) many for each argument.
 
 _The Einstein summation convention does not apply to tensor components._
 
+_Answer:_ false.
+
+Clarification: see above.
+
 _A change of basis does not change the tensor components._
 
-c) Given a basis for a \\(d\\)-dimensional vector space \\(V\\),􏲽
+_Answer:_ false.
 
-one can find exactly \\(d^2\\)-different dual bases for the corresponding dual vector space \\(V^*\\).
+Clarification:
+ - the tensor components are defined with respect to a given basis.
 
-by removing one basis vector of the basis of \\(V\\), a basis for a \\((d - 1)\\)-dimensional vector space \\(V_1\\) is obtained.
+c) Given a basis for a \\(d\\)-dimensional vector space \\(V\\),􏲽 ...
 
-the continuity of a map \\(f : V \rightarrow W\\) depends on the choice of basis for the vector space \\(W\\).
+..._one can find exactly \\(d^2\\)-different dual bases for the corresponding dual vector space \\( V^* \\)._
 
-one can extract the components of the elements of the dual vector space \\(V^*\\).
+..._by removing one basis vector of the basis of \\(V\\), a basis for a \\((d - 1)\\)-dimensional vector space \\(V_1\\) is obtained._
 
-each vector of \\(V\\) can be reconstructed from its components.
+..._the continuity of a map \\(f : V \rightarrow W\\) depends on the choice of basis for the vector space \\(W\\)._
+
+..._one can extract the components of the elements of the dual vector space \\(V^*\\)._
+
+..._each vector of \\(V\\) can be reconstructed from its components._

@@ -34,6 +34,17 @@ theme: minima
 plugins:
   - jekyll-feed
 
+latex_macros:
+    \RR: \mathbb{R}
+    \EE: \mathbb{E}
+    \parm: \color{grey}{\bullet}
+    \indep: \perp\!\!\!\perp
+    \emptyset: \varnothing
+    \proves: \vdash
+    \Union: \bigcup
+    \Intersect: \bigcap
+    \grad: \nabla
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.

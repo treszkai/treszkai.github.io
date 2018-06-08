@@ -20,6 +20,10 @@ kramdown:
 
 This turns off the pre-processing for MathJax.
 
+## Problem with Kramdown + KaTeX
+
+Kramdown treats only the text between $$ and $$ as math. ⇒ In Javascript, first replace every "$$" in a div-something with a "££", and use the auto-renderer accordingly. `#todo`
+
 
 KaTeX Auto-render extension:
 https://github.com/Khan/KaTeX/blob/master/contrib/auto-render/README.md
@@ -125,3 +129,17 @@ Jekyll::Hooks.register(:pages, :pre_render, &pre_render_task)
 Kramdown supports server-side rendering with KaTeX out of the box; [link](https://kramdown.gettalong.org/math_engine/katex.html) to how to set it up.
 
 https://docs.mathjax.org/en/latest/tex.html
+
+## Notes
+
+\t, \n are not a tab and newline for kramdown, so one can freely use them as KaTeX macros.
+
+Wide range of supported functions:
+https://khan.github.io/KaTeX/function-support.html#environments
+
+Newlines in display environments?
+
+##
+
+Black center white star: ✬ 0x272C
+Four balloon-spoked asterisk ✣ 0x2723

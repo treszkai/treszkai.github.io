@@ -25,24 +25,26 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var macros_dict = {};
-        var macros_list = [
-          {% for x in page.katex.macros %}
-             '{{x}}' {% if forloop.last == false %} , {% endif %}
-          {% endfor %}
-        ];
-        for (var x of macros_list) {
-            macros_dict[x.replace(/{"(.*)"=>"(.*)"}/, "$1")] =
-                        x.replace(/{"(.*)"=>"(.*)"}/, "$2");
+        var macros_dict = { {% for x in site.latex_macros %}
+            "{{ x[0] | replace: '\', '\\\\' }}": "{{ x[1] | replace: '\', '\\\\' }}" {% if forloop.last == false %} , {% endif %} {% endfor %}
+            {% for x in page.latex_macros %} {% if forloop.first == true %} , {% endif %}
+            "{{ x[0] | replace: '\', '\\\\' }}": "{{ x[1] | replace: '\', '\\\\' }}" {% if forloop.last == false %} , {% endif %} {% endfor %}
+        };
+
+        for (var x of document.getElementsByClassName("kdmath")) {
+	        x.innerHTML = x.innerText.replace(/\$\$/g, "✣✣");
+            x.innerHTML = x.innerText.replace(/\$/g, "✬✬");
         }
-        console.log(macros_dict);
+
         renderMathInElement(document.body, {
             colorIsTextColor: true,
             macros: macros_dict,
             delimiters: [
               {left: "((", right: "))", display: false},
               {left: "\\(", right: "\\)", display: false},
-              {left: "$$", right: "$$", display: true},
+              {left: "⁍", right: "⁌", display: false},
+              {left: "✬✬", right: "✬✬", display: false},
+              {left: "✣✣", right: "✣✣", display: true},
               {left: "\\[", right: "\\]", display: true}
             ]
         });

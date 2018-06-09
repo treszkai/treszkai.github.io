@@ -7,6 +7,11 @@ latex_macros:
      \u: 0<1
 ---
 
+$$A = \{x : x \in \RR \} \rightarrow B $$
+
+inline:
+$$A = \{x : x \in \RR \}$$, $$A = \{x : x ∈ \RR \} → B $$, 
+
 $$\b{x}$$
 
 $$a \indep b$$

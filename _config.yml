@@ -35,6 +35,9 @@ plugins:
   - jekyll-feed
   - jekyll-scholar
 
+minima:
+  date_format: "%-d %b. %Y"
+
 scholar:
   sort_by: author, year, month, title
 

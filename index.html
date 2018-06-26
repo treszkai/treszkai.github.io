@@ -1,0 +1,29 @@
+---
+layout: page
+title: Home
+---
+<section class="c-archives">
+  <link rel="shortcut icon" href="">
+  {% for post in site.posts  %}
+  {% if forloop.first %}
+  <h2 class="c-archives__year">Posts<br></h2>
+  <ul class="c-archives__list">
+    {% endif %}
+    <li class="c-archives__item">
+      <h3>
+        <a href="{{ post.url | prepend: site.baseurl }}">{{post.title}}</a>
+        <br>
+        <small>{{ post.date | date: "%b %-d, %Y" }}
+            <span class="u-separate"></span>
+            Category: {{ post.categories }}<br>
+        {{post.description}}</small>
+      </h3>
+      {% if post.starred %}
+      <p class="u-star">*</p>
+      {% endif %}
+    </li>
+    {% if forloop.last %}
+  </ul>
+  {% endif %}
+  {% endfor %}
+</section>

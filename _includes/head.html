@@ -2,52 +2,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
-  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
-
-  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
-
-  {% for x in page.scriptarr %}
-    <script src="{{ x }}"></script>
-  {% endfor %}
-
-  {% for x in page.stylearr %}
-    <link rel="stylesheet" href="{{ x }}">
-  {% endfor %}
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
-
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.js" integrity="sha384-y6SGsNt7yZECc4Pf86XmQhC4hG2wxL6Upkt9N1efhFxfh6wlxBH0mJiTE8XYclC1" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/contrib/auto-render.min.js" integrity="sha384-IiI65aU9ZYub2MY9zhtKd1H2ps7xxf+eb2YFG9lX6uRqpXCvBTOidPRCXCrQ++Uc" crossorigin="anonymous"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var macros_dict = { {% for x in site.latex_macros %}
-            "{{ x[0] | replace: '\', '\\\\' }}": "{{ x[1] | replace: '\', '\\\\' }}" {% if forloop.last == false %} , {% endif %} {% endfor %}
-            {% for x in page.latex_macros %} {% if forloop.first == true %} , {% endif %}
-            "{{ x[0] | replace: '\', '\\\\' }}": "{{ x[1] | replace: '\', '\\\\' }}" {% if forloop.last == false %} , {% endif %} {% endfor %}
-        };
-
-        for (var x of document.getElementsByClassName("kdmath")) {
-            x.innerHTML = x.innerText.replace(/\$\$/g, "✣✣");
-            x.innerHTML = x.innerText.replace(/\$/g, "✬✬");
-        }
-
-        renderMathInElement(document.body, {
-            colorIsTextColor: true,
-            macros: macros_dict,
-            delimiters: [
-              {left: "((", right: "))", display: false},
-              {left: "\\(", right: "\\)", display: false},
-              {left: "⁍", right: "⁌", display: false},
-              {left: "✬✬", right: "✬✬", display: false},
-              {left: "✣✣", right: "✣✣", display: true},
-              {left: "\\[", right: "\\]", display: true}
-            ]
-        });
-    });
-  </script>
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,900,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+  <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+  {% include katex.html %}
 </head>

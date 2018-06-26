@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Some versatile tools for bash"
-categories: bash, scripts
+categories: scripts
 ---
 
 I rarely use bash besides the basics: I could use a `for` loop even if woken up at night, but my knowledge of the language doesn't go much further. Hence instead of trying to memorize all the `{}%$` magic, having a few versatile commands in my toolbox comes handy.

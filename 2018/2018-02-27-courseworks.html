@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114915944-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-114915944-1');
+</script>
+
+
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laszlo Treszkai – Some proofs in first-order logic</title>
+  <meta name="description" content="This post links to some problems I solved in mathematical logic.">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,900,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/2018/2018-02-27-courseworks">
+  <link rel="alternate" type="application/rss+xml" title="Laszlo Treszkai" href="/feed.xml">
+  <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.js" integrity="sha384-y6SGsNt7yZECc4Pf86XmQhC4hG2wxL6Upkt9N1efhFxfh6wlxBH0mJiTE8XYclC1" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var macros_dict = { 
+            "\\RR": "\\mathbb{R}"  ,  
+            "\\EE": "\\mathbb{E}"  ,  
+            "\\lA": "\\langle"  ,  
+            "\\rA": "\\rangle"  ,  
+            "\\parm": "\\color{grey}{\\bullet}"  ,  
+            "\\indep": "\\perp\\!\\!\\!\\perp"  ,  
+            "\\emptyset": "\\varnothing"  ,  
+            "\\proves": "\\vdash"  ,  
+            "\\Union": "\\bigcup"  ,  
+            "\\Intersect": "\\bigcap"  ,  
+            "\\grad": "\\nabla"  ,  
+            "\\Godel": "\\ulcorner #1 \\urcorner"  
+            
+        };
+
+        document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+            el.outerHTML = katex.renderToString(el.textContent, { displayMode: false });
+        });
+
+        document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+            el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true });
+        });
+    });
+  </script>
+
+
+</head>
+
+  <body>
+    <main class="u-container" aria-label="Content">
+      <div class="c-page">
+  <header class="c-page__header">
+  
+  <h1>Laszlo Treszkai</h1>
+  
+  <p>
+    <a href="/">Posts</a>
+    <span class="u-separate"></span>
+    <a href="/about/">About me</a>
+  </p>
+</header>
+
+  <div class="c-page__main">
+    <article class="c-article">
+  <header class="c-article__header">
+    <h1 class="c-article__title">Some proofs in first-order logic</h1>
+    <p class="c-article__time"><time datetime="2018-02-27T00:00:00+00:00" itemprop="datePublished">Feb 27, 2018</time></p>
+    <!-- Post Tags -->
+    </ul>
+  </header>
+  <div class="c-article__main">
+    <p>This post links to some problems I solved in mathematical logic.</p>
+
+<p>I had the fortune to study classical logic from <a href="http://www.renyi.hu/~csirmaz/">László Csirmaz</a> at the Eötvös Loránd University, Budapest. Although I was not officially enrolled in the course, he was kind enough to mark my weekly homework regardless of my lack of student status. These were originally written in Hungarian, and I translated a few of them into English.</p>
+
+<h1 id="a-non-standard-model-of-robinson-arithmetics">A non-standard model of Robinson arithmetics</h1>
+
+<p><em>Give a model that fulfills every axiom of the Robinson arithmetics, and which contains contains two elements that are neither greater than or equal to, nor smaller than or equal to one another; or prove that such a model doesn’t exist.</em></p>
+
+<p><a href="/files/logic-coursework/2017-03-logic-cw4ex4.pdf">Solution (PDF)</a>.</p>
+
+<h1 id="a-two-formula-version-of-the-diagonal-lemma">A two-formula version of the diagonal lemma</h1>
+
+<p><em>Let <script type="math/tex">\Gamma</script> be a theorem which can represent every recursive function. Prove that for every pair of formulae <script type="math/tex">\Phi(x)</script> and <script type="math/tex">\Psi(x)</script> with one free variable, there exist closed formulae <script type="math/tex">\eta</script> and <script type="math/tex">\theta</script> such that <script type="math/tex">\Gamma \proves \eta \,\leftrightarrow\, \Phi(\Godel{\theta})</script> and <script type="math/tex">\Gamma \proves \theta \,\leftrightarrow\, \Psi(\Godel{\eta})</script>.</em></p>
+
+<p><a href="/files/logic-coursework/2017-05-logic-cw9ex1.pdf">Solution (PDF)</a>.</p>
+
+<h1 id="final-steps-of-the-proof-of-gödels-completeness-theorem">Final steps of the proof of Gödel’s completeness theorem</h1>
+
+<p>When proving Gödel’s completeness theorem during the lectures, I was missing a crucial step from the proof, so I <a href="/files/logic-coursework/2017-07-logic-henkin.pdf">proved it myself</a>.</p>
+
+  </div>
+  <!-- Previous / Next Buttons -->
+  <div class="pagenav">
+    
+    
+    <div class="wrapper" id="right">
+      <small>May 16, 2018 <b>Next</b></small>
+      <br>
+      <a class="no-hov" href="/2018/2018-05-16-bash-versatile">Some versatile tools for bash &raquo;</a>
+    </div>
+    
+  </div>
+  <!-- Disqus comments view -->
+  
+</article>
+
+  </div>
+  <footer class="c-page__footer">
+  <p><a href="LICENSE.html">&copy;</a>  Laszlo Treszkai 2018</p>
+  <p>
+    <a href="https://twitter.com/ltreszkai">Twitter</a>
+    <span class="u-separate"></span><a href="https://github.com/treszkai">GitHub</a>
+    <span class="u-separate"></span><a href="mailto:firstname.lastname@gmail.com">Email</a>
+  </p>
+</footer>
+
+</div>
+<hr>
+
+    </main>
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114915944-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-114915944-1');
+</script>
+
+
+    
+  </body>
+</html>

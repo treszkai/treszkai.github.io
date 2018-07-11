@@ -23,22 +23,20 @@ baseurl: "" # the subpath of your site, e.g. /blog
 # url: "https://treszkai.github.io"
 twitter_username: ltreszkai
 github_username:  treszkai
-permalink: /:year-:month-:day-:title
+permalink: /:year/:year-:month-:day-:title
 
-# google_analytics: UA-114915944-1
+google_analytics_id: UA-114915944-1
 # disqus_id:
 
 # Build settings
 include: [_pages]
 markdown: kramdown
-kramdown:
- math_engine: nil
 theme: minima
 sass:
     style: compressed
 
-# minima:
-#   date_format: "%-d %b. %Y"
+minima:
+  date_format: "%-d %b. %Y"
 
 scholar:
   sort_by: author, year, month, title
@@ -46,6 +44,8 @@ scholar:
 latex_macros:
     \RR: \mathbb{R}
     \EE: \mathbb{E}
+    \lA: \langle
+    \rA: \rangle
     \parm: \color{grey}{\bullet}
     \indep: \perp\!\!\!\perp
     \emptyset: \varnothing
@@ -53,14 +53,15 @@ latex_macros:
     \Union: \bigcup
     \Intersect: \bigcap
     \grad: \nabla
+    \Godel: "\\ulcorner #1 \\urcorner"
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
-exclude:
-    - vendor/
-#   - Gemfile
-#   - Gemfile.lock
+# exclude:
+  # - vendor/
+  # - Gemfile
+  # - Gemfile.lock
 #   - node_modules
 #   - vendor/bundle/
 #   - vendor/cache/

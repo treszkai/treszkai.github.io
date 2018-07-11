@@ -1,7 +1,8 @@
 ---
 layout: post
 title:  "Some versatile tools for bash"
-categories: scripts
+categories: Misc
+description: A 7-line bash script that includes 90% of what an average user needs.
 ---
 
 I rarely use bash besides the basics: I could use a `for` loop even if woken up at night, but my knowledge of the language doesn't go much further. Hence instead of trying to memorize all the `{}%$` magic, having a few versatile commands in my toolbox comes handy.
@@ -20,6 +21,9 @@ done
 ```
 
 Yet there were some educational points in it:
+ - One loops a variable `x` over the lines of a string `values` by `for x in values; do something; something_else; done`.
+ - `seq a b` simply prints out the integers from `a` to `b`, inclusive, regardless of which is larger.
+ - Variable `x` is assigned a value by `x=foobar`, where there must be _no spaces around the equation sign_.The value of `x` can then be referred to by `$x`.
  - Renaming a set of files to a similar name but later in the alphabet must be done in reverse order.
  - Bash has a built-in `printf` that seems to work as in C: first the string to be printed with format specifiers like `%02d`, followed by the arguments whose values are used according to the format specifiers.
  - With the `-v` option of `printf`, you can save the output into a variable.

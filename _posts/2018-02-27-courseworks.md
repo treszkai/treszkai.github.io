@@ -1,26 +1,28 @@
 ---
 layout: post
-title:  "Select technical writings"
-categories: math, ML
+title:  "Some proofs in first-order logic"
+categories: Math
+katex: true
+description: This page lists some of the interesting problems that I solved during my academic career.
+starred: true
 ---
 
-This page links to a few courseworks that I submitted during my academic career.
-
-## Mathematical logic
+This post links to some problems I solved in mathematical logic.
 
 I had the fortune to study classical logic from [László Csirmaz](http://www.renyi.hu/~csirmaz/) at the Eötvös Loránd University, Budapest. Although I was not officially enrolled in the course, he was kind enough to mark my weekly homework regardless of my lack of student status. These were originally written in Hungarian, and I translated a few of them into English.
 
- - [Coursework 4, Exercise 4](/files/2017-03-logic-cw4ex4.pdf), about a non-standard structure of Robinson arithmetics.
- - [Coursework 9, Exercise 1](/files/2017-05-logic-cw9ex1.pdf), a result similar to the diagonal lemma in first order logic.
+# A non-standard model of Robinson arithmetics
 
-When proving Gödel's completeness theorem during the lectures, I missed a crucial step from the proof, so I [proved it myself](/files/2017-07-logic-henkin.pdf).
+_Give a model that fulfills every axiom of the Robinson arithmetics, and which contains contains two elements that are neither greater than or equal to, nor smaller than or equal to one another; or prove that such a model doesn't exist._
 
-## Machine Learning Practical
+[Solution (PDF)](/files/logic-coursework/2017-03-logic-cw4ex4.pdf).
 
-A two-semester course taught by Steve Renals about deep learning at the University of Edinburgh.
+# A two-formula version of the diagonal lemma
 
-[Coursework 2](/files/2017-11-mlp-cw2.pdf) was about different learning rules (SGD, Adam, RMSprop), batch normalisation, and convolutional nets on EMNIST.
+_Let $$\Gamma$$ be a theorem which can represent every recursive function. Prove that for every pair of formulae $$\Phi(x)$$ and $$\Psi(x)$$ with one free variable, there exist closed formulae $$\eta$$ and $$\theta$$ such that $$\Gamma \proves \eta \,\leftrightarrow\, \Phi(\Godel{\theta})$$ and $$\Gamma \proves \theta \,\leftrightarrow\, \Psi(\Godel{\eta})$$._
 
-## Informatics Research Review
+[Solution (PDF)](/files/logic-coursework/2017-05-logic-cw9ex1.pdf).
 
-My [IRR](/files/2018-01-irr.pdf) at the University of Edinburgh, where I collected literature on noise-contrastive estimation, negative sampling, and generative adversarial nets, and aimed to give a fair comparison of these methods, while trying to give a citation for every statement I make.
+# Final steps of the proof of Gödel's completeness theorem
+
+When proving Gödel's completeness theorem during the lectures, I was missing a crucial step from the proof, so I [proved it myself](/files/logic-coursework/2017-07-logic-henkin.pdf).

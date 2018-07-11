@@ -1,16 +1,16 @@
 ---
 layout: post
 title: "Change YouTube speed from your favorites bar"
-categories: scripts
+categories: Misc
 ---
 
-![I feel the need... the need for speed.](/files/to5VgPPs/need-for-speed.gif)
+![I feel the need... the need for speed.](/files/youtube-speed/need-for-speed.gif)
 
 # Premise
 
 While the UI of YouTube only shows only limited set of high-speed options, it is possible to set the speed to any floating point value. Even better, one can do so from their favorites bar with bookmarklets.
 
-![Youtube dialog to set speed](/files/to5VgPPs/youtube.png) &nbsp;&nbsp;⇒&nbsp;&nbsp; ![Bookmarks to set youtube speed](/files/to5VgPPs/bookmarklets.png)
+![Youtube dialog to set speed](/files/youtube-speed/youtube.png) &nbsp;&nbsp;⇒&nbsp;&nbsp; ![Bookmarks to set youtube speed](/files/youtube-speed/bookmarklets.png)
 
 # Method
 
@@ -26,7 +26,7 @@ Or save this line to show a prompt that asks for a floating-point input:
 
 Which results in the following prompt:
 
-![A prompt that asks for speed](/files/to5VgPPs/custom.png)
+![A prompt that asks for speed](/files/youtube-speed/custom.png)
 
 # Caveats
 

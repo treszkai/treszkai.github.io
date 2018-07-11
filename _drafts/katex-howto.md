@@ -1,9 +1,16 @@
 ---
 layout: post
 title: "Browser-side KaTeX rendering with Jekyll"
+katex: true
 latex_macros:
     → : \leftarrow
 ---
+
+# Extra
+
+\Godel: "\\ulcorner #1 \\urcorner"
+
+# Main
 
 Math bloggers, you need not waste another minute on setting up LaTeX for your markdown posts.
 
@@ -54,6 +61,7 @@ https://github.com/Khan/KaTeX/blob/master/contrib/auto-render/README.md
           colorIsTextColor: true,
           macros: macros_dict,
           delimiters: [
+            {left: "((", right: "))", display: false},
             {left: "\\(", right: "\\)", display: false},
             {left: "⁍", right: "⁌", display: false},
             {left: "✬✬", right: "✬✬", display: false},

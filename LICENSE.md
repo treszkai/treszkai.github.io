@@ -7,7 +7,7 @@ title: LICENSE
 
 Copyright (c) 2018 Laszlo Treszkai
 
-(Theme adapted from Paper: Copyright (c) 2017 Mike JS. Choi.)
+(Theme adapted from [Paper](https://deadbeef.me/paper-jekyll-theme/): Copyright (c) 2017 Mike JS. Choi.)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

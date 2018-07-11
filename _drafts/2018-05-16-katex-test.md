@@ -1,16 +1,21 @@
 ---
 layout: post
 title:  "KaTeX test"
+katex: true
 latex_macros:
      \R: \mathbb{R}
      \b: \mathbf
      \u: 0<1
 ---
 
+inline: $b$, \(a\), asdkjaks, \(b\), $4, $5, \( v _d , a_ b \)
+
+Inline: \( a \)  $b$
+
 $$A = \{x : x \in \RR \} \rightarrow B $$
 
 inline:
-$$A = \{x : x \in \RR \}$$, $$A = \{x : x ∈ \RR \} → B $$, 
+$$A = \{x : x \in \RR \}$$, $$A = \{x : x ∈ \RR \} → B $$,
 
 $$\b{x}$$
 

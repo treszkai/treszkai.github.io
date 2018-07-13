@@ -21,7 +21,7 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,900,400italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="/2018/2018-02-27-courseworks">
-  <link rel="alternate" type="application/rss+xml" title="Laszlo Treszkai" href="/feed.xml">
+  <!-- <link rel="alternate" type="application/rss+xml" title="Laszlo Treszkai" href="/feed.xml"> --> 
   <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
@@ -31,8 +31,8 @@
         var macros_dict = { 
             "\\RR": "\\mathbb{R}"  ,  
             "\\EE": "\\mathbb{E}"  ,  
-            "\\lA": "\\langle"  ,  
-            "\\rA": "\\rangle"  ,  
+            "\\<": "\\langle"  ,  
+            "\\>": "\\rangle"  ,  
             "\\parm": "\\color{grey}{\\bullet}"  ,  
             "\\indep": "\\perp\\!\\!\\!\\perp"  ,  
             "\\emptyset": "\\varnothing"  ,  
@@ -45,11 +45,11 @@
         };
 
         document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
-            el.outerHTML = katex.renderToString(el.textContent, { displayMode: false });
+            el.outerHTML = katex.renderToString(el.textContent, { displayMode: false, macros: macros_dict });
         });
 
         document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
-            el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true });
+            el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true, macros: macros_dict });
         });
     });
   </script>

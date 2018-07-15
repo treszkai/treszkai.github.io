@@ -2,7 +2,7 @@
 layout: post
 title:  "Some proofs in first-order logic"
 categories: Math
-katex: true
+latex: true
 description: This page lists some of the interesting problems that I solved during my academic career.
 starred: true
 ---

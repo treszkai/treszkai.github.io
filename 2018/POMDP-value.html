@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114915944-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-114915944-1');
+</script>
+
+
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>(Coming soon!) The value function of partially observable MDPs – Laszlo Treszkai</title>
+  <meta name="description" content="Explorations in math, AI, ML, et al.
+">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,900,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//css/main.css">
+  <link rel="canonical" href="https://treszkai.github.io//2018/POMDP-value">
+  <!-- <link rel="alternate" type="application/rss+xml" title="Laszlo Treszkai" href="https://treszkai.github.io//feed.xml"> -->
+  <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.js" integrity="sha384-y6SGsNt7yZECc4Pf86XmQhC4hG2wxL6Upkt9N1efhFxfh6wlxBH0mJiTE8XYclC1" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var macros_dict = { 
+            "\\RR": "\\mathbb{R}"  ,  
+            "\\EE": "\\mathbb{E}"  ,  
+            "\\parm": "\\color{grey}{\\bullet}"  ,  
+            "\\indep": "\\perp\\!\\!\\!\\perp"  ,  
+            "\\emptyset": "\\varnothing"  ,  
+            "\\proves": "\\vdash"  ,  
+            "\\Union": "\\bigcup"  ,  
+            "\\Intersect": "\\bigcap"  ,  
+            "\\grad": "\\nabla"  ,  
+            "\\Godel": "\\ulcorner #1 \\urcorner"  
+              , 
+            "\\SS": "\\mathcal S"  ,   
+            "\\AA": "\\mathcal A"  ,   
+            "#": "^{(#1)}"  ,   
+            "*": "^{\\star}"  
+        };
+
+        document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+            var text = el.textContent === "" ? el.innerHTML : el.textContent;
+            var textWithoutComments = text.replace(/%.*/g, '');
+            el.outerHTML = katex.renderToString(textWithoutComments, { displayMode: false, macros: macros_dict });
+        });
+
+        document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+            var text = el.textContent === "" ? el.innerHTML : el.textContent;
+            var textWithoutComments = text.replace(/%.*/g, '');
+            el.outerHTML = katex.renderToString(textWithoutComments, { displayMode: true, macros: macros_dict });
+        });
+    });
+  </script>
+
+
+</head>
+
+  <body>
+    <main class="u-container" aria-label="Content">
+      <div class="c-page">
+  <header class="c-page__header">
+  
+  <h1>Laszlo Treszkai</h1>
+  
+  <p>
+    <a href="//">Posts</a>
+    <span class="u-separate"></span>
+    <a href="//about/">About me</a>
+  </p>
+</header>
+
+  <div class="c-page__main">
+    <article class="c-article">
+  <header class="c-article__header">
+    <h1 class="c-article__title">(Coming soon!) The value function of partially observable MDPs</h1>
+    <p class="c-article__time"><time datetime="2018-07-15T00:00:00+01:00" itemprop="datePublished">Jul 15, 2018</time></p>
+    <!-- Post Tags -->
+    </ul>
+  </header>
+  <div class="c-article__main">
+    <p>This post explores the properties of the value function of a partially observable Markov decision process (POMDP). It is heavily based on <a href="#Kaelbling1998-POMDP">(Kaelbling, Littman, &amp; Cassandra, 1998)</a> and <a href="#Hauskrecht2000-POMDP-approx">(Hauskrecht, 2000)</a>.</p>
+
+<h1 id="problem-formulation">Problem formulation</h1>
+
+<p>A <em>partially observable Markov decision process</em> is described by a tuple <script type="math/tex">⟨ \SS, \AA, T, R, γ, \Omega, O, b_0⟩</script>, where</p>
+<ul>
+  <li><script type="math/tex">⟨ \SS, \AA, T, R, γ, ⟩</script> describes an MDP (where <script type="math/tex">\SS</script> is a set of states, <script type="math/tex">\AA</script> a set of actions, <script type="math/tex">T: SS \times \AA → Π(\SS)</script> is the transition function, <script type="math/tex">R: \SS → \RR</script> is the reward function and <script type="math/tex">γ</script> the discount factor, and <script type="math/tex">Π(X)</script> denotes the set of probability distributions over a set <script type="math/tex">X</script>);</li>
+  <li><script type="math/tex">\Omega</script> is a set of observations;</li>
+  <li><script type="math/tex">O: \SS \times \AA → Π(Ω)</script> is the observation function;</li>
+  <li><script type="math/tex">b#0 \in Π(\SS)</script> is the initial belief distribution (described in the next section).</li>
+</ul>
+
+<p>As in a fully observable MDP, when the environment is in state <script type="math/tex">s</script>, executing action <script type="math/tex">a</script> will bring the environment to a state <script type="math/tex">s'</script> sampled from <script type="math/tex">T(s,a)</script>. (If the MDP is discrete, then the probability of the next state being <script type="math/tex">s'</script>, given the current state <script type="math/tex">s</script> and action <script type="math/tex">a</script> is <script type="math/tex">Pr(s' \vert s, a) = T(s,a)</script>.) On every step, the agent is rewarded <script type="math/tex">R(s)</script> according to the current state <script type="math/tex">s</script>. Future rewards are discounted exponentially: a reward <script type="math/tex">r\in \RR</script> that’s given <script type="math/tex">k ≥ 0</script> timesteps later is worth <script type="math/tex">γ^k r</script> right now.</p>
+
+<p>The goal of the agent is to maximize the expected cumulative discounted reward, either for a finite horizon up until time <script type="math/tex">M</script>, or for an infinite horizon.</p>
+
+<p>However, in a POMDP the agent doesn’t have full information about the current state of the environment. Instead, when the environment is in state <script type="math/tex">s</script>, the agent executes action <script type="math/tex">a</script>, and as a result the environment arrives in state <script type="math/tex">s'</script>, the agent receives observation <script type="math/tex">o' ∼ O(s', a)</script>.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> (Where <script type="math/tex">∼</script> denotes the sampling operator.)</p>
+
+<p>Some examples are:</p>
+<ul>
+  <li>navigating in a maze where there are multiple places that look the same;</li>
+  <li>playing poker, where you can only observe your own cards, but the next state is prescribed by your own cards, your own strategy, and your opponents’ cards and their strategy [^3];</li>
+  <li>driving a car, where the intent of the other driver makes a big difference in the next state but it can’t be observed.</li>
+</ul>
+
+<h1 id="coming-soon">Coming soon…</h1>
+
+<p>(Last update: 2018-07-15. Check back around 2018-07-22.)</p>
+
+<h3 id="the-belief-state-of-a-pomdp">The belief state of a POMDP</h3>
+<h3 id="the-value-function">The value function</h3>
+<h3 id="an-example-pomdp-tiger">An example POMDP: Tiger</h3>
+<h3 id="discussion">Discussion</h3>
+
+<h1 id="references">References</h1>
+
+<ol class="bibliography"><li><span id="Hauskrecht2000-POMDP-approx">Hauskrecht, M. (2000). Value-Function Approximations for Partially Observable Markov Decision Processes. <i>J. Artif. Intell. Res.</i>, <i>13</i>, 33–94. https://doi.org/10.1613/jair.678</span></li>
+<li><span id="Kaelbling1998-POMDP">Kaelbling, L. P., Littman, M. L., &amp; Cassandra, A. R. (1998). Planning and Acting in Partially Observable Stochastic Domains. <i>Artificial Intelligence</i>, <i>101</i>(1-2), 99–134. https://doi.org/10.1016/S0004-3702(98)00023-X</span></li></ol>
+
+<h1 id="footnotes">Footnotes</h1>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>The fact that the observation depends on the last action makes it easy to observe the effect of only the last action: e.g. after rolling a sequence of dice, you usually observe only the result of the last one. (Even though you might keep the sum of all in memory, describing the state with an integer.) <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div>
+  <!-- Previous / Next Buttons -->
+  <div class="pagenav">
+    
+    <div class="wrapper" id="left">
+      <small><b>Previous</b> Jul 11, 2018</small>
+      <br>
+      <a class="no-hov" href="//2018/medical-safety">&laquo; Medical AI safety: where are we and where are we heading</a>
+    </div>
+    
+    
+  </div>
+  <!-- Disqus comments view -->
+  
+</article>
+
+  </div>
+  <footer class="c-page__footer">
+  <p><a href="LICENSE.html">&copy;</a>  Laszlo Treszkai 2018</p>
+  <p>
+    <a href="https://twitter.com/ltreszkai">Twitter</a>
+    <span class="u-separate"></span><a href="https://github.com/treszkai">GitHub</a>
+    <span class="u-separate"></span><a href="mailto:firstname.lastname@gmail.com">Email</a>
+  </p>
+</footer>
+
+</div>
+<hr>
+
+    </main>
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114915944-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-114915944-1');
+</script>
+
+
+    
+  </body>
+</html>

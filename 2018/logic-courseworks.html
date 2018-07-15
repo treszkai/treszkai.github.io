@@ -16,12 +16,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Laszlo Treszkai – Some proofs in first-order logic</title>
-  <meta name="description" content="This post links to some problems I solved in mathematical logic.">
+  <title>Some proofs in first-order logic – Laszlo Treszkai</title>
+  <meta name="description" content="This page lists some of the interesting problems that I solved during my academic career.">
   <link href='https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,900,400italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="/2018/2018-02-27-courseworks">
-  <!-- <link rel="alternate" type="application/rss+xml" title="Laszlo Treszkai" href="/feed.xml"> --> 
+  <link rel="stylesheet" href="//css/main.css">
+  <link rel="canonical" href="https://treszkai.github.io//2018/logic-courseworks">
+  <!-- <link rel="alternate" type="application/rss+xml" title="Laszlo Treszkai" href="https://treszkai.github.io//feed.xml"> -->
   <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
@@ -31,8 +31,6 @@
         var macros_dict = { 
             "\\RR": "\\mathbb{R}"  ,  
             "\\EE": "\\mathbb{E}"  ,  
-            "\\<": "\\langle"  ,  
-            "\\>": "\\rangle"  ,  
             "\\parm": "\\color{grey}{\\bullet}"  ,  
             "\\indep": "\\perp\\!\\!\\!\\perp"  ,  
             "\\emptyset": "\\varnothing"  ,  
@@ -45,11 +43,15 @@
         };
 
         document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
-            el.outerHTML = katex.renderToString(el.textContent, { displayMode: false, macros: macros_dict });
+            var text = el.textContent === "" ? el.innerHTML : el.textContent;
+            var textWithoutComments = text.replace(/%.*/g, '');
+            el.outerHTML = katex.renderToString(textWithoutComments, { displayMode: false, macros: macros_dict });
         });
 
         document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
-            el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true, macros: macros_dict });
+            var text = el.textContent === "" ? el.innerHTML : el.textContent;
+            var textWithoutComments = text.replace(/%.*/g, '');
+            el.outerHTML = katex.renderToString(textWithoutComments, { displayMode: true, macros: macros_dict });
         });
     });
   </script>
@@ -65,9 +67,9 @@
   <h1>Laszlo Treszkai</h1>
   
   <p>
-    <a href="/">Posts</a>
+    <a href="//">Posts</a>
     <span class="u-separate"></span>
-    <a href="/about/">About me</a>
+    <a href="//about/">About me</a>
   </p>
 </header>
 
@@ -108,7 +110,7 @@
     <div class="wrapper" id="right">
       <small>May 16, 2018 <b>Next</b></small>
       <br>
-      <a class="no-hov" href="/2018/2018-05-16-bash-versatile">Some versatile tools for bash &raquo;</a>
+      <a class="no-hov" href="//2018/bash-versatile">Some versatile tools for bash &raquo;</a>
     </div>
     
   </div>

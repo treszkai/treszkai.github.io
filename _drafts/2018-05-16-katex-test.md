@@ -1,12 +1,15 @@
 ---
 layout: post
 title:  "KaTeX test"
-katex: true
 latex_macros:
      \R: \mathbb{R}
      \b: \mathbf
      \u: 0<1
 ---
+
+$$a$$
+
+$$\<b$$
 
 inline: $b$, \(a\), asdkjaks, \(b\), $4, $5, \( v _d , a_ b \)
 

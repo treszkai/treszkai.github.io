@@ -63,7 +63,7 @@ task :check do
 end
 
 desc "Generate production website"
-task :production do
+task :prod do
   puts "\n## Generating for production"
   status = system("JEKYLL_ENV=production bundle exec jekyll build")
 end

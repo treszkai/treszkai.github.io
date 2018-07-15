@@ -6,7 +6,9 @@ description: This post briefly describes the problem of probabilistic planning, 
 
 ---
 
-This post briefly describes the problem of _probabilistic planning_, and explains what makes a planning problem _probabilistically interesting_, along with some examples.
+This post briefly describes the problem of _probabilistic planning_, and explains in informal terms what makes a planning problem _probabilistically interesting_, along with some examples.
+
+
 
 # Primer on probabilistic planning
 

@@ -1,14 +1,34 @@
 ---
 layout: post
 title: "Browser-side KaTeX rendering with Jekyll"
-katex: true
 latex_macros:
     → : \leftarrow
+    '#': '^{(#1)}'
 ---
 
 # Extra
 
-\Godel: "\\ulcorner #1 \\urcorner"
+$$\phi \proves \Godel{\phi}$$
+
+            /* Removing comments is important because kramdown adds a
+            TeX-commented CDATA wrapper to any math including the
+            characters < and &. KaTeX unfortunately doesn't respect
+            TeX-style comments (as MathJax does), so we need to help it
+            out here.  The reason that kramdown needs to add a CDATA
+            wrapper is that for some reason (idky) XHTML doesn't like '<'
+            and '&' in a script tag unless there's a CDATA wrapper.  XHTML
+            will see the wrapper because it doesn't respect TeX-style
+            comments.  For more information see
+            https://github.com/gettalong/kramdown/issues/292 and follow
+            the links.
+            Source: https://github.com/Khan/KaTeX/issues/681
+            */
+
+Dunno if I need innerHTML or textContent, tbh.
+
+# TODO
+
+Automatically Test if Katex runs okay, by either checking no javascript errors, or by putting a $$test$$ at the end of the document for testing.
 
 # Main
 

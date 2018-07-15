@@ -1,15 +1,13 @@
 ---
 layout: post
-title:  "Medical AI safety: where we are and where we are heading"
+title:  "Medical AI safety: where are we and where are we heading"
 categories: AI
 description: Using (almost) advanced tools for advanced tasks, without weighing their consequences.
 ---
 
-In this post I summarize a blog post about “medical AI safety”: the potential consequences of using advanced medical  systems without sufficient evidence to back up their usefulness.
+In this post I summarize a [blog post about “medical AI safety”](https://lukeoakdenrayner.wordpress.com/2018/07/11/medical-ai-safety-we-have-a-problem/): the potential consequences of using advanced medical systems without sufficient evidence to back up their usefulness.
 
 _Epistemic status: the author (Luke Oakden-Rayner) is a PhD candidate radiologist, and I'm not an expert in medicine._
-
-https://lukeoakdenrayner.wordpress.com/2018/07/11/medical-ai-safety-we-have-a-problem/
 
 > For the first time ever, AI systems could actually be responsible for medical disasters.
 

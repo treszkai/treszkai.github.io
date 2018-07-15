@@ -23,7 +23,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 # url: "https://treszkai.github.io"
 twitter_username: ltreszkai
 github_username:  treszkai
-permalink: /:year/:year-:month-:day-:title
+permalink: /:year/:title
 
 google_analytics_id: UA-114915944-1
 # disqus_id:
@@ -44,8 +44,6 @@ scholar:
 latex_macros:
     \RR: \mathbb{R}
     \EE: \mathbb{E}
-    \lA: \langle
-    \rA: \rangle
     \parm: \color{grey}{\bullet}
     \indep: \perp\!\!\!\perp
     \emptyset: \varnothing
@@ -59,12 +57,15 @@ latex_macros:
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
 exclude:
+ - todo.txt
+ - .git/
  - Rakefile
-# - vendor/
-# - Gemfile
-# - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+ - todo.txt
+ - vendor/
+ - Gemfile
+ - Gemfile.lock
+ - node_modules
+ # - vendor/bundle/
+ # - vendor/cache/
+ # - vendor/gems/
+ # - vendor/ruby/

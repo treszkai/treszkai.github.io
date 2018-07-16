@@ -1,0 +1,60 @@
+<p>\rm: \mathrm{#1}
+\tt: \mathtt{#1}</p>
+
+<p>This is our first task with language modelling, i.e. calculating the joint probability of sequences of words. In this context, random variables denote words</p>
+
+<h1 id="preliminaries">Preliminaries</h1>
+
+<p>The chain rule of probabilities rewrites the joint probability of a finite set of random variables as a product of conditional probabilities. For any <script type="math/tex">n</script> random variables <script type="math/tex">X_i</script>, the following is true:</p>
+
+<script type="math/tex; mode=display">P(X_1\, X_2\, …\, X_n) = \prod_{i=1}^n P(X_i\, |\, X_1\, …\, X_{i-1}),</script>
+
+<p>for example with <script type="math/tex">n=4</script>:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+P(X_1\,X_2\, X_3\, X_4) &= \prod_{i=1}^4 P(X_i\, |\, X_1\, …\, X_{i-1}) \\
+ &= P(X_1) P(X_2\, |\, X_1) P(X_3\, |\, X_2\,X_1) P(X_4\,|\, X_3\,X_2\,X_1).
+\end{align} %]]></script>
+
+<p>The sequence <script type="math/tex">X_1, X_2, …, X_n</script> is said to have the <em>Markov property</em> if for every <script type="math/tex">% <![CDATA[
+1 < k < n %]]></script>, <script type="math/tex">X_{k+1}</script> is conditionally independent of <script type="math/tex">X_1, …, X_{k-1}</script>, given <script type="math/tex">X_k</script>. <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> This means that knowing how <script type="math/tex">X_{k-1}</script>.</p>
+
+<p>I like to think of</p>
+
+<p><em>Recap: what is a hidden Markov model (HMM)?</em></p>
+
+<p>An HMM is usually used for modelling discrete time sequences, for example for language modelling.  joint probability of the words of a sequence. In that case,</p>
+
+<p>First of all, remember the chain rule of probability</p>
+
+<p>In a Hidden Markov Model, there are two kinds of random variables: hidden states and visible states. In the case of a part-of-speech (POS) tagger, the visible states are the words of the sentence and  is the word we can see and  hidden state at time step <script type="math/tex">t</script> is the POS of the</p>
+
+<p>Markov model has two main concepts</p>
+
+<blockquote>
+  <table>
+    <tbody>
+      <tr>
+        <td>The transition probabilities for this HMM are given by the table on the left below, where cell <script type="math/tex">[i,j]</script> is the probability of transitioning from state <script type="math/tex">i</script> to <script type="math/tex">j</script> (i.e., $$P(\mathrm{state}_j</td>
+        <td>\mathrm{state}_i)$$).</td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Yeah, one usually needs some flexibility with the indices, and figure out what the authors mean. In this case, <script type="math/tex">\mathrm{state}_i</script> and <script type="math/tex">\mathrm{state}_j</script> are the row and column headings of the cell <script type="math/tex">[i,j]</script>. Also, as in the previous tutorial, note the abbreviated probability notations. For example, $$P(X_{\rm{next_state}} = \tt{VB}</td>
+      <td>X_{\rm{curr_state}} = \tt{VB}) = 0.25<script type="math/tex">, where</script>X_{\rm{next_state}}$$ denotes the random variable of the next state.</td>
+    </tr>
+  </tbody>
+</table>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>yoadijaod <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>

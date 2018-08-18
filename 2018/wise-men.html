@@ -96,7 +96,7 @@ It follows that the third man must be able to say that he knows the colour of hi
 <p>One solution is to think about the puzzle in terms of possible worlds. A world in this problem is described by an assignment of hat colors to people, which is equally an ordered triple of colours <script type="math/tex">⟨c_1, c_2, c_3⟩</script>, with <script type="math/tex">c_i ∈ \{R,W\}</script>. There are only 2 white hats, so in the beginning, the seven possible worlds are</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
-\begin{array}
+\begin{array}{cc}
 ⟨R,R,R⟩ & ⟨R,R,W⟩ & ⟨R,W,R⟩ & ⟨R,W,W⟩ \\
 ⟨W,R,R⟩ & ⟨W,R,W⟩ & ⟨W,W,R⟩ & \\
 \end{array}. %]]></script>
@@ -104,7 +104,7 @@ It follows that the third man must be able to say that he knows the colour of hi
 <p>If Beta and Gamma were both wearing white hats, then Alpha would know that that his hat is red. Therefore, when Alpha says “no”, Beta and Gamma both learn that both of them cannot be white, i.e. at least one of them is red. The remaining possible worlds are</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
-\begin{array}
+\begin{array}{cc}
 {⟨R,R,R⟩} & ⟨R,R,W⟩ & ⟨R,W,R⟩ & \crossed{⟨R,W,W⟩} \\
 {⟨W,R,R⟩} & ⟨W,R,W⟩ & ⟨W,W,R⟩ & \\
 \end{array}. %]]></script>
@@ -113,7 +113,7 @@ It follows that the third man must be able to say that he knows the colour of hi
 But back to the observations of A,B,C. When Beta says “no”, that rules out the worlds where Gamma is white (because then Beta would be red).</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
-\begin{array}
+\begin{array}{cc}
 {⟨R,R,R⟩} & \crossed{⟨R,R,W⟩} & ⟨R,W,R⟩ & \crossed{⟨R,W,W⟩} \\
 {⟨W,R,R⟩} & \crossed{⟨W,R,W⟩} & ⟨W,W,R⟩ & \\
 \end{array} %]]></script>
@@ -126,72 +126,72 @@ But back to the observations of A,B,C. When Beta says “no”, that rules out t
 Besides, in every world, we implicitly include what is common knowledge, and what any agent can see, i.e. the whole problem statement in the opening paragraph.
 The common knowledge at the beginning in any of these worlds is <script type="math/tex">\lnot⟨W,W,W⟩</script>. That’s not very much, but at least symmetric, which allows us to write down only three worlds.</p>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨W,R,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,R,W⟩</script>.</li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">⟨W,R,W⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">⟨R,W,W⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,R,W⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,W,W⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,W,W⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,W,W⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">⟨R,W,W⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">⟨R,W,W⟩</script></li>
 </ul>
 
-<p>When Alpha says “no” in the beginning, that means he is not in a world where from his knowledge base he can conclude his own colour. His statement becomes common knowledge (CK), i.e. CK is extended with <script type="math/tex">\lnot(W_2\wedgeW_3)</script>.</p>
+<p>When Alpha says “no” in the beginning, that means he is not in a world where from his knowledge base he can conclude his own colour. His statement becomes common knowledge (CK), i.e. CK is extended with <script type="math/tex">\lnot(W_2\wedge W_3)</script>.</p>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨W,R,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,R,W⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">⟨W,R,W⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">\crossed{⟨R,W,W⟩}</script></li>
   <li>Gamma: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,R,W⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,W,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,W,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">\crossed{⟨R,W,W⟩}</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,W,W⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,W,W⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">\crossed{⟨R,W,W⟩}</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">\crossed{⟨R,W,W⟩}</script></li>
   <li>Gamma: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">\crossed{⟨R,W,W⟩}</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,R,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,R,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨W,R,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,R,W⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,R,W⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,R,W⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">⟨W,R,W⟩</script></li>
   <li>Beta: <script type="math/tex">⟨W,R,W⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,R,W⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,W,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,W,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
@@ -200,7 +200,7 @@ The common knowledge at the beginning in any of these worlds is <script type="ma
 
 <p>We were able to cross out some worlds! And in the world <script type="math/tex">⟨R,W,W⟩</script> we were left with zero possible worlds for Alpha, i.e. Alpha’s statement would lead to a contradiction: he would have answered “yes”. In fact, this was how we eliminated possible-worlds in the previous solution. Next turn: the king asks Beta, who says “no”. The common knowledge is extended with <script type="math/tex">\lnot(W_1 \wedge W_3)</script>. (Right? At this point I can imagine myself making an incorrect deduction.)</p>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨W,R,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,W,R⟩</script></li>
@@ -208,7 +208,7 @@ The common knowledge at the beginning in any of these worlds is <script type="ma
 </ul>
 
 <div id="mistaken1" style="display: block;">
-  <p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+  <p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
   <ul>
     <li>Alpha: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">\crossed{⟨W,R,W⟩}</script></li>
     <li>Beta: <script type="math/tex">⟨R,R,W⟩</script></li>
@@ -216,7 +216,7 @@ The common knowledge at the beginning in any of these worlds is <script type="ma
   </ul>
 </div>
 <div id="fixed1" style="display: none;">
-  <p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+  <p><strong>World</strong> <script type="math/tex">⟨R,R,W⟩</script>, CK: <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
   <ul>
     <li>Alpha: <script type="math/tex">\crossed{⟨R,R,W}⟩</script>, <script type="math/tex">\crossed{⟨W,R,W⟩}</script></li>
     <li>Beta: <script type="math/tex">\crossed{⟨R,R,W}⟩</script></li>
@@ -224,28 +224,28 @@ The common knowledge at the beginning in any of these worlds is <script type="ma
   </ul>
 </div>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,W,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,W,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨R,W,R⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,R,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,R,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨W,R,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">\crossed{⟨W,R,W⟩}</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,R,W⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,R,W⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,W⟩</script>, <script type="math/tex">\crossed{⟨W,R,W⟩}</script></li>
   <li>Beta: <script type="math/tex">\crossed{⟨W,R,W⟩}</script></li>
   <li>Gamma: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">\crossed{⟨W,R,W⟩}</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,W,R⟩</script>, CK <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,W,R⟩</script>, CK: <script type="math/tex">\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
@@ -257,15 +257,19 @@ Although never explicitly stated, we assumed that if someone’s not then he’s
 
 <script type="math/tex; mode=display">\star ≡ \bigwedge_{i=1}^3 (\lnot R_i → W_i) \wedge (\lnot W_i → R_i).</script>
 
-<p>We also know that common knowledge is true: for every formula <script type="math/tex">φ</script>, <script type="math/tex">\mathcal C(φ) \vdash φ</script>.
+<p>We also know that common knowledge is true: for every formula <script type="math/tex">φ</script>, it’s an axiom that <script type="math/tex">\mathcal C(φ) \vdash φ</script>.
 Then, it’s simple to show that Alpha is red and Gamma is white, Beta is red.</p>
 
 <script type="math/tex; mode=display">\mathcal C \Big((R_1 \vee R_2 \vee R_3) \wedge (R_2 \vee R_3) \wedge (R_1 \vee R_3) \Big) \wedge \star \vdash
     (R_1 \wedge W_3) → R_2.</script>
 
 <script type="text/javascript">
-function showById(id, btn) {
+function showById(id, btn, displayStyle) {
     document.getElementById(id).style.display = 'block';
+    btn.style.display = 'none';
+}
+function showInlineById(id, btn, displayStyle) {
+    document.getElementById(id).style.display = 'inline';
     btn.style.display = 'none';
 }
 function hideById(id, btn) {
@@ -274,41 +278,41 @@ function hideById(id, btn) {
 }
 </script>
 
-<p>Click this to fix that above: <a href="#" onclick="showById('fixed1', this); hideById('mistaken1', this); return false;" class="show-answer">click me!</a> (Needs JavaScript.)</p>
+<p>Click this to fix that above: <a href="#" onclick="showById('fixed1', this); hideById('mistaken1', this); return false;">click me!</a> (Needs JavaScript.)</p>
 
 <p>Now we are left with the following worlds:</p>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,R,R⟩</script>, CK: <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨W,R,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,W,R⟩</script></li>
-  <li>Gamma: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,R,W⟩</script></li>
+  <li>Gamma: <script type="math/tex">⟨R,R,R⟩</script>, <span id="mistaken2"><script type="math/tex">⟨R,R,W⟩</script></span> <span id="fixed2" style="display: none;"><script type="math/tex">\crossed{⟨R,R,W⟩}</script></span></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨R,W,R⟩</script>, CK <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨R,W,R⟩</script>, CK: <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨R,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨R,W,R⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,R,R⟩</script>, CK <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,R,R⟩</script>, CK: <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,R,R⟩</script>, <script type="math/tex">⟨W,R,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨W,R,R⟩</script></li>
 </ul>
 
-<p><strong>World</strong> <script type="math/tex">⟨W,W,R⟩</script>, CK <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedgeW_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
+<p><strong>World</strong> <script type="math/tex">⟨W,W,R⟩</script>, CK: <script type="math/tex">\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)</script>:</p>
 <ul>
   <li>Alpha: <script type="math/tex">⟨R,W,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Beta: <script type="math/tex">⟨W,R,R⟩</script>, <script type="math/tex">⟨W,W,R⟩</script></li>
   <li>Gamma: <script type="math/tex">⟨W,W,R⟩</script></li>
 </ul>
 
-<p>At first sight, Gamma’s knowledge base in some worlds (<script type="math/tex">⟨R,R,R⟩</script>) contains a world with <script type="math/tex">\lnot R_3</script>. But every four of the above worlds has <script type="math/tex">R_3</script>, meaning <script type="math/tex">R_3</script> is deducible from <script type="math/tex">\star</script> and the CK.</p>
+<p>At first sight, Gamma’s knowledge base in some worlds (<script type="math/tex">⟨R,R,R⟩</script>) contains a world with <script type="math/tex">\lnot R_3</script>. But every four of the above worlds has <script type="math/tex">R_3</script>, meaning <script type="math/tex">R_3</script> is deducible from <script type="math/tex">\star</script> and the CK, making <script type="math/tex">⟨R,R,W⟩</script> in world <script type="math/tex">⟨R,R,R⟩</script> impossible. <a href="#" onclick="showInlineById('fixed2', this); hideById('mistaken2', this); return false;">Click me to fix that.</a> This means <script type="math/tex">R_3</script> is CK. Yay!</p>
 
-<p>There might be some other true statements that could be deduced, so maybe Alpha knows his colour too in some worlds—I haven’t solved the problem in full. For example, when Gamma answers “yes” in the end, it doesn’t say anything we didn’t already know, and nothing that Alpha and Beta didn’t know already, as <script type="math/tex">R_3</script> can be deduced from the common knowledge. Maybe someone else knows theirs too?</p>
+<p>Note: there might be some other true statements that could be deduced, so maybe Alpha knows his colour too in some worlds—I haven’t solved the problem in full. For example, when Gamma answers “yes” in the end, it doesn’t say anything we didn’t already know, and nothing that Alpha and Beta didn’t know already, as <script type="math/tex">R_3</script> can be deduced from the common knowledge. Maybe someone else knows theirs too?</p>
 
 <h1 id="another-problem">Another problem</h1>
 

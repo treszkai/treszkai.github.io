@@ -20,7 +20,7 @@ description: > # this means to ignore newlines until "baseurl:"
 
 email: firstname.lastname@gmail.com
 baseurl: "" # the subpath of your site, e.g. /blog
-# url: "https://treszkai.github.io"
+url: "https://treszkai.github.io"
 twitter_username: ltreszkai
 github_username:  treszkai
 permalink: /:year/:title

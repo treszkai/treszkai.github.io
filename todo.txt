@@ -1,1 +1,3 @@
 Make difference between h1 and h2 more visible.
+How to use the html proofer?
+Check all JS executes without errors

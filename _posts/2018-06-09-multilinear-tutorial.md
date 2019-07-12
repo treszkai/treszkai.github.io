@@ -14,7 +14,7 @@ Solutions for exercise 1 of [tutorial 3](https://www.youtube.com/watch?v=5oeWX3N
 
 ## Notation
 
-On this solution sheet, I'll speak of a vector space $$(V,+,\cdot)$$ over a field $$K$$, where $$+: V\times V \rightarrow V$$ is the addition and $$\cdot: K \times V \rightarrow V$$ is called (scalar) multiplication or S-multiplication. The field $$(K, \color{red}{+}, \color{red}{\cdot})$$ has $$\color{red}{+}:K\times K \rightarrow K$$ as addition and $$\color{red}{\cdot}:K\times K \rightarrow K$$ as multiplication operations. The dot is often omitted, i.e. $$a \mathbf v$$ is short for $$a \cdot \mathbf v$$, $$a b$$ is short for $$a \color{red}{\cdot} b$$. (Note that the lecture dealt with real vector spaces, i.e. the field $$K$$ was always the set of reals $$\mathbb R$$.)
+On this solution sheet, I'll speak of a vector space $$(V,+,\cdot)$$ over a field $$K$$, where $$+: V\times V \rightarrow V$$ is the addition and $$\cdot: K \times V \rightarrow V$$ is called (scalar) multiplication or S-multiplication. The field $$(K, \textcolor{red}{+}, \textcolor{red}{\cdot})$$ has $$\textcolor{red}{+}:K\times K \rightarrow K$$ as addition and $$\textcolor{red}{\cdot}:K\times K \rightarrow K$$ as multiplication operations. The dot is often omitted, i.e. $$a \mathbf v$$ is short for $$a \cdot \mathbf v$$, $$a b$$ is short for $$a \textcolor{red}{\cdot} b$$. (Note that the lecture dealt with real vector spaces, i.e. the field $$K$$ was always the set of reals $$\mathbb R$$.)
 The scalars, i.e. the elements of $$K$$, are denoted with normal letters $$a,b$$, and the vectors, i.e. the elements of $$V$$, are denoted with boldface letters $$\mathbf u, \mathbf v, \mathbf w$$.
 
 <script type="text/javascript">
@@ -47,11 +47,11 @@ _Answer:_ false.
 Clarification:
  - The scalar multiplication $$\cdot: K \times V \rightarrow V$$ doesn't even have the same sets in its two arguments, i.e. $$\mathbf v \cdot a$$ is not even defined.
  - The vector space has the commutativity of _addition_ as an axiom: for any $$\mathbf u,\mathbf v \in V$$, $${\mathbf u+\mathbf v} = {\mathbf v + \mathbf u}$$.
- - The underlying field $$K$$ _does_ have the commutativity of multiplication as a field axiom: for any $$a,b \in K$$, $$a \color{red}{\cdot} b = b \color{red}{\cdot} a$$.
+ - The underlying field $$K$$ _does_ have the commutativity of multiplication as a field axiom: for any $$a,b \in K$$, $$a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a$$.
  - As a consequence, for any $$\mathbf v \in V$$ and $$a, b \in K$$,
 
 $$
- a (b \mathbf v) = (a\color{red}{\cdot} b)\mathbf v = (b \color{red}{\cdot} a)\mathbf v = b(a \mathbf v).
+ a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v).
 $$
 </div>
 
@@ -208,7 +208,7 @@ Clarification:
  - the tensor components are defined with respect to a given basis.
 </div>
 
-c) Given a basis for a $$d$$-dimensional vector space $$V$$,􏲽 ...
+c) Given a basis for a $$d$$-dimensional vector space $$V$$, ...
 
 **?.** ..._one can find exactly $$d^2$$-different dual bases for the corresponding dual vector space $$ V^* $$._ <a href="#" onclick="showById('answer11', this); return false;" class="show-answer">Show answer</a>
 

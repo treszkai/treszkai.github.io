@@ -68,6 +68,12 @@ task :prod do
   status = system("JEKYLL_ENV=production bundle exec jekyll build")
 end
 
+desc "Serve production website"
+task :prodserve do
+  puts "\n## Generating for production and serving"
+  status = system("JEKYLL_ENV=production bundle exec jekyll serve")
+end
+
 #
 ## General support functions
 #

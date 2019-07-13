@@ -25,7 +25,9 @@ github_username:  treszkai
 permalink: /:year/:month/:day/:title
 
 google_analytics_id: UA-114915944-1
-disqus_id: treszkai
+
+disqus:
+  shortname: treszkai
 
 # Build settings
 # include: [_pages]
@@ -36,6 +38,9 @@ theme: minima
 
 minima:
   date_format: "%-d %b. %Y"
+
+header_pages:
+ - about.md
 
 scholar:
   sort_by: author, year, month, title

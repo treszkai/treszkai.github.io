@@ -1,0 +1,226 @@
+---
+layout: post
+date: 2018-08-18
+title: "The wise men puzzle"
+categories: math
+tags: logic
+description: Investigating the wise men puzzle of modal logic.
+latex_macros:
+    \crossed: '\sout{#1}'
+starred: true
+---
+
+Today I understood the wise men puzzle at a conceptual level, well enough that I could explain it and possibly generalize to similar domains. This post is my attempt at explaining it.
+
+The puzzle is described in {% cite Huth2000-Logic-book %} as follows:
+
+> There are three wise men. It's common knowledge—known by everyone and known to be known by everyone, etc.—that there are three red hats and two white hats. The king puts a hat on each of the wise men in such a way that they are not able to see their own hat, and asks each one in turn whether they are not able to see their own hat, and asks each one in turn whether they know the color of the hat on their head. Suppose the first man says he does not know; then the second says he does not know either.
+> It follows that the third man must be able to say that he knows the colour of his hat. Why is this? What colour has the third man's hat?
+
+Let's call the people Alpha, Beta, Gamma, in the order they speak.
+
+One solution is to think about the puzzle in terms of possible worlds. A world in this problem is described by an assignment of hat colors to people, which is equally an ordered triple of colours $$⟨c_1, c_2, c_3⟩$$, with $$c_i ∈ \{R,W\}$$. There are only 2 white hats, so in the beginning, the seven possible worlds are
+
+$$
+\begin{array}{cc}
+⟨R,R,R⟩ & ⟨R,R,W⟩ & ⟨R,W,R⟩ & ⟨R,W,W⟩ \\
+⟨W,R,R⟩ & ⟨W,R,W⟩ & ⟨W,W,R⟩ & \\
+\end{array}.
+$$
+
+If Beta and Gamma were both wearing white hats, then Alpha would know that that his hat is red. Therefore, when Alpha says "no", Beta and Gamma both learn that both of them cannot be white, i.e. at least one of them is red. The remaining possible worlds are
+
+$$
+\begin{array}{cc}
+{⟨R,R,R⟩} & ⟨R,R,W⟩ & ⟨R,W,R⟩ & \crossed{⟨R,W,W⟩} \\
+{⟨W,R,R⟩} & ⟨W,R,W⟩ & ⟨W,W,R⟩ & \\
+\end{array}.
+$$
+
+Now, _we_ know that the world is one of the 6 worlds above, but Beta also sees the hats of Alpha and Gamma. What we think as outsiders only matters for whether _we_ can tell who's wearing what.
+But back to the observations of A,B,C. When Beta says "no", that rules out the worlds where Gamma is white (because then Beta would be red).
+
+
+$$
+\begin{array}{cc}
+{⟨R,R,R⟩} & \crossed{⟨R,R,W⟩} & ⟨R,W,R⟩ & \crossed{⟨R,W,W⟩} \\
+{⟨W,R,R⟩} & \crossed{⟨W,R,W⟩} & ⟨W,W,R⟩ & \\
+\end{array}
+$$
+
+This means that Gamma is red, and he also knows this.
+
+# Another way
+
+Our solution is more procedural than is necessary, and it does not show the essence of omniscient agents acting with one another. As this problem is small enough, we could list for every world every statement any agent could make, which is simply their knowledge base of true statements (i.e. whatever they can deduce from their view and from the common knowledge, CK). (Say, with atoms $$R_1, R_2, R_3, W_1, W_2, W_3$$, meaning "I think person $$i$$ has color X", with a $$⟨R,W,R⟩$$ abbreviating $$R_1\wedge W_2 \wedge R_3$$.) We can only do this because we are not interested in making statements like "X knows that Y knows that Z knows that φ".
+Besides, in every world, we implicitly include what is common knowledge, and what any agent can see, i.e. the whole problem statement in the opening paragraph.
+The common knowledge at the beginning in any of these worlds is $$\lnot⟨W,W,W⟩$$. That's not very much, but at least symmetric, which allows us to write down only three worlds.
+
+*[CK]: Common knowledge
+
+**World** $$⟨R,R,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,R,R⟩$$, $$⟨W,R,R⟩$$
+- Beta: $$⟨R,R,R⟩$$, $$⟨R,W,R⟩$$
+- Gamma: $$⟨R,R,R⟩$$, $$⟨R,R,W⟩$$.
+
+**World** $$⟨R,R,W⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,R,W⟩$$, $$⟨W,R,W⟩$$
+- Beta: $$⟨R,R,W⟩$$, $$⟨R,W,W⟩$$
+- Gamma: $$⟨R,R,R⟩$$, $$⟨R,R,W⟩$$
+
+**World** $$⟨R,W,W⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,W,W⟩$$
+- Beta: $$⟨R,R,W⟩$$, $$⟨R,W,W⟩$$
+- Gamma: $$⟨R,W,R⟩$$, $$⟨R,W,W⟩$$
+
+When Alpha says "no" in the beginning, that means he is not in a world where from his knowledge base he can conclude his own colour. His statement becomes common knowledge (CK), i.e. CK is extended with $$\lnot(W_2\wedge W_3)$$.
+
+**World** $$⟨R,R,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,R,R⟩$$, $$⟨W,R,R⟩$$
+- Beta: $$⟨R,R,R⟩$$, $$⟨R,W,R⟩$$
+- Gamma: $$⟨R,R,R⟩$$, $$⟨R,R,W⟩$$
+
+**World** $$⟨R,R,W⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,R,W⟩$$, $$⟨W,R,W⟩$$
+- Beta: $$⟨R,R,W⟩$$, $$\crossed{⟨R,W,W⟩}$$
+- Gamma: $$⟨R,R,R⟩$$, $$⟨R,R,W⟩$$
+
+**World** $$⟨R,W,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,W,R⟩$$, $$⟨W,W,R⟩$$
+- Beta: $$⟨R,R,R⟩$$, $$⟨R,W,R⟩$$
+- Gamma: $$⟨R,W,R⟩$$, $$\crossed{⟨R,W,W⟩}$$
+
+**World** $$⟨R,W,W⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$\crossed{⟨R,W,W⟩}$$
+- Beta: $$⟨R,R,W⟩$$, $$\crossed{⟨R,W,W⟩}$$
+- Gamma: $$⟨R,W,R⟩$$, $$\crossed{⟨R,W,W⟩}$$
+
+**World** $$⟨W,R,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,R,R⟩$$, $$⟨W,R,R⟩$$
+- Beta: $$⟨W,R,R⟩$$, $$⟨W,W,R⟩$$
+- Gamma: $$⟨W,R,R⟩$$, $$⟨W,R,W⟩$$
+
+**World** $$⟨W,R,W⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,R,W⟩$$, $$⟨W,R,W⟩$$
+- Beta: $$⟨W,R,W⟩$$
+- Gamma: $$⟨W,R,R⟩$$, $$⟨W,R,W⟩$$
+
+**World** $$⟨W,W,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)$$:
+- Alpha: $$⟨R,W,R⟩$$, $$⟨W,W,R⟩$$
+- Beta: $$⟨W,R,R⟩$$, $$⟨W,W,R⟩$$
+- Gamma: $$⟨W,W,R⟩$$
+
+We were able to cross out some worlds! And in the world $$⟨R,W,W⟩$$ we were left with zero possible worlds for Alpha, i.e. Alpha's statement would lead to a contradiction: he would have answered "yes". In fact, this was how we eliminated possible-worlds in the previous solution. Next turn: the king asks Beta, who says "no". The common knowledge is extended with $$\lnot(W_1 \wedge W_3)$$. (Right? At this point I can imagine myself making an incorrect deduction.)
+
+**World** $$⟨R,R,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,R,R⟩$$, $$⟨W,R,R⟩$$
+- Beta: $$⟨R,R,R⟩$$, $$⟨R,W,R⟩$$
+- Gamma: $$⟨R,R,R⟩$$, $$⟨R,R,W⟩$$
+
+<div id="mistaken1" style="display: block;" markdown="1">
+**World** $$⟨R,R,W⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,R,W⟩$$, $$\crossed{⟨W,R,W⟩}$$
+- Beta: $$⟨R,R,W⟩$$
+- Gamma: $$⟨R,R,R⟩$$, $$⟨R,R,W⟩$$
+</div><div id="fixed1" style="display: none;" markdown="1">
+**World** $$⟨R,R,W⟩$$, CK: $$\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$\crossed{⟨R,R,W}⟩$$, $$\crossed{⟨W,R,W⟩}$$
+- Beta: $$\crossed{⟨R,R,W}⟩$$
+- Gamma: $$\crossed{⟨R,R,R}⟩$$, $$\crossed{⟨R,R,W}⟩$$
+</div>
+
+**World** $$⟨R,W,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,W,R⟩$$, $$⟨W,W,R⟩$$
+- Beta: $$⟨R,R,R⟩$$, $$⟨R,W,R⟩$$
+- Gamma: $$⟨R,W,R⟩$$
+
+**World** $$⟨W,R,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,R,R⟩$$, $$⟨W,R,R⟩$$
+- Beta: $$⟨W,R,R⟩$$, $$⟨W,W,R⟩$$
+- Gamma: $$⟨W,R,R⟩$$, $$\crossed{⟨W,R,W⟩}$$
+
+**World** $$⟨W,R,W⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,R,W⟩$$, $$\crossed{⟨W,R,W⟩}$$
+- Beta: $$\crossed{⟨W,R,W⟩}$$
+- Gamma: $$⟨W,R,R⟩$$, $$\crossed{⟨W,R,W⟩}$$
+
+**World** $$⟨W,W,R⟩$$, CK: $$\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,W,R⟩$$, $$⟨W,W,R⟩$$
+- Beta: $$⟨W,R,R⟩$$, $$⟨W,W,R⟩$$
+- Gamma: $$⟨W,W,R⟩$$
+
+Another world disappeared. But what about $$⟨R,R,W⟩$$, why is it still there, when last time we argued that it's not possible for Gamma to be white? In fact, it is not: in that world Beta would have said yes, as he knew what colour he had.
+Although never explicitly stated, we assumed that if someone's not then he's white, and vice versa. Use $$\star$$ to denote this fact:
+
+$$
+\star ≡ \bigwedge_{i=1}^3 (\lnot R_i → W_i) \wedge (\lnot W_i → R_i).
+$$
+
+We also know that common knowledge is true: for every formula $$φ$$, it's an axiom that $$\mathcal C φ → φ$$.
+Then, it's simple to show that Alpha is red and Gamma is white, Beta is red.
+
+$$
+\mathcal C \Big((R_1 \vee R_2 \vee R_3) \wedge (R_2 \vee R_3) \wedge (R_1 \vee R_3) \Big) \wedge \star \vdash
+    (R_1 \wedge W_3) → R_2.
+$$
+
+<script type="text/javascript">
+function showById(id, btn, displayStyle) {
+    document.getElementById(id).style.display = 'block';
+    btn.style.display = 'none';
+}
+function showInlineById(id, btn, displayStyle) {
+    document.getElementById(id).style.display = 'inline';
+    btn.style.display = 'none';
+}
+function hideById(id, btn) {
+    document.getElementById(id).style.display = 'none';
+    btn.style.display = 'none';
+}
+</script>
+
+Click this to fix that above: <a href="#" onclick="showById('fixed1', this); hideById('mistaken1', this); return false;">click me!</a> (Needs JavaScript.)
+
+Now we are left with the following worlds:
+
+**World** $$⟨R,R,R⟩$$, CK: $$\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,R,R⟩$$, $$⟨W,R,R⟩$$
+- Beta: $$⟨R,R,R⟩$$, $$⟨R,W,R⟩$$
+- Gamma: $$⟨R,R,R⟩$$, <span id="mistaken2" markdown="1">$$⟨R,R,W⟩$$</span> <span id="fixed2" style="display: none;">$$\crossed{⟨R,R,W⟩}$$</span>
+
+**World** $$⟨R,W,R⟩$$, CK: $$\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,W,R⟩$$, $$⟨W,W,R⟩$$
+- Beta: $$⟨R,R,R⟩$$, $$⟨R,W,R⟩$$
+- Gamma: $$⟨R,W,R⟩$$
+
+**World** $$⟨W,R,R⟩$$, CK: $$\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,R,R⟩$$, $$⟨W,R,R⟩$$
+- Beta: $$⟨W,R,R⟩$$, $$⟨W,W,R⟩$$
+- Gamma: $$⟨W,R,R⟩$$
+
+**World** $$⟨W,W,R⟩$$, CK: $$\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)$$:
+- Alpha: $$⟨R,W,R⟩$$, $$⟨W,W,R⟩$$
+- Beta: $$⟨W,R,R⟩$$, $$⟨W,W,R⟩$$
+- Gamma: $$⟨W,W,R⟩$$
+
+At first sight, Gamma's knowledge base in some worlds ($$⟨R,R,R⟩$$) contains a world with $$\lnot R_3$$. But every four of the above worlds has $$R_3$$, meaning $$R_3$$ is deducible from $$\star$$ and the CK, making $$⟨R,R,W⟩$$ in world $$⟨R,R,R⟩$$ impossible. <a href="#" onclick="showInlineById('fixed2', this); hideById('mistaken2', this); return false;">Click me to fix that.</a> This means $$R_3$$ is CK. Yay!
+
+Note: there might be some other true statements that could be deduced, so maybe Alpha knows his colour too in some worlds—I haven't solved the problem in full. For example, when Gamma answers "yes" in the end, it doesn't say anything we didn't already know, and nothing that Alpha and Beta didn't know already, as $$R_3$$ can be deduced from the common knowledge. Maybe someone else knows theirs too?
+
+# Another problem
+
+A slight modification is to map a natural number $$k$$ to worlds where X is able to decide their colour after $$k$$ utterances, if it wasn't X who spoke last.
+
+Related: it feels like there is a situation with $$n>2$$ people, where two agents can keep on discarding possible worlds just by them speaking in turns. If you know of one such problem, please let me know.
+
+# Notes
+
+I hope I didn't make a mistake in the calculations, I admit I enumerated the possible worlds by hand instead of with Prolog.
+
+# Conclusion
+
+Listen to people when they say "no".
+
+# References
+
+{% bibliography --cited %}

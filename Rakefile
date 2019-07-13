@@ -44,7 +44,7 @@ load '_rake-configuration.rb' if File.exist?('_rake-configuration.rb')
 desc 'Preview with livereload on local machine'
 task :preview => :clean do
 	puts green "Starting livereload server"
-  jekyll('serve')
+  jekyll('serve --incremental')
 end
 task :serve => :preview
 
@@ -73,7 +73,7 @@ end
 #
 
 def cleanup
-  sh 'rm -rf _site'
+  sh 'rm -rf _site/*'
 end
 
 def jekyll(directives = '')

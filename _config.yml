@@ -22,17 +22,17 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://treszkai.github.io"
 twitter_username: ltreszkai
 github_username:  treszkai
-permalink: /:year/:title
+permalink: /:year/:month/:day/:title
 
 google_analytics_id: UA-114915944-1
-# disqus_id:
+disqus_id: treszkai
 
 # Build settings
-include: [_pages]
+# include: [_pages]
 markdown: kramdown
 theme: minima
-sass:
-    style: compressed
+# plugins:
+ # - jekyll-scholar
 
 minima:
   date_format: "%-d %b. %Y"

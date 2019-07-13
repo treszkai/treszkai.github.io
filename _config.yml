@@ -18,25 +18,29 @@ email: laszlo.treszkai@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Explorations in math, AI, ML, et al.
 
-email: firstname.lastname@gmail.com
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://treszkai.github.io"
 twitter_username: ltreszkai
 github_username:  treszkai
-permalink: /:year/:title
+permalink: /:year/:month/:day/:title
 
 google_analytics_id: UA-114915944-1
-# disqus_id:
+
+disqus:
+  shortname: treszkai
 
 # Build settings
-include: [_pages]
+# include: [_pages]
 markdown: kramdown
 theme: minima
-sass:
-    style: compressed
+# plugins:
+ # - jekyll-scholar
 
 minima:
   date_format: "%-d %b. %Y"
+
+header_pages:
+ - about.md
 
 scholar:
   sort_by: author, year, month, title
@@ -44,7 +48,7 @@ scholar:
 latex_macros:
     \RR: \mathbb{R}
     \EE: \mathbb{E}
-    \parm: \color{grey}{\bullet}
+    \parm: \textcolor{grey}{\bullet}
     \indep: \perp\!\!\!\perp
     \emptyset: \varnothing
     \proves: \vdash
@@ -57,7 +61,6 @@ latex_macros:
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
 exclude:
- - todo.txt
  - .git/
  - Rakefile
  - todo.txt

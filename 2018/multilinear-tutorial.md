@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2018-06-09
 title: "International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise 1"
 categories: Math
 description: Solutions for exercise 1 of tutorial 3 of the International Winter School on Gravity and Light.

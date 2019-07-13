@@ -1,31 +1,1029 @@
-@@ -0,0 +1,30 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% for post in site.posts limit:10 %}
+    <title>Laszlo Treszkai</title>
+    <description>Explorations in math, AI, ML, et al.
+</description>
+    <link>https://treszkai.github.io/</link>
+    <atom:link href="https://treszkai.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 13 Jul 2019 23:20:43 +0200</pubDate>
+    <lastBuildDate>Sat, 13 Jul 2019 23:20:43 +0200</lastBuildDate>
+    <generator>Jekyll v3.8.6</generator>
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
-        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
-        {% for tag in post.tags %}
-        <category>{{ tag | xml_escape }}</category>
-        {% endfor %}
-        {% for cat in post.categories %}
-        <category>{{ cat | xml_escape }}</category>
-        {% endfor %}
+        <title>Evaluation of function calls in Haskell</title>
+        <description>&lt;p&gt;Chapter 27 of &lt;em&gt;Haskell Programming from first principles&lt;/em&gt; (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section &lt;em&gt;Preventing sharing on purpose&lt;/em&gt;, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of &lt;code class=&quot;highlighter-rouge&quot;&gt;g _&lt;/code&gt; is not shared but calculated twice:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Prelude&amp;gt; f x = (x 3) + (x 10)
+Prelude&amp;gt; g' = \_ -&amp;gt; trace &quot;hi g'&quot; 2
+Prelude&amp;gt; f g'
+hi g'
+hi g'
+4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the second, the result of &lt;code class=&quot;highlighter-rouge&quot;&gt;g _&lt;/code&gt; &lt;em&gt;is&lt;/em&gt; shared, i.e. calculated only once and the result is stored:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Prelude&amp;gt; g = const (trace &quot;hi g&quot; 2)
+Prelude&amp;gt; f g
+hi g
+4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(Note that this latter is called a &lt;a href=&quot;https://wiki.haskell.org/Pointfree&quot;&gt;“point-free” definition&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;The authors conclude that&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;functions aren’t shared when there are named arguments but are when the arguments are elided, as in pointfree. So, one way to prevent sharing is adding named arguments.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;(Quoted from version 1.0RC4 of the book.)&lt;/p&gt;
+
+&lt;p&gt;In this post I analyze the runtime differences between point-free and pointful definitions.&lt;/p&gt;
+
+&lt;h2 id=&quot;behind-the-scenes&quot;&gt;Behind the scenes&lt;/h2&gt;
+
+&lt;p&gt;As &lt;a href=&quot;#Further resources&quot;&gt;Tom Ellis describes&lt;/a&gt;, the definitions of &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; translate to the following (in a close approximation to the “Core” language used during compilation):&lt;/p&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g&quot;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tg&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g'&quot;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(Calling &lt;code class=&quot;highlighter-rouge&quot;&gt;f g&lt;/code&gt; with these definitions does &lt;em&gt;not&lt;/em&gt; result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like &lt;a href=&quot;#Sharing&quot;&gt;that below&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; was turned into a &lt;em&gt;let&lt;/em&gt; expression because we can only apply functions to variables or literals (in Core), not to function calls.&lt;/p&gt;
+
+&lt;h2 id=&quot;evaluation-with-sharing&quot;&gt;Evaluation with sharing&lt;/h2&gt;
+
+&lt;p&gt;This is what happens during the evaluation of &lt;code class=&quot;highlighter-rouge&quot;&gt;f g&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ans&lt;/code&gt; is a function call, so its evaluation proceeds with substituting &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; for the argument of &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ans&lt;/code&gt; is a &lt;em&gt;let&lt;/em&gt; expression, so we put the following &lt;em&gt;thunks&lt;/em&gt; for &lt;code class=&quot;highlighter-rouge&quot;&gt;x3&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;x10&lt;/code&gt; on the heap under some unique name:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Heap:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;…and then proceed with evaluating the &lt;em&gt;in&lt;/em&gt; part:&lt;/p&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans_x3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans_x10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;During the evaluation of this function call, &lt;code class=&quot;highlighter-rouge&quot;&gt;ans_x3&lt;/code&gt; will be evaluated (or potentially &lt;code class=&quot;highlighter-rouge&quot;&gt;ans_x10&lt;/code&gt; first, or both in parallel). &lt;code class=&quot;highlighter-rouge&quot;&gt;ans_x3&lt;/code&gt; is a function call, so first we evaluate &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; to a lambda. As &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; is a &lt;em&gt;let&lt;/em&gt; expression, we create a closure for &lt;code class=&quot;highlighter-rouge&quot;&gt;trace &quot;hi g&quot; 2&lt;/code&gt; on the heap, and then continue with the &lt;em&gt;in&lt;/em&gt; part of &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;\y -&amp;gt; const tg y&lt;/code&gt;). This is a lambda now, meaning it’s in weak head normal form, so the heap contents for &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; is overwritten with that:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Heap:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g_tg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g&quot;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_tg&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Back to &lt;code class=&quot;highlighter-rouge&quot;&gt;ans_x3&lt;/code&gt;, now the argument &lt;code class=&quot;highlighter-rouge&quot;&gt;3&lt;/code&gt; is substituted in the definition of &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ans_x3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_tg&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is a function call, with &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt; already a lambda &lt;code class=&quot;highlighter-rouge&quot;&gt;\x _ -&amp;gt; x&lt;/code&gt;, so the arguments can now be substituted in the body, leaving us with&lt;/p&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Heap:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_tg&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;-- (Pointer to the same address as g_tg.)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;During the evaluation of &lt;code class=&quot;highlighter-rouge&quot;&gt;g_tg&lt;/code&gt;, the magic printout happens (&lt;code class=&quot;highlighter-rouge&quot;&gt;hi g&lt;/code&gt; on stdout), and its value is resolved to be &lt;code class=&quot;highlighter-rouge&quot;&gt;2&lt;/code&gt;, so the heap is updated as such:&lt;/p&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Heap:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g_tg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And &lt;code class=&quot;highlighter-rouge&quot;&gt;ans_x3&lt;/code&gt; is a pointer to the same memory content &lt;code class=&quot;highlighter-rouge&quot;&gt;2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Analogously, the evaluation of &lt;code class=&quot;highlighter-rouge&quot;&gt;ans_x10&lt;/code&gt; proceeds as such:&lt;/p&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ans_x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_tg&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_tg&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;-- let ans_x10 points to the memory location of g_tg:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, &lt;code class=&quot;highlighter-rouge&quot;&gt;ans = (+) ans_x3 ans_x10&lt;/code&gt;, which evaluates to &lt;code class=&quot;highlighter-rouge&quot;&gt;ans = 4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;evaluation-without-sharing&quot;&gt;Evaluation without sharing&lt;/h2&gt;
+
+&lt;p&gt;In contrast, the evaluation of &lt;code class=&quot;highlighter-rouge&quot;&gt;f g'&lt;/code&gt; proceeds as follows:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ans'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g'&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g'&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Heap:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x3'&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g'&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x10'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g'&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ans'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans_x3'&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans_x10'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x3'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g'&quot;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now &lt;code class=&quot;highlighter-rouge&quot;&gt;hi g'&lt;/code&gt; is printed, and the heap is updated:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Heap:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x3'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When evaluating &lt;code class=&quot;highlighter-rouge&quot;&gt;ans_x10'&lt;/code&gt;, we &lt;strong&gt;again print&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;hi g'&lt;/code&gt;, and store the result of the trace under a different thunk:&lt;/p&gt;
+
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;-- Heap:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ans_x10'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now &lt;code class=&quot;highlighter-rouge&quot;&gt;ans'&lt;/code&gt; evaluates to &lt;code class=&quot;highlighter-rouge&quot;&gt;(+) 2 2&lt;/code&gt;, i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;attempt-at-verifying-my-translated-definitions&quot;&gt;Attempt at verifying my translated definitions&lt;/h2&gt;
+
+&lt;p&gt;I attempted to verify what I was saying above about the definitions of &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;g'&lt;/code&gt; in Core, using the &lt;code class=&quot;highlighter-rouge&quot;&gt;-ddump-simpl&lt;/code&gt; compiler flag of GHCi, but it didn’t fulfil my expectations.&lt;/p&gt;
+
+&lt;p&gt;&lt;a name=&quot;Sharing&quot;&gt;&lt;/a&gt;Sharing.hs:&lt;/p&gt;
+&lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kr&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Sharing&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;where&lt;/span&gt;
+
+&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Debug.Trace&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;::&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;-- share&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g'&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g'&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;-- don't share&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g''&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tg&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;-- share (equivalent to g)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In GHCi:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Prelude&amp;gt; :set -ddump-simpl -dsuppress-all -Wno-missing-signatures
+Prelude&amp;gt; :l Sharing
+[1 of 1] Compiling Sharing          ( Sharing.hs, interpreted )
+
+==================== Tidy Core ====================
+Result size of Tidy Core
+  = {terms: 52, types: 39, coercions: 0, joins: 0/0}
+
+f = \ x_a1Fl -&amp;gt; + $fNumInt (x_a1Fl (I# 3#)) (x_a1Fl (I# 10#))
+g = \ @ b_a1Gi -&amp;gt; const (trace (unpackCString# &quot;hi g&quot;#) (I# 2#))
+g' = \ @ p_a1G6 -&amp;gt; \ _ -&amp;gt; trace (unpackCString# &quot;hi g'&quot;#) (I# 2#)
+tg_r1F4 = trace (unpackCString# &quot;hi g&quot;#) (I# 2#)
+g'' = \ @ b_a1FJ -&amp;gt; \ y_a1Fn -&amp;gt; const tg_r1F4 y_a1Fn
+
+... and some more stuff
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Nonetheless, as &lt;a href=&quot;https://stackoverflow.com/a/6121495/8424390&quot;&gt;a SO answer describes&lt;/a&gt;, we can see that a function application in Core is defined as &lt;code class=&quot;highlighter-rouge&quot;&gt;Expr Atom&lt;/code&gt;, where &lt;em&gt;Atom&lt;/em&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;var | Literal&lt;/code&gt;. I attempted to install &lt;a href=&quot;http://hackage.haskell.org/package/ghc-core&quot;&gt;ghc-core&lt;/a&gt; but the build failed, so further analysis is put on the shelf.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusions&quot;&gt;Conclusions&lt;/h2&gt;
+
+&lt;p&gt;So, what’s the essential difference between &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;g'&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;g = const (trace &quot;hi g&quot; 2)&lt;/code&gt; is a function application where the argument is a function application, which is treated as a &lt;em&gt;let&lt;/em&gt; expression. When you evaluate &lt;code class=&quot;highlighter-rouge&quot;&gt;g ()&lt;/code&gt;, the auxiliary variable introduced by the &lt;em&gt;let&lt;/em&gt; – i.e.,&lt;code class=&quot;highlighter-rouge&quot;&gt;tg = trace &quot;hi g&quot; 2&lt;/code&gt; – is evaluated to a literal and its value is stored on the heap. On subsequent calls, some other argument can be applied to the &lt;code class=&quot;highlighter-rouge&quot;&gt;const tg&lt;/code&gt; function, but its first argument &lt;code class=&quot;highlighter-rouge&quot;&gt;tg&lt;/code&gt; is already evaluated.&lt;/p&gt;
+
+&lt;p&gt;In contrast, &lt;code class=&quot;highlighter-rouge&quot;&gt;g' = \_ -&amp;gt; trace &quot;hi g'&quot; 2&lt;/code&gt; is a lambda, so it is already fully evaluated, and nothing in it can be simplified further. If we apply &lt;code class=&quot;highlighter-rouge&quot;&gt;g'&lt;/code&gt; first to the argument &lt;code class=&quot;highlighter-rouge&quot;&gt;()&lt;/code&gt;, the expression &lt;code class=&quot;highlighter-rouge&quot;&gt;g' ()&lt;/code&gt; will evaluate to the body of &lt;code class=&quot;highlighter-rouge&quot;&gt;g'&lt;/code&gt; with the unused parameter discarded, i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;trace &quot;hi g'&quot; 2&lt;/code&gt;. If we later evaluate &lt;code class=&quot;highlighter-rouge&quot;&gt;g' []&lt;/code&gt;, then it again results in the (same) body after the (dummy) function application. Nowhere during this process did we store the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;trace &quot;hi g'&quot; 2&lt;/code&gt;: in particular, we didn’t update the definition of &lt;code class=&quot;highlighter-rouge&quot;&gt;g'&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;\_ -&amp;gt; 2&lt;/code&gt;, simply because that is not the definition of &lt;code class=&quot;highlighter-rouge&quot;&gt;g'&lt;/code&gt;. (But could we have updated it? Even though functions are always pure, I think the answer is generally &lt;em&gt;no&lt;/em&gt;: sometimes the result of a function is bigger than the definition, and the result is not needed often enough to warrant this speed–memory tradeoff.)&lt;/p&gt;
+
+&lt;p&gt;Recall the original wording:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;functions aren’t shared when there are named arguments but are when the arguments are elided, as in pointfree.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As we saw, &lt;em&gt;functions&lt;/em&gt; themselves are never shared. Rather, if &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; is a partially applied function whose argument is a function application &lt;code class=&quot;highlighter-rouge&quot;&gt;fun arg&lt;/code&gt;, then &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; is equivalent to a &lt;em&gt;let&lt;/em&gt; expression, and after its first evaluation &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; will &lt;em&gt;change&lt;/em&gt; to a lambda with &lt;code class=&quot;highlighter-rouge&quot;&gt;fun arg&lt;/code&gt; already evaluated.&lt;/p&gt;
+
+&lt;p&gt;As a generally-okay heuristic, point-free definitions allow sharing inner function calls, whereas nothing in a lambda (or a function with all arguments on the left-hand side) is shared.&lt;/p&gt;
+
+&lt;h2 id=&quot;further-resources&quot;&gt;Further resources&lt;/h2&gt;
+
+&lt;p&gt;More details on similar behavior are given by Tom Ellis in his talk &lt;a href=&quot;https://skillsmatter.com/skillscasts/8726-haskell-programs-how-do-they-run&quot;&gt;&lt;em&gt;Haskell programs: how do they run?&lt;/em&gt;&lt;/a&gt; (free registration required to watch the talk).&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://skillsmatter.com/skillscasts/8800-functional-and-low-level-watching-the-stg-execute&quot;&gt;talk of David Luposchainsky (a.k.a. &lt;code class=&quot;highlighter-rouge&quot;&gt;quchen&lt;/code&gt;)&lt;/a&gt; goes into more depth – down to the Core –, in which he uses his own implementation of the spineless tagless graph reduction machine (STG), to visualize the evaluation of any given Haskell code (&lt;a href=&quot;https://github.com/quchen/stgi&quot;&gt;link to repo&lt;/a&gt;).&lt;/p&gt;
+</description>
+        <pubDate>Sat, 13 Jul 2019 00:00:00 +0200</pubDate>
+        <link>https://treszkai.github.io/2019/07/13/haskell-eval</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2019/07/13/haskell-eval</guid>
+        
+        
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>The wise men puzzle</title>
+        <description>&lt;p&gt;Today I understood the wise men puzzle at a conceptual level, well enough that I could explain it and possibly generalize to similar domains. This post is my attempt at explaining it.&lt;/p&gt;
+
+&lt;p&gt;The puzzle is described in &lt;a class=&quot;citation&quot; href=&quot;#Huth2000-Logic-book&quot;&gt;(Huth &amp;amp; Ryan, 2000)&lt;/a&gt; as follows:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;There are three wise men. It’s common knowledge—known by everyone and known to be known by everyone, etc.—that there are three red hats and two white hats. The king puts a hat on each of the wise men in such a way that they are not able to see their own hat, and asks each one in turn whether they are not able to see their own hat, and asks each one in turn whether they know the color of the hat on their head. Suppose the first man says he does not know; then the second says he does not know either.
+It follows that the third man must be able to say that he knows the colour of his hat. Why is this? What colour has the third man’s hat?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Let’s call the people Alpha, Beta, Gamma, in the order they speak.&lt;/p&gt;
+
+&lt;p&gt;One solution is to think about the puzzle in terms of possible worlds. A world in this problem is described by an assignment of hat colors to people, which is equally an ordered triple of colours &lt;script type=&quot;math/tex&quot;&gt;⟨c_1, c_2, c_3⟩&lt;/script&gt;, with &lt;script type=&quot;math/tex&quot;&gt;c_i ∈ \{R,W\}&lt;/script&gt;. There are only 2 white hats, so in the beginning, the seven possible worlds are&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{array}{cc}
+⟨R,R,R⟩ &amp; ⟨R,R,W⟩ &amp; ⟨R,W,R⟩ &amp; ⟨R,W,W⟩ \\
+⟨W,R,R⟩ &amp; ⟨W,R,W⟩ &amp; ⟨W,W,R⟩ &amp; \\
+\end{array}. %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;If Beta and Gamma were both wearing white hats, then Alpha would know that that his hat is red. Therefore, when Alpha says “no”, Beta and Gamma both learn that both of them cannot be white, i.e. at least one of them is red. The remaining possible worlds are&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{array}{cc}
+{⟨R,R,R⟩} &amp; ⟨R,R,W⟩ &amp; ⟨R,W,R⟩ &amp; \crossed{⟨R,W,W⟩} \\
+{⟨W,R,R⟩} &amp; ⟨W,R,W⟩ &amp; ⟨W,W,R⟩ &amp; \\
+\end{array}. %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Now, &lt;em&gt;we&lt;/em&gt; know that the world is one of the 6 worlds above, but Beta also sees the hats of Alpha and Gamma. What we think as outsiders only matters for whether &lt;em&gt;we&lt;/em&gt; can tell who’s wearing what.
+But back to the observations of A,B,C. When Beta says “no”, that rules out the worlds where Gamma is white (because then Beta would be red).&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{array}{cc}
+{⟨R,R,R⟩} &amp; \crossed{⟨R,R,W⟩} &amp; ⟨R,W,R⟩ &amp; \crossed{⟨R,W,W⟩} \\
+{⟨W,R,R⟩} &amp; \crossed{⟨W,R,W⟩} &amp; ⟨W,W,R⟩ &amp; \\
+\end{array} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;This means that Gamma is red, and he also knows this.&lt;/p&gt;
+
+&lt;h1 id=&quot;another-way&quot;&gt;Another way&lt;/h1&gt;
+
+&lt;p&gt;Our solution is more procedural than is necessary, and it does not show the essence of omniscient agents acting with one another. As this problem is small enough, we could list for every world every statement any agent could make, which is simply their knowledge base of true statements (i.e. whatever they can deduce from their view and from the common knowledge, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;). (Say, with atoms &lt;script type=&quot;math/tex&quot;&gt;R_1, R_2, R_3, W_1, W_2, W_3&lt;/script&gt;, meaning “I think person &lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt; has color X”, with a &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt; abbreviating &lt;script type=&quot;math/tex&quot;&gt;R_1\wedge W_2 \wedge R_3&lt;/script&gt;.) We can only do this because we are not interested in making statements like “X knows that Y knows that Z knows that φ”.
+Besides, in every world, we implicitly include what is common knowledge, and what any agent can see, i.e. the whole problem statement in the opening paragraph.
+The common knowledge at the beginning in any of these worlds is &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩&lt;/script&gt;. That’s not very much, but at least symmetric, which allows us to write down only three worlds.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,W⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;When Alpha says “no” in the beginning, that means he is not in a world where from his knowledge base he can conclude his own colour. His statement becomes common knowledge (&lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;), i.e. &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt; is extended with &lt;script type=&quot;math/tex&quot;&gt;\lnot(W_2\wedge W_3)&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We were able to cross out some worlds! And in the world &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,W⟩&lt;/script&gt; we were left with zero possible worlds for Alpha, i.e. Alpha’s statement would lead to a contradiction: he would have answered “yes”. In fact, this was how we eliminated possible-worlds in the previous solution. Next turn: the king asks Beta, who says “no”. The common knowledge is extended with &lt;script type=&quot;math/tex&quot;&gt;\lnot(W_1 \wedge W_3)&lt;/script&gt;. (Right? At this point I can imagine myself making an incorrect deduction.)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div id=&quot;mistaken1&quot; style=&quot;display: block;&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;&lt;/li&gt;
+    &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/li&gt;
+    &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;fixed1&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,R,W}⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;&lt;/li&gt;
+    &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,R,W}⟩&lt;/script&gt;&lt;/li&gt;
+    &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,R,R}⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,R,W}⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,W⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Another world disappeared. But what about &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;, why is it still there, when last time we argued that it’s not possible for Gamma to be white? In fact, it is not: in that world Beta would have said yes, as he knew what colour he had.
+Although never explicitly stated, we assumed that if someone’s not then he’s white, and vice versa. Use &lt;script type=&quot;math/tex&quot;&gt;\star&lt;/script&gt; to denote this fact:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\star ≡ \bigwedge_{i=1}^3 (\lnot R_i → W_i) \wedge (\lnot W_i → R_i).&lt;/script&gt;
+
+&lt;p&gt;We also know that common knowledge is true: for every formula &lt;script type=&quot;math/tex&quot;&gt;φ&lt;/script&gt;, it’s an axiom that &lt;script type=&quot;math/tex&quot;&gt;\mathcal C φ → φ&lt;/script&gt;.
+Then, it’s simple to show that Alpha is red and Gamma is white, Beta is red.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal C \Big((R_1 \vee R_2 \vee R_3) \wedge (R_2 \vee R_3) \wedge (R_1 \vee R_3) \Big) \wedge \star \vdash
+    (R_1 \wedge W_3) → R_2.&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+function showById(id, btn, displayStyle) {
+    document.getElementById(id).style.display = 'block';
+    btn.style.display = 'none';
+}
+function showInlineById(id, btn, displayStyle) {
+    document.getElementById(id).style.display = 'inline';
+    btn.style.display = 'none';
+}
+function hideById(id, btn) {
+    document.getElementById(id).style.display = 'none';
+    btn.style.display = 'none';
+}
+&lt;/script&gt;
+
+&lt;p&gt;Click this to fix that above: &lt;a href=&quot;#&quot; onclick=&quot;showById('fixed1', this); hideById('mistaken1', this); return false;&quot;&gt;click me!&lt;/a&gt; (Needs JavaScript.)&lt;/p&gt;
+
+&lt;p&gt;Now we are left with the following worlds:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;span id=&quot;mistaken2&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/span&gt; &lt;span id=&quot;fixed2&quot; style=&quot;display: none;&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;\crossed{⟨R,R,W⟩}&lt;/script&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;, &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;: &lt;script type=&quot;math/tex&quot;&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha: &lt;script type=&quot;math/tex&quot;&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Beta: &lt;script type=&quot;math/tex&quot;&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;Gamma: &lt;script type=&quot;math/tex&quot;&gt;⟨W,W,R⟩&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;At first sight, Gamma’s knowledge base in some worlds (&lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt;) contains a world with &lt;script type=&quot;math/tex&quot;&gt;\lnot R_3&lt;/script&gt;. But every four of the above worlds has &lt;script type=&quot;math/tex&quot;&gt;R_3&lt;/script&gt;, meaning &lt;script type=&quot;math/tex&quot;&gt;R_3&lt;/script&gt; is deducible from &lt;script type=&quot;math/tex&quot;&gt;\star&lt;/script&gt; and the &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;, making &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,W⟩&lt;/script&gt; in world &lt;script type=&quot;math/tex&quot;&gt;⟨R,R,R⟩&lt;/script&gt; impossible. &lt;a href=&quot;#&quot; onclick=&quot;showInlineById('fixed2', this); hideById('mistaken2', this); return false;&quot;&gt;Click me to fix that.&lt;/a&gt; This means &lt;script type=&quot;math/tex&quot;&gt;R_3&lt;/script&gt; is &lt;abbr title=&quot;Common knowledge&quot;&gt;CK&lt;/abbr&gt;. Yay!&lt;/p&gt;
+
+&lt;p&gt;Note: there might be some other true statements that could be deduced, so maybe Alpha knows his colour too in some worlds—I haven’t solved the problem in full. For example, when Gamma answers “yes” in the end, it doesn’t say anything we didn’t already know, and nothing that Alpha and Beta didn’t know already, as &lt;script type=&quot;math/tex&quot;&gt;R_3&lt;/script&gt; can be deduced from the common knowledge. Maybe someone else knows theirs too?&lt;/p&gt;
+
+&lt;h1 id=&quot;another-problem&quot;&gt;Another problem&lt;/h1&gt;
+
+&lt;p&gt;A slight modification is to map a natural number &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; to worlds where X is able to decide their colour after &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; utterances, if it wasn’t X who spoke last.&lt;/p&gt;
+
+&lt;p&gt;Related: it feels like there is a situation with &lt;script type=&quot;math/tex&quot;&gt;n&gt;2&lt;/script&gt; people, where two agents can keep on discarding possible worlds just by them speaking in turns. If you know of one such problem, please let me know.&lt;/p&gt;
+
+&lt;h1 id=&quot;notes&quot;&gt;Notes&lt;/h1&gt;
+
+&lt;p&gt;I hope I didn’t make a mistake in the calculations, I admit I enumerated the possible worlds by hand instead of with Prolog.&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;Listen to people when they say “no”.&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+
+&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;Huth2000-Logic-book&quot;&gt;Huth, M., &amp;amp; Ryan, M. D. (2000). &lt;i&gt;Logic in Computer Science - modelling and reasoning about systems&lt;/i&gt;. Cambridge University Press.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;
+</description>
+        <pubDate>Sat, 18 Aug 2018 00:00:00 +0200</pubDate>
+        <link>https://treszkai.github.io/2018/08/18/wise-men</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2018/08/18/wise-men</guid>
+        
+        <category>logic</category>
+        
+        
+        <category>math</category>
+        
+      </item>
+    
+      <item>
+        <title>Medical AI safety: where are we and where are we heading</title>
+        <description>&lt;p&gt;In this post I summarize a &lt;a href=&quot;https://lukeoakdenrayner.wordpress.com/2018/07/11/medical-ai-safety-we-have-a-problem/&quot;&gt;blog post about “medical AI safety”&lt;/a&gt;: the potential consequences of using advanced medical systems without sufficient evidence to back up their usefulness.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Epistemic status: the author (Luke Oakden-Rayner) is a PhD candidate radiologist, and I’m not an expert in medicine.&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;For the first time ever, AI systems could actually be responsible for medical disasters.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The risk of a medical AI system increases with its complexity: from the lowest complexity &lt;em&gt;processing systems&lt;/em&gt;, through &lt;em&gt;triage systems&lt;/em&gt; that order the priority queue of patients, we are now moving towards autonomous &lt;em&gt;diagnostic systems&lt;/em&gt;, and eventually to autonomous &lt;em&gt;prediction systems&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some systems in the wild are worse than humans in both recall and sensitivity:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Not only did CAD [computer-aided diagnosis] increase the recalls without improving cancer detection, but, in some cases, even decreased sensitivity by missing some cancers.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Nonetheless, we are already proceeding to the next level:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A few months ago the FDA approved a new AI system by IDx, and it makes independent medical decisions without the need for a clinician. (In this case, screening for eye disease through a retina scan.)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;But on the upside, these tools improve the ratio of people screened:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But while there is a big potential upside here (about 50% of people with diabetes are not screened regularly enough), and the decision to “refer or not” is rarely immediately vision-threatening, approving a system like this without &lt;em&gt;clinical testing&lt;/em&gt; raises some concerns.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And systems operate now on a larger scale too:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;NHS is already using an automated smart-phone triage system “powered by” babylonhealth AI. This one is definitely capable of leading to serious harm, since it recommends when to go (or not to go) to hospital.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;… which system gave 90% confidence to non-lethal diagnosis X, not even offering lethal diagnosis Y which was suggested by 90% of MDs on Twitter. (And I assume it’s not even an adversarial attack.) It’s fair to say that there is room for improvement. (Compare this with the amount of news coverage received by the monthly crash of an autonomous vehicle.)&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The real point is that none of the FDA, NHS, nor the various regulatory agencies in other nations appear to be concerned [to the extent required] about the specific risks of autonomous decision making AI.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Are we potentially racing towards an AI event on the scale of elixir sulfanilamide [which prompted the foundation of FDA] or thalidomide [which the FDA banned before other countries, preventing 10,000 birth malformations]?&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Wed, 11 Jul 2018 00:00:00 +0200</pubDate>
+        <link>https://treszkai.github.io/2018/07/11/medical-safety</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2018/07/11/medical-safety</guid>
+        
+        
+        <category>AI</category>
+        
+      </item>
+    
+      <item>
+        <title>International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise 1</title>
+        <description>&lt;p&gt;Solutions for exercise 1 of &lt;a href=&quot;https://www.youtube.com/watch?v=5oeWX3NUhMA&quot;&gt;tutorial 3&lt;/a&gt; of the &lt;a href=&quot;https://gravity-and-light.herokuapp.com&quot;&gt;International Winter School on Gravity and Light&lt;/a&gt;. (&lt;a href=&quot;https://www.youtube.com/watch?v=mbv3T15nWq0&quot;&gt;Link to video of lecture 3&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;h2 id=&quot;notation&quot;&gt;Notation&lt;/h2&gt;
+
+&lt;p&gt;On this solution sheet, I’ll speak of a vector space &lt;script type=&quot;math/tex&quot;&gt;(V,+,\cdot)&lt;/script&gt; over a field &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt;, where &lt;script type=&quot;math/tex&quot;&gt;+: V\times V \rightarrow V&lt;/script&gt; is the addition and &lt;script type=&quot;math/tex&quot;&gt;\cdot: K \times V \rightarrow V&lt;/script&gt; is called (scalar) multiplication or S-multiplication. The field &lt;script type=&quot;math/tex&quot;&gt;(K, \textcolor{red}{+}, \textcolor{red}{\cdot})&lt;/script&gt; has &lt;script type=&quot;math/tex&quot;&gt;\textcolor{red}{+}:K\times K \rightarrow K&lt;/script&gt; as addition and &lt;script type=&quot;math/tex&quot;&gt;\textcolor{red}{\cdot}:K\times K \rightarrow K&lt;/script&gt; as multiplication operations. The dot is often omitted, i.e. &lt;script type=&quot;math/tex&quot;&gt;a \mathbf v&lt;/script&gt; is short for &lt;script type=&quot;math/tex&quot;&gt;a \cdot \mathbf v&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;a b&lt;/script&gt; is short for &lt;script type=&quot;math/tex&quot;&gt;a \textcolor{red}{\cdot} b&lt;/script&gt;. (Note that the lecture dealt with real vector spaces, i.e. the field &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt; was always the set of reals &lt;script type=&quot;math/tex&quot;&gt;\mathbb R&lt;/script&gt;.)
+The scalars, i.e. the elements of &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt;, are denoted with normal letters &lt;script type=&quot;math/tex&quot;&gt;a,b&lt;/script&gt;, and the vectors, i.e. the elements of &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt;, are denoted with boldface letters &lt;script type=&quot;math/tex&quot;&gt;\mathbf u, \mathbf v, \mathbf w&lt;/script&gt;.&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+function showById(id, btn) {
+    document.getElementById(id).style.display = 'block';
+    btn.style.display = 'none';
+}
+function showByClass(cls, btn) {
+    for (var x of document.getElementsByClassName(cls))
+        x.style.display = 'block';
+    btn.style.display = 'none';
+}
+function hideByClass(cls) {
+    for (var x of document.getElementsByClassName(cls))
+        x.style.display = 'none';
+}
+&lt;/script&gt;
+
+&lt;h1 id=&quot;exercise-1-true-or-false&quot;&gt;Exercise 1: True or false?&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;Tick the correct statements, but not the incorrect ones.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showByClass('answer', this); hideByClass('show-answer'); return false;&quot;&gt;Show all answers&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;a) Which statements on vector spaces are correct?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Commutativity of multiplication is a vector space axiom.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer1', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer1&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The scalar multiplication &lt;script type=&quot;math/tex&quot;&gt;\cdot: K \times V \rightarrow V&lt;/script&gt; doesn’t even have the same sets in its two arguments, i.e. &lt;script type=&quot;math/tex&quot;&gt;\mathbf v \cdot a&lt;/script&gt; is not even defined.&lt;/li&gt;
+    &lt;li&gt;The vector space has the commutativity of &lt;em&gt;addition&lt;/em&gt; as an axiom: for any &lt;script type=&quot;math/tex&quot;&gt;\mathbf u,\mathbf v \in V&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;{\mathbf u+\mathbf v} = {\mathbf v + \mathbf u}&lt;/script&gt;.&lt;/li&gt;
+    &lt;li&gt;The underlying field &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt; &lt;em&gt;does&lt;/em&gt; have the commutativity of multiplication as a field axiom: for any &lt;script type=&quot;math/tex&quot;&gt;a,b \in K&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a&lt;/script&gt;.&lt;/li&gt;
+    &lt;li&gt;As a consequence, for any &lt;script type=&quot;math/tex&quot;&gt;\mathbf v \in V&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;a, b \in K&lt;/script&gt;,&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v).&lt;/script&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Every vector is a matrix with only one column.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer2', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer2&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;By definition, a vector is an element of a vector space. If we fix a basis for the vector space, then any vector can be represented by an ordered set of numbers, which could be treated as a column vector, i.e. a matrix with one column. However, this representation depends on the choice of basis.&lt;/li&gt;
+    &lt;li&gt;The &lt;a href=&quot;https://youtu.be/5oeWX3NUhMA?t=1m09s&quot;&gt;official answer&lt;/a&gt; brings up as a counterexample the vector space of polynomials up to some finite degree. However, here again we could represent the vectors as a column vector with any choice of a basis. E.g. using the standard basis, &lt;script type=&quot;math/tex&quot;&gt;p(x) = 0x^2 + 4x + 5&lt;/script&gt; could be represented as &lt;script type=&quot;math/tex&quot;&gt;\mathbf p = [0, 4, 5]^T&lt;/script&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Every linear map between vector spaces can be represented by a unique quadratic matrix.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer3', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer3&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;As above, a linear map &lt;script type=&quot;math/tex&quot;&gt;f: V \rightarrow W&lt;/script&gt; can be represented as a unique matrix only once bases are chosen for its domain &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; and codomain &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;.&lt;/li&gt;
+    &lt;li&gt;This matrix is quadratic only if the dimensions of &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt; are equal.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Every vector space has a corresponding dual vector space.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer4', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer4&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; true.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The dual space of a vector space &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; is defined as the set of linear maps from &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; to &lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt;: &lt;script type=&quot;math/tex&quot;&gt;V^* \coloneqq Hom(V,K) \coloneqq \{φ\ \vert \ φ: V \linmap K\}&lt;/script&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The set of everywhere positive functions on &lt;script type=&quot;math/tex&quot;&gt;\mathbb R&lt;/script&gt; with pointwise addition and S-multiplication is a vector space.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer5', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer5&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;This set doesn’t have a commutative identity element: by the field axioms of &lt;script type=&quot;math/tex&quot;&gt;\mathbb R&lt;/script&gt;, it could only be the constant zero function, but that’s not an element of the set.&lt;/li&gt;
+    &lt;li&gt;This set doesn’t have a commutative inverse for any element.&lt;/li&gt;
+    &lt;li&gt;For the scalar multiplication we’d need to know the underlying field. Usually it would be &lt;script type=&quot;math/tex&quot;&gt;\mathbb R&lt;/script&gt;, but then S-multiplication with a negative number wouldn’t result in an everywhere positive function. (Although one can construct a field from &lt;script type=&quot;math/tex&quot;&gt;\mathbb R^+&lt;/script&gt;, I wonder how well that would combine with the above attempt at a vector space.)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;b) What is true about tensors and their components?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The tensor product of two tensors is a tensor.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer6', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer6&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; true.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The lecture didn’t mention tensor products, so a definition is in order. The product of an &lt;script type=&quot;math/tex&quot;&gt;(l,k)&lt;/script&gt;-tensor &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; and an &lt;script type=&quot;math/tex&quot;&gt;(n,m)&lt;/script&gt;-tensor &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; is an &lt;script type=&quot;math/tex&quot;&gt;(l+n,k+m)&lt;/script&gt;-tensor &lt;script type=&quot;math/tex&quot;&gt;S \otimes T&lt;/script&gt;, whose &lt;script type=&quot;math/tex&quot;&gt;(i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m})&lt;/script&gt;-th component is the product of the relevant components of &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt;:&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;script type=&quot;math/tex; mode=display&quot;&gt;(S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}_ {j_1, \ldots, j_k, j_{k+1}, \ldots, j_{k+m} } =
+   S^{i_1, \ldots, i_l}_ {j_1, \ldots, j_k}
+   T^{i_{1}, \ldots, i_{n}}_ {j_{1}, \ldots, j_{m}}.&lt;/script&gt;
+
+  &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Tensor#Tensor_product&quot;&gt;Source: Wikipedia&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p&gt;This means that if the arguments of &lt;script type=&quot;math/tex&quot;&gt;S \otimes T&lt;/script&gt; are&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;the &lt;script type=&quot;math/tex&quot;&gt;l+n&lt;/script&gt; linear maps &lt;script type=&quot;math/tex&quot;&gt;φ^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i&lt;/script&gt; for &lt;script type=&quot;math/tex&quot;&gt;1 \le p \le l+n&lt;/script&gt;, and&lt;/li&gt;
+    &lt;li&gt;the &lt;script type=&quot;math/tex&quot;&gt;k+m&lt;/script&gt; vectors &lt;script type=&quot;math/tex&quot;&gt;\v_{(q)} = \sum^{dim V}_{j=1} v_{(q)}^j \e_j&lt;/script&gt; for &lt;script type=&quot;math/tex&quot;&gt;1 \le q \le k+m&lt;/script&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;p&gt;(with some particular choice of basis vectors &lt;script type=&quot;math/tex&quot;&gt;\{\e_i\}_i&lt;/script&gt; and basis covectors &lt;script type=&quot;math/tex&quot;&gt;\{\epsilon^i\}_i&lt;/script&gt; ), then&lt;/p&gt;
+
+  &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{aligned}
+(S\otimes T) &amp;(φ^{(1)}, \ldots, φ^{(l+n)}, \v_{(1)}, \ldots, \v_{(k+m)}) = \\
+  &amp;= S (φ^{(1)}, \ldots, φ^{(l)}, \v_{(1)}, \ldots, \v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, \v_{(k+1)}, \ldots, \v_{(k+m)})\\
+  &amp;= \Bigg(
+      \sum_{i_1}^{\dim V} \cdots \sum_{i_l}^{\dim V}
+      \sum_{j_1}^{\dim V} \cdots \sum_{j_k}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Bigg) \cdot \phantom.\\
+  &amp;\phantom{=} \Bigg(
+      \sum_{i_{l+1}}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      \sum_{j_{k+1}}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Bigg) \\
+  &amp;=  \sum_{i_1}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      \sum_{j_1}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+\end{aligned} %]]&gt;&lt;/script&gt;
+
+  &lt;p&gt;These &lt;script type=&quot;math/tex&quot;&gt;(l+n+k+m)&lt;/script&gt; summations are quite a mess, but the above derivation shows that the &lt;a href=&quot;http://mathworld.wolfram.com/EinsteinSummation.html&quot;&gt;Einstein summation convention&lt;/a&gt; works for tensor products as well:&lt;/p&gt;
+
+  &lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\begin{aligned}
+(S\otimes T) &amp;(φ^{(1)}, \ldots, φ^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) =\\
+  &amp;= S (φ^{(1)}, \ldots, φ^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, v_{(k+1)}, \ldots, v_{(k+m)})\\
+  &amp;= \Big(
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Big)
+  \Big(
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Big) \\
+ &amp;=  \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+\end{aligned} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;You can always reconstruct a tensor from its components and the corresponding basis.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer7', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer7&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; true.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; is not finite dimensional).&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The number of indices of the tensor components depends on dimension.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer8', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer8&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;A tensor component usually has one index for each argument, e.g. for a &lt;script type=&quot;math/tex&quot;&gt;(2,1)&lt;/script&gt;-tensor &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt;, the components are &lt;script type=&quot;math/tex&quot;&gt;T^{i_1,i_2}_{j_1}&lt;/script&gt;.&lt;/li&gt;
+    &lt;li&gt;The &lt;em&gt;range&lt;/em&gt; of these indices does depend on the dimension: each index ranges from &lt;script type=&quot;math/tex&quot;&gt;1&lt;/script&gt; to &lt;script type=&quot;math/tex&quot;&gt;\dim V&lt;/script&gt;. Therefore an &lt;script type=&quot;math/tex&quot;&gt;(n,m)&lt;/script&gt;-tensor &lt;script type=&quot;math/tex&quot;&gt;T&lt;/script&gt; has &lt;script type=&quot;math/tex&quot;&gt;(\dim V)^{n+m}&lt;/script&gt; many components.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The Einstein summation convention does not apply to tensor components.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer9', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer9&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification: see above.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;A change of basis does not change the tensor components.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer10', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer10&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;the tensor components are defined with respect to a given basis.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;c) Given a basis for a &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt;-dimensional vector space &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt;, …&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; …&lt;em&gt;one can find exactly &lt;script type=&quot;math/tex&quot;&gt;d^2&lt;/script&gt;-different dual bases for the corresponding dual vector space &lt;script type=&quot;math/tex&quot;&gt;V^*&lt;/script&gt;.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer11', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer11&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Given a basis of &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;E = \{\mathbf{e}_i\}_{i=1}^d \subset V&lt;/script&gt;, there is a &lt;em&gt;unique&lt;/em&gt; dual basis of &lt;script type=&quot;math/tex&quot;&gt;V^*&lt;/script&gt;, namely &lt;script type=&quot;math/tex&quot;&gt;E^* = \{\epsilon_i\}_{i=1}^d&lt;/script&gt;, where &lt;script type=&quot;math/tex&quot;&gt;\epsilon_i(\e_i) = 1&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\epsilon_i(\e_j) = 0&lt;/script&gt; for &lt;script type=&quot;math/tex&quot;&gt;i ≠ j&lt;/script&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; …&lt;em&gt;by removing one basis vector of the basis of &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt;, a basis for a &lt;script type=&quot;math/tex&quot;&gt;(d - 1)&lt;/script&gt;-dimensional vector space &lt;script type=&quot;math/tex&quot;&gt;V_1&lt;/script&gt; is obtained.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer12', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer12&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; true.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The resulting set of &lt;script type=&quot;math/tex&quot;&gt;(d-1)&lt;/script&gt; vectors are still linearly independent, and their span is a &lt;script type=&quot;math/tex&quot;&gt;(d-1)&lt;/script&gt;-dimensional subspace of &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; …&lt;em&gt;the continuity of a map &lt;script type=&quot;math/tex&quot;&gt;f : V → W&lt;/script&gt; depends on the choice of basis for the vector space &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer13', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer13&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; false.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The continuity of a map is defined for &lt;em&gt;topological spaces&lt;/em&gt;, not for vector spaces.&lt;/li&gt;
+    &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;f&lt;/script&gt; is continuous &lt;em&gt;iff&lt;/em&gt; the preimage of every open set in &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt; is open in &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt;. Note that no term in this definition depends on the choice of basis for either &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; or &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;.&lt;/li&gt;
+    &lt;li&gt;Assuming that &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt; are real vector spaces, it is customary to equip them with the standard topology. A set &lt;script type=&quot;math/tex&quot;&gt;A&lt;/script&gt; is open in &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; &lt;em&gt;iff&lt;/em&gt; either it is the union of open &lt;script type=&quot;math/tex&quot;&gt;ε&lt;/script&gt;-balls, or of Cartesian products of open intervals. While these definitions assume a basis for &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt;, they all result in the exact same topologies. (Meaning a set can be covered with open balls &lt;em&gt;iff&lt;/em&gt; it can be covered with open cuboids &lt;em&gt;iff&lt;/em&gt; it can be covered with open cubes – an interesting but easy-to-prove result.)&lt;/li&gt;
+    &lt;li&gt;It’s easy to see that every &lt;em&gt;linear&lt;/em&gt; map between real vector spaces (equipped with the standard topology) is continuous.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; …&lt;em&gt;one can extract the components of the elements of the dual vector space &lt;script type=&quot;math/tex&quot;&gt;V^*&lt;/script&gt;.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer14', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer14&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; true.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;a basis for &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; uniquely determines a dual basis for &lt;script type=&quot;math/tex&quot;&gt;V^*&lt;/script&gt;, which uniquely determines the components of any covector.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; …&lt;em&gt;each vector of &lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; can be reconstructed from its components.&lt;/em&gt; &lt;a href=&quot;#&quot; onclick=&quot;showById('answer15', this); return false;&quot; class=&quot;show-answer&quot;&gt;Show answer&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&quot;answer15&quot; class=&quot;answer&quot; style=&quot;display: none;&quot;&gt;
+  &lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt; true.&lt;/p&gt;
+
+  &lt;p&gt;Clarification:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Given the basis vectors &lt;script type=&quot;math/tex&quot;&gt;\mathbf{e}_i&lt;/script&gt; and components &lt;script type=&quot;math/tex&quot;&gt;v^i&lt;/script&gt; for &lt;script type=&quot;math/tex&quot;&gt;1 \leq i \leq d&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\mathbf{v} = \sum_{i=1}^d v^i \mathbf{e}_i&lt;/script&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 09 Jun 2018 00:00:00 +0200</pubDate>
+        <link>https://treszkai.github.io/2018/06/09/multilinear-tutorial</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2018/06/09/multilinear-tutorial</guid>
+        
+        
+        <category>Math</category>
+        
+      </item>
+    
+      <item>
+        <title>Probabilistically interesting planning problems</title>
+        <description>&lt;p&gt;This post briefly describes the problem of &lt;em&gt;probabilistic planning&lt;/em&gt;, and explains in informal terms what makes a planning problem &lt;em&gt;probabilistically interesting&lt;/em&gt;, along with some examples.&lt;/p&gt;
+
+&lt;h1 id=&quot;primer-on-probabilistic-planning&quot;&gt;Primer on probabilistic planning&lt;/h1&gt;
+
+&lt;p&gt;In a nutshell, planning is about &lt;em&gt;finding a way to win&lt;/em&gt;, and as such, the field of research on planners is vast. However, there is no single textbook definition of “planning”, so in this post I’ll try to be as general as possible. One description of a planning problem could be: given a description of an environment, find a sequence of actions that brings the environment from the initial state of the environment to a goal state. There are multiple ways to describe the environment: for example in formal logic with the &lt;a href=&quot;https://en.wikipedia.org/wiki/Situation_calculus&quot;&gt;situation calculus&lt;/a&gt;, or more commonly as a &lt;a href=&quot;https://en.wikipedia.org/wiki/Markov_decision_process&quot;&gt;Markov decision process (MDP)&lt;/a&gt;. In probabilistic planning problems, the functions describing the MDP are not necessarily deterministic: executing action &lt;script type=&quot;math/tex&quot;&gt;a&lt;/script&gt; in state &lt;script type=&quot;math/tex&quot;&gt;s&lt;/script&gt; will bring the environment to state &lt;script type=&quot;math/tex&quot;&gt;s'&lt;/script&gt; with a probability of &lt;script type=&quot;math/tex&quot;&gt;T(s,a,s')&lt;/script&gt;. In contrast with the &lt;em&gt;control problem&lt;/em&gt; of reinforcement learning, where the goal is to find an optimal &lt;em&gt;policy&lt;/em&gt; (i.e. a mapping from states to actions), in planning one is interested only in a partial policy that brings the agent closer to a goal state, or frequently only a single action that brings the agent closer to a goal state from the current state. An example planning problem is thus: “Siri, show me a way to the library.” Then Siri responds either with a plan that I can follow from the first step to the last (i.e. a route from start to finish), or only an action that I can take right now (“go forward 100 meters”).&lt;/p&gt;
+
+&lt;p&gt;Graphical representation of an example MDP:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/MDP-env.jpg&quot; alt=&quot;Graphical representation of an example MDP&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;An example policy for the same MDP:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/MDP-policy.jpg&quot; alt=&quot;An example policy for the same MDP&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;An example plan for the same MDP:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/MDP-plan.jpg&quot; alt=&quot;An example plan for the same MDP&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The approach taken by a planner differs based on the discounting factor \( \gamma \) and the distribution of rewards. In a &lt;em&gt;shortest path problem&lt;/em&gt; the future rewards are discounted (\( 0 &amp;lt; \gamma &amp;lt; 1 \)), and there might be a constant negative reward for every step taken. Together with a positive reward in goal states, an agent with the goal of maximizing return – i.e. the sum of discounted expected future rewards – has incentives to minimize the length of the path to the goal. However, if there is no discounting (\(\gamma = 1 \)) and there’s a positive reward only in the goal states, it is sufficient for the agent to find &lt;em&gt;any&lt;/em&gt; way to the goal. (Some call these &lt;em&gt;goal-based problems&lt;/em&gt; &lt;a href=&quot;#Yoon2008-probabilistic-planning&quot;&gt;(Yoon, Fern, Givan, &amp;amp; Kambhampati, 2008)&lt;/a&gt;.) In the next section we’ll see that not all plans are created equal, so even in the non-discounted case we want one that ends up in a goal state with the highest probability.&lt;/p&gt;
+
+&lt;p&gt;In an &lt;em&gt;offline&lt;/em&gt; approach to deterministic planning problems, a planner is given an environment, initial state and goal state, and it needs to return a sequence of actions that brings the environment to the goal state. However, this offline approach does not work for probabilistic problems, where the outcome of an action is not always in our control. Hence a probabilistic planner is usually executed &lt;em&gt;online&lt;/em&gt;: it makes an observation (e.g. the current state of the environment, in the fully observable case), does some magic, and outputs a single action that brings the agent closer to a goal state. Nature brings the agent to a new state, not necessarily the one you desired, and these steps are repeated, until you run out of time or end up at a goal.&lt;/p&gt;
+
+&lt;p&gt;Since the fourth &lt;a href=&quot;http://icaps-conference.org/index.php/Main/Competitions&quot;&gt;International Planning Competition&lt;/a&gt; in 2004 hosted by the ICAPS (International Conference on Automated Planning and Scheduling), this event featured a probabilistic track. The winner of IPPC 2004 was FF-Replan, a planner that simplifies the probabilistic planning problem into a deterministic one by not considering the multiple potential effects of an action &lt;a href=&quot;#Yoon2007-FF-replan&quot;&gt;(Yoon, Fern, &amp;amp; Givan, 2007)&lt;/a&gt; – hence the title of the paper, “FF-Replan: A Baseline for Probabilistic Planning.”&lt;/p&gt;
+
+&lt;h1 id=&quot;probabilistically-interesting-planning-problems&quot;&gt;Probabilistically interesting planning problems&lt;/h1&gt;
+
+&lt;p&gt;Iain Little and Sylvie Thiébaux analyzed the common characteristics of planning problems that can and cannot be optimally solved by a planner like FF-Replan &lt;a href=&quot;#Little2007-probabilistic-planning&quot;&gt;(Little &amp;amp; Thiébaux, 2007)&lt;/a&gt;. They gave necessary and sufficient conditions for a probabilistic planning problem to be &lt;em&gt;probabilistically interesting&lt;/em&gt;: on a problem fulfilling these conditions, a planner that determinizes the problem will lose crucial information, and will do worse than a probabilistic planner. In this section I’ll summarize these conditions using natural language, slightly diverging from the vocabulary of the paper. For formal definitions and more examples, see the &lt;a href=&quot;http://users.cecs.anu.edu.au/~iain/icaps07.pdf&quot;&gt;original paper&lt;/a&gt;; it is an interesting read.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Criterion 1:&lt;/em&gt; there are multiple paths from the start to the goal. If there is only a single path, then any planner that finds &lt;em&gt;a&lt;/em&gt; path will do equally good, as this will be the only one.&lt;/p&gt;
+
+&lt;p&gt;Counterexample:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/counter-1.png&quot; alt=&quot;Graphical description of an MDP with a single goal trajectory&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Criterion 2:&lt;/em&gt; where the above two paths diverge, there is a choice about which way to go, i.e. a state \(s_{crossroads}\) from which action \(a_1\) leads to one road with a different probability than action \(a_2\) does. (Yes, this is a sufficient condition for the first criterion.) If it’s only luck that separates the two paths, then the agent doesn’t have much of a choice to do better.&lt;/p&gt;
+
+&lt;p&gt;Counterexample:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/counter-2.png&quot; alt=&quot;MDP with skill doesn't help&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Criterion 3:&lt;/em&gt; there must be a non-trivially avoidable dead end in the environment. A &lt;em&gt;dead end&lt;/em&gt; is an absorbing state that is not a goal state, i.e. a state from which there is no path to any goal state. For a dead end to be &lt;em&gt;avoidable&lt;/em&gt;, there must be a state \(s_{crossroads}\) with at least two possible actions \(a_{deadly}\) and \(a_{winning}\), such that executing \(a_{deadly}\) brings the agent to the dead end with a higher probability than executing \(a_{winning}\). A dead end is &lt;em&gt;non-trivially avoidable&lt;/em&gt; if \(s_{crossroads}\) is on a path from the initial state to a goal state, and there is a non-zero chance of reaching a goal state after executing either \(a_{winning}\) or \(a_{deadly}\).&lt;/p&gt;
+
+&lt;p&gt;Counterexample: the probabilistic version of Blocksworld, where the worst case scenario is that a block is dropped accidentally, does not contain dead ends; the environment is irreducible. (This was an actual problem of IPPC 2004.)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/blocksworld.png&quot; alt=&quot;Probabilistic Blocks world&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Counterexample: all dead ends are unavoidable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/counter-3b.png&quot; alt=&quot;MDP with no avoidable dead end&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Counterexample: all dead ends are trivially avoidable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/counter-3c.png&quot; alt=&quot;MDP with only trivially avoidable dead ends&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;a-simple-yet-interesting-planning-problem&quot;&gt;A simple yet “interesting” planning problem&lt;/h1&gt;
+
+&lt;p&gt;A very simple problem that is probabilistically interesting is what the authors call &lt;code class=&quot;highlighter-rouge&quot;&gt;climber&lt;/code&gt;, described by the following story:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;You are stuck on a roof because the ladder you climbed up on fell down. There are plenty of people around; if you call out for help someone will certainly lift the ladder up again. Or you can try to climb down without it. You aren’t a very good climber though, so there is a 40% chance that you will fall and break your neck if you do it alone. What do you do?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Graphical representation of the &lt;code class=&quot;highlighter-rouge&quot;&gt;climber&lt;/code&gt; problem:
+&lt;img src=&quot;/files/probabilistically-interesting/climber-orig.jpg&quot; alt=&quot;Graphical representation of the climber problem&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Despite the simplicity of this problem, most methods to turn it into a deterministic problem fail. Little and Thiébaux described 3 ways to determinize a problem, and they called a resulting deteministic problem a “compilation”.&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;REPLAN1&lt;/em&gt; approach simply drops all but the most likely outcome of every action, and finds the shortest goal trajectory. (This was the approach used by FF-Replan.) Compilation of the climber problem according to REPLAN1:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/climber-det1.jpg&quot; alt=&quot;Compilation of the climber problem according to REPLAN1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;REPLAN2(shortest)&lt;/em&gt; turns every possible probabilistic outcome of an action into the outcome of a deterministic action, each with a cost of 1. Optimizing for smallest cost thus finds the &lt;em&gt;shortest&lt;/em&gt; goal trajectory, but this might not be the one with the highest success probability. Compilation of the climber problem according to REPLAN2(shortest):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/climber-det2.jpg&quot; alt=&quot;Compilation of the climber problem according to REPLAN2(shortest)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;REPLAN2(most-likely)&lt;/em&gt; also turns every outcome into a separate deterministic action, but the new action costs are the negative log probability of the relevant outcome. This is the only compilation of the problem that finds the optimal path for &lt;code class=&quot;highlighter-rouge&quot;&gt;climber&lt;/code&gt;, but for many other problems even this one will be suboptimal. The resulting compilation is as follows:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/probabilistically-interesting/climber-det3.jpg&quot; alt=&quot;Compilation of the climber problem according to REPLAN2(most-likely)&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;summary&quot;&gt;Summary&lt;/h1&gt;
+
+&lt;p&gt;Finding the optimal goal trajectory in a probabilistic planning problem is computationally expensive, so most planners use some heuristics. One way to plan in a stochastic environment is to change the probabilistic planning problem into a deterministic shortest path problem and replan after (almost) every step, which is computationally efficient, but in many cases suboptimal. This article outlined the attributes of probabilistically interesting problems, where the deterministic replanning approach often fails. As such, recent probabilistic planners use more complicated methods (or often a portfolio of probabilistic planners), but replanners remain a good baseline to compare against.&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+
+&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;Little2007-probabilistic-planning&quot;&gt;Little, I., &amp;amp; Thiébaux, S. (2007). Probabilistic planning vs. replanning. &lt;i&gt;Workshop, ICAPS 2007&lt;/i&gt;. Retrieved from http://users.cecs.anu.edu.au/ iain/icaps07.pdf&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span id=&quot;Yoon2007-FF-replan&quot;&gt;Yoon, S. W., Fern, A., &amp;amp; Givan, R. (2007). FF-Replan: A Baseline for Probabilistic Planning. In M. S. Boddy, M. Fox, &amp;amp; S. Thiébaux (Eds.), &lt;i&gt;Proceedings of the Seventeenth International Conference on Automated
+               Planning and Scheduling, ICAPS 2007, Providence, Rhode Island, USA,
+               September 22-26, 2007&lt;/i&gt; (p. 352). AAAI. Retrieved from http://www.aaai.org/Library/ICAPS/2007/icaps07-045.php&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span id=&quot;Yoon2008-probabilistic-planning&quot;&gt;Yoon, S. W., Fern, A., Givan, R., &amp;amp; Kambhampati, S. (2008). Probabilistic Planning via Determinization in Hindsight. In D. Fox &amp;amp; C. P. Gomes (Eds.), &lt;i&gt;Proceedings of the Twenty-Third AAAI Conference on Artificial Intelligence,
+               AAAI 2008, Chicago, Illinois, USA, July 13-17, 2008&lt;/i&gt; (pp. 1010–1016). AAAI Press. Retrieved from http://www.aaai.org/Library/AAAI/2008/aaai08-160.php&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;
+</description>
+        <pubDate>Mon, 28 May 2018 00:00:00 +0200</pubDate>
+        <link>https://treszkai.github.io/2018/05/28/probabilistically-interesting</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2018/05/28/probabilistically-interesting</guid>
+        
+        
+        <category>AI</category>
+        
+      </item>
+    
+      <item>
+        <title>Change YouTube speed from your favorites bar</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/need-for-speed.gif&quot; alt=&quot;I feel the need... the need for speed.&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;premise&quot;&gt;Premise&lt;/h1&gt;
+
+&lt;p&gt;While the UI of YouTube only shows only limited set of high-speed options, it is possible to set the speed to any floating point value. Even better, one can do so from their favorites bar with bookmarklets.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/youtube.png&quot; alt=&quot;Youtube dialog to set speed&quot; /&gt;   ⇒   &lt;img src=&quot;/files/youtube-speed/bookmarklets.png&quot; alt=&quot;Bookmarks to set youtube speed&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;method&quot;&gt;Method&lt;/h1&gt;
+
+&lt;p&gt;Simply add any of the following code snippets as bookmarks.&lt;/p&gt;
+
+&lt;p&gt;If you have a fixed speed in mind, e.g. 2.5:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;javascript:document.getElementsByTagName(&quot;video&quot;)[0].playbackRate=2.5;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Or save this line to show a prompt that asks for a floating-point input:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;javascript:var%20speed=prompt(&quot;Speed:&quot;,&quot;1.&quot;);document.getElementsByTagName(&quot;video&quot;)[0].playbackRate=parseFloat(speed);&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Which results in the following prompt:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/custom.png&quot; alt=&quot;A prompt that asks for speed&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;caveats&quot;&gt;Caveats&lt;/h1&gt;
+
+&lt;p&gt;Works with YouTube and Vimeo.&lt;/p&gt;
+
+&lt;p&gt;The speed display in the video player will remain to show the last setting.&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;GIF: &lt;a href=&quot;https://www.youtube.com/watch?v=fR2hajcuFEM&quot;&gt;Top Gun&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Script: &lt;a href=&quot;https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12&quot;&gt;Quora answer of John Vuong&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 23 May 2018 00:00:00 +0200</pubDate>
+        <link>https://treszkai.github.io/2018/05/23/youtube-speed</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2018/05/23/youtube-speed</guid>
+        
+        
+        <category>Misc</category>
+        
+      </item>
+    
+      <item>
+        <title>Some versatile tools for bash</title>
+        <description>&lt;p&gt;I rarely use bash besides the basics: I could use a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop even if woken up at night, but my knowledge of the language doesn’t go much further. Hence instead of trying to memorize all the &lt;code class=&quot;highlighter-rouge&quot;&gt;{}%$&lt;/code&gt; magic, having a few versatile commands in my toolbox comes handy.&lt;/p&gt;
+
+&lt;p&gt;Recently I faced the task of renaming a set of files {&lt;code class=&quot;highlighter-rouge&quot;&gt;foo 02.jpg&lt;/code&gt;, …, &lt;code class=&quot;highlighter-rouge&quot;&gt;foo 74.jpg&lt;/code&gt;} to {&lt;code class=&quot;highlighter-rouge&quot;&gt;foo 06.jpg&lt;/code&gt;, …, &lt;code class=&quot;highlighter-rouge&quot;&gt;foo 78.jpg&lt;/code&gt;}, while keeping the order. My approach contained nothing extraordinary:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;seq &lt;/span&gt;74 2&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;do
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; oldname &lt;span class=&quot;s2&quot;&gt;&quot;foo %02d.jpg&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; newname &lt;span class=&quot;s2&quot;&gt;&quot;foo %02d.jpg&quot;&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;+4&quot;&lt;/span&gt; | bc&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$oldname&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$newname&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Yet there were some educational points in it:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;One loops a variable &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; over the lines of a string &lt;code class=&quot;highlighter-rouge&quot;&gt;values&lt;/code&gt; by &lt;code class=&quot;highlighter-rouge&quot;&gt;for x in values; do something; something_else; done&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;seq a b&lt;/code&gt; simply prints out the integers from &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt;, inclusive, regardless of which is larger.&lt;/li&gt;
+  &lt;li&gt;Variable &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; is assigned a value by &lt;code class=&quot;highlighter-rouge&quot;&gt;x=foobar&lt;/code&gt;, where there must be &lt;em&gt;no spaces around the equation sign&lt;/em&gt;.The value of &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; can then be referred to by &lt;code class=&quot;highlighter-rouge&quot;&gt;$x&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Renaming a set of files to a similar name but later in the alphabet must be done in reverse order.&lt;/li&gt;
+  &lt;li&gt;Bash has a built-in &lt;code class=&quot;highlighter-rouge&quot;&gt;printf&lt;/code&gt; that seems to work as in C: first the string to be printed with format specifiers like &lt;code class=&quot;highlighter-rouge&quot;&gt;%02d&lt;/code&gt;, followed by the arguments whose values are used according to the format specifiers.&lt;/li&gt;
+  &lt;li&gt;With the &lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; option of &lt;code class=&quot;highlighter-rouge&quot;&gt;printf&lt;/code&gt;, you can save the output into a variable.&lt;/li&gt;
+  &lt;li&gt;One can use &lt;code class=&quot;highlighter-rouge&quot;&gt;$(  )&lt;/code&gt; for executing a command and having bash treat the output as the source code. (It’s the same as using backticks, as around &lt;code class=&quot;highlighter-rouge&quot;&gt;seq 74 2&lt;/code&gt;, but allows nesting and is clearer. Kinda like &lt;code class=&quot;highlighter-rouge&quot;&gt;eval&lt;/code&gt; in other languages, like JavaScript.) Not shown here, but it even works in quotation marks, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;$(echo hey yo)&quot;&lt;/code&gt; is like writing &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;hey yo&quot;&lt;/code&gt;. Note that the trailing newline is deleted.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bc&lt;/code&gt; is a calculator that reads from the input and outputs nothing but the result on a single line.&lt;/li&gt;
+  &lt;li&gt;Don’t forget the quotes around arguments with spaces, like with &lt;code class=&quot;highlighter-rouge&quot;&gt;mv&lt;/code&gt; above.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;One minute of further bash tips are provided by Julia Evans &lt;a href=&quot;https://drawings.jvns.ca/bashtips/&quot;&gt;[here]&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 16 May 2018 00:00:00 +0200</pubDate>
+        <link>https://treszkai.github.io/2018/05/16/bash-versatile</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2018/05/16/bash-versatile</guid>
+        
+        
+        <category>Misc</category>
+        
+      </item>
+    
+      <item>
+        <title>Some proofs in first-order logic</title>
+        <description>&lt;p&gt;This post links to some problems I solved in mathematical logic.&lt;/p&gt;
+
+&lt;p&gt;I had the fortune to study classical logic from &lt;a href=&quot;http://www.renyi.hu/~csirmaz/&quot;&gt;László Csirmaz&lt;/a&gt; at the Eötvös Loránd University, Budapest. Although I was not officially enrolled in the course, he was kind enough to mark my weekly homework regardless of my lack of student status. These were originally written in Hungarian, and I translated a few of them into English.&lt;/p&gt;
+
+&lt;h1 id=&quot;a-non-standard-model-of-robinson-arithmetics&quot;&gt;A non-standard model of Robinson arithmetics&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;Give a model that fulfills every axiom of the Robinson arithmetics, and which contains contains two elements that are neither greater than or equal to, nor smaller than or equal to one another; or prove that such a model doesn’t exist.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/files/logic-coursework/2017-03-logic-cw4ex4.pdf&quot;&gt;Solution (PDF)&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;a-two-formula-version-of-the-diagonal-lemma&quot;&gt;A two-formula version of the diagonal lemma&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;Let &lt;script type=&quot;math/tex&quot;&gt;\Gamma&lt;/script&gt; be a theorem which can represent every recursive function. Prove that for every pair of formulae &lt;script type=&quot;math/tex&quot;&gt;\Phi(x)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\Psi(x)&lt;/script&gt; with one free variable, there exist closed formulae &lt;script type=&quot;math/tex&quot;&gt;\eta&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; such that &lt;script type=&quot;math/tex&quot;&gt;\Gamma \proves \eta \,\leftrightarrow\, \Phi(\Godel{\theta})&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\Gamma \proves \theta \,\leftrightarrow\, \Psi(\Godel{\eta})&lt;/script&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/files/logic-coursework/2017-05-logic-cw9ex1.pdf&quot;&gt;Solution (PDF)&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;final-steps-of-the-proof-of-gödels-completeness-theorem&quot;&gt;Final steps of the proof of Gödel’s completeness theorem&lt;/h1&gt;
+
+&lt;p&gt;When proving Gödel’s completeness theorem during the lectures, I was missing a crucial step from the proof, so I &lt;a href=&quot;/files/logic-coursework/2017-07-logic-henkin.pdf&quot;&gt;proved it myself&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 27 Feb 2018 00:00:00 +0100</pubDate>
+        <link>https://treszkai.github.io/2018/02/27/logic-courseworks</link>
+        <guid isPermaLink="true">https://treszkai.github.io/2018/02/27/logic-courseworks</guid>
+        
+        
+        <category>Math</category>
+        
+      </item>
+    
   </channel>
 </rss>

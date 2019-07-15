@@ -1,10 +1,11 @@
 ---
 layout: post
 title: Evaluation of function calls in Haskell
-description: Analyzing why point-free definitions allow sharing.
+description: Analyzing why point-free definitions in Haskell allow sharing the result of an inner function application, whereas pointful definitions do not.
+tags: Haskell
 ---
 
-Chapter 27 of _Haskell Programming from first principles_ (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section _Preventing sharing on purpose_, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of `g _` is not shared but calculated twice:
+Chapter 27 of [_Haskell Programming from first principles_](http://haskellbook.com/) (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section _Preventing sharing on purpose_, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of `g _` is not shared but calculated twice:
 
 ```
 Prelude> f x = (x 3) + (x 10)
@@ -35,7 +36,7 @@ In this post I analyze the runtime differences between point-free and pointful d
 
 ## Behind the scenes
 
-As [Tom Ellis describes](#Further resources), the definitions of `g` and `f` translate to the following (in a close approximation to the “Core” language used during compilation):
+As [Tom Ellis describes](#Further-resources), the definitions of `g` and `f` translate to the following (in a close approximation to the “Core” language used during compilation):
 
 ```haskell
 f = \x -> let {x3 = x 3; x10 = x 10} in (+) x3 x10
@@ -45,7 +46,10 @@ g' = \_ -> trace "hi g'" 2
 
 (Calling `f g` with these definitions does _not_ result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like [that below](#Sharing).)
 
-Note that `g` was turned into a _let_ expression because we can only apply functions to variables or literals (in Core), not to function calls.
+Two things to point out here. First, every function definition is a lambda. Second, `g` was turned into a _let_ expression because we can only apply functions to variables or literals (in Core), not to function calls. _Edited to add:_ It would be reasonable to ask why `g = const (trace "hi g" 2)`  doesn't translate to `\y -> let {tg = trace "hi g" 2} in const tg y` (similar to `f`), to which the pragmatic answer is that _apparently_ the order is the following:
+ 1. not-fully-applied functions are turned into lambdas,
+ 2. parameters that are function calls are turned into named variables, and
+ 3. named function arguments from the left-hand side of `=` are moved to the right as a lambda.
 
 ## Evaluation with sharing
 

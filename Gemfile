@@ -22,5 +22,5 @@ gem "html-proofer"
 
 group :jekyll_plugins do
   gem "jekyll-scholar"
-  # gem "jekyll-feed", "~> 0.6"
+  gem "jekyll-feed"
 end

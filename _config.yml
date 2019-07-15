@@ -24,7 +24,7 @@ twitter_username: ltreszkai
 github_username:  treszkai
 permalink: /:year/:month/:day/:title
 
-google_analytics_id: UA-114915944-1
+google_analytics: UA-114915944-1
 
 disqus:
   shortname: treszkai

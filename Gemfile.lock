@@ -113,6 +113,7 @@ PLATFORMS
 DEPENDENCIES
   html-proofer
   jekyll
+  jekyll-feed
   jekyll-scholar
   minima
 

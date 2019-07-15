@@ -74,6 +74,11 @@ task :prodserve do
   status = system("JEKYLL_ENV=production bundle exec jekyll serve")
 end
 
+desc "Build site and push"
+task :push => :prod do
+    sh 'cd _site; git commit -am "Update (see source branch for description)"; git push; cd ..'
+end
+
 #
 ## General support functions
 #

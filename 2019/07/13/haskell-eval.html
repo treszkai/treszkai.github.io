@@ -14,15 +14,15 @@
 <meta name="generator" content="Jekyll v3.8.6" />
 <meta property="og:title" content="Evaluation of function calls in Haskell" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Analyzing why point-free definitions allow sharing." />
-<meta property="og:description" content="Analyzing why point-free definitions allow sharing." />
+<meta name="description" content="Analyzing why point-free definitions in Haskell allow sharing the result of an inner function application, whereas pointful definitions do not." />
+<meta property="og:description" content="Analyzing why point-free definitions in Haskell allow sharing the result of an inner function application, whereas pointful definitions do not." />
 <link rel="canonical" href="https://treszkai.github.io/2019/07/13/haskell-eval" />
 <meta property="og:url" content="https://treszkai.github.io/2019/07/13/haskell-eval" />
 <meta property="og:site_name" content="Laszlo Treszkai" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-07-13T00:00:00+02:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"https://treszkai.github.io/2019/07/13/haskell-eval"},"description":"Analyzing why point-free definitions allow sharing.","@type":"BlogPosting","headline":"Evaluation of function calls in Haskell","dateModified":"2019-07-13T00:00:00+02:00","datePublished":"2019-07-13T00:00:00+02:00","url":"https://treszkai.github.io/2019/07/13/haskell-eval","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://treszkai.github.io/2019/07/13/haskell-eval"},"description":"Analyzing why point-free definitions in Haskell allow sharing the result of an inner function application, whereas pointful definitions do not.","@type":"BlogPosting","headline":"Evaluation of function calls in Haskell","dateModified":"2019-07-13T00:00:00+02:00","datePublished":"2019-07-13T00:00:00+02:00","url":"https://treszkai.github.io/2019/07/13/haskell-eval","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link type="application/atom+xml" rel="alternate" href="https://treszkai.github.io/feed.xml" title="Laszlo Treszkai" />
 
@@ -54,7 +54,7 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Chapter 27 of <em>Haskell Programming from first principles</em> (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section <em>Preventing sharing on purpose</em>, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of <code class="highlighter-rouge">g _</code> is not shared but calculated twice:</p>
+    <p>Chapter 27 of <a href="http://haskellbook.com/"><em>Haskell Programming from first principles</em></a> (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section <em>Preventing sharing on purpose</em>, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of <code class="highlighter-rouge">g _</code> is not shared but calculated twice:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Prelude&gt; f x = (x 3) + (x 10)
 Prelude&gt; g' = \_ -&gt; trace "hi g'" 2
@@ -85,7 +85,7 @@ hi g
 
 <h2 id="behind-the-scenes">Behind the scenes</h2>
 
-<p>As <a href="#Further resources">Tom Ellis describes</a>, the definitions of <code class="highlighter-rouge">g</code> and <code class="highlighter-rouge">f</code> translate to the following (in a close approximation to the “Core” language used during compilation):</p>
+<p>As <a href="#Further-resources">Tom Ellis describes</a>, the definitions of <code class="highlighter-rouge">g</code> and <code class="highlighter-rouge">f</code> translate to the following (in a close approximation to the “Core” language used during compilation):</p>
 
 <div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="nf">\</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="kr">let</span> <span class="p">{</span><span class="n">x3</span> <span class="o">=</span> <span class="n">x</span> <span class="mi">3</span><span class="p">;</span> <span class="n">x10</span> <span class="o">=</span> <span class="n">x</span> <span class="mi">10</span><span class="p">}</span> <span class="kr">in</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">x3</span> <span class="n">x10</span>
 <span class="n">g</span> <span class="o">=</span> <span class="kr">let</span> <span class="p">{</span><span class="n">tg</span> <span class="o">=</span> <span class="n">trace</span> <span class="s">"hi g"</span> <span class="mi">2</span><span class="p">}</span> <span class="kr">in</span> <span class="nf">\</span><span class="n">y</span> <span class="o">-&gt;</span> <span class="n">const</span> <span class="n">tg</span> <span class="n">y</span>
@@ -94,7 +94,12 @@ hi g
 
 <p>(Calling <code class="highlighter-rouge">f g</code> with these definitions does <em>not</em> result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like <a href="#Sharing">that below</a>.)</p>
 
-<p>Note that <code class="highlighter-rouge">g</code> was turned into a <em>let</em> expression because we can only apply functions to variables or literals (in Core), not to function calls.</p>
+<p>Two things to point out here. First, every function definition is a lambda. Second, <code class="highlighter-rouge">g</code> was turned into a <em>let</em> expression because we can only apply functions to variables or literals (in Core), not to function calls. <em>Edited to add:</em> It would be reasonable to ask why <code class="highlighter-rouge">g = const (trace "hi g" 2)</code>  doesn’t translate to <code class="highlighter-rouge">\y -&gt; let {tg = trace "hi g" 2} in const tg y</code> (similar to <code class="highlighter-rouge">f</code>), to which the pragmatic answer is that <em>apparently</em> the order is the following:</p>
+<ol>
+  <li>not-fully-applied functions are turned into lambdas,</li>
+  <li>parameters that are function calls are turned into named variables, and</li>
+  <li>named function arguments from the left-hand side of <code class="highlighter-rouge">=</code> are moved to the right as a lambda.</li>
+</ol>
 
 <h2 id="evaluation-with-sharing">Evaluation with sharing</h2>
 

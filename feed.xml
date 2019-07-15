@@ -1,18 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Laszlo Treszkai</title>
-    <description>Explorations in math, AI, ML, et al.
-</description>
-    <link>https://treszkai.github.io/</link>
-    <atom:link href="https://treszkai.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 13 Jul 2019 23:20:43 +0200</pubDate>
-    <lastBuildDate>Sat, 13 Jul 2019 23:20:43 +0200</lastBuildDate>
-    <generator>Jekyll v3.8.6</generator>
-    
-      <item>
-        <title>Evaluation of function calls in Haskell</title>
-        <description>&lt;p&gt;Chapter 27 of &lt;em&gt;Haskell Programming from first principles&lt;/em&gt; (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section &lt;em&gt;Preventing sharing on purpose&lt;/em&gt;, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of &lt;code class=&quot;highlighter-rouge&quot;&gt;g _&lt;/code&gt; is not shared but calculated twice:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://treszkai.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://treszkai.github.io/" rel="alternate" type="text/html" /><updated>2019-07-15T08:06:22+02:00</updated><id>https://treszkai.github.io/feed.xml</id><title type="html">Laszlo Treszkai</title><subtitle>Explorations in math, AI, ML, et al.
+</subtitle><entry><title type="html">Evaluation of function calls in Haskell</title><link href="https://treszkai.github.io/2019/07/13/haskell-eval" rel="alternate" type="text/html" title="Evaluation of function calls in Haskell" /><published>2019-07-13T00:00:00+02:00</published><updated>2019-07-13T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/07/13/haskell-eval</id><content type="html" xml:base="https://treszkai.github.io/2019/07/13/haskell-eval">&lt;p&gt;Chapter 27 of &lt;a href=&quot;http://haskellbook.com/&quot;&gt;&lt;em&gt;Haskell Programming from first principles&lt;/em&gt;&lt;/a&gt; (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section &lt;em&gt;Preventing sharing on purpose&lt;/em&gt;, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of &lt;code class=&quot;highlighter-rouge&quot;&gt;g _&lt;/code&gt; is not shared but calculated twice:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Prelude&amp;gt; f x = (x 3) + (x 10)
 Prelude&amp;gt; g' = \_ -&amp;gt; trace &quot;hi g'&quot; 2
@@ -43,7 +30,7 @@ hi g
 
 &lt;h2 id=&quot;behind-the-scenes&quot;&gt;Behind the scenes&lt;/h2&gt;
 
-&lt;p&gt;As &lt;a href=&quot;#Further resources&quot;&gt;Tom Ellis describes&lt;/a&gt;, the definitions of &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; translate to the following (in a close approximation to the “Core” language used during compilation):&lt;/p&gt;
+&lt;p&gt;As &lt;a href=&quot;#Further-resources&quot;&gt;Tom Ellis describes&lt;/a&gt;, the definitions of &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; translate to the following (in a close approximation to the “Core” language used during compilation):&lt;/p&gt;
 
 &lt;div class=&quot;language-haskell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x10&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trace&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hi g&quot;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tg&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
@@ -52,7 +39,12 @@ hi g
 
 &lt;p&gt;(Calling &lt;code class=&quot;highlighter-rouge&quot;&gt;f g&lt;/code&gt; with these definitions does &lt;em&gt;not&lt;/em&gt; result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like &lt;a href=&quot;#Sharing&quot;&gt;that below&lt;/a&gt;.)&lt;/p&gt;
 
-&lt;p&gt;Note that &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; was turned into a &lt;em&gt;let&lt;/em&gt; expression because we can only apply functions to variables or literals (in Core), not to function calls.&lt;/p&gt;
+&lt;p&gt;Two things to point out here. First, every function definition is a lambda. Second, &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; was turned into a &lt;em&gt;let&lt;/em&gt; expression because we can only apply functions to variables or literals (in Core), not to function calls. &lt;em&gt;Edited to add:&lt;/em&gt; It would be reasonable to ask why &lt;code class=&quot;highlighter-rouge&quot;&gt;g = const (trace &quot;hi g&quot; 2)&lt;/code&gt;  doesn’t translate to &lt;code class=&quot;highlighter-rouge&quot;&gt;\y -&amp;gt; let {tg = trace &quot;hi g&quot; 2} in const tg y&lt;/code&gt; (similar to &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt;), to which the pragmatic answer is that &lt;em&gt;apparently&lt;/em&gt; the order is the following:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;not-fully-applied functions are turned into lambdas,&lt;/li&gt;
+  &lt;li&gt;parameters that are function calls are turned into named variables, and&lt;/li&gt;
+  &lt;li&gt;named function arguments from the left-hand side of &lt;code class=&quot;highlighter-rouge&quot;&gt;=&lt;/code&gt; are moved to the right as a lambda.&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h2 id=&quot;evaluation-with-sharing&quot;&gt;Evaluation with sharing&lt;/h2&gt;
 
@@ -193,18 +185,7 @@ g'' = \ @ b_a1FJ -&amp;gt; \ y_a1Fn -&amp;gt; const tg_r1F4 y_a1Fn
 
 &lt;p&gt;More details on similar behavior are given by Tom Ellis in his talk &lt;a href=&quot;https://skillsmatter.com/skillscasts/8726-haskell-programs-how-do-they-run&quot;&gt;&lt;em&gt;Haskell programs: how do they run?&lt;/em&gt;&lt;/a&gt; (free registration required to watch the talk).&lt;/p&gt;
 
-&lt;p&gt;The &lt;a href=&quot;https://skillsmatter.com/skillscasts/8800-functional-and-low-level-watching-the-stg-execute&quot;&gt;talk of David Luposchainsky (a.k.a. &lt;code class=&quot;highlighter-rouge&quot;&gt;quchen&lt;/code&gt;)&lt;/a&gt; goes into more depth – down to the Core –, in which he uses his own implementation of the spineless tagless graph reduction machine (STG), to visualize the evaluation of any given Haskell code (&lt;a href=&quot;https://github.com/quchen/stgi&quot;&gt;link to repo&lt;/a&gt;).&lt;/p&gt;
-</description>
-        <pubDate>Sat, 13 Jul 2019 00:00:00 +0200</pubDate>
-        <link>https://treszkai.github.io/2019/07/13/haskell-eval</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2019/07/13/haskell-eval</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>The wise men puzzle</title>
-        <description>&lt;p&gt;Today I understood the wise men puzzle at a conceptual level, well enough that I could explain it and possibly generalize to similar domains. This post is my attempt at explaining it.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&quot;https://skillsmatter.com/skillscasts/8800-functional-and-low-level-watching-the-stg-execute&quot;&gt;talk of David Luposchainsky (a.k.a. &lt;code class=&quot;highlighter-rouge&quot;&gt;quchen&lt;/code&gt;)&lt;/a&gt; goes into more depth – down to the Core –, in which he uses his own implementation of the spineless tagless graph reduction machine (STG), to visualize the evaluation of any given Haskell code (&lt;a href=&quot;https://github.com/quchen/stgi&quot;&gt;link to repo&lt;/a&gt;).&lt;/p&gt;</content><author><name></name></author><category term="Haskell" /><summary type="html">Chapter 27 of Haskell Programming from first principles (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section Preventing sharing on purpose, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of g _ is not shared but calculated twice:</summary></entry><entry><title type="html">The wise men puzzle</title><link href="https://treszkai.github.io/2018/08/18/wise-men" rel="alternate" type="text/html" title="The wise men puzzle" /><published>2018-08-18T00:00:00+02:00</published><updated>2018-08-18T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/08/18/wise-men</id><content type="html" xml:base="https://treszkai.github.io/2018/08/18/wise-men">&lt;p&gt;Today I understood the wise men puzzle at a conceptual level, well enough that I could explain it and possibly generalize to similar domains. This post is my attempt at explaining it.&lt;/p&gt;
 
 &lt;p&gt;The puzzle is described in &lt;a class=&quot;citation&quot; href=&quot;#Huth2000-Logic-book&quot;&gt;(Huth &amp;amp; Ryan, 2000)&lt;/a&gt; as follows:&lt;/p&gt;
 
@@ -452,22 +433,7 @@ function hideById(id, btn) {
 
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
 
-&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;Huth2000-Logic-book&quot;&gt;Huth, M., &amp;amp; Ryan, M. D. (2000). &lt;i&gt;Logic in Computer Science - modelling and reasoning about systems&lt;/i&gt;. Cambridge University Press.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;
-</description>
-        <pubDate>Sat, 18 Aug 2018 00:00:00 +0200</pubDate>
-        <link>https://treszkai.github.io/2018/08/18/wise-men</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2018/08/18/wise-men</guid>
-        
-        <category>logic</category>
-        
-        
-        <category>math</category>
-        
-      </item>
-    
-      <item>
-        <title>Medical AI safety: where are we and where are we heading</title>
-        <description>&lt;p&gt;In this post I summarize a &lt;a href=&quot;https://lukeoakdenrayner.wordpress.com/2018/07/11/medical-ai-safety-we-have-a-problem/&quot;&gt;blog post about “medical AI safety”&lt;/a&gt;: the potential consequences of using advanced medical systems without sufficient evidence to back up their usefulness.&lt;/p&gt;
+&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;Huth2000-Logic-book&quot;&gt;Huth, M., &amp;amp; Ryan, M. D. (2000). &lt;i&gt;Logic in Computer Science - modelling and reasoning about systems&lt;/i&gt;. Cambridge University Press.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name></name></author><category term="logic" /><summary type="html">Today I understood the wise men puzzle at a conceptual level, well enough that I could explain it and possibly generalize to similar domains. This post is my attempt at explaining it.</summary></entry><entry><title type="html">Medical AI safety: where are we and where are we heading</title><link href="https://treszkai.github.io/2018/07/11/medical-safety" rel="alternate" type="text/html" title="Medical AI safety: where are we and where are we heading" /><published>2018-07-11T00:00:00+02:00</published><updated>2018-07-11T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/07/11/medical-safety</id><content type="html" xml:base="https://treszkai.github.io/2018/07/11/medical-safety">&lt;p&gt;In this post I summarize a &lt;a href=&quot;https://lukeoakdenrayner.wordpress.com/2018/07/11/medical-ai-safety-we-have-a-problem/&quot;&gt;blog post about “medical AI safety”&lt;/a&gt;: the potential consequences of using advanced medical systems without sufficient evidence to back up their usefulness.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Epistemic status: the author (Luke Oakden-Rayner) is a PhD candidate radiologist, and I’m not an expert in medicine.&lt;/em&gt;&lt;/p&gt;
 
@@ -509,20 +475,7 @@ function hideById(id, btn) {
 
 &lt;blockquote&gt;
   &lt;p&gt;Are we potentially racing towards an AI event on the scale of elixir sulfanilamide [which prompted the foundation of FDA] or thalidomide [which the FDA banned before other countries, preventing 10,000 birth malformations]?&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-        <pubDate>Wed, 11 Jul 2018 00:00:00 +0200</pubDate>
-        <link>https://treszkai.github.io/2018/07/11/medical-safety</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2018/07/11/medical-safety</guid>
-        
-        
-        <category>AI</category>
-        
-      </item>
-    
-      <item>
-        <title>International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise 1</title>
-        <description>&lt;p&gt;Solutions for exercise 1 of &lt;a href=&quot;https://www.youtube.com/watch?v=5oeWX3NUhMA&quot;&gt;tutorial 3&lt;/a&gt; of the &lt;a href=&quot;https://gravity-and-light.herokuapp.com&quot;&gt;International Winter School on Gravity and Light&lt;/a&gt;. (&lt;a href=&quot;https://www.youtube.com/watch?v=mbv3T15nWq0&quot;&gt;Link to video of lecture 3&lt;/a&gt;.)&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><summary type="html">In this post I summarize a blog post about “medical AI safety”: the potential consequences of using advanced medical systems without sufficient evidence to back up their usefulness.</summary></entry><entry><title type="html">International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise 1</title><link href="https://treszkai.github.io/2018/06/09/multilinear-tutorial" rel="alternate" type="text/html" title="International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise 1" /><published>2018-06-09T00:00:00+02:00</published><updated>2018-06-09T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/06/09/multilinear-tutorial</id><content type="html" xml:base="https://treszkai.github.io/2018/06/09/multilinear-tutorial">&lt;p&gt;Solutions for exercise 1 of &lt;a href=&quot;https://www.youtube.com/watch?v=5oeWX3NUhMA&quot;&gt;tutorial 3&lt;/a&gt; of the &lt;a href=&quot;https://gravity-and-light.herokuapp.com&quot;&gt;International Winter School on Gravity and Light&lt;/a&gt;. (&lt;a href=&quot;https://www.youtube.com/watch?v=mbv3T15nWq0&quot;&gt;Link to video of lecture 3&lt;/a&gt;.)&lt;/p&gt;
 
 &lt;h2 id=&quot;notation&quot;&gt;Notation&lt;/h2&gt;
 
@@ -792,20 +745,7 @@ function hideByClass(cls) {
   &lt;ul&gt;
     &lt;li&gt;Given the basis vectors &lt;script type=&quot;math/tex&quot;&gt;\mathbf{e}_i&lt;/script&gt; and components &lt;script type=&quot;math/tex&quot;&gt;v^i&lt;/script&gt; for &lt;script type=&quot;math/tex&quot;&gt;1 \leq i \leq d&lt;/script&gt;, &lt;script type=&quot;math/tex&quot;&gt;\mathbf{v} = \sum_{i=1}^d v^i \mathbf{e}_i&lt;/script&gt;.&lt;/li&gt;
   &lt;/ul&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Sat, 09 Jun 2018 00:00:00 +0200</pubDate>
-        <link>https://treszkai.github.io/2018/06/09/multilinear-tutorial</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2018/06/09/multilinear-tutorial</guid>
-        
-        
-        <category>Math</category>
-        
-      </item>
-    
-      <item>
-        <title>Probabilistically interesting planning problems</title>
-        <description>&lt;p&gt;This post briefly describes the problem of &lt;em&gt;probabilistic planning&lt;/em&gt;, and explains in informal terms what makes a planning problem &lt;em&gt;probabilistically interesting&lt;/em&gt;, along with some examples.&lt;/p&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Solutions for exercise 1 of tutorial 3 of the International Winter School on Gravity and Light. (Link to video of lecture 3.)</summary></entry><entry><title type="html">Probabilistically interesting planning problems</title><link href="https://treszkai.github.io/2018/05/28/probabilistically-interesting" rel="alternate" type="text/html" title="Probabilistically interesting planning problems" /><published>2018-05-28T00:00:00+02:00</published><updated>2018-05-28T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/05/28/probabilistically-interesting</id><content type="html" xml:base="https://treszkai.github.io/2018/05/28/probabilistically-interesting">&lt;p&gt;This post briefly describes the problem of &lt;em&gt;probabilistic planning&lt;/em&gt;, and explains in informal terms what makes a planning problem &lt;em&gt;probabilistically interesting&lt;/em&gt;, along with some examples.&lt;/p&gt;
 
 &lt;h1 id=&quot;primer-on-probabilistic-planning&quot;&gt;Primer on probabilistic planning&lt;/h1&gt;
 
@@ -895,20 +835,7 @@ function hideByClass(cls) {
                Planning and Scheduling, ICAPS 2007, Providence, Rhode Island, USA,
                September 22-26, 2007&lt;/i&gt; (p. 352). AAAI. Retrieved from http://www.aaai.org/Library/ICAPS/2007/icaps07-045.php&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span id=&quot;Yoon2008-probabilistic-planning&quot;&gt;Yoon, S. W., Fern, A., Givan, R., &amp;amp; Kambhampati, S. (2008). Probabilistic Planning via Determinization in Hindsight. In D. Fox &amp;amp; C. P. Gomes (Eds.), &lt;i&gt;Proceedings of the Twenty-Third AAAI Conference on Artificial Intelligence,
-               AAAI 2008, Chicago, Illinois, USA, July 13-17, 2008&lt;/i&gt; (pp. 1010–1016). AAAI Press. Retrieved from http://www.aaai.org/Library/AAAI/2008/aaai08-160.php&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;
-</description>
-        <pubDate>Mon, 28 May 2018 00:00:00 +0200</pubDate>
-        <link>https://treszkai.github.io/2018/05/28/probabilistically-interesting</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2018/05/28/probabilistically-interesting</guid>
-        
-        
-        <category>AI</category>
-        
-      </item>
-    
-      <item>
-        <title>Change YouTube speed from your favorites bar</title>
-        <description>&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/need-for-speed.gif&quot; alt=&quot;I feel the need... the need for speed.&quot; /&gt;&lt;/p&gt;
+               AAAI 2008, Chicago, Illinois, USA, July 13-17, 2008&lt;/i&gt; (pp. 1010–1016). AAAI Press. Retrieved from http://www.aaai.org/Library/AAAI/2008/aaai08-160.php&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name></name></author><summary type="html">This post briefly describes the problem of probabilistic planning, and explains in informal terms what makes a planning problem probabilistically interesting, along with some examples.</summary></entry><entry><title type="html">Change YouTube speed from your favorites bar</title><link href="https://treszkai.github.io/2018/05/23/youtube-speed" rel="alternate" type="text/html" title="Change YouTube speed from your favorites bar" /><published>2018-05-23T00:00:00+02:00</published><updated>2018-05-23T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/05/23/youtube-speed</id><content type="html" xml:base="https://treszkai.github.io/2018/05/23/youtube-speed">&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/need-for-speed.gif&quot; alt=&quot;I feel the need... the need for speed.&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;premise&quot;&gt;Premise&lt;/h1&gt;
 
@@ -943,20 +870,7 @@ function hideByClass(cls) {
 &lt;ul&gt;
   &lt;li&gt;GIF: &lt;a href=&quot;https://www.youtube.com/watch?v=fR2hajcuFEM&quot;&gt;Top Gun&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Script: &lt;a href=&quot;https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12&quot;&gt;Quora answer of John Vuong&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 23 May 2018 00:00:00 +0200</pubDate>
-        <link>https://treszkai.github.io/2018/05/23/youtube-speed</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2018/05/23/youtube-speed</guid>
-        
-        
-        <category>Misc</category>
-        
-      </item>
-    
-      <item>
-        <title>Some versatile tools for bash</title>
-        <description>&lt;p&gt;I rarely use bash besides the basics: I could use a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop even if woken up at night, but my knowledge of the language doesn’t go much further. Hence instead of trying to memorize all the &lt;code class=&quot;highlighter-rouge&quot;&gt;{}%$&lt;/code&gt; magic, having a few versatile commands in my toolbox comes handy.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Some versatile tools for bash</title><link href="https://treszkai.github.io/2018/05/16/bash-versatile" rel="alternate" type="text/html" title="Some versatile tools for bash" /><published>2018-05-16T00:00:00+02:00</published><updated>2018-05-16T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/05/16/bash-versatile</id><content type="html" xml:base="https://treszkai.github.io/2018/05/16/bash-versatile">&lt;p&gt;I rarely use bash besides the basics: I could use a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop even if woken up at night, but my knowledge of the language doesn’t go much further. Hence instead of trying to memorize all the &lt;code class=&quot;highlighter-rouge&quot;&gt;{}%$&lt;/code&gt; magic, having a few versatile commands in my toolbox comes handy.&lt;/p&gt;
 
 &lt;p&gt;Recently I faced the task of renaming a set of files {&lt;code class=&quot;highlighter-rouge&quot;&gt;foo 02.jpg&lt;/code&gt;, …, &lt;code class=&quot;highlighter-rouge&quot;&gt;foo 74.jpg&lt;/code&gt;} to {&lt;code class=&quot;highlighter-rouge&quot;&gt;foo 06.jpg&lt;/code&gt;, …, &lt;code class=&quot;highlighter-rouge&quot;&gt;foo 78.jpg&lt;/code&gt;}, while keeping the order. My approach contained nothing extraordinary:&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
@@ -983,20 +897,7 @@ function hideByClass(cls) {
   &lt;li&gt;Don’t forget the quotes around arguments with spaces, like with &lt;code class=&quot;highlighter-rouge&quot;&gt;mv&lt;/code&gt; above.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;One minute of further bash tips are provided by Julia Evans &lt;a href=&quot;https://drawings.jvns.ca/bashtips/&quot;&gt;[here]&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 16 May 2018 00:00:00 +0200</pubDate>
-        <link>https://treszkai.github.io/2018/05/16/bash-versatile</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2018/05/16/bash-versatile</guid>
-        
-        
-        <category>Misc</category>
-        
-      </item>
-    
-      <item>
-        <title>Some proofs in first-order logic</title>
-        <description>&lt;p&gt;This post links to some problems I solved in mathematical logic.&lt;/p&gt;
+&lt;p&gt;One minute of further bash tips are provided by Julia Evans &lt;a href=&quot;https://drawings.jvns.ca/bashtips/&quot;&gt;[here]&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">I rarely use bash besides the basics: I could use a for loop even if woken up at night, but my knowledge of the language doesn’t go much further. Hence instead of trying to memorize all the {}%$ magic, having a few versatile commands in my toolbox comes handy.</summary></entry><entry><title type="html">Some proofs in first-order logic</title><link href="https://treszkai.github.io/2018/02/27/logic-courseworks" rel="alternate" type="text/html" title="Some proofs in first-order logic" /><published>2018-02-27T00:00:00+01:00</published><updated>2018-02-27T00:00:00+01:00</updated><id>https://treszkai.github.io/2018/02/27/logic-courseworks</id><content type="html" xml:base="https://treszkai.github.io/2018/02/27/logic-courseworks">&lt;p&gt;This post links to some problems I solved in mathematical logic.&lt;/p&gt;
 
 &lt;p&gt;I had the fortune to study classical logic from &lt;a href=&quot;http://www.renyi.hu/~csirmaz/&quot;&gt;László Csirmaz&lt;/a&gt; at the Eötvös Loránd University, Budapest. Although I was not officially enrolled in the course, he was kind enough to mark my weekly homework regardless of my lack of student status. These were originally written in Hungarian, and I translated a few of them into English.&lt;/p&gt;
 
@@ -1014,16 +915,4 @@ function hideByClass(cls) {
 
 &lt;h1 id=&quot;final-steps-of-the-proof-of-gödels-completeness-theorem&quot;&gt;Final steps of the proof of Gödel’s completeness theorem&lt;/h1&gt;
 
-&lt;p&gt;When proving Gödel’s completeness theorem during the lectures, I was missing a crucial step from the proof, so I &lt;a href=&quot;/files/logic-coursework/2017-07-logic-henkin.pdf&quot;&gt;proved it myself&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 27 Feb 2018 00:00:00 +0100</pubDate>
-        <link>https://treszkai.github.io/2018/02/27/logic-courseworks</link>
-        <guid isPermaLink="true">https://treszkai.github.io/2018/02/27/logic-courseworks</guid>
-        
-        
-        <category>Math</category>
-        
-      </item>
-    
-  </channel>
-</rss>
+&lt;p&gt;When proving Gödel’s completeness theorem during the lectures, I was missing a crucial step from the proof, so I &lt;a href=&quot;/files/logic-coursework/2017-07-logic-henkin.pdf&quot;&gt;proved it myself&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">This post links to some problems I solved in mathematical logic.</summary></entry></feed>

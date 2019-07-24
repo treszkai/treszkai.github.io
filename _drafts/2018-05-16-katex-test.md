@@ -7,9 +7,16 @@ latex_macros:
      \u: 0<1
 ---
 
-$$a$$
+$$b$$
 
-$$\<b$$
+kramdown turns `a<v` into `% <![CDATA[\na<v %]]>` (see https://github.com/KaTeX/KaTeX/issues/20 ), so we could strip the comments manually.
+
+```javascript
+    var textWithoutComments = text.replace(/([^\\])%.*/g, '$1');
+    el.outerHTML = katex.renderToString(textWithoutComments, { displayMode: false, macros: macros_dict });
+```
+
+$$a<v$$
 
 inline: $b$, \(a\), asdkjaks, \(b\), $4, $5, \( v _d , a_ b \)
 

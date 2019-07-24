@@ -55,6 +55,7 @@ latex_macros:
     \Union: \bigcup
     \Intersect: \bigcap
     \grad: \nabla
+    \given: \,\vert\,
     \Godel: "\\ulcorner #1 \\urcorner"
 
 # Exclude from processing.

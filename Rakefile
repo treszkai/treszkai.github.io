@@ -42,11 +42,17 @@ task :default => :preview
 load '_rake-configuration.rb' if File.exist?('_rake-configuration.rb')
 
 desc 'Preview with livereload on local machine'
-task :preview => :clean do
+task :preview do
 	puts green "Starting livereload server"
   jekyll('serve --incremental')
 end
 task :serve => :preview
+
+desc 'Preview with livereload and drafts on local machine'
+task :draft do
+	puts green "Starting livereload+draft server"
+  jekyll('serve --drafts --incremental')
+end
 
 desc 'Clean up generated site'
 task :clean do
@@ -56,14 +62,14 @@ end
 desc 'Check links for generated site'
 task :check do
   STDOUT.sync = true
-	cleanup
+	# cleanup
   jekyll("build -d _site#{baseurl}")
 	puts cyan "Running html proofer..."
 	puts `htmlproofer --assume-extension --alt-ignore '/.*/' ./_site`
 end
 
 desc "Generate production website"
-task :prod do
+task :prod => :clean do
   puts "\n## Generating for production"
   status = system("JEKYLL_ENV=production bundle exec jekyll build")
 end

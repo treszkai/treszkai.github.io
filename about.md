@@ -8,4 +8,4 @@ Hi, my name is Laszlo Treszkai. Here's [my CV](/files/CV.pdf). I love mathematic
 
 I graduated with honours at the MSc in Artificial Intelligence at the University of Edinburgh, where I learned a ton about machine learning, NLP, and Bayesian analysis. Previously I received an [MSc in Electrical Engineering](https://www.mit.bme.hu/eng/) at the Budapest University of Technology and Economics, with a focus on embedded systems. During that program, most of my time went into building a race car in the [BME Formula Racing Team](frt.bme.hu) for the [Formula Student](https://www.formulastudent.de) competition. After university, I worked as an embedded engineer at [TTControl](ttcontrol.com) on the HY-TTC 500 ECU, which is used for safety critical applications in big industrial vehicles like tractors, snow groomers and bridge building machines.
 
-If you find would like to get in touch with me, drop me a mail at _laszlo.treszkai@gmail.com_ or open a pull request by [editing a post directly](https://github.com/treszkai/treszkai.github.io/tree/source/_posts).
+You can reach me at <laszlo.treszkai@gmail.com>, or by commenting at a post.

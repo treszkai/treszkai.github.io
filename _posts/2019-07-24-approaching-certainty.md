@@ -129,9 +129,11 @@ for i in range(1,4):
 # Easter egg. Thanks for reading!
 ```
 
-- 1/ramanujan(1) - π ≈ 7.64e-08
-- 1/ramanujan(2) - π ≈ 4.44e-16
-- 1/ramanujan(3) - π ≈ 0.00e+00
+> 1/ramanujan(1) - π ≈ 7.64e-08
+>
+> 1/ramanujan(2) - π ≈ 4.44e-16
+>
+> 1/ramanujan(3) - π ≈ 0.00e+00
 
 
 
@@ -155,7 +157,7 @@ posterior.mean()
 
 
 
-0.999001996007984
+> 0.999001996007984
 
 
 
@@ -167,7 +169,7 @@ print('P(θ > 0.999) = {:d}%'.format(int(100*(1-posterior.cdf(0.999)))))
 
 
 
-P(θ > 0.999) = 63%
+> P(θ > 0.999) = 63%
 
 
 
@@ -179,7 +181,7 @@ print('P(θ > 0.998) = {:d}%'.format(int(100*(1-posterior.cdf(0.998)))))
 
 
 
-P(θ > 0.998) = 86%
+> P(θ > 0.998) = 86%
 
 
 

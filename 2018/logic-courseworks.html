@@ -37,8 +37,8 @@ if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNo
 </script>
   
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.js" integrity="sha384-y6SGsNt7yZECc4Pf86XmQhC4hG2wxL6Upkt9N1efhFxfh6wlxBH0mJiTE8XYclC1" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
         var macros_dict = { 
@@ -51,20 +51,19 @@ if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNo
             "\\Union": "\\bigcup"  ,  
             "\\Intersect": "\\bigcap"  ,  
             "\\grad": "\\nabla"  ,  
+            "\\given": "\\,\\vert\\,"  ,  
             "\\Godel": "\\ulcorner #1 \\urcorner"  
             
         };
 
         document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
             var text = el.textContent === "" ? el.innerHTML : el.textContent;
-            var textWithoutComments = text.replace(/%.*/g, '');
-            el.outerHTML = katex.renderToString(textWithoutComments, { displayMode: false, macros: macros_dict });
+            el.outerHTML = katex.renderToString(text, { displayMode: false, macros: macros_dict });
         });
 
         document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
             var text = el.textContent === "" ? el.innerHTML : el.textContent;
-            var textWithoutComments = text.replace(/%.*/g, '');
-            el.outerHTML = katex.renderToString(textWithoutComments, { displayMode: true, macros: macros_dict });
+            el.outerHTML = katex.renderToString(text, { displayMode: true, macros: macros_dict });
         });
     });
   </script>

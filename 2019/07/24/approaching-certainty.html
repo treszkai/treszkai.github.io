@@ -213,11 +213,13 @@ if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNo
 <span class="c1"># Easter egg. Thanks for reading!
 </span></code></pre></div></div>
 
-<ul>
-  <li>1/ramanujan(1) - π ≈ 7.64e-08</li>
-  <li>1/ramanujan(2) - π ≈ 4.44e-16</li>
-  <li>1/ramanujan(3) - π ≈ 0.00e+00</li>
-</ul>
+<blockquote>
+  <p>1/ramanujan(1) - π ≈ 7.64e-08</p>
+
+  <p>1/ramanujan(2) - π ≈ 4.44e-16</p>
+
+  <p>1/ramanujan(3) - π ≈ 0.00e+00</p>
+</blockquote>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_beta</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.990</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">1000</span><span class="p">),</span> <span class="n">posterior</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">posterior</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'mean'</span><span class="p">)</span>
@@ -231,17 +233,23 @@ if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNo
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">posterior</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>0.999001996007984</p>
+<blockquote>
+  <p>0.999001996007984</p>
+</blockquote>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'P(θ &gt; 0.999) = {:d}</span><span class="si">%</span><span class="s">'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">posterior</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">)))))</span>
 </code></pre></div></div>
 
-<p>P(θ &gt; 0.999) = 63%</p>
+<blockquote>
+  <p>P(θ &gt; 0.999) = 63%</p>
+</blockquote>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'P(θ &gt; 0.998) = {:d}</span><span class="si">%</span><span class="s">'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">posterior</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">0.998</span><span class="p">)))))</span>
 </code></pre></div></div>
 
-<p>P(θ &gt; 0.998) = 86%</p>
+<blockquote>
+  <p>P(θ &gt; 0.998) = 86%</p>
+</blockquote>
 
 <h2 id="references">References</h2>
 

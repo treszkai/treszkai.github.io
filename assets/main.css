@@ -380,9 +380,10 @@ table {
   color: #93a1a1; }
 
 .highlight .c {
-  color: #93a1a1; }
+  color: #dc322f; }
 
 .highlight .err {
+  background-color: #dc322f;
   color: #586e75; }
 
 .highlight .g {
@@ -407,13 +408,13 @@ table {
   color: #586e75; }
 
 .highlight .cm {
-  color: #93a1a1; }
+  color: #dc322f; }
 
 .highlight .cp {
   color: #859900; }
 
 .highlight .c1 {
-  color: #93a1a1; }
+  color: #dc322f; }
 
 .highlight .cs {
   color: #859900; }

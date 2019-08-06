@@ -2,9 +2,8 @@
 layout: post
 title: "Bayesian inference: Approaching certainty through sampling"
 categories: math
-tags: statistics
+tags: statistics, Bayes, sampling
 latex: true
-starred: true
 ---
 
 _Bayesian Data Analysis_ from Gelman et al. (2013), in section 3.7, presents the statistical analysis of a bioassay experiment. The parameters of the model are $$(\alpha, \beta)$$, and we draw samples from the numerically calculated posterior. Then the authors write:

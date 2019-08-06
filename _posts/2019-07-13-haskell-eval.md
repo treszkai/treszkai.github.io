@@ -25,6 +25,8 @@ hi g
 4
 ```
 
+(Edited to add:) In practice, sharing is usually achieved with a `let` expression or a `where` construct.
+
 (Note that this latter is called a [“point-free” definition](https://wiki.haskell.org/Pointfree).)
 
 The authors conclude that

@@ -269,7 +269,8 @@ table {
   margin-bottom: 15px; }
 
 .contact-list,
-.social-media-list {
+.social-media-list,
+.right-footer-list {
   list-style: none;
   margin-left: 0; }
 

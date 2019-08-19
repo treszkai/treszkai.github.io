@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Medical AI safety: where are we and where are we heading"
-categories: AI
-description: Using (almost) advanced tools for advanced tasks, without weighing their consequences.
+title:  "Blog post summary: Medical AI safety: where are we and where are we heading"
+categories: AI, medicine
+description: "I summarize a blog post about medical AI safety, which describes the potential consequences of using advanced medical systems without sufficient evidence to back up their usefulness."
 ---
 
 In this post I summarize a [blog post about “medical AI safety”](https://lukeoakdenrayner.wordpress.com/2018/07/11/medical-ai-safety-we-have-a-problem/): the potential consequences of using advanced medical systems without sufficient evidence to back up their usefulness.
@@ -19,7 +19,7 @@ Some systems in the wild are worse than humans in both recall and sensitivity:
 
 Nonetheless, we are already proceeding to the next level:
 
-> A few months ago the FDA approved a new AI system by IDx, and it makes independent medical decisions without the need for a clinician. (In this case, screening for eye disease through a retina scan.)
+> A few months ago the FDA approved a new AI system by IDx, and it makes independent medical decisions without the need for a clinician. [In this case, screening for eye disease through a retina scan.]
 
 But on the upside, these tools improve the ratio of people screened:
 

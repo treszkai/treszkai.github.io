@@ -3,6 +3,7 @@ layout: post
 title: "Bayesian inference: Approaching certainty through sampling"
 categories: math
 tags: statistics, Bayes, sampling
+description: "Analysis of a slightly incorrect statement from BDA3: if all of the 1000 draws from Bernoulli(p) are 1, what are likely values of p?"
 latex: true
 ---
 

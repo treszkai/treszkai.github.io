@@ -2,7 +2,7 @@
 layout: post
 title: "Paper summary: Abbeel, Ng: Inverse Reinforcement Learning (2004)"
 categories: ML
-description: "Summary of the seminal paper on inverse reinforcement learning by Pieter Abbeel and Andrew Ng, from 2004."
+description: "Summary of the seminal paper on inverse reinforcement learning."
 latex: true
 ---
 

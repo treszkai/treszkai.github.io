@@ -3,11 +3,9 @@ layout: post
 title:  "Some proofs in first-order logic"
 categories: Math
 latex: true
-description: This page lists some of the interesting problems that I solved during my academic career.
+description: This page lists some interesting problems in mathematical logic that I solved during my studies.
 starred: true
 ---
-
-This post links to some problems I solved in mathematical logic.
 
 I had the fortune to study classical logic from [László Csirmaz](http://www.renyi.hu/~csirmaz/) at the Eötvös Loránd University, Budapest. Although I was not officially enrolled in the course, he was kind enough to mark my weekly homework regardless of my lack of student status. These were originally written in Hungarian, and I translated a few of them into English.
 

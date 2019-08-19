@@ -43,7 +43,8 @@ load '_rake-configuration.rb' if File.exist?('_rake-configuration.rb')
 
 desc 'Preview with livereload on local machine'
 task :preview do
-	puts green "Starting livereload server"
+  puts green "Starting livereload server"
+  system("rm -r _site/index.html")
   jekyll('serve --incremental')
 end
 task :serve => :preview
@@ -82,7 +83,7 @@ end
 
 desc "Build site and push"
 task :push => :prod do
-    sh 'cd _site; git commit -am "Update (see source branch for description)"; git push; cd ..'
+    sh 'cd _site; git add -A && git commit -m "Update (see source branch for description)" && git push; cd ..'
 end
 
 #

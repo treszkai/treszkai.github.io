@@ -26,8 +26,10 @@
       </div>
 
       <div class="footer-col footer-col-3">
-        <p>{{- site.description | escape -}}</p><br />
-        <p class="rss-subscribe">Subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a>.</p>
+        <ul class="right-footer-list">
+          <li>{{- site.description | escape -}}</li>
+          <li class="rss-subscribe">Subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a>.</li>
+        </ul>
       </div>
     </div>
 

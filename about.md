@@ -12,6 +12,6 @@ Some of the things I did:
  - as an **embedded engineer** at [TTControl](ttcontrol.com) I wrote software for the [HY-TTC 500 ECU](https://www.ttcontrol.com/products/electronic-control-units/safety-certified-controllers/hy-ttc-500-family/), which is used for safety critical applications in big industrial vehicles like tractors, snow groomers and bridge building machines;
  - as an **AI engineer** at [Sclable Business Solutions](https://sclable.com/en/) I designed and implemented a recommendation engine using Bayesian inference;
  - I verified the design and implementation of **electric** and **driverless vehicles** at Formula Student events, recently at [FS East](https://fseast.eu/gallery-2019/), which is an engineering competition for students to design and build a race car (over a year);
- - now I'm thinking about ways to improve statistical methods in medicine: embracing uncertainty for less false positives, more accurate inferences, easier meta-analyses.
+ - now I'm investigating ways and tools to improve statistical methods in medical research: embracing uncertainty for less false positives, more accurate inferences, easier meta-analyses.
 
 You can reach me at <laszlo.treszkai@gmail.com>, or by commenting at a post.

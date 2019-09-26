@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://treszkai.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://treszkai.github.io/" rel="alternate" type="text/html" /><updated>2019-09-26T22:56:03+02:00</updated><id>https://treszkai.github.io/feed.xml</id><title type="html">Laszlo Treszkai</title><subtitle>Explorations in math, AI, ML, et al.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://treszkai.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://treszkai.github.io/" rel="alternate" type="text/html" /><updated>2019-09-26T23:23:53+02:00</updated><id>https://treszkai.github.io/feed.xml</id><title type="html">Laszlo Treszkai</title><subtitle>Explorations in math, AI, ML, et al.
 </subtitle><entry><title type="html">On the overconfidence of modern neural networks</title><link href="https://treszkai.github.io/2019/09/26/overconfidence" rel="alternate" type="text/html" title="On the overconfidence of modern neural networks" /><published>2019-09-26T00:00:00+02:00</published><updated>2019-09-26T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/09/26/overconfidence</id><content type="html" xml:base="https://treszkai.github.io/2019/09/26/overconfidence">&lt;p&gt;&lt;em&gt;On the overconfidence of modern neural networks&lt;/em&gt;. This is the title of the coursework I did with a fellow student at the University of Edinburgh. (PDF: &lt;a href=&quot;mlp-cw3.pdf&quot;&gt;Part 1&lt;/a&gt;, &lt;a href=&quot;mlp-cw4.pdf&quot;&gt;Part 2&lt;/a&gt;.)&lt;/p&gt;
 
 &lt;p&gt;Our topic was influenced by a previous study, titled &lt;em&gt;On Calibration of Modern Neural Networks&lt;/em&gt; &lt;a class=&quot;citation&quot; href=&quot;#Guo2017-calibration&quot;&gt;(Guo, Pleiss, Sun, &amp;amp; Weinberger, 2017)&lt;/a&gt;.&lt;/p&gt;
@@ -46,7 +46,7 @@ One of our main findings is that cross-entropy error is not a good indicator of 
 
 &lt;p&gt;&lt;img src=&quot;mlp-cw4-fig2.png&quot; alt=&quot;Confidence and calibration plots for BigNet. (Figure 2 of our report)&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;(&lt;em&gt;Top row:&lt;/em&gt; confidence plots for a deep neural net. The more right, the better. &lt;em&gt;Bottom row:&lt;/em&gt; corresponding calibration plots. The more close to the diagonal, the better.)&lt;/p&gt;
+&lt;p&gt;(&lt;em&gt;Top row:&lt;/em&gt; confidence plots for a deep neural net. The more skewed to the right, the better. &lt;em&gt;Bottom row:&lt;/em&gt; corresponding calibration plots. The more close to the diagonal, the better.)&lt;/p&gt;
 
 &lt;h2 id=&quot;things-i-would-do-differently&quot;&gt;Things I would do differently&lt;/h2&gt;
 

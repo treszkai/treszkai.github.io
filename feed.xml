@@ -1,5 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://treszkai.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://treszkai.github.io/" rel="alternate" type="text/html" /><updated>2019-09-14T15:00:38+02:00</updated><id>https://treszkai.github.io/feed.xml</id><title type="html">Laszlo Treszkai</title><subtitle>Explorations in math, AI, ML, et al.
-</subtitle><entry><title type="html">Paper summary: Abbeel, Ng: Inverse Reinforcement Learning (2004)</title><link href="https://treszkai.github.io/2019/08/19/irl-summary" rel="alternate" type="text/html" title="Paper summary: Abbeel, Ng: Inverse Reinforcement Learning (2004)" /><published>2019-08-19T00:00:00+02:00</published><updated>2019-08-19T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/08/19/irl-summary</id><content type="html" xml:base="https://treszkai.github.io/2019/08/19/irl-summary">&lt;p&gt;This post is a summary of the seminal paper on inverse reinforcement learning: Pieter Abbeel, Andrew Y. Ng: &lt;em&gt;Apprenticeship Learning via Inverse Reinforcement Learning&lt;/em&gt; (2004) [&lt;a href=&quot;http://ai.stanford.edu/~pabbeel/irl/&quot;&gt;link&lt;/a&gt;].&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://treszkai.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://treszkai.github.io/" rel="alternate" type="text/html" /><updated>2019-09-26T22:56:03+02:00</updated><id>https://treszkai.github.io/feed.xml</id><title type="html">Laszlo Treszkai</title><subtitle>Explorations in math, AI, ML, et al.
+</subtitle><entry><title type="html">On the overconfidence of modern neural networks</title><link href="https://treszkai.github.io/2019/09/26/overconfidence" rel="alternate" type="text/html" title="On the overconfidence of modern neural networks" /><published>2019-09-26T00:00:00+02:00</published><updated>2019-09-26T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/09/26/overconfidence</id><content type="html" xml:base="https://treszkai.github.io/2019/09/26/overconfidence">&lt;p&gt;&lt;em&gt;On the overconfidence of modern neural networks&lt;/em&gt;. This is the title of the coursework I did with a fellow student at the University of Edinburgh. (PDF: &lt;a href=&quot;mlp-cw3.pdf&quot;&gt;Part 1&lt;/a&gt;, &lt;a href=&quot;mlp-cw4.pdf&quot;&gt;Part 2&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;Our topic was influenced by a previous study, titled &lt;em&gt;On Calibration of Modern Neural Networks&lt;/em&gt; &lt;a class=&quot;citation&quot; href=&quot;#Guo2017-calibration&quot;&gt;(Guo, Pleiss, Sun, &amp;amp; Weinberger, 2017)&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Applications of uncertainty estimation include threshold-based outlier detection, active learning, uncertainty-driven exploration of reinforcement learning, or certain safety-critical applications.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-uncertainty&quot;&gt;What is uncertainty?&lt;/h2&gt;
+
+&lt;p&gt;No computer vision system is perfect, so an image classification algorithm sometimes identifies people as not-people, or not-people as people.
+While we usually care about the class with the highest output (the “most likely” class), we can treat the softmax outputs of a classifier as uncertainty estimates.
+(After all, that is how we trained a model when treating the softmax outputs of a classifier as a probability distribution, and minimizing the negative log likelihood of the model given the data.)
+For example, out of 1000 classifications made with an output of 0.8, approximately 800 should be correct &lt;em&gt;if the system is well-calibrated&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;yolo.png&quot; alt=&quot;Example output of a YOLO object detection network&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(Example output of a YOLO object detection network, with the probability estimates. Image source: &lt;a href=&quot;https://www.analyticsvidhya.com/blog/2018/12/practical-guide-object-detection-yolo-framewor-python/&quot;&gt;Analytics Vidhya&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;Ideally, we want our system to be 100% correct, but we rarely have access to an all-knowing Oracle. In cases where it is hard to distinguish between two categories (like on the cat-dog below) we want the uncertainties to be well-calibrated, so that predictions are neither overly confident nor insufficiently confident.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;catdog.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(Image source: Google Brain)&lt;/p&gt;
+
+&lt;h2 id=&quot;our-results&quot;&gt;Our results&lt;/h2&gt;
+
+&lt;h3 id=&quot;interim-report&quot;&gt;Interim report&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;mlp-cw3.pdf&quot;&gt;Link to report (PDF)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Our initial experiments showed that our baseline model is already well-calibrated when trained on the EMNIST By-Class dataset.
+Calibration worsened when we used only a subset of the training set.
+We found that increasing regularization increases calibration, but too much regularization leads to a decrease in both accuracy and calibration. (See figure below.)
+This contradicts the findings of &lt;a class=&quot;citation&quot; href=&quot;#Guo2017-calibration&quot;&gt;(Guo, Pleiss, Sun, &amp;amp; Weinberger, 2017, sec. 3)&lt;/a&gt;, who found that model calibration can improve by increasing the weight decay constant, well after the model achieves minimum classification accuracy.
+One of our main findings is that cross-entropy error is not a good indicator of model calibration.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;mlp-cw3-fig5.png&quot; alt=&quot;Figure 5 of our interim report.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(ECE: expected calibration error. The lower the better.)&lt;/p&gt;
+
+&lt;h3 id=&quot;final-report&quot;&gt;Final report&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;mlp-cw4.pdf&quot;&gt;Link to report (PDF)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We replicate the findings of &lt;a class=&quot;citation&quot; href=&quot;#Guo2017-calibration&quot;&gt;(Guo, Pleiss, Sun, &amp;amp; Weinberger, 2017)&lt;/a&gt; that deep neural networks achieve higher accuracy but worse calibration than shallow nets, and compare different approaches for improving the calibration of neural networks (see figure below). As the baseline approach, we consider the calibration of the softmax outputs from a single network; this is compared to &lt;em&gt;deep ensembles&lt;/em&gt;, &lt;em&gt;MC dropout&lt;/em&gt;, and &lt;em&gt;concrete dropout&lt;/em&gt;. Through experiments on the CIFAR-100 data set, we find that a large neural network can be significantly over-confident about its predictions. We show on a classification problem that an ensemble of deep networks has better classification accuracy and calibration compared to a single network, and that MC dropout and concrete dropout significantly improve the calibration of a large network.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;mlp-cw4-fig2.png&quot; alt=&quot;Confidence and calibration plots for BigNet. (Figure 2 of our report)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(&lt;em&gt;Top row:&lt;/em&gt; confidence plots for a deep neural net. The more right, the better. &lt;em&gt;Bottom row:&lt;/em&gt; corresponding calibration plots. The more close to the diagonal, the better.)&lt;/p&gt;
+
+&lt;h2 id=&quot;things-i-would-do-differently&quot;&gt;Things I would do differently&lt;/h2&gt;
+
+&lt;p&gt;With a little more experience behind my back now, I would make the following changes in experiment design and writing the report:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Use a validation set.&lt;/em&gt; We only used a training set because we trained for minimum error, and we expected &lt;em&gt;calibration&lt;/em&gt; to be independent from &lt;em&gt;accuracy&lt;/em&gt;, but that is a strong assumption (and likely incorrect, seeing our results in the interim report).&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Use better biblography sources.&lt;/em&gt; Instead of Google Scholar, I would search &lt;a href=&quot;https://dblp.uni-trier.de/&quot;&gt;DBLP&lt;/a&gt;, where the information is more correct and consistent.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Use pastel colors.&lt;/em&gt; I let my collaborator have it his way, but ever since this submission I’m having nightmares in purple and glowing green :D&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In future work, I would like to test the calibration of a Bayesian neural network, where the weights of the network have a probability distribution instead of a point estimate.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ol class=&quot;bibliography&quot;&gt;&lt;li&gt;&lt;span id=&quot;Guo2017-calibration&quot;&gt;Guo, C., Pleiss, G., Sun, Y., &amp;amp; Weinberger, K. Q. (2017). On Calibration of Modern Neural Networks. In D. Precup &amp;amp; Y. W. Teh (Eds.), &lt;i&gt;Proceedings of the 34th International Conference on Machine Learning&lt;/i&gt; (Vol. 70, pp. 1321–1330). International Convention Centre, Sydney, Australia: PMLR. Retrieved from http://proceedings.mlr.press/v70/guo17a.html&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name></name></author><summary type="html">On the overconfidence of modern neural networks. This is the title of the coursework I did with a fellow student at the University of Edinburgh. (PDF: Part 1, Part 2.)</summary></entry><entry><title type="html">Paper summary: Abbeel, Ng: Inverse Reinforcement Learning (2004)</title><link href="https://treszkai.github.io/2019/08/19/irl-summary" rel="alternate" type="text/html" title="Paper summary: Abbeel, Ng: Inverse Reinforcement Learning (2004)" /><published>2019-08-19T00:00:00+02:00</published><updated>2019-08-19T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/08/19/irl-summary</id><content type="html" xml:base="https://treszkai.github.io/2019/08/19/irl-summary">&lt;p&gt;This post is a summary of the seminal paper on inverse reinforcement learning: Pieter Abbeel, Andrew Y. Ng: &lt;em&gt;Apprenticeship Learning via Inverse Reinforcement Learning&lt;/em&gt; (2004) [&lt;a href=&quot;http://ai.stanford.edu/~pabbeel/irl/&quot;&gt;link&lt;/a&gt;].&lt;/p&gt;
 
 &lt;p&gt;Traditional &lt;a href=&quot;http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.html&quot;&gt;reinforcement learning&lt;/a&gt; (RL) starts with specifying a reward function, and during training we search for policies that maximize this reward function&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. In contrast, inverse reinforcement learning (IRL) starts with expert demonstrations of the desired behavior, infers a reward function that the expert likely followed, and trains a policy to maximize that.&lt;/p&gt;
 
@@ -1117,31 +1179,4 @@ function hideByClass(cls) {
 &lt;ul&gt;
   &lt;li&gt;GIF: &lt;a href=&quot;https://www.youtube.com/watch?v=fR2hajcuFEM&quot;&gt;Top Gun&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Script: &lt;a href=&quot;https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12&quot;&gt;Quora answer of John Vuong&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Some versatile tools for bash</title><link href="https://treszkai.github.io/2018/05/16/bash-versatile" rel="alternate" type="text/html" title="Some versatile tools for bash" /><published>2018-05-16T00:00:00+02:00</published><updated>2018-05-16T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/05/16/bash-versatile</id><content type="html" xml:base="https://treszkai.github.io/2018/05/16/bash-versatile">&lt;p&gt;I rarely use bash besides the basics: I could use a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop even if woken up at night, but my knowledge of the language doesn’t go much further. Hence instead of trying to memorize all the &lt;code class=&quot;highlighter-rouge&quot;&gt;{}%$&lt;/code&gt; magic, having a few versatile commands in my toolbox comes handy.&lt;/p&gt;
-
-&lt;p&gt;Recently I faced the task of renaming a set of files {&lt;code class=&quot;highlighter-rouge&quot;&gt;foo 02.jpg&lt;/code&gt;, …, &lt;code class=&quot;highlighter-rouge&quot;&gt;foo 74.jpg&lt;/code&gt;} to {&lt;code class=&quot;highlighter-rouge&quot;&gt;foo 06.jpg&lt;/code&gt;, …, &lt;code class=&quot;highlighter-rouge&quot;&gt;foo 78.jpg&lt;/code&gt;}, while keeping the order. My approach contained nothing extraordinary:&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;seq &lt;/span&gt;74 2&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;do
-    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; oldname &lt;span class=&quot;s2&quot;&gt;&quot;foo %02d.jpg&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; newname &lt;span class=&quot;s2&quot;&gt;&quot;foo %02d.jpg&quot;&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;+4&quot;&lt;/span&gt; | bc&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$oldname&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$newname&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Yet there were some educational points in it:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;One loops a variable &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; over the lines of a string &lt;code class=&quot;highlighter-rouge&quot;&gt;values&lt;/code&gt; by &lt;code class=&quot;highlighter-rouge&quot;&gt;for x in values; do something; something_else; done&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;seq a b&lt;/code&gt; simply prints out the integers from &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt;, inclusive, regardless of which is larger.&lt;/li&gt;
-  &lt;li&gt;Variable &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; is assigned a value by &lt;code class=&quot;highlighter-rouge&quot;&gt;x=foobar&lt;/code&gt;, where there must be &lt;em&gt;no spaces around the equation sign&lt;/em&gt;.The value of &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; can then be referred to by &lt;code class=&quot;highlighter-rouge&quot;&gt;$x&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Renaming a set of files to a similar name but later in the alphabet must be done in reverse order.&lt;/li&gt;
-  &lt;li&gt;Bash has a built-in &lt;code class=&quot;highlighter-rouge&quot;&gt;printf&lt;/code&gt; that seems to work as in C: first the string to be printed with format specifiers like &lt;code class=&quot;highlighter-rouge&quot;&gt;%02d&lt;/code&gt;, followed by the arguments whose values are used according to the format specifiers.&lt;/li&gt;
-  &lt;li&gt;With the &lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; option of &lt;code class=&quot;highlighter-rouge&quot;&gt;printf&lt;/code&gt;, you can save the output into a variable.&lt;/li&gt;
-  &lt;li&gt;One can use &lt;code class=&quot;highlighter-rouge&quot;&gt;$(  )&lt;/code&gt; for executing a command and having bash treat the output as the source code. (It’s the same as using backticks, as around &lt;code class=&quot;highlighter-rouge&quot;&gt;seq 74 2&lt;/code&gt;, but allows nesting and is clearer. Kinda like &lt;code class=&quot;highlighter-rouge&quot;&gt;eval&lt;/code&gt; in other languages, like JavaScript.) Not shown here, but it even works in quotation marks, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;$(echo hey yo)&quot;&lt;/code&gt; is like writing &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;hey yo&quot;&lt;/code&gt;. Note that the trailing newline is deleted.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bc&lt;/code&gt; is a calculator that reads from the input and outputs nothing but the result on a single line.&lt;/li&gt;
-  &lt;li&gt;Don’t forget the quotes around arguments with spaces, like with &lt;code class=&quot;highlighter-rouge&quot;&gt;mv&lt;/code&gt; above.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;One minute of further bash tips are provided by Julia Evans &lt;a href=&quot;https://drawings.jvns.ca/bashtips/&quot;&gt;[here]&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">I rarely use bash besides the basics: I could use a for loop even if woken up at night, but my knowledge of the language doesn’t go much further. Hence instead of trying to memorize all the {}%$ magic, having a few versatile commands in my toolbox comes handy.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><summary type="html"></summary></entry></feed>

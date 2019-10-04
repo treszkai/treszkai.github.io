@@ -54,7 +54,7 @@ We replicate the findings of {% cite Guo2017-calibration %} that deep neural net
 
 ![Confidence and calibration plots for BigNet. (Figure 2 of our report)](mlp-cw4-fig2.png)
 
-(_Top row:_ confidence plots for a deep neural net. The more right, the better. _Bottom row:_ corresponding calibration plots. The more close to the diagonal, the better.)
+(_Top row:_ confidence plots for a deep neural net. The more skewed to the right, the better. _Bottom row:_ corresponding calibration plots. The more close to the diagonal, the better.)
 
 ## Things I would do differently
 

@@ -1,5 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://treszkai.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://treszkai.github.io/" rel="alternate" type="text/html" /><updated>2019-10-04T12:50:19+02:00</updated><id>https://treszkai.github.io/feed.xml</id><title type="html">Laszlo Treszkai</title><subtitle>Explorations in math, AI, ML, et al.
-</subtitle><entry><title type="html">On the overconfidence of modern neural networks</title><link href="https://treszkai.github.io/2019/09/26/overconfidence" rel="alternate" type="text/html" title="On the overconfidence of modern neural networks" /><published>2019-09-26T00:00:00+02:00</published><updated>2019-09-26T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/09/26/overconfidence</id><content type="html" xml:base="https://treszkai.github.io/2019/09/26/overconfidence">&lt;p&gt;&lt;em&gt;On the overconfidence of modern neural networks&lt;/em&gt;. This is the title of the coursework I did with a fellow student at the University of Edinburgh. (PDF: &lt;a href=&quot;mlp-cw3.pdf&quot;&gt;Part 1&lt;/a&gt;, &lt;a href=&quot;mlp-cw4.pdf&quot;&gt;Part 2&lt;/a&gt;.)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="https://treszkai.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://treszkai.github.io/" rel="alternate" type="text/html" /><updated>2019-10-08T23:31:58+02:00</updated><id>https://treszkai.github.io/feed.xml</id><title type="html">Laszlo Treszkai</title><subtitle>Explorations in math, AI, ML, et al.
+</subtitle><entry><title type="html">Trust in numbers (Sir David Spiegelhalter) – talk notes</title><link href="https://treszkai.github.io/2019/10/08/trust-in-numbers" rel="alternate" type="text/html" title="Trust in numbers (Sir David Spiegelhalter) – talk notes" /><published>2019-10-08T00:00:00+02:00</published><updated>2019-10-08T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/10/08/trust-in-numbers</id><content type="html" xml:base="https://treszkai.github.io/2019/10/08/trust-in-numbers">&lt;p&gt;The Institute of Medical Statistics of the Center for Medical Statistics, Informatics and Intelligent Systems at the Medical University of Vienna just turned 50 years old, and they organized a two-day event around it. I was fortunate to have attended the keynote talk of Sir David Spiegelhalter (&lt;a href=&quot;&quot;&gt;wiki&lt;/a&gt;), who is a British statistician and &lt;a href=&quot;https://en.wikipedia.org/wiki/Winton_Professorship_of_the_Public_Understanding_of_Risk&quot;&gt;Winton Professor of the Public Understanding of Risk&lt;/a&gt; at the Faculty of Mathematics, University of Cambridge, which was one of the most entertaining &lt;em&gt;and&lt;/em&gt; informative talk I have heard. There is no way I can do justice to the talk, and I wouldn’t even attempt to bring through the humor (his &lt;em&gt;humour&lt;/em&gt;) – the goal of this post is to increase your vigilance a little bit, when it comes to any reports about science.&lt;/p&gt;
+
+&lt;p&gt;The professor has authored several academic books on statistics, such as &lt;a href=&quot;https://www.springer.com/gp/book/9780387987675&quot;&gt;Probabilistic Networks and Expert Systems&lt;/a&gt;, and was interviewed by the CNN with the title, &lt;a href=&quot;https://edition.cnn.com/videos/tv/2019/04/01/amanpour-david-spiegelhalter-statistics.cnn&quot;&gt;&lt;em&gt;Why statistics should make you suspicious&lt;/em&gt;&lt;/a&gt; (18’ 50” long).&lt;/p&gt;
+
+&lt;p&gt;The problem explained in the talk was that &lt;strong&gt;numbers are used to persuade people, not to inform them&lt;/strong&gt;. (Actually, that was only the first half – the second half offered a handful of steps we could take when presenting our data.) Take for example politics, and the campaign around Brexit. Even if it were true that it costs £350 million a week for the UK to be a member of the EU, it would be much less misleading if it said that it costs 80 pence &lt;em&gt;per person per day&lt;/em&gt; to be a member of the EU. The cost of a bag of potato chips. (The other side committed similar errors too – I’m not trying to win a battle here.)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;nhs.png&quot; alt=&quot;We send the EU £350 million a week; let’s fund our NHS instead. Vote Leave.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As Eliezer Yudkowsky says, &lt;a href=&quot;https://www.lesswrong.com/posts/9weLK2AJ9JEt2Tt8f/politics-is-the-mind-killer&quot;&gt;politics is the mind-killer&lt;/a&gt;, but of course, using numbers to mislead instead of to show an honest representation of reality is done everywhere where there are numbers. My favorite topic these days: &lt;strong&gt;medical statistics&lt;/strong&gt;. I’m picking a topic from the talk as an example (which Spiegelhalter analyzed in more detail in a &lt;a href=&quot;https://medium.com/wintoncentre/are-we-individuals-or-members-of-populations-the-deeper-issues-behind-the-sausage-wars-a067aebf2063&quot;&gt;Medium post&lt;/a&gt;): dietary advice of processed meat consumption. CNN did a &lt;a href=&quot;https://edition.cnn.com/2019/04/17/health/colorectal-cancer-risk-red-processed-meat-study-intl/index.html&quot;&gt;great job&lt;/a&gt; with picking the title of their article to be as close to the original conclusions as possible: &lt;em&gt;Eating just one slice of bacon a day linked to higher risk of colorectal cancer, says study&lt;/em&gt;. But by the time this study reaches The Sun, it gets reported as the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;bacon.jpg&quot; alt=&quot;Rasher of bacon a day is deadly&quot; /&gt;.&lt;/p&gt;
+
+&lt;p&gt;Boy, that escalated quickly. And what does “higher risk of colorectal cancer” mean anyhow? In this case, the study showed a 19% increase. As Peter Attia explains in his detailed post series on science, &lt;a href=&quot;https://peterattiamd.com/ns001/&quot;&gt;Studying Studies&lt;/a&gt;, such big numbers generally mean an increase in &lt;em&gt;relative risk&lt;/em&gt;, not in &lt;em&gt;absolute risk&lt;/em&gt;. Relative risk is meaningless without knowing the base rate of the disease. In this case, 5% of US men and women born today are expected to be diagnosed with colorectal cancer sometime during their lives. Add 19% to that 5% figure (i.e., multiply it by 1.19), and you get 6%, for the people who eat 1 slice of bacon a day. (The 5% figure is surprisingly high, by the way! Fortunately, it has a five-year survival rate of 65%. I don’t know how much of the 5% is a false positive; I guess it doesn’t include the disconfirmed cases. These figures I just gathered from &lt;a href=&quot;https://en.wikipedia.org/wiki/Colorectal_cancer#Epidemiology&quot;&gt;Wikipedia&lt;/a&gt;, FWIW.)&lt;/p&gt;
+
+&lt;p&gt;You can take the extra step and visualize these numbers using what &lt;a href=&quot;https://en.wikipedia.org/wiki/Gerd_Gigerenzer&quot;&gt;Gigerenzer&lt;/a&gt; calls natural frequencies. As one Wikipedia author puts it, “the problem is not simply in the human mind, but in the representation of the information”, so let’s deliver using things we evolved to understand: a small tribe of human-like icons.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;All&lt;/em&gt; of these people below eat a clean diet without processed meat, and those with a distraught face will get colorectal cancer:&lt;/p&gt;
+
+&lt;p&gt;😎😎😎😎😎😎😫😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😫😎😎😎😎😎😎&lt;br /&gt;
+😎😎😫😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😫&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😫😎😎&lt;/p&gt;
+
+&lt;p&gt;And &lt;em&gt;all&lt;/em&gt; of these people eat a slice of &lt;a href=&quot;https://en.wikipedia.org/wiki/Extrawurst&quot;&gt;Extrawurst&lt;/a&gt; daily:&lt;/p&gt;
+
+&lt;p&gt;😎😎😎😎😎😎😫😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😫😎😎😎😎😎😎&lt;br /&gt;
+😎😎😫😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😫&lt;br /&gt;
+😎😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😫😎😎😎😎😎😎😎😎😎&lt;br /&gt;
+😎😎😎😎😎😎😎😫😎😎&lt;/p&gt;
+
+&lt;p&gt;See the difference? It’s that one troubled guy in row 9.&lt;/p&gt;
+
+&lt;p&gt;Now, I’m not saying bacon is good for health, or that that additional risk factor would be negligible (admittedly, my mocking tone above suggests otherwise). But if the scientists, journalists, and clinicians report the risk honestly, &lt;em&gt;and&lt;/em&gt; no-one is trying to influence you into eating more burgers by playing at our primal instincts (including the marketing division of McDonald’s and our social group who calls you chicken if you don’t eat your &lt;a href=&quot;https://en.wikipedia.org/wiki/Black_pudding&quot;&gt;black pudding&lt;/a&gt;), then us puny humans could make more educated decisions about which sacrifices we are willing to make.&lt;/p&gt;
+
+&lt;p&gt;This post was just a tiny part of what was said at the talk. In parting, I have two takeaway quotes. First,&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;80% of statistics are false.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;(From anonymous statistician, a comedian, and also Elon Musk.) Unfortunately, this factoid alone doesn’t enable one to navigate reality.&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/aHGd6LqAVzw?start=43&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;The second quote is of a little more value, but still doesn’t help one to sieve through statistics:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;There’s no point in being trustworthy if you’re boring.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;(From Spiegelhalter in today’s talk.)&lt;/p&gt;
+
+&lt;p&gt;This talk was anything but boring. If you have a chance to see Spiegelhalter in person, do so: he gets my highest grade recommendation. (He also has a book, titled &lt;a href=&quot;https://smile.amazon.com/Art-Statistics-How-Learn-Data/dp/1541618513&quot;&gt;&lt;em&gt;The Art of Statistics&lt;/em&gt;&lt;/a&gt;, which I haven’t read.)&lt;/p&gt;
+
+&lt;p&gt;(Somewhat related: just today on my way home I learned of Edward Tufte’s book, &lt;em&gt;The Visual Display of Quantitative Information,&lt;/em&gt; which also &lt;a href=&quot;https://www.edwardtufte.com/tufte/books_vdqi&quot;&gt;looks amazing&lt;/a&gt;.)&lt;/p&gt;</content><author><name></name></author><summary type="html">The Institute of Medical Statistics of the Center for Medical Statistics, Informatics and Intelligent Systems at the Medical University of Vienna just turned 50 years old, and they organized a two-day event around it. I was fortunate to have attended the keynote talk of Sir David Spiegelhalter (wiki), who is a British statistician and Winton Professor of the Public Understanding of Risk at the Faculty of Mathematics, University of Cambridge, which was one of the most entertaining and informative talk I have heard. There is no way I can do justice to the talk, and I wouldn’t even attempt to bring through the humor (his humour) – the goal of this post is to increase your vigilance a little bit, when it comes to any reports about science.</summary></entry><entry><title type="html">On the overconfidence of modern neural networks</title><link href="https://treszkai.github.io/2019/09/26/overconfidence" rel="alternate" type="text/html" title="On the overconfidence of modern neural networks" /><published>2019-09-26T00:00:00+02:00</published><updated>2019-09-26T00:00:00+02:00</updated><id>https://treszkai.github.io/2019/09/26/overconfidence</id><content type="html" xml:base="https://treszkai.github.io/2019/09/26/overconfidence">&lt;p&gt;&lt;em&gt;On the overconfidence of modern neural networks&lt;/em&gt;. This is the title of the coursework I did with a fellow student at the University of Edinburgh. (PDF: &lt;a href=&quot;mlp-cw3.pdf&quot;&gt;Part 1&lt;/a&gt;, &lt;a href=&quot;mlp-cw4.pdf&quot;&gt;Part 2&lt;/a&gt;.)&lt;/p&gt;
 
 &lt;p&gt;Our topic was influenced by a previous study, titled &lt;em&gt;On Calibration of Modern Neural Networks&lt;/em&gt; &lt;a class=&quot;citation&quot; href=&quot;#Guo2017-calibration&quot;&gt;(Guo, Pleiss, Sun, &amp;amp; Weinberger, 2017)&lt;/a&gt;.&lt;/p&gt;
 
@@ -1144,39 +1210,4 @@ function hideByClass(cls) {
                Planning and Scheduling, ICAPS 2007, Providence, Rhode Island, USA,
                September 22-26, 2007&lt;/i&gt; (p. 352). AAAI. Retrieved from http://www.aaai.org/Library/ICAPS/2007/icaps07-045.php&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span id=&quot;Yoon2008-probabilistic-planning&quot;&gt;Yoon, S. W., Fern, A., Givan, R., &amp;amp; Kambhampati, S. (2008). Probabilistic Planning via Determinization in Hindsight. In D. Fox &amp;amp; C. P. Gomes (Eds.), &lt;i&gt;Proceedings of the Twenty-Third AAAI Conference on Artificial Intelligence,
-               AAAI 2008, Chicago, Illinois, USA, July 13-17, 2008&lt;/i&gt; (pp. 1010–1016). AAAI Press. Retrieved from http://www.aaai.org/Library/AAAI/2008/aaai08-160.php&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name></name></author><summary type="html">This post briefly describes the problem of probabilistic planning, and explains in informal terms what makes a planning problem probabilistically interesting, along with some examples.</summary></entry><entry><title type="html">Change YouTube speed from your favorites bar</title><link href="https://treszkai.github.io/2018/05/23/youtube-speed" rel="alternate" type="text/html" title="Change YouTube speed from your favorites bar" /><published>2018-05-23T00:00:00+02:00</published><updated>2018-05-23T00:00:00+02:00</updated><id>https://treszkai.github.io/2018/05/23/youtube-speed</id><content type="html" xml:base="https://treszkai.github.io/2018/05/23/youtube-speed">&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/need-for-speed.gif&quot; alt=&quot;I feel the need... the need for speed.&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;premise&quot;&gt;Premise&lt;/h1&gt;
-
-&lt;p&gt;While the UI of YouTube only shows only limited set of high-speed options, it is possible to set the speed to any floating point value. Even better, one can do so from their favorites bar with bookmarklets.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/youtube.png&quot; alt=&quot;Youtube dialog to set speed&quot; /&gt;   ⇒   &lt;img src=&quot;/files/youtube-speed/bookmarklets.png&quot; alt=&quot;Bookmarks to set youtube speed&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;method&quot;&gt;Method&lt;/h1&gt;
-
-&lt;p&gt;Simply add any of the following code snippets as bookmarks.&lt;/p&gt;
-
-&lt;p&gt;If you have a fixed speed in mind, e.g. 2.5:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;javascript:document.getElementsByTagName(&quot;video&quot;)[0].playbackRate=2.5;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Or save this line to show a prompt that asks for a floating-point input:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;javascript:var%20speed=prompt(&quot;Speed:&quot;,&quot;1.&quot;);document.getElementsByTagName(&quot;video&quot;)[0].playbackRate=parseFloat(speed);&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Which results in the following prompt:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/files/youtube-speed/custom.png&quot; alt=&quot;A prompt that asks for speed&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;caveats&quot;&gt;Caveats&lt;/h1&gt;
-
-&lt;p&gt;Works with YouTube and Vimeo.&lt;/p&gt;
-
-&lt;p&gt;The speed display in the video player will remain to show the last setting.&lt;/p&gt;
-
-&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;GIF: &lt;a href=&quot;https://www.youtube.com/watch?v=fR2hajcuFEM&quot;&gt;Top Gun&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Script: &lt;a href=&quot;https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12&quot;&gt;Quora answer of John Vuong&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html"></summary></entry></feed>
+               AAAI 2008, Chicago, Illinois, USA, July 13-17, 2008&lt;/i&gt; (pp. 1010–1016). AAAI Press. Retrieved from http://www.aaai.org/Library/AAAI/2008/aaai08-160.php&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><author><name></name></author><summary type="html">This post briefly describes the problem of probabilistic planning, and explains in informal terms what makes a planning problem probabilistically interesting, along with some examples.</summary></entry></feed>

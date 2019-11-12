@@ -83,7 +83,7 @@ end
 
 desc "Build site and push"
 task :push => :prod do
-    sh 'cd _site; git add -A && git commit -m "Update (see source branch for description)" && git push; cd ..'
+    sh 'cd _site; git add -A . && git commit -m "Update (see source branch for description)" && git push; cd ..'
 end
 
 #

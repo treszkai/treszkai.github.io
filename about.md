@@ -14,4 +14,4 @@ Some of the things I did:
  - I verified the design and implementation of **electric** and **driverless vehicles** at Formula Student events, recently at [FS East](https://fseast.eu/gallery-2019/), which is an engineering competition for students to design and build a race car (over a year);
  - now I'm investigating ways and tools to improve statistical methods in medical research: embracing uncertainty for less false positives, more accurate inferences, easier meta-analyses.
 
-You can reach me at <laszlo.treszkai@gmail.com>, or by commenting at a post.
+You can reach me at firstname.lastname@gmail.com, or by commenting at a post.

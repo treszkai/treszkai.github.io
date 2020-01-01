@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python: mode options of open() function</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", "Helvetica", sans-serif;
+      font-size: 10pt;
+      text-align: center;
+      font-weight: 400;
+    }
+    code {
+      font-family: "Fira Code", monospace;
+    }
+    th { font-weight: 600;}
+    h1 {
+      font-size: 150%;
+      font-weight: normal;
+    }
+    table {
+      margin-left: auto;
+      margin-right: auto;
+      border-collapse: collapse;
+    }
+    tbody#options th:nth-of-type(1), tbody#options th:nth-of-type(2) {
+      background: hsl(0, 0%, 92%)
+    }
+    tr { border: 1pt solid black; }
+    tr#r, tr#w, tr#x {
+      border-bottom: none;
+    }
+    tr#w, tr#x, tr#a {
+      border-top: 0.5pt solid gray;
+    }
+    tbody#options th {
+      border-right: 0.5pt solid gray;
+    }
+    tbody#header tr { border: none; }
+    th, td { padding: .3em; }
+    .param { font-style: italic; }
+    .op::before,.op::after { content: "\2003" }
+    .paren {
+      margin-left: 0.1em;
+      margin-right: 0.1em;
+    }
+  </style>
+</head>
+<body>
+<h1>Python: <span class="param">mode</span> options of <code>open</code><span class="paren">(</span><span class="param">filepath</span>, <span class="param">mode</span>='r'<span class="paren">)</span></h1>
+<table>
+  <tbody id="header">
+    <tr><th></th> <th></th> <th>read/write</th> <th>options</th> <th>position</th></tr>
+  </tbody>
+  <tbody id="options">
+    <tr id="r"><th rowspan="4">base</th> <th>r</th> <td>read</td> <td></td> <td>0</td></tr>
+    <tr id="w"><!--  <th>base</th>   --> <th>w</th> <td>write</td> <td>truncate<br>( = delete content)</td> <td>0</td></tr>
+    <tr id="x"><!--  <th>base</th>   --> <th>x</th> <td>write</td> <td>fail if file exists</td> <td>0</td></tr>
+    <tr id="a"><!--  <th>base</th>   --> <th>a</th> <td>write</td> <td></td> <td>end</td></tr>
+    <tr><th>optional R+W</th> <th>+</th> <td>read+write</td> <td>(as above)</td> <td>(as above)</td></tr>
+    <tr><th>optional binary</th> <th>b</th> <td></td> <td>binary mode<br>(instead of text mode)</td> <td></td></tr>
+  </tbody>
+  <tbody id="notes">
+    <tr><td colspan="5" style="height: 4em; font-size: 120%;">
+      <span class="param">mode</span><span class="op">=</span>one of ‘r’ / ‘w’ / ‘x’ / ‘a’<span class="op">+</span>‘+’ or nothing<span class="op">+</span>‘b’ or nothing
+    </td></tr>
+    <tr><td colspan="5" style="text-align: left">Notes:<br>
+      <ul style="margin: 0em; margin-top: 0.3em;">
+        <li><code>f.write()</code> sets the position of <code>f.read()</code> and <code>f.write()</code> to the end of written content.</li>
+        <li><code>f.read()</code> sets the <em>write</em> position to the end of the <em>file</em>.</li>
+        <li><code>f.seek()</code> sets the position of both <code>f.write()</code> and <code>f.read()</code>.</li>
+      </ul>
+    </td></tr>
+  </tbody>
+</table>
+</body>
+</html>

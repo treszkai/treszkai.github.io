@@ -76,9 +76,10 @@
   <tbody id="notes">
     <tr><td colspan="5">Notes:<br>
       <ul>
-        <li><code>f.read()</code> sets the <em>read</em> position to the end of the <em>read content</em>, and the <em>write</em> position to the end of the <em>file</em>.<sup><a href="https://gist.github.com/treszkai/2349acf6e77d62bd99532030e681a639">[test]</a></sup></li>
+        <li><code>f.read()</code> sets the <em>read</em> position after the byte last read.
+        <li><code>f.read()</code> sets the <em>write</em> position to the end of the <em>file</em> in Python 3. <sup><a href="https://gist.github.com/treszkai/2349acf6e77d62bd99532030e681a639">[test]</a></sup></li>
         <li><code>f.write()</code> sets the read and write position to the end of the written content.</li>
-        <li><code>f.seek()</code> sets the position of both <code>f.write()</code> and <code>f.read()</code>.</li>
+        <li><code>f.seek()</code> sets both the read and write positions.</li>
       </ul>
     </td></tr>
   </tbody>

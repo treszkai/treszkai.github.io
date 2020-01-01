@@ -45,11 +45,12 @@
     tbody#notes tr { text-align: left; }
     th, td { padding: .3em; }
     .param { font-style: italic; }
-    .op::before,.op::after { content: "\2003" }
+    .op::before,.op::after { content: "\2003 " }
     .paren {
       margin-left: 0.1em;
       margin-right: 0.1em;
     }
+    .nowrap { white-space: nowrap; }
     tbody#notes ul {
       margin: 0em;
       margin-top: 0.3em;
@@ -57,11 +58,11 @@
   </style>
 </head>
 <body>
-<h1>Python: <span class="param">mode</span> options of <code>open</code><span class="paren">(</span><span class="param">filepath</span>, <span class="param">mode</span>='r'<span class="paren">)</span></h1>
+<h1>Python: <span class="param">mode</span> options of <code>open</code><span class="paren">(</span><span class="param">filepath</span>,&nbsp;<span class="param">mode</span>='r'<span class="paren">)</span></h1>
 <table>
   <tbody id="summary">
     <tr><td colspan="5">
-      <span class="param">mode</span><span class="op">=</span>one of ‘r’ / ‘w’ / ‘x’ / ‘a’<span class="op">+</span>‘+’ or nothing<span class="op">+</span>‘b’ or nothing
+      <span class="param">mode</span><span class="op">=</span><span class="nowrap">one of ‘r’ / ‘w’ / ‘x’ / ‘a’</span><span class="op">+</span><span class="nowrap">‘+’ or nothing</span><span class="op">+</span><span class="nowrap">‘b’ or nothing</span>
     </td></tr>
   </tbody>
   <tbody id="options">

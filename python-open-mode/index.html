@@ -10,8 +10,8 @@
       text-align: center;
       font-weight: 400;
     }
-    td { text-align: left; }
     tbody#summary td { text-align: center; }
+    tbody#notes td, tbody#options td { text-align: left;}
     code {
       font-family: "Fira Code", monospace;
     }
@@ -24,13 +24,13 @@
       height: 4em;
       font-size: 120%;
     }
+    #license {
+      font-size: 75%;
+    }
     table {
       margin-left: auto;
       margin-right: auto;
       border-collapse: collapse;
-    }
-    tbody#options th:nth-of-type(1), tbody#options th:nth-of-type(2) {
-      background: hsl(0, 0%, 92%)
     }
     tr { border: 1pt solid black; }
     tr#r, tr#w, tr#x {
@@ -42,8 +42,10 @@
     tbody#options th {
       border-right: 0.5pt solid gray;
     }
-    tbody#notes tr { text-align: left; }
-    th, td { padding: .3em; }
+    tbody#options th:nth-of-type(1), tbody#options th:nth-of-type(2) {
+      background: hsl(0, 0%, 92%)
+    }
+    th, td { padding: .6em; }
     .param { font-style: italic; }
     .op::before,.op::after { content: "\2003 " }
     .paren {
@@ -55,13 +57,17 @@
       margin: 0em;
       margin-top: 0.3em;
     }
+    p#license {
+      max-width: 50%;
+      margin: 5em auto 2em auto;
+    }
   </style>
 </head>
 <body>
 <h1>Python: <span class="param">mode</span> options of <code>open</code><span class="paren">(</span><span class="param">filepath</span>,&nbsp;<span class="param">mode</span>='r'<span class="paren">)</span></h1>
 <table>
   <tbody id="summary">
-    <tr><td colspan="5">
+    <tr><td colspan="3">
       <span class="param">mode</span><span class="op">=</span><span class="nowrap">one of ‘r’ / ‘w’ / ‘x’ / ‘a’</span><span class="op">+</span><span class="nowrap">‘+’ or nothing</span><span class="op">+</span><span class="nowrap">‘b’ or nothing</span>
     </td></tr>
   </tbody>
@@ -74,7 +80,7 @@
     <tr><th>optional binary</th> <th>b</th> <td>binary mode (instead of text mode); otherwise as above</tr>
   </tbody>
   <tbody id="notes">
-    <tr><td colspan="5">Notes:<br>
+    <tr><td colspan="3">Notes:<br>
       <ul>
         <li><code>f.read()</code> sets the <em>read</em> position after the byte last read.
         <li><code>f.read()</code> sets the <em>write</em> position to the end of the <em>file</em> in Python 3. <sup><a href="https://gist.github.com/treszkai/2349acf6e77d62bd99532030e681a639">[test]</a></sup></li>
@@ -84,5 +90,22 @@
     </td></tr>
   </tbody>
 </table>
+<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" id="license">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="https://licensebuttons.net/p/zero/1.0/80x15.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law,
+  <a rel="dct:publisher"
+     href="https://treszkai.github.io/python-open-mode/">
+    <span property="dct:title">László Treszkai</span></a>
+  has waived all copyright and related or neighboring rights to
+  <span property="dct:title">Python: options for the <span class="param">mode</span> parameter of <code>open()</code></span>.
+This work is published from:
+<span property="vcard:Country" datatype="dct:ISO3166"
+      content="HU" about="https://treszkai.github.io/python-open-mode/">
+  Hungary</span>.
+</p>
 </body>
 </html>

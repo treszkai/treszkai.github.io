@@ -72,18 +72,18 @@
     </td></tr>
   </tbody>
   <tbody id="options">
-    <tr id="r"><th rowspan="4">base</th> <th>r</th> <td>open for reading (default option), seek to the beginning of the file</td></tr>
-    <tr id="w"><!--  <th>base</th>   --> <th>w</th> <td>open for writing, delete existing content</td></tr>
-    <tr id="x"><!--  <th>base</th>   --> <th>x</th> <td>open for writing, fail if file exists</tr>
-    <tr id="a"><!--  <th>base</th>   --> <th>a</th> <td>open for writing, seek to the end of the file</tr>
-    <tr><th>optional R+W</th> <th>+</th> <td>open for read+write; otherwise as above</tr>
+    <tr id="r"><th rowspan="4">base</th> <th>r</th> <td>open for reading, seek to the beginning, raise <code>FileNotFoundError</code> if file doesn’t exist</td></tr>
+    <tr id="w"><!--  <th>base</th>   --> <th>w</th> <td>open for writing, delete existing content, create file if doesn’t exist yet</td></tr>
+    <tr id="x"><!--  <th>base</th>   --> <th>x</th> <td>open for writing, raise <code>FileExistsError</code> if file already exists</tr>
+    <tr id="a"><!--  <th>base</th>   --> <th>a</th> <td>open for writing, seek to the end of the file, create file if doesn’t exist yet</tr>
+    <tr><th>optional R+W</th> <th>+</th> <td>open for read+write (instead of only read or write); otherwise as above</tr>
     <tr><th>optional binary</th> <th>b</th> <td>binary mode (instead of text mode); otherwise as above</tr>
   </tbody>
   <tbody id="notes">
     <tr><td colspan="3">Notes:<br>
       <ul>
         <li><code>f.read()</code> sets the <em>read</em> position after the byte last read.
-        <li><code>f.read()</code> sets the <em>write</em> position to the end of the <em>file</em> in Python 3. <sup><a href="https://gist.github.com/treszkai/2349acf6e77d62bd99532030e681a639">[test]</a></sup></li>
+        <li><code>f.read()</code> sets the <em>write</em> position to the end of the <em>file</em> in Python 3 <sup><a href="https://gist.github.com/treszkai/2349acf6e77d62bd99532030e681a639">[test]</a></sup></li>
         <li><code>f.write()</code> sets the read and write position to the end of the written content.</li>
         <li><code>f.seek()</code> sets both the read and write positions.</li>
       </ul>

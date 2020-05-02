@@ -19,10 +19,10 @@ description: > # this means to ignore newlines until "baseurl:"
   Explorations in math, AI, ML, et al.
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://treszkai.github.io"
+url: "https://www.treszkai.com"
 twitter_username: ltreszkai
 github_username:  treszkai
-permalink: /:year/:month/:day/:title
+permalink: /blog/:title
 
 google_analytics: UA-114915944-1
 

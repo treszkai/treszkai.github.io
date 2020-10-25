@@ -14,7 +14,7 @@ _Give a model that fulfills every axiom of the Robinson arithmetics, and which c
 
 # A two-formula version of the diagonal lemma
 
-_Let $$\Gamma$$ be a theorem which can represent every recursive function. Prove that for every pair of formulae $$\Phi(x)$$ and $$\Psi(x)$$ with one free variable, there exist closed formulae $$\eta$$ and $$\theta$$ such that $$\Gamma \proves \eta \,\leftrightarrow\, \Phi(\Godel{\theta})$$ and $$\Gamma \proves \theta \,\leftrightarrow\, \Psi(\Godel{\eta})$$._
+_Let \(\Gamma\) be a theorem which can represent every recursive function. Prove that for every pair of formulae \(\Phi(x)\) and \(\Psi(x)\) with one free variable, there exist closed formulae \(\eta\) and \(\theta\) such that \(\Gamma \proves \eta \,\leftrightarrow\, \Phi(\Godel{\theta})\) and \(\Gamma \proves \theta \,\leftrightarrow\, \Psi(\Godel{\eta})\)._
 
 [Solution (PDF)](/files/logic-coursework/2017-05-logic-cw9ex1.pdf).
 

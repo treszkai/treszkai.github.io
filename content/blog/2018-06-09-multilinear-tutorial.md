@@ -4,9 +4,9 @@ category: math
 summary: Solutions for exercise 1 of tutorial 3 of the International Winter School on Gravity and Light.
 tags: starred
 latex_macros:
-    \linmap: \stackrel{\sim}{→}
-    \v: \mathbf{v}
-    \e: \mathbf{e}
+    "\linmap": "\stackrel{\sim}{→}"
+    "\v": "\mathbf{v}"
+    "\e": "\mathbf{e}"
 ---
 
 Solutions for exercise 1 of [tutorial 3](https://www.youtube.com/watch?v=5oeWX3NUhMA) of the [International Winter School on Gravity and Light](https://gravity-and-light.herokuapp.com). ([Link to video of lecture 3](https://www.youtube.com/watch?v=mbv3T15nWq0).)

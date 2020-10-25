@@ -19,7 +19,7 @@
     <meta name="tags" content="{{tag}}" />
   {% endfor %}
 
-  {% if article.latex or article.latex_macros %}
+  {% if (article.latex is defined and article.latex) or article.latex_macros is defined %}
     {% include 'katex.html' %}
   {% endif %}
 {% endblock %}

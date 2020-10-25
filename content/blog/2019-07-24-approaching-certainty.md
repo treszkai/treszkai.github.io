@@ -24,11 +24,11 @@ The node for $$x_i$$ is filled because it's observed, and the plate represents $
 
 If $$n_1$$ (resp. $$n_0$$) denote the number of samples where $$x_i$$ is true (resp. false), the likelihood is described by:
 
-$$p(\{x_i\} \given \theta) = \text{Binomial}(n_1 \given n = S, p = \theta).$$
+[p(\{x_i\} \given \theta) = \text{Binomial}(n_1 \given n = S, p = \theta).]
 
 We can assume a noninformative uniform prior on the probability $$\theta$$ on the unit interval. A Beta prior is conjugate to the Bernoulli likelihood, and $$p(\theta) = \text{Beta}(\theta \given \alpha_0 = 1, \beta_0 = 1) = \text{Uniform}(\theta \given a = 0, b = 1)$$, and this results in the following posterior:
 
-$$p(\theta \given \{x_i\}) = \text{Beta}(\theta \given \alpha_0 + n_0, \beta_0 + n_1).$$
+[p(\theta \given \{x_i\}) = \text{Beta}(\theta \given \alpha_0 + n_0, \beta_0 + n_1).]
 
 With $$n_1 = 1000$$ and $$n_0 = 0$$, this amounts to a $$\text{Beta}(1001, 1)$$ distribution, whose [pdf](https://en.wikipedia.org/wiki/Beta_distribution#Probability_density_function) is as such:
 
@@ -40,7 +40,7 @@ As expected, most of the probability mass is close to 1.0. But that graph is not
 
 The red line marks the mean of the distribution, which is approximately $$0.999$$, but not nearly all of the probability mass is on the right side of $$0.999$$. Using the [cdf](https://en.wikipedia.org/wiki/Cumulative_distribution_function) of the posterior, we have that
 
-$$P(\theta > 0.999) = 0.63,$$
+[P(\theta > 0.999) = 0.63,]
 
 meaning there's still a 1 in 3 chance that the posterior probability that $$\beta > 0$$ does _not_ exceed $$0.999$$. To be fair, **$$0.999$$ is still good for a “rough estimate”**, unless one has a strong prior for $$\beta < 0$$. (Given the nature of the experiment and the meaning of the parameter $$\beta$$ -- the toxicity of a compound --, a flat prior on “$$\beta > 0$$” is reasonable.)
 

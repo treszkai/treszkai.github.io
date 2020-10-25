@@ -49,9 +49,9 @@ Clarification:
  - The underlying field $$K$$ _does_ have the commutativity of multiplication as a field axiom: for any $$a,b \in K$$, $$a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a$$.
  - As a consequence, for any $$\mathbf v \in V$$ and $$a, b \in K$$,
 
-$$
+\[
  a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v).
-$$
+\]
 </div>
 
 **?.** _Every vector is a matrix with only one column._ <a href="#" onclick="showById('answer2', this); return false;" class="show-answer">Show answer</a>
@@ -104,11 +104,11 @@ _Answer:_ true.
 Clarification:
  - The lecture didn't mention tensor products, so a definition is in order. The product of an $$ (l,k) $$-tensor $$S$$ and an $$ (n,m) $$-tensor $$T$$ is an $$ (l+n,k+m) $$-tensor $$ S \otimes T $$, whose $$ (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) $$-th component is the product of the relevant components of $$S$$ and $$T$$:
 
-$$
+\[
  (S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}_ {j_1, \ldots, j_k, j_{k+1}, \ldots, j_{k+m} } =
    S^{i_1, \ldots, i_l}_ {j_1, \ldots, j_k}
    T^{i_{1}, \ldots, i_{n}}_ {j_{1}, \ldots, j_{m}}.
-$$
+\]
 
 [Source: Wikipedia](https://en.wikipedia.org/wiki/Tensor#Tensor_product)
 
@@ -118,7 +118,7 @@ This means that if the arguments of $$ S \otimes T $$ are
 
 (with some particular choice of basis vectors $$\{\e_i\}_i$$ and basis covectors $$\{\epsilon^i\}_i$$ ), then
 
-$$
+\[
 \begin{aligned}
 (S\otimes T) &(φ^{(1)}, \ldots, φ^{(l+n)}, \v_{(1)}, \ldots, \v_{(k+m)}) = \\
   &= S (φ^{(1)}, \ldots, φ^{(l)}, \v_{(1)}, \ldots, \v_{(k)})\,\cdot\,
@@ -144,11 +144,11 @@ $$
       S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
       T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
 \end{aligned}
-$$
+\]
 
 These $$ (l+n+k+m) $$ summations are quite a mess, but the above derivation shows that the [Einstein summation convention](http://mathworld.wolfram.com/EinsteinSummation.html) works for tensor products as well:
 
-$$
+\[
 \begin{aligned}
 (S\otimes T) &(φ^{(1)}, \ldots, φ^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) =\\
   &= S (φ^{(1)}, \ldots, φ^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
@@ -168,7 +168,7 @@ $$
       S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
       T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
 \end{aligned}
-$$
+\]
 </div>
 
 **?.** _You can always reconstruct a tensor from its components and the corresponding basis._ <a href="#" onclick="showById('answer7', this); return false;" class="show-answer">Show answer</a>

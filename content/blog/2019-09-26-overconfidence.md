@@ -6,7 +6,7 @@ summary: Evaluating various methods to improve the calibration of deep neural ne
 
 *On the overconfidence of modern neural networks*. This is the title of the coursework I did with a fellow student at the University of Edinburgh. (PDF: [Part 1](mlp-cw3.pdf), [Part 2](mlp-cw4.pdf).)
 
-Our topic was influenced by a previous study, titled _On Calibration of Modern Neural Networks_ {% cite Guo2017-calibration %}.
+Our topic was influenced by a previous study, titled _On Calibration of Modern Neural Networks_ <!-- {% cite Guo2017-calibration %} --> <a class="citation" href="#Guo2017-calibration">(Guo, Pleiss, Sun, &amp; Weinberger, 2017)</a>.
 
 Applications of uncertainty estimation include threshold-based outlier detection, active learning, uncertainty-driven exploration of reinforcement learning, or certain safety-critical applications.
 
@@ -38,7 +38,7 @@ Ideally, we want our system to be 100% correct, but we rarely have access to an 
 Our initial experiments showed that our baseline model is already well-calibrated when trained on the EMNIST By-Class dataset.
 Calibration worsened when we used only a subset of the training set.
 We found that increasing regularization increases calibration, but too much regularization leads to a decrease in both accuracy and calibration. (See figure below.)
-This contradicts the findings of {% cite Guo2017-calibration -L section -l 3 %}, who found that model calibration can improve by increasing the weight decay constant, well after the model achieves minimum classification accuracy.
+This contradicts the findings of <!-- {% cite Guo2017-calibration -L section -l 3 %} --> <a class="citation" href="#Guo2017-calibration">(Guo, Pleiss, Sun, &amp; Weinberger, 2017, sec. 3)</a>, who found that model calibration can improve by increasing the weight decay constant, well after the model achieves minimum classification accuracy.
 One of our main findings is that cross-entropy error is not a good indicator of model calibration.
 
 ![Figure 5 of our interim report.](mlp-cw3-fig5.png)
@@ -49,7 +49,7 @@ One of our main findings is that cross-entropy error is not a good indicator of 
 
 [Link to report (PDF)](mlp-cw4.pdf)
 
-We replicate the findings of {% cite Guo2017-calibration %} that deep neural networks achieve higher accuracy but worse calibration than shallow nets, and compare different approaches for improving the calibration of neural networks (see figure below). As the baseline approach, we consider the calibration of the softmax outputs from a single network; this is compared to _deep ensembles_, _MC dropout_, and _concrete dropout_. Through experiments on the CIFAR-100 data set, we find that a large neural network can be significantly over-confident about its predictions. We show on a classification problem that an ensemble of deep networks has better classification accuracy and calibration compared to a single network, and that MC dropout and concrete dropout significantly improve the calibration of a large network.
+We replicate the findings of <!-- {% cite Guo2017-calibration %} --> <a class="citation" href="#Guo2017-calibration">(Guo, Pleiss, Sun, &amp; Weinberger, 2017)</a>£ that deep neural networks achieve higher accuracy but worse calibration than shallow nets, and compare different approaches for improving the calibration of neural networks (see figure below). As the baseline approach, we consider the calibration of the softmax outputs from a single network; this is compared to _deep ensembles_, _MC dropout_, and _concrete dropout_. Through experiments on the CIFAR-100 data set, we find that a large neural network can be significantly over-confident about its predictions. We show on a classification problem that an ensemble of deep networks has better classification accuracy and calibration compared to a single network, and that MC dropout and concrete dropout significantly improve the calibration of a large network.
 
 ![Confidence and calibration plots for BigNet. (Figure 2 of our report)](mlp-cw4-fig2.png)
 
@@ -66,4 +66,6 @@ In future work, I would like to test the calibration of a Bayesian neural networ
 
 ## References
 
-{% bibliography --cited %}
+<!-- {% bibliography --cited %} -->
+<ol class="bibliography"><li><span id="Guo2017-calibration">Guo, C., Pleiss, G., Sun, Y., &amp; Weinberger, K. Q. (2017). On Calibration of Modern Neural Networks. In D. Precup &amp; Y. W. Teh (Eds.), <i>Proceedings of the 34th International Conference on Machine Learning</i> (Vol. 70, pp. 1321–1330). International Convention Centre, Sydney, Australia: PMLR. Retrieved from http://proceedings.mlr.press/v70/guo17a.html</span></li></ol>
+

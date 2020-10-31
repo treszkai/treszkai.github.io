@@ -9,10 +9,11 @@ THEME = 'theme'
 FILENAME_METADATA = r'(?P<date>\d{4}-\d\d-\d\d)-(?P<slug>.*)'
 
 PATH = 'content'
-ARTICLE_PATHS = ['blog']
+STATIC_PATHS = ['img']
+ARTICLE_PATHS = ['posts']
 ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
 ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'
-PAGE_PATHS = ['pages',  'legacy_redirects']
+PAGE_PATHS = ['pages', 'legacy_redirects']
 
 TIMEZONE = 'Europe/Paris'
 

@@ -8,12 +8,10 @@
         {{ macro_replacement | replace('\\', '\\\\') | safe }} {% if not loop.last %} , {% endif %} {% endfor %}
       };
       document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
-        var text = el.textContent === "" ? el.innerHTML : el.textContent;
-        el.outerHTML = katex.renderToString(text, { displayMode: false, macros: macros_dict });
+        el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: false, macros: macros_dict });
       });
       document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
-        var text = el.textContent === "" ? el.innerHTML : el.textContent;
-        el.outerHTML = katex.renderToString(text, { displayMode: true, macros: macros_dict });
+        el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: true, macros: macros_dict });
       });
     });
   </script>

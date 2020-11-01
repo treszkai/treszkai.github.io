@@ -1,7 +1,0 @@
-_site
-_site_noprod
-_site_prod
-.sass-cache
-.jekyll-metadata
-Gemfile.lock
-_drafts/

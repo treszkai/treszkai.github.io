@@ -6,11 +6,12 @@ SITENAME = 'Laszlo Treszkai'
 SITEURL = ''
 
 THEME = 'theme'
-FILENAME_METADATA = r'(?P<date>\d{4}-\d\d-\d\d)-(?P<slug>.*)'
+
+PATH_METADATA = r'(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*)'
 
 PATH = 'content'
-STATIC_PATHS = ['img']
-ARTICLE_PATHS = ['posts']
+STATIC_PATHS = ['']
+ARTICLE_PATHS = ['']
 ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
 ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'
 PAGE_PATHS = ['pages', 'legacy_redirects']

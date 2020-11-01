@@ -17,13 +17,13 @@ While we usually care about the class with the highest output (the “most likel
 (After all, that is how we trained a model when treating the softmax outputs of a classifier as a probability distribution, and minimizing the negative log likelihood of the model given the data.)
 For example, out of 1000 classifications made with an output of 0.8, approximately 800 should be correct _if the system is well-calibrated_.
 
-![Example output of a YOLO object detection network](yolo.png)
+![Example output of a YOLO object detection network]({attach}yolo.png)
 
 (Example output of a YOLO object detection network, with the probability estimates. Image source: [Analytics Vidhya](https://www.analyticsvidhya.com/blog/2018/12/practical-guide-object-detection-yolo-framewor-python/).)
 
 Ideally, we want our system to be 100% correct, but we rarely have access to an all-knowing Oracle. In cases where it is hard to distinguish between two categories (like on the cat-dog below) we want the uncertainties to be well-calibrated, so that predictions are neither overly confident nor insufficiently confident.
 
-![](catdog.jpeg)
+![]({attach}catdog.jpeg)
 
 (Image source: Google Brain)
 
@@ -41,7 +41,7 @@ We found that increasing regularization increases calibration, but too much regu
 This contradicts the findings of <!-- {% cite Guo2017-calibration -L section -l 3 %} --> <a class="citation" href="#Guo2017-calibration">(Guo, Pleiss, Sun, &amp; Weinberger, 2017, sec. 3)</a>, who found that model calibration can improve by increasing the weight decay constant, well after the model achieves minimum classification accuracy.
 One of our main findings is that cross-entropy error is not a good indicator of model calibration.
 
-![Figure 5 of our interim report.](mlp-cw3-fig5.png)
+![Figure 5 of our interim report.]({attach}mlp-cw3-fig5.png)
 
 (ECE: expected calibration error. The lower the better.)
 
@@ -51,7 +51,7 @@ One of our main findings is that cross-entropy error is not a good indicator of 
 
 We replicate the findings of <!-- {% cite Guo2017-calibration %} --> <a class="citation" href="#Guo2017-calibration">(Guo, Pleiss, Sun, &amp; Weinberger, 2017)</a>£ that deep neural networks achieve higher accuracy but worse calibration than shallow nets, and compare different approaches for improving the calibration of neural networks (see figure below). As the baseline approach, we consider the calibration of the softmax outputs from a single network; this is compared to _deep ensembles_, _MC dropout_, and _concrete dropout_. Through experiments on the CIFAR-100 data set, we find that a large neural network can be significantly over-confident about its predictions. We show on a classification problem that an ensemble of deep networks has better classification accuracy and calibration compared to a single network, and that MC dropout and concrete dropout significantly improve the calibration of a large network.
 
-![Confidence and calibration plots for BigNet. (Figure 2 of our report)](mlp-cw4-fig2.png)
+![Confidence and calibration plots for BigNet. (Figure 2 of our report)]({attach}mlp-cw4-fig2.png)
 
 (_Top row:_ confidence plots for a deep neural net. The more skewed to the right, the better. _Bottom row:_ corresponding calibration plots. The more close to the diagonal, the better.)
 

@@ -125,7 +125,7 @@ The [Poisson distribution](https://en.wikipedia.org/wiki/Poisson_distribution) i
 
 The distribution has a single parameter, which is a positive real number, and is often denoted \(λ\). The mean (expected value) of \(\text{Poisson}(λ)\) is \(λ\), and the standard deviation is \(\sqrt{λ}\). Its probability mass function is shown below for \(λ=100\), along with the 95% highest density interval (HDI) – the shortest interval that covers 95% of the probability mass.
 
-![Distribution of Poisson plot with mean 100](figs/poisson-dist.svg)
+![Distribution of Poisson plot with mean 100]({attach}figs/poisson-dist.svg)
 
 The analyzed studies reported the sum of AMIs on a given day over the period of the study (e.g. all posttransitional Tuesdays during the years 2010–2013), never the AMI counts for individual years. This sum is denoted with \(y_d\), where \(d\) signifies the day. We note again that the individual counts are each Poisson-distributed, so their sum is Poisson-distributed too. (However, their _average_ would not be Poisson-distributed.) This means that \(y_d\) is sampled from a Poisson distribution whose parameter \(x_d\) is the sum of the trend on day \(d\) over the period of the study (\(t_d\)), multiplied with the RR for the given day (\(r_d\)).
 
@@ -152,7 +152,7 @@ When performing a Bayesian analysis, we _must_ have prior expectations on the ex
 
 The infarction counts on neighboring days are conditionally independent given \(\theta\) (apart from exceptional cases, such as a mass catastrophe), which means we can model the days separately and simply multiply their likelihoods. (Prior to observing the data, it feels _very_ unlikely to us that there would be any effect on Friday, but one paper attempted to measure effects on the 2 and 4 weeks following DST adjustment, meaning they didn't think such a long-lasting effect is completely implausible, therefore we consider including Friday as part of the expert opinion.)
 
-![](figs/rr_example.svg)
+![]({attach}figs/rr_example.svg)
 
 This model of all weekdays is described by the following graph:
 
@@ -170,7 +170,7 @@ I believe \(\theta\) is likely to be approximately \(0.0\) (i.e., \(\text{RR} \a
 
 We can formalize this description by placing 50-50% of the prior probability mass of either there being zero effect (a Gaussian distribution with standard deviation of 0.01), or there being an increase in AMI counts, where the increase in RR has an Exponential(\(\lambda=0.2^{-1}\)) prior on it. (An Exponential(\(\lambda=0.2^{-1}\)) distribution has a mean of \(0.2\).) This distribution is plotted on the figure below.
 
-![Prior distribution of Monday RR](figs/prior_Monday.svg)
+![Prior distribution of Monday RR]({attach}figs/prior_Monday.svg)
 
 ### Prior beliefs about the RR (autumn)
 
@@ -322,7 +322,7 @@ To see the difference between a small and a large study, we visualize the prior 
 - Observation lower than trend, large sample size (bottom left);
 - Observation higher than trend, large sample size (bottom right).
 
-![](figs/test-posteriors.svg)
+![]({attach}figs/test-posteriors.svg)
 
 When the sample size is small, there is only a slight change from prior to posterior. With a large sample size, the prior beliefs barely have an effect on the posterior. (In the lower right plot, the posterior peaks at more than 1.1 because with 1100 AMI every day, the linear weekday model fits better with a larger RR.)
 
@@ -381,22 +381,22 @@ _(Autumn AMI counts. Trend predictions in parentheses, under them the number of 
 
 The posteriors after the individual papers are shown below, along with their 95% central credible interval (CCrI).
 
-![Forest plot that shows the posterior after the individual papers](figs/forest_plot.svg)
+![Forest plot that shows the posterior after the individual papers]({attach}figs/forest_plot.svg)
 
 The width of the 95% CCrI is a measure of the precision of the estimate. The 95% CCrI after (Janszky and Ljung, 2008) and (Sipilä et al. 2016) are comparably narrow, but they are centered around 1.085 and 1.001, respectively. In fact, as we can see from the likelihood functions (not shown here), the study of Sipilä et al. (2016) presents a case for a slight _decrease_ in AMI risk under this model.
 
 In the fixed effects model the posterior is weighted heavily towards the study with the largest sample size (Janszky and Ljung 2008), and the other studies barely play a role.
 Specifically, the posterior mean of the RR is 107.7% (95% central credible interval: \([104.7\%, 110.7\%]\)) – the posterior is shown below. We emphasize again that the relative weights of the studies is not arbitrary, but is fully determined by the model and the data through the rules of probability theory.
 
-![](figs/combined_posterior.svg)
+![]({attach}figs/combined_posterior.svg)
 
 We arrive at the same posterior when drawing samples from it through a Monte Carlo method with Stan. Furthermore, as the tails of posterior are symmetric, the 95% highest density interval of \[104.8%, 110.7%\] closely aligns with the 95% central credible interval obtained earlier (\[104.7%, 110.7%\]). (This fact merely verifies that the two methods compute the model correctly, it does not provide additional evidence about the quality of the data.)
 
-![Posterior after spring data – with Stan](figs/posterior_mc.svg)
+![Posterior after spring data – with Stan]({attach}figs/posterior_mc.svg)
 
 The studies together provide so many data points that the choice of prior does not play an important role. Assuming a uniform prior on the risk ratio, i.e. assuming that we have no more _prior_ evidence for +2% than for +20% or −30% change in risk, we arrive at practically the same posterior, and a 95% HDI of \[104.7%, 110.7%\].
 
-![Posterior after spring data, uniform prior](figs/posterior_mc_uniform.svg)
+![Posterior after spring data, uniform prior]({attach}figs/posterior_mc_uniform.svg)
 
 #### Exponential weekday model
 
@@ -408,11 +408,11 @@ The exponential weekday model relaxes the assumption of linear decrease in RR th
 
 Assuming a uniform prior on both \(\alpha\) and \(\theta\), the posterior for this model looks as follows:
 
-![](figs/posterior_mc_exp.svg)
+![]({attach}figs/posterior_mc_exp.svg)
 
 I expected the posterior on \(\alpha\) to be centered much closer to zero (meaning a rapid decrease in risk after Monday), but the posterior shows the opposite: most of the plausible values of \(\alpha\) correspond to an \(r_\text{Fri} / r_\text{Mon}\) ratio greater than the 0.2 ratio assumed previously (\(0.7^4 \approx 0.24\)). The 95% HDI for \(\theta\) is \[104.0%, 110.2%\] (mean 107.1%), which is close to the linear weekday model, and the 95% HDI for \(\alpha\) is \[0.66, 1.0\] (mean 0.83). The figure below shows the risk ratios over the week for 20 of the sampled combinations of \((\alpha, \theta)\).
 
-![](figs/risk_ratios_exp.svg)
+![]({attach}figs/risk_ratios_exp.svg)
 
 Over the five weekdays this posterior corresponds to an average risk ratio of 105.0% (95% HDI: \[103.1%, 107.0%\]). Assuming an affected population of 1.6 billion globally, with AMI rates standard across the USA [\(^\textsf{[source]}\)](https://www.cdc.gov/heartdisease/heart_attack.htm), this means that over the whole posttransitional week the an additional 2700 people experience AMI (95% HDI: \[1600, 3700\]), on top of the regular 53,000 per week.
 
@@ -420,7 +420,7 @@ Over the five weekdays this posterior corresponds to an average risk ratio of 10
 
 The posterior for the autumn data, using the linear weekday model with uniform prior on \(\theta\) is shown below. The 95% HDI of \[95.1%, 100.3%\] suggests a decrease in AMI risk, but the hypothesis of “no change in risk” (\(\theta = 100.0\%\)) is also compatible with the data.
 
-![Posterior after autumn data](figs/posterior_mc_autumn.svg)
+![Posterior after autumn data]({attach}figs/posterior_mc_autumn.svg)
 
 Globally, this translates to a change of AMI counts over the whole week of −700 (95% HDI \[−1600, +100\]), from the original 53,000.
 
@@ -436,7 +436,7 @@ These predictive distributions on \(\tilde y\) can be calculated by integrating 
 \int P(\tilde y \given \theta, \mathcal D) \,d\theta =
 \int P(\tilde y \given \theta) p(\theta \given \mathcal D) \,d\theta\]
 
-![Posterior predictive distribution](figs/posterior_predictive_95.svg)
+![Posterior predictive distribution]({attach}figs/posterior_predictive_95.svg)
 
 _(Posterior predictive distribution for spring.)_
 

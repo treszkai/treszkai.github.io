@@ -18,7 +18,7 @@ I thought this 0.999 figure is an overestimate; I analyze this question in this 
 
 The event “\(\beta > 0\)” is a Bernoulli-distributed random variable; let's denote it with \(x \sim \text{Bernoulli}(\theta)\). If we draw \(S\) samples from \(x\) (and denote the results with \(x_i\)), the conditional probability distribution of \(p(\theta \given \{x_i\})\) is described by the following directed graphical model:
 
-![Bayes net for x_i and theta](dgm-theta.svg)
+![Bayes net for x_i and theta]({attach}dgm-theta.svg)
 
 The node for \(x_i\) is filled because it's observed, and the plate represents \(S\) copies of this node (with \(i\) ranging from \(1\) to \(S\)).
 
@@ -32,11 +32,11 @@ We can assume a noninformative uniform prior on the probability \(\theta\) on th
 
 With \(n_1 = 1000\) and \(n_0 = 0\), this amounts to a \(\text{Beta}(1001, 1)\) distribution, whose [pdf](https://en.wikipedia.org/wiki/Beta_distribution#Probability_density_function) is as such:
 
-![Pdf of Beta(1001,1)](beta-1000-pdf-big.svg)
+![Pdf of Beta(1001,1)]({attach}beta-1000-pdf-big.svg)
 
 As expected, most of the probability mass is close to 1.0. But that graph is not very legible, so let's zoom in on the right end of the _x_ axis:
 
-![Pdf of Beta(1001,1) in \[.99,1.0\] interval](beta-1000-pdf-zoomed.svg)
+![Pdf of Beta(1001,1) in \[.99,1.0\] interval]({attach}beta-1000-pdf-zoomed.svg)
 
 The red line marks the mean of the distribution, which is approximately \(0.999\), but not nearly all of the probability mass is on the right side of \(0.999\). Using the [cdf](https://en.wikipedia.org/wiki/Cumulative_distribution_function) of the posterior, we have that
 
@@ -52,11 +52,11 @@ A similar statement was made for 1988 pre-election polls, on page 70:
 
 When a presidential election is won “by a landslide”, that rarely means more than a 60-40% results; so in this case, I would rather use a prior that puts more mass on results close to 50-50%, for example \(\text{Beta}(10,10)\):
 
-![Pdf of Beta(10,10)](beta-10-pdf.svg)
+![Pdf of Beta(10,10)]({attach}beta-10-pdf.svg)
 
 This results in the following posterior:
 
-![Pdf of Beta(1010,10)](beta-1010-pdf.svg)
+![Pdf of Beta(1010,10)]({attach}beta-1010-pdf.svg)
 
 So in this case, the crude estimate does does not suffice, and we should rather be only 98% certain. (This is a 20-fold difference, \((1-.98)/(1-0.999)\), and a well-calibrated [superforecaster](https://goodjudgment.com/philip-tetlocks-10-commandments-of-superforecasting/) could tell them apart.) If the stakes are high, then refine your model, and draw more samples.
 
@@ -108,7 +108,7 @@ plt.show()
 ```
 
 
-![svg](beta-1000-pdf-big.svg)
+![svg]({attach}beta-1000-pdf-big.svg)
 
 
 
@@ -145,7 +145,7 @@ plt.show()
 ```
 
 
-![svg](beta-1000-pdf-zoomed.svg)
+![svg]({attach}beta-1000-pdf-zoomed.svg)
 
 
 

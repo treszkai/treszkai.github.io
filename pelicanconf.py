@@ -10,7 +10,8 @@ THEME = 'theme'
 PATH_METADATA = r'(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*)'
 
 PATH = 'content'
-STATIC_PATHS = ['']
+STATIC_PATHS = ['', 'extra/CNAME']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 ARTICLE_PATHS = ['']
 ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
 ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'

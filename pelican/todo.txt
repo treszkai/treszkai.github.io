@@ -1,0 +1,11 @@
+check images
+check files
+about me
+theme + cite in README.md
+cite Pelican in about-me
+CNAME
+
+citations
+
+How to use the html proofer?
+Check all JS executes without errors

@@ -1,10 +1,6 @@
----
-layout: page
 title: About me
-permalink: /about/
----
-
-Hi, my name is Laszlo Treszkai -- the name is Hungarian, but its anglicized pronunciation I prefer as “laslo tresky”, ending like “sky”. I love various branches of mathematics (with a knack for statistics) and engineering (both software and physical).
+    
+Hi, my name is Laszlo Treszkai -- the name is Hungarian, ideally pronounced as [la:sloʊ ˈtreskɒɪ]. I love various branches of mathematics (with a knack for statistics) and engineering (both software and physical).
 
 I graduated with honours at the MSc in Artificial Intelligence at the University of Edinburgh, where I learned a ton about machine learning, NLP, and Bayesian analysis. Previously I received an [MSc in Electrical Engineering](https://www.mit.bme.hu/eng/) at the Budapest University of Technology and Economics, with a focus on embedded systems.
 

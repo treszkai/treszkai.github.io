@@ -8,8 +8,6 @@ The Institute of Medical Statistics of the Center for Medical Statistics, Inform
 
 The professor has authored several academic books on statistics, and was interviewed by the CNN with the title, [_Why statistics should make you suspicious_](https://edition.cnn.com/videos/tv/2019/04/01/amanpour-david-spiegelhalter-statistics.cnn). And keeps doing a huge service to science in a number of other ways.
 
-<iframe width="416" height="234" src="//fave.api.cnn.io/v1/fav/?video=tv/2019/04/01/amanpour-david-spiegelhalter-statistics.cnn&customer=cnn&edition=international&env=prod" frameborder="0"></iframe>
-
 The problem explained in the talk was that **numbers are used to persuade people, not to inform them**. (Actually, that was only the first half – the second half offered a handful of steps we could take when presenting our data.) Take for example politics, and the campaign around Brexit. Even if it were true that it costs £350 million a week for the UK to be a member of the EU, it would be much less misleading if it said that it costs 80 pence _per person per day_ to be a member of the EU. The cost of a bag of potato chips. (The other side committed similar errors too – I’m not trying to win a battle here.)
 
 ![We send the EU £350 million a week; let’s fund our NHS instead. Vote Leave.]({attach}nhs.png)
@@ -56,9 +54,7 @@ This post was just a tiny part of what was said at the talk. In parting, I have 
 
 > 80% of statistics are false.
 
-(From anonymous statistician, a comedian, and also Elon Musk.) Unfortunately, this factoid alone doesn’t enable one to navigate reality.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/aHGd6LqAVzw?start=43" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+(From anonymous statistician, a comedian, and also [Elon Musk](https://www.youtube.com/embed/aHGd6LqAVzw?start=43).) Unfortunately, this factoid alone doesn’t enable one to navigate reality.
 
 The second quote is of a little more value, but still doesn’t help one to sieve through statistics:
 

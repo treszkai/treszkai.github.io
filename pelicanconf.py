@@ -7,12 +7,12 @@ SITEURL = ''
 
 THEME = 'theme'
 
-PATH_METADATA = r'(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*)'
+PATH_METADATA = r'posts/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*)'
 
 PATH = 'content'
-STATIC_PATHS = ['', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
-ARTICLE_PATHS = ['']
+STATIC_PATHS = ['posts', 'extra/CNAME']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
+ARTICLE_PATHS = ['posts']
 ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
 ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'
 PAGE_PATHS = ['pages', 'legacy_redirects']
@@ -29,20 +29,22 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (#('Pelican', 'https://getpelican.com/'),
-         #('Python.org', 'https://www.python.org/'),
-         #('Jinja2', 'https://palletsprojects.com/p/jinja/'),
-         #('You can modify those links in your config file', '#'),
-        )
+LINKS = (  # ('Pelican', 'https://getpelican.com/'),
+    # ('Python.org', 'https://www.python.org/'),
+    # ('Jinja2', 'https://palletsprojects.com/p/jinja/'),
+    # ('You can modify those links in your config file', '#'),
+)
 
 # Social widget
-SOCIAL = (('github', 'https://github.com/treszkai'),
-          ('twitter', 'https://twitter.com/ltreszkai'),)
+SOCIAL = (
+    ('github', 'https://github.com/treszkai'),
+    ('twitter', 'https://twitter.com/ltreszkai'),
+)
 
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# RELATIVE_URLS = True
 
 LATEX_MACROS = {
     r'\RR': r'\mathbb{R}',

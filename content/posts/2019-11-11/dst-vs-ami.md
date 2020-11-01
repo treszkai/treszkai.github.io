@@ -440,7 +440,7 @@ These predictive distributions on \(\tilde y\) can be calculated by integrating 
 
 _(Posterior predictive distribution for spring.)_
 
-Only the Monday observation of (Sipilä et al., 2016) falls out of the 95% central credible interval (CCrI), and in addition the Thursday observation of (Sipilä et al., 2016) and the Monday observation of (Čulić, 2013) falls out of the 90% CCrI (shown [here](figs/posterior_predictive_90.svg)), indicating a good fit of the model.
+Only the Monday observation of (Sipilä et al., 2016) falls out of the 95% central credible interval (CCrI), and in addition the Thursday observation of (Sipilä et al., 2016) and the Monday observation of (Čulić, 2013) falls out of the 90% CCrI (shown [here]({attach}figs/posterior_predictive_90.svg)), indicating a good fit of the model.
 
 ## Further research
 

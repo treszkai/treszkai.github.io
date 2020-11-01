@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
+from pathlib import Path
 
 AUTHOR = 'Laszlo Treszkai'
 SITENAME = 'Laszlo Treszkai'
@@ -10,12 +11,20 @@ THEME = 'theme'
 PATH_METADATA = r'posts/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*)'
 
 PATH = 'content'
-STATIC_PATHS = ['posts', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
 ARTICLE_PATHS = ['posts']
 ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
 ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'
 PAGE_PATHS = ['pages', 'legacy_redirects']
+
+EXTRA_PATHS = ['extra']
+
+STATIC_PATHS = ['posts', 'extra/CNAME']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}}
+
+for path in Path(PATH).iterdir():
+    content_path = str(path.relative_to(path))
+    if content_path not in ARTICLE_PATHS + PAGE_PATHS + EXTRA_PATHS:
+        STATIC_PATHS.append(content_path)
 
 TIMEZONE = 'Europe/Paris'
 

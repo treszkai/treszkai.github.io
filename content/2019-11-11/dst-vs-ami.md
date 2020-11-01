@@ -152,7 +152,7 @@ When performing a Bayesian analysis, we _must_ have prior expectations on the ex
 
 The infarction counts on neighboring days are conditionally independent given \(\theta\) (apart from exceptional cases, such as a mass catastrophe), which means we can model the days separately and simply multiply their likelihoods. (Prior to observing the data, it feels _very_ unlikely to us that there would be any effect on Friday, but one paper attempted to measure effects on the 2 and 4 weeks following DST adjustment, meaning they didn't think such a long-lasting effect is completely implausible, therefore we consider including Friday as part of the expert opinion.)
 
-![]({attach}figs/rr_example.svg)
+![Risk ratio on given days of the posttransitional week under the linear weekday model, for θ=0.5]({attach}figs/rr_example.svg)
 
 This model of all weekdays is described by the following graph:
 
@@ -322,7 +322,7 @@ To see the difference between a small and a large study, we visualize the prior 
 - Observation lower than trend, large sample size (bottom left);
 - Observation higher than trend, large sample size (bottom right).
 
-![]({attach}figs/test-posteriors.svg)
+![Posteriors of four example sample counts for trend and observation]({attach}figs/test-posteriors.svg)
 
 When the sample size is small, there is only a slight change from prior to posterior. With a large sample size, the prior beliefs barely have an effect on the posterior. (In the lower right plot, the posterior peaks at more than 1.1 because with 1100 AMI every day, the linear weekday model fits better with a larger RR.)
 
@@ -388,7 +388,7 @@ The width of the 95% CCrI is a measure of the precision of the estimate. The 95%
 In the fixed effects model the posterior is weighted heavily towards the study with the largest sample size (Janszky and Ljung 2008), and the other studies barely play a role.
 Specifically, the posterior mean of the RR is 107.7% (95% central credible interval: \([104.7\%, 110.7\%]\)) – the posterior is shown below. We emphasize again that the relative weights of the studies is not arbitrary, but is fully determined by the model and the data through the rules of probability theory.
 
-![]({attach}figs/combined_posterior.svg)
+![Posterior probability after every paper included in this analysis]({attach}figs/combined_posterior.svg)
 
 We arrive at the same posterior when drawing samples from it through a Monte Carlo method with Stan. Furthermore, as the tails of posterior are symmetric, the 95% highest density interval of \[104.8%, 110.7%\] closely aligns with the 95% central credible interval obtained earlier (\[104.7%, 110.7%\]). (This fact merely verifies that the two methods compute the model correctly, it does not provide additional evidence about the quality of the data.)
 
@@ -408,11 +408,11 @@ The exponential weekday model relaxes the assumption of linear decrease in RR th
 
 Assuming a uniform prior on both \(\alpha\) and \(\theta\), the posterior for this model looks as follows:
 
-![]({attach}figs/posterior_mc_exp.svg)
+![Posterior of alpha and theta visualized together]({attach}figs/posterior_mc_exp.svg)
 
 I expected the posterior on \(\alpha\) to be centered much closer to zero (meaning a rapid decrease in risk after Monday), but the posterior shows the opposite: most of the plausible values of \(\alpha\) correspond to an \(r_\text{Fri} / r_\text{Mon}\) ratio greater than the 0.2 ratio assumed previously (\(0.7^4 \approx 0.24\)). The 95% HDI for \(\theta\) is \[104.0%, 110.2%\] (mean 107.1%), which is close to the linear weekday model, and the 95% HDI for \(\alpha\) is \[0.66, 1.0\] (mean 0.83). The figure below shows the risk ratios over the week for 20 of the sampled combinations of \((\alpha, \theta)\).
 
-![]({attach}figs/risk_ratios_exp.svg)
+![Risk ratios over the week for 20 sampled combinations of alpha-theta]({attach}figs/risk_ratios_exp.svg)
 
 Over the five weekdays this posterior corresponds to an average risk ratio of 105.0% (95% HDI: \[103.1%, 107.0%\]). Assuming an affected population of 1.6 billion globally, with AMI rates standard across the USA [\(^\textsf{[source]}\)](https://www.cdc.gov/heartdisease/heart_attack.htm), this means that over the whole posttransitional week the an additional 2700 people experience AMI (95% HDI: \[1600, 3700\]), on top of the regular 53,000 per week.
 

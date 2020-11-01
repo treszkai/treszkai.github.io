@@ -23,7 +23,7 @@ For example, out of 1000 classifications made with an output of 0.8, approximate
 
 Ideally, we want our system to be 100% correct, but we rarely have access to an all-knowing Oracle. In cases where it is hard to distinguish between two categories (like on the cat-dog below) we want the uncertainties to be well-calibrated, so that predictions are neither overly confident nor insufficiently confident.
 
-![]({attach}catdog.jpeg)
+![Image of a cat that could be mistaken for a dog]({attach}catdog.jpeg)
 
 (Image source: Google Brain)
 

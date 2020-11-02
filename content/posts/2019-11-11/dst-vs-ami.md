@@ -137,7 +137,7 @@ We perform the analysis using a fixed-effects model, which assumes that the DST
 
 The model for the AMI count on a posttransitional Monday is described by the following graph – such a graph is called a Bayes network or a directed graphical model:
 
-<img src="figs/tikz_bayesnet_Mon.png">
+![Bayes network for the Monday counts]({attach}figs/tikz_bayesnet_Mon.png)
 
 Loosely speaking, the arrows denote causal or logical dependencies, where the exact formula for the dependency is shown next to the nodes (in a canonical Bayes network, the formulas are described only in the text). The model can be translated into the following sentences:
  - The observed posttransitional AMI count on Monday follows a Poisson distribution.
@@ -156,7 +156,7 @@ The infarction counts on neighboring days are conditionally independent given \(
 
 This model of all weekdays is described by the following graph:
 
-<img src="figs/tikz_bayesnet.png">
+![Bayes network for the counts of all weekdays]({attach}figs/tikz_bayesnet.png)
 
 Here the rectangle means the nodes inside it should be repeated for \(d = \text{Mo}..\text{Fr})\) -- this rectangle is called a “plate”. A common parameter \(\theta\) determines \(r_d\) for a given day \(d\), which, together with \(t_d\), determines the number of expected AMIs (\(x_d\)) and actual AMIs (\(y_d\)).
 

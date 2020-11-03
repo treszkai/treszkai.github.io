@@ -1,11 +1,8 @@
-check images
-check files
-about me
 theme + cite in README.md
 cite Pelican in about-me
-CNAME
 
+merge CSS files
 citations
 
-How to use the html proofer?
+How to check all internal links?
 Check all JS executes without errors

@@ -30,8 +30,7 @@ _All_ of these people below eat a clean diet without processed meat, and those w
 😎😎😎😎😎😎😎😎😎😎<br />
 😎😎😎😎😎😎😎😎😎😫<br />
 😎😎😎😎😎😎😎😎😎😎<br />
-😎😎😎😎😎😎😎😎😎😎<br />
-😎😎😎😎😎😎😎😫😎😎
+😎😎😎😎😎😎😎😎😎😎<br />😎😎😎😎😎😎😎😫😎😎
 
 And _all_ of these people eat a slice of [Extrawurst](https://en.wikipedia.org/wiki/Extrawurst) daily:
 
@@ -43,8 +42,7 @@ And _all_ of these people eat a slice of [Extrawurst](https://en.wikipedia.org/w
 😎😎😎😎😎😎😎😎😎😎<br />
 😎😎😎😎😎😎😎😎😎😫<br />
 😎😎😎😎😎😎😎😎😎😎<br />
-😫😎😎😎😎😎😎😎😎😎<br />
-😎😎😎😎😎😎😎😫😎😎
+😫😎😎😎😎😎😎😎😎😎<br />😎😎😎😎😎😎😎😫😎😎
 
 See the difference? It’s that one troubled guy in row 9.
 

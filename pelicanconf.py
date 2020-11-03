@@ -7,6 +7,7 @@ SITENAME = 'Laszlo Treszkai'
 SITEURL = ''
 
 THEME = 'theme'
+TYPOGRIFY = True
 
 PATH_METADATA = r'posts/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*)'
 

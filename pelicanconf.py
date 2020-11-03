@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
+from hashlib import md5
 from pathlib import Path
 
 AUTHOR = 'Laszlo Treszkai'
@@ -16,6 +17,9 @@ ARTICLE_PATHS = ['posts']
 ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
 ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'
 PAGE_PATHS = ['pages', 'legacy_redirects']
+
+style_css = Path(THEME) / 'static' / 'css' / 'style.css'
+STYLE_CSS_MD5 = md5(style_css.read_bytes()).hexdigest()[:8]
 
 EXTRA_PATHS = ['extra']
 

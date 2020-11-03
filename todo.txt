@@ -6,3 +6,4 @@ citations
 
 How to check all internal links?
 Check all JS executes without errors
+include style.css hash in the filename, such that it can be cached

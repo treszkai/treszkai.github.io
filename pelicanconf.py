@@ -14,8 +14,8 @@ PATH_METADATA = r'posts/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*).md'
 
 PATH = 'content'
 ARTICLE_PATHS = ['posts']
-ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
-ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'
+ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}/index.html'
+ARTICLE_URL = '{date:%Y/%m/%d}/{slug}/'
 PAGE_PATHS = ['pages', 'legacy_redirects']
 
 # don't process html files
@@ -57,8 +57,6 @@ SOCIAL = (
     ('github', 'https://github.com/treszkai'),
     ('twitter', 'https://twitter.com/ltreszkai'),
 )
-
-DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True

@@ -37,6 +37,8 @@ for path in Path(PATH).iterdir():
 TIMEZONE = 'Europe/Paris'
 
 DEFAULT_LANG = 'en'
+DEFAULT_CATEGORY = 'misc'
+DEFAULT_PAGINATION = False
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None

@@ -10,13 +10,16 @@ SITEURL = ''
 THEME = 'theme'
 TYPOGRIFY = True
 
-PATH_METADATA = r'posts/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*)'
+PATH_METADATA = r'posts/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*).md'
 
 PATH = 'content'
 ARTICLE_PATHS = ['posts']
 ARTICLE_SAVE_AS = '{date:%Y/%m/%d}/{slug}.html'
 ARTICLE_URL = '{date:%Y/%m/%d}/{slug}.html'
 PAGE_PATHS = ['pages', 'legacy_redirects']
+
+# don't process html files
+READERS = {'html': None}
 
 style_css = Path(THEME) / 'static' / 'css' / 'style.css'
 STYLE_CSS_MD5 = md5(style_css.read_bytes()).hexdigest()[:8]
@@ -73,3 +76,5 @@ LATEX_MACROS = {
     r'\given': r'\,\vert\,',
     r'\Godel': r'\ulcorner #1 \urcorner',
 }
+
+DISPLAY_PAGES_ON_MENU = True

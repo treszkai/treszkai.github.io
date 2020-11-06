@@ -2,6 +2,7 @@
 title: Evaluation of function calls in Haskell
 summary: Analyzing why point-free definitions in Haskell allow sharing the result of an inner function application, whereas pointful definitions do not.
 tags: Haskell
+category: programming
 ---
 
 Chapter 27 of [_Haskell Programming from first principles_](http://haskellbook.com/) (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section _Preventing sharing on purpose_, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of `g _` is not shared but calculated twice:

@@ -1,7 +1,7 @@
 ---
 title: The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis (original research)
 category: statistics
-summary: "A Bayesian meta-analysis to evaluate whether one is more likely to get a heart attack after losing an hour of sleep. They are, but getting a heart attack is unlikely to begin with."
+summary: A Bayesian meta-analysis to evaluate whether one is more likely to get a heart attack after losing an hour of sleep. They are, a little.
 latex: true
 ---
 

@@ -1,5 +1,6 @@
 title: Change YouTube speed from your favorites bar
 category: misc
+summary: While the UI of YouTube only shows only limited set of high-speed options, it is possible to set the speed to any floating point value. Even better, one can do so from their favorites bar with bookmarklets.
 ---
 
 ![I feel the need... the need for speed!]({attach}need-for-speed.gif)

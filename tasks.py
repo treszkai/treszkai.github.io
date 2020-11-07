@@ -78,7 +78,7 @@ def reserve(c):
 @task
 def preview(c):
     """Build production version of site"""
-    pelican_run('-s {settings_publish}'.format(**CONFIG))
+    pelican_run('-d -s {settings_publish}'.format(**CONFIG))
 
 @task
 def livereload(c):

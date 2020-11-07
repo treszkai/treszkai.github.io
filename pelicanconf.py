@@ -39,6 +39,7 @@ TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = 'en'
 DEFAULT_CATEGORY = 'misc'
 DEFAULT_PAGINATION = False
+DEFAULT_DATE_FORMAT = '%-d %b. %Y'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=58cb4674">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+  <meta name="description" content="Posts and writings by Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta name="keywords" content="">
+
+  <title>
+    Laszlo Treszkai
+&ndash; Trust in numbers &#8212; notes of a talk given by Sir David&nbsp;Spiegelhalter  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2019/10/08/trust-in-numbers/">Trust in numbers &#8212; notes of a talk given by Sir David&nbsp;Spiegelhalter</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 8 Oct. 2019</p>
+    </p>
+  </div>
+  <div class="article__text">
+    <p>The Institute of Medical Statistics of the Center for Medical Statistics, Informatics and Intelligent Systems at the Medical University of Vienna <a href="https://cemsiis.meduniwien.ac.at/50years-of-ms/">just turned 50 years old</a>, and they organized a two-day event around it. I was fortunate to have attended the keynote talk of Sir David Spiegelhalter (<a href="https://en.wikipedia.org/wiki/David_Spiegelhalter">wiki</a>), who is a British statistician and <a href="https://en.wikipedia.org/wiki/Winton_Professorship_of_the_Public_Understanding_of_Risk">Winton Professor of the Public Understanding of Risk</a> at the Faculty of Mathematics, University of Cambridge, which was one of the most entertaining <em>and</em> informative talk I have heard. There is no way I can do justice to the talk, and I wouldn’t even attempt to bring through the humor (his <em>humour</em>) – the goal of this post is to increase your vigilance a little bit when it comes to any reports about science, and to shed light on the work of&nbsp;Spiegelhalter.</p>
+<p>The professor has authored several academic books on statistics, and was interviewed by the <span class="caps">CNN</span> with the title, <a href="https://edition.cnn.com/videos/tv/2019/04/01/amanpour-david-spiegelhalter-statistics.cnn"><em>Why statistics should make you suspicious</em></a>. And keeps doing a huge service to science in a number of other&nbsp;ways.</p>
+<p>The problem explained in the talk was that <strong>numbers are used to persuade people, not to inform them</strong>. (Actually, that was only the first half – the second half offered a handful of steps we could take when presenting our data.) Take for example politics, and the campaign around Brexit. Even if it were true that it costs £350 million a week for the <span class="caps">UK</span> to be a member of the <span class="caps">EU</span>, it would be much less misleading if it said that it costs 80 pence <em>per person per day</em> to be a member of the <span class="caps">EU</span>. The cost of a bag of potato chips. (The other side committed similar errors too – I’m not trying to win a battle&nbsp;here.)</p>
+<p><img alt="We send the EU £350 million a week; let’s fund our NHS instead. Vote Leave." src="https://www.treszkai.com/2019/10/08/trust-in-numbers/nhs.png"></p>
+<p>As Eliezer Yudkowsky says, <a href="https://www.lesswrong.com/posts/9weLK2AJ9JEt2Tt8f/politics-is-the-mind-killer">politics is the mind-killer</a>, but of course, using numbers to mislead instead of to show an honest representation of reality is done everywhere where there are numbers. My favorite topic these days: <strong>medical statistics</strong>. I’m picking a topic from the talk as an example (which Spiegelhalter analyzed in more detail in a <a href="https://medium.com/wintoncentre/are-we-individuals-or-members-of-populations-the-deeper-issues-behind-the-sausage-wars-a067aebf2063">Medium post</a>): dietary advice about processed meat consumption. <span class="caps">CNN</span> did a <a href="https://edition.cnn.com/2019/04/17/health/colorectal-cancer-risk-red-processed-meat-study-intl/index.html">great job</a> with picking the title of their article to be as close to the original conclusions as possible: <em>Eating just one slice of bacon a day linked to higher risk of colorectal cancer, says study</em>. But by the time this study reaches The Sun, it gets reported as the&nbsp;following:</p>
+<p><img alt="Rasher of bacon a day is deadly" src="https://www.treszkai.com/2019/10/08/trust-in-numbers/bacon.jpg">.</p>
+<p>Boy, that escalated quickly. And what does “higher risk of colorectal cancer” mean anyhow? In this case, the study showed a 19% increase. As Peter Attia explains in his detailed post series on science, <a href="https://peterattiamd.com/ns001/">Studying Studies</a>, such big numbers generally mean an increase in <em>relative risk</em>, not in <em>absolute risk</em>. Relative risk is meaningless without knowing the base rate of the disease. In this case, 5% of <span class="caps">US</span> men and women born today are expected to be diagnosed with colorectal cancer sometime during their lives. Add 19% to that 5% figure (i.e., multiply it by 1.19), and you get 6%, for the people who eat 1 slice of bacon a day. (The 5% figure is surprisingly high, by the way! Fortunately, it has a five-year survival rate of 65%. I don’t know how much of the 5% is a false positive; I guess it doesn’t include the disconfirmed cases. These figures I just gathered from <a href="https://en.wikipedia.org/wiki/Colorectal_cancer#Epidemiology">Wikipedia</a>, <span class="caps">FWIW</span>.)</p>
+<p>You can take the extra step and visualize these numbers using what <a href="https://en.wikipedia.org/wiki/Gerd_Gigerenzer">Gigerenzer</a> calls natural frequencies. As one Wikipedia author puts it, “the problem is not simply in the human mind, but in the representation of the information”, so let’s deliver using things we evolved to understand: a small tribe of human-like&nbsp;icons.</p>
+<p><em>All</em> of these people below eat a clean diet without processed meat, and those with a distraught face will get colorectal&nbsp;cancer:</p>
+<p>😎😎😎😎😎😎😫😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😎😎😎😫😎😎😎😎😎😎<br />
+😎😎😫😎😎😎😎😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😫<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😎<br />😎😎😎😎😎😎😎😫😎😎</p>
+<p>And <em>all</em> of these people eat a slice of <a href="https://en.wikipedia.org/wiki/Extrawurst">Extrawurst</a>&nbsp;daily:</p>
+<p>😎😎😎😎😎😎😫😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😎😎😎😫😎😎😎😎😎😎<br />
+😎😎😫😎😎😎😎😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😎😎😎😎😎😎😎😎😎😫<br />
+😎😎😎😎😎😎😎😎😎😎<br />
+😫😎😎😎😎😎😎😎😎😎<br />😎😎😎😎😎😎😎😫😎😎</p>
+<p>See the difference? It’s that one troubled guy in row&nbsp;9.</p>
+<p>Now, I’m not saying bacon is good for health, or that that additional risk factor would be negligible (admittedly, my mocking tone above suggests otherwise). But if the scientists, journalists, and clinicians report the risk honestly, <em>and</em> no-one is trying to influence you into eating more burgers by playing at our primal instincts (including the marketing division of McDonald’s and our social group who calls you chicken if you don’t eat your <a href="https://en.wikipedia.org/wiki/Black_pudding">black pudding</a>), then us puny humans could make more educated decisions about which sacrifices we are willing to&nbsp;make.</p>
+<p>This post was just a tiny part of what was said at the talk. In parting, I have two takeaway quotes.&nbsp;First,</p>
+<blockquote>
+<p>80% of statistics are&nbsp;false.</p>
+</blockquote>
+<p>(From anonymous statistician, a comedian, and also <a href="https://www.youtube.com/embed/aHGd6LqAVzw?start=43">Elon Musk</a>.) Unfortunately, this factoid alone doesn’t enable one to navigate&nbsp;reality.</p>
+<p>The second quote is of a little more value, but still doesn’t help one to sieve through&nbsp;statistics:</p>
+<blockquote>
+<p>There’s no point in being trustworthy if you’re&nbsp;boring.</p>
+</blockquote>
+<p>(From Spiegelhalter in today’s&nbsp;talk.)</p>
+<p>This talk was anything but boring. If you have a chance to see Spiegelhalter in person, do so: he gets my highest grade recommendation. (He also has a book, titled <a href="https://smile.amazon.com/Art-Statistics-How-Learn-Data/dp/1541618513"><em>The Art of Statistics</em></a>, which I haven’t&nbsp;read.)</p>
+<p>(Somewhat related: just today on my way home I learned of Edward Tufte’s book, <em>The Visual Display of Quantitative Information,</em> which also <a href="https://www.edwardtufte.com/tufte/books_vdqi">looks amazing</a>.)</p>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

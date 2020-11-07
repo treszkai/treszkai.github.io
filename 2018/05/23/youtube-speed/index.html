@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=58cb4674">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+  <meta name="description" content="Posts and writings by Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta name="keywords" content="">
+
+  <title>
+    Laszlo Treszkai
+&ndash; Change YouTube speed from your favorites&nbsp;bar  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2018/05/23/youtube-speed/">Change YouTube speed from your favorites&nbsp;bar</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 23 May. 2018</p>
+    </p>
+  </div>
+  <div class="article__text">
+    <p><img alt="I feel the need... the need for speed!" src="https://www.treszkai.com/2018/05/23/youtube-speed/need-for-speed.gif"></p>
+<h1>Premise</h1>
+<p>While the <span class="caps">UI</span> of YouTube only shows only limited set of high-speed options, it is possible to set the speed to any floating point value. Even better, one can do so from their favorites bar with&nbsp;bookmarklets.</p>
+<p><img alt="Youtube dialog to set speed" src="https://www.treszkai.com/2018/05/23/youtube-speed/youtube.png"> &nbsp;&nbsp;⇒&nbsp;&nbsp; <img alt="Bookmarks to set youtube speed" src="https://www.treszkai.com/2018/05/23/youtube-speed/bookmarklets.png"></p>
+<h1>Method</h1>
+<p>Simply add any of the following code snippets as&nbsp;bookmarks.</p>
+<p>If you have a fixed speed in mind, e.g.&nbsp;2.5:</p>
+<p><code>javascript:document.getElementsByTagName("video")[0].playbackRate=2.5;</code></p>
+<p>Or save this line to show a prompt that asks for a floating-point&nbsp;input:</p>
+<p><code>javascript:var%20speed=prompt("Speed:","1.");document.getElementsByTagName("video")[0].playbackRate=parseFloat(speed);</code></p>
+<p>Which results in the following&nbsp;prompt:</p>
+<p><img alt="A prompt that asks for speed" src="https://www.treszkai.com/2018/05/23/youtube-speed/custom.png"></p>
+<h1>Caveats</h1>
+<p>Works with YouTube and&nbsp;Vimeo.</p>
+<p>The speed display in the video player will remain to show the last&nbsp;setting.</p>
+<h1>References</h1>
+<ul>
+<li><span class="caps">GIF</span>: <a href="https://www.youtube.com/watch?v=fR2hajcuFEM">Top&nbsp;Gun</a></li>
+<li>Script: <a href="https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12">Quora answer of John&nbsp;Vuong</a></li>
+</ul>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

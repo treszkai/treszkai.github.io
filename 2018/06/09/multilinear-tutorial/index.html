@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=58cb4674">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+  <meta name="description" content="Posts and writings by Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta name="keywords" content="starred">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var macros_dict = { "\\RR": "\\mathbb{R}"  ,  "\\EE": "\\mathbb{E}"  ,  "\\parm": "\\textcolor{grey}{\\bullet}"  ,  "\\indep": "\\perp\\!\\!\\!\\perp"  ,  "\\emptyset": "\\varnothing"  ,  "\\proves": "\\vdash"  ,  "\\Union": "\\bigcup"  ,  "\\Intersect": "\\bigcap"  ,  "\\grad": "\\nabla"  ,  "\\given": "\\,\\vert\\,"  ,  "\\Godel": "\\ulcorner #1 \\urcorner"    ,  "\\linmap": "\\stackrel{\\sim}{→}"  ,  "\\v": "\\mathbf{v}"  ,  "\\e": "\\mathbf{e}"    };
+  document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: false, macros: macros_dict });
+  });
+  document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: true, macros: macros_dict });
+  });
+});
+</script>
+  <title>
+    Laszlo Treszkai
+&ndash; International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise&nbsp;1  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2018/06/09/multilinear-tutorial/">International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise&nbsp;1</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 9 Jun. 2018</p>
+ Tags:
+      <a href="https://www.treszkai.com/tag/starred.html">#starred</a>    </p>
+  </div>
+  <div class="article__text">
+    <p>Solutions for exercise 1 of <a href="https://www.youtube.com/watch?v=5oeWX3NUhMA">tutorial 3</a> of the <a href="https://gravity-and-light.herokuapp.com">International Winter School on Gravity and Light</a>. (<a href="https://www.youtube.com/watch?v=mbv3T15nWq0">Link to video of lecture 3</a>.)</p>
+<h2>Notation</h2>
+<p>On this solution sheet, I&#8217;ll speak of a vector space <script type="math/tex">(V,+,\cdot)</script> over a field <script type="math/tex">K</script>, where <script type="math/tex">+: V\times V \rightarrow V</script> is the addition and <script type="math/tex">\cdot: K \times V \rightarrow V</script> is called (scalar) multiplication or S-multiplication. The field <script type="math/tex">(K, \textcolor{red}{+}, \textcolor{red}{\cdot})</script> has <script type="math/tex">\textcolor{red}{+}:K\times K \rightarrow K</script> as addition and <script type="math/tex">\textcolor{red}{\cdot}:K\times K \rightarrow K</script> as multiplication operations. The dot is often omitted, i.e. <script type="math/tex">a \mathbf v</script> is short for <script type="math/tex">a \cdot \mathbf v</script>, <script type="math/tex">a b</script> is short for <script type="math/tex">a \textcolor{red}{\cdot} b</script>. (Note that the lecture dealt with real vector spaces, i.e. the field <script type="math/tex">K</script> was always the set of reals <script type="math/tex">\mathbb R</script>.)
+The scalars, i.e. the elements of <script type="math/tex">K</script>, are denoted with normal letters <script type="math/tex">a,b</script>, and the vectors, i.e. the elements of <script type="math/tex">V</script>, are denoted with boldface letters <script type="math/tex">\mathbf u, \mathbf v, \mathbf w</script>.</p>
+<script type="text/javascript">
+function showById(id, btn) {
+    document.getElementById(id).style.display = 'block';
+    btn.style.display = 'none';
+}
+function showByClass(cls, btn) {
+    for (var x of document.getElementsByClassName(cls))
+        x.style.display = 'block';
+    btn.style.display = 'none';
+}
+function hideByClass(cls) {
+    for (var x of document.getElementsByClassName(cls))
+        x.style.display = 'none';
+}
+</script>
+
+<h1>Exercise 1: True or&nbsp;false?</h1>
+<p><em>Tick the correct statements, but not the incorrect ones.</em> <a href="#" onclick="showByClass('answer', this); hideByClass('show-answer'); return false;">Show all&nbsp;answers</a></p>
+<p><em>a) Which statements on vector spaces are&nbsp;correct?</em></p>
+<p><strong>?.</strong> <em>Commutativity of multiplication is a vector space axiom.</em> <a href="#" onclick="showById('answer1', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer1" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - The scalar multiplication <script type="math/tex">\cdot: K \times V \rightarrow V</script> doesn&#8217;t even have the same sets in its two arguments, i.e. <script type="math/tex">\mathbf v \cdot a</script> is not even defined.
+ - The vector space has the commutativity of <em>addition</em> as an axiom: for any <script type="math/tex">\mathbf u,\mathbf v \in V</script>, <script type="math/tex">{\mathbf u+\mathbf v} = {\mathbf v + \mathbf u}</script>.
+ - The underlying field <script type="math/tex">K</script>
+<em>does</em> have the commutativity of multiplication as a field axiom: for any <script type="math/tex">a,b \in K</script>, <script type="math/tex">a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a</script>.
+ - As a consequence, for any <script type="math/tex">\mathbf v \in V</script> and <script type="math/tex">a, b \in K</script>,</p>
+<script type="math/tex; mode=display">% <![CDATA[
+ a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v). %]]></script>
+</div>
+<p><strong>?.</strong> <em>Every vector is a matrix with only one column.</em> <a href="#" onclick="showById('answer2', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer2" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - By definition, a vector is an element of a vector space. If we fix a basis for the vector space, then any vector can be represented by an ordered set of numbers, which could be treated as a column vector, i.e. a matrix with one column. However, this representation depends on the choice of basis.
+ - The <a href="https://youtu.be/5oeWX3NUhMA?t=1m09s">official answer</a> brings up as a counterexample the vector space of polynomials up to some finite degree. However, here again we could represent the vectors as a column vector with any choice of a basis. E.g. using the standard basis, <script type="math/tex">p(x) = 0x^2 + 4x + 5 </script> could be represented as <script type="math/tex">\mathbf p = [0, 4, 5]^T</script>.</p>
+</div>
+<p><strong>?.</strong> <em>Every linear map between vector spaces can be represented by a unique quadratic matrix.</em> <a href="#" onclick="showById('answer3', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer3" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - As above, a linear map <script type="math/tex">f: V \rightarrow W </script> can be represented as a unique matrix only once bases are chosen for its domain <script type="math/tex">V</script> and codomain <script type="math/tex">W</script>.
+ - This matrix is quadratic only if the dimensions of <script type="math/tex">V</script> and <script type="math/tex">W</script> are&nbsp;equal.</p>
+</div>
+<p><strong>?.</strong> <em>Every vector space has a corresponding dual vector space.</em> <a href="#" onclick="showById('answer4', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer4" style="display: none;">
+<p><em>Answer:</em>&nbsp;true.</p>
+<p>Clarification:
+ - The dual space of a vector space <script type="math/tex">V</script> is defined as the set of linear maps from <script type="math/tex">V</script> to <script type="math/tex">K</script>: <script type="math/tex">V^* \coloneqq Hom(V,K) \coloneqq \{φ\ \vert \ φ: V \linmap K\} </script>.</p>
+</div>
+<p><strong>?.</strong> <em>The set of everywhere positive functions on <script type="math/tex">\mathbb R</script> with pointwise addition and S-multiplication is a vector space.</em> <a href="#" onclick="showById('answer5', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer5" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - This set doesn&#8217;t have a commutative identity element: by the field axioms of <script type="math/tex">\mathbb R</script>, it could only be the constant zero function, but that&#8217;s not an element of the set.
+ - This set doesn&#8217;t have a commutative inverse for any element.
+ - For the scalar multiplication we&#8217;d need to know the underlying field. Usually it would be <script type="math/tex">\mathbb R</script>, but then S-multiplication with a negative number wouldn&#8217;t result in an everywhere positive function. (Although one can construct a field from <script type="math/tex">\mathbb R^+</script>, I wonder how well that would combine with the above attempt at a vector&nbsp;space.)</p>
+</div>
+<p>b) What is true about tensors and their&nbsp;components?</p>
+<p><strong>?.</strong> <em>The tensor product of two tensors is a tensor.</em> <a href="#" onclick="showById('answer6', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer6" style="display: none;">
+<p><em>Answer:</em>&nbsp;true.</p>
+<p>Clarification:
+ - The lecture didn&#8217;t mention tensor products, so a definition is in order. The product of an <script type="math/tex"> (l,k) </script>-tensor <script type="math/tex">S</script> and an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> is an <script type="math/tex"> (l+n,k+m) </script>-tensor <script type="math/tex"> S \otimes T </script>, whose <script type="math/tex"> (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) </script>-th component is the product of the relevant components of <script type="math/tex">S</script> and <script type="math/tex">T</script>:</p>
+<script type="math/tex; mode=display">% <![CDATA[
+ (S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}_ {j_1, \ldots, j_k, j_{k+1}, \ldots, j_{k+m} } =
+   S^{i_1, \ldots, i_l}_ {j_1, \ldots, j_k}
+   T^{i_{1}, \ldots, i_{n}}_ {j_{1}, \ldots, j_{m}}. %]]></script>
+<p><a href="https://en.wikipedia.org/wiki/Tensor#Tensor_product">Source:&nbsp;Wikipedia</a></p>
+<p>This means that if the arguments of <script type="math/tex"> S \otimes T </script> are
+ - the <script type="math/tex">l+n</script> linear maps <script type="math/tex">φ^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i</script> for <script type="math/tex">1 \le p \le l+n</script>, and
+ - the <script type="math/tex">k+m</script> vectors <script type="math/tex"> \v_{(q)} = \sum^{dim V}_{j=1} v_{(q)}^j \e_j </script> for <script type="math/tex">1 \le q \le k+m</script>
+</p>
+<p>(with some particular choice of basis vectors <script type="math/tex">\{\e_i\}_i</script> and basis covectors <script type="math/tex">\{\epsilon^i\}_i</script> ),&nbsp;then</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{aligned}
+(S\otimes T) &(φ^{(1)}, \ldots, φ^{(l+n)}, \v_{(1)}, \ldots, \v_{(k+m)}) = \\
+  &= S (φ^{(1)}, \ldots, φ^{(l)}, \v_{(1)}, \ldots, \v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, \v_{(k+1)}, \ldots, \v_{(k+m)})\\
+  &= \Bigg(
+      \sum_{i_1}^{\dim V} \cdots \sum_{i_l}^{\dim V}
+      \sum_{j_1}^{\dim V} \cdots \sum_{j_k}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Bigg) \cdot \phantom.\\
+  &\phantom{=} \Bigg(
+      \sum_{i_{l+1}}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      \sum_{j_{k+1}}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Bigg) \\
+  &=  \sum_{i_1}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      \sum_{j_1}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+\end{aligned} %]]></script>
+<p>These <script type="math/tex"> (l+n+k+m) </script> summations are quite a mess, but the above derivation shows that the <a href="http://mathworld.wolfram.com/EinsteinSummation.html">Einstein summation convention</a> works for tensor products as&nbsp;well:</p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{aligned}
+(S\otimes T) &(φ^{(1)}, \ldots, φ^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) =\\
+  &= S (φ^{(1)}, \ldots, φ^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, v_{(k+1)}, \ldots, v_{(k+m)})\\
+  &= \Big(
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Big)
+  \Big(
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Big) \\
+ &=  \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+\end{aligned} %]]></script>
+</div>
+<p><strong>?.</strong> <em>You can always reconstruct a tensor from its components and the corresponding basis.</em> <a href="#" onclick="showById('answer7', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer7" style="display: none;">
+<p><em>Answer:</em>&nbsp;true.</p>
+<p>Clarification:
+ - If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case <script type="math/tex">V</script> is not finite&nbsp;dimensional).</p>
+</div>
+<p><strong>?.</strong> <em>The number of indices of the tensor components depends on dimension.</em> <a href="#" onclick="showById('answer8', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer8" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - A tensor component usually has one index for each argument, e.g. for a <script type="math/tex">(2,1)</script>-tensor <script type="math/tex">T</script>, the components are <script type="math/tex">T^{i_1,i_2}_{j_1}</script>.
+ - The <em>range</em> of these indices does depend on the dimension: each index ranges from <script type="math/tex">1</script> to <script type="math/tex">\dim V</script>. Therefore an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> has <script type="math/tex"> (\dim V)^{n+m} </script> many&nbsp;components.</p>
+</div>
+<p><strong>?.</strong> <em>The Einstein summation convention does not apply to tensor components.</em> <a href="#" onclick="showById('answer9', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer9" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification: see&nbsp;above.</p>
+</div>
+<p><strong>?.</strong> <em>A change of basis does not change the tensor components.</em> <a href="#" onclick="showById('answer10', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer10" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - the tensor components are defined with respect to a given&nbsp;basis.</p>
+</div>
+<p>c) Given a basis for a <script type="math/tex">d</script>-dimensional vector space <script type="math/tex">V</script>,&nbsp;&#8230;</p>
+<p><strong>?.</strong> &#8230;<em>one can find exactly <script type="math/tex">d^2</script>-different dual bases for the corresponding dual vector space <script type="math/tex"> V^* </script>.</em> <a href="#" onclick="showById('answer11', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer11" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - Given a basis of <script type="math/tex">V</script>, <script type="math/tex">E = \{\mathbf{e}_i\}_{i=1}^d \subset V</script>, there is a <em>unique</em> dual basis of <script type="math/tex">V^* </script>, namely <script type="math/tex">E^* = \{\epsilon_i\}_{i=1}^d</script>, where <script type="math/tex">\epsilon_i(\e_i) = 1</script> and <script type="math/tex">\epsilon_i(\e_j) = 0</script> for <script type="math/tex">i ≠ j</script>.</p>
+</div>
+<p><strong>?.</strong> &#8230;<em>by removing one basis vector of the basis of <script type="math/tex">V</script>, a basis for a <script type="math/tex">(d - 1)</script>-dimensional vector space <script type="math/tex">V_1</script> is obtained.</em> <a href="#" onclick="showById('answer12', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer12" style="display: none;">
+<p><em>Answer:</em>&nbsp;true.</p>
+<p>Clarification:
+ - The resulting set of <script type="math/tex">(d-1)</script> vectors are still linearly independent, and their span is a <script type="math/tex">(d-1)</script>-dimensional subspace of <script type="math/tex">V</script>.</p>
+</div>
+<p><strong>?.</strong> &#8230;<em>the continuity of a map <script type="math/tex">f : V → W</script> depends on the choice of basis for the vector space <script type="math/tex">W</script>.</em> <a href="#" onclick="showById('answer13', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer13" style="display: none;">
+<p><em>Answer:</em>&nbsp;false.</p>
+<p>Clarification:
+ - The continuity of a map is defined for <em>topological spaces</em>, not for vector spaces.
+ - <script type="math/tex">f</script> is continuous <em>iff</em> the preimage of every open set in <script type="math/tex">W</script> is open in <script type="math/tex">V</script>. Note that no term in this definition depends on the choice of basis for either <script type="math/tex">V</script> or <script type="math/tex">W</script>.
+ - Assuming that <script type="math/tex">V</script> and <script type="math/tex">W</script> are real vector spaces, it is customary to equip them with the standard topology. A set <script type="math/tex">A</script> is open in <script type="math/tex">V</script>
+<em>iff</em> either it is the union of open <script type="math/tex">ε</script>-balls, or of Cartesian products of open intervals. While these definitions assume a basis for <script type="math/tex">V</script>, they all result in the exact same topologies. (Meaning a set can be covered with open balls <em>iff</em> it can be covered with open cuboids <em>iff</em> it can be covered with open cubes – an interesting but easy-to-prove result.)
+ - It&#8217;s easy to see that every <em>linear</em> map between real vector spaces (equipped with the standard topology) is&nbsp;continuous.</p>
+</div>
+<p><strong>?.</strong> &#8230;<em>one can extract the components of the elements of the dual vector space <script type="math/tex">V^*</script>.</em> <a href="#" onclick="showById('answer14', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer14" style="display: none;">
+<p><em>Answer:</em>&nbsp;true.</p>
+<p>Clarification:
+ - a basis for <script type="math/tex">V</script> uniquely determines a dual basis for <script type="math/tex">V^* </script>, which uniquely determines the components of any&nbsp;covector.</p>
+</div>
+<p><strong>?.</strong> &#8230;<em>each vector of <script type="math/tex">V</script> can be reconstructed from its components.</em> <a href="#" onclick="showById('answer15', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<div class="answer" id="answer15" style="display: none;">
+<p><em>Answer:</em>&nbsp;true.</p>
+<p>Clarification:
+ - Given the basis vectors <script type="math/tex">\mathbf{e}_i</script> and components <script type="math/tex">v^i</script> for <script type="math/tex">1 \leq i \leq d</script>, <script type="math/tex">\mathbf{v} = \sum_{i=1}^d v^i \mathbf{e}_i</script>.</p>
+</div>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

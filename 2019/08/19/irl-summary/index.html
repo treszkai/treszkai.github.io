@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=58cb4674">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+  <meta name="description" content="Posts and writings by Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta name="keywords" content="">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var macros_dict = { "\\RR": "\\mathbb{R}"  ,  "\\EE": "\\mathbb{E}"  ,  "\\parm": "\\textcolor{grey}{\\bullet}"  ,  "\\indep": "\\perp\\!\\!\\!\\perp"  ,  "\\emptyset": "\\varnothing"  ,  "\\proves": "\\vdash"  ,  "\\Union": "\\bigcup"  ,  "\\Intersect": "\\bigcap"  ,  "\\grad": "\\nabla"  ,  "\\given": "\\,\\vert\\,"  ,  "\\Godel": "\\ulcorner #1 \\urcorner"    };
+  document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: false, macros: macros_dict });
+  });
+  document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: true, macros: macros_dict });
+  });
+});
+</script>
+  <title>
+    Laszlo Treszkai
+&ndash; Paper summary: Abbeel, Ng: Inverse Reinforcement Learning&nbsp;(2004)  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2019/08/19/irl-summary/">Paper summary: Abbeel, Ng: Inverse Reinforcement Learning&nbsp;(2004)</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 19 Aug. 2019</p>
+    </p>
+  </div>
+  <div class="article__text">
+    <p>This post is a summary of the seminal paper on inverse reinforcement learning: Pieter Abbeel, Andrew Y. Ng: <em>Apprenticeship Learning via Inverse Reinforcement Learning</em> (2004) [<a href="http://ai.stanford.edu/~pabbeel/irl/">link</a>].</p>
+<p>Traditional <a href="http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.html">reinforcement learning</a> (<span class="caps">RL</span>) starts with specifying a reward function, and during training we search for policies that maximize this reward function<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. In contrast, inverse reinforcement learning (<span class="caps">IRL</span>) starts with expert demonstrations of the desired behavior, infers a reward function that the expert likely followed, and trains a policy to maximize&nbsp;that.</p>
+<!-- more -->
+
+<p><span class="caps">IRL</span> is useful for learning complex tasks where it is hard to manually specify a reward function that makes desirable trade-offs between desiderata; such tasks include driving a car or teaching a robot to do a backflip, where we want the car to reach to the destination promptly but also safely, or the robot to flip with its arms straight and <a href="https://youtu.be/xet3KDUfS_U?t=50">sticking the landing</a>.</p>
+<p>In contrast with previous attempts at apprenticeship learning (i.e. learning from an expert), which tried to mimic the expert demonstrations directly, <span class="caps">IRL</span> assumes that the expert follows a reward function that is a linear combination of the feature vectors (<script type="math/tex">R = w^T φ(s)</script>), and finds a reward function that maximizes the received reward under the set of demonstrations. The hand-specified function <script type="math/tex">φ: S→ℝ^k</script> maps a state of the Markov decision process (<span class="caps">MDP</span>) to a feature vector, which vector includes parameters for the different desiderata of the task, such as the distances to objects surrounding the car, the speed of the car, or the current&nbsp;lane.</p>
+<p><span class="caps">IRL</span> assumes knowledge of an expert policy <script type="math/tex">π_E</script>, or at least samples from it. Using these, we only care about the estimated &#8220;accumulated feature values&#8221;, <script type="math/tex">μ(π_E) ∈ ℝ^k</script>, which is the expected discounted sum of the feature vectors if sampled from the policy, because then the value of a policy (parametrised by <script type="math/tex">w</script>) can be calculated from it directly: <script type="math/tex">R = w^T μ(π_E)</script>.</p>
+<p>The goal is then to find a policy whose performance is close to that of the expert&#8217;s on the unknown reward function <script type="math/tex">R_{\star} = w^T_{\star} φ</script>. This is done by finding a policy whose feature vector is close to the expert&#8217;s feature vector, which assures that the value of these policies is close&nbsp;too.</p>
+<p>The algorithm for <span class="caps">IRL</span> is the following:
+ 1. Pick a random initial policy, and calculate its <script type="math/tex">μ</script>.
+ 2. Find the vector of weights w that lies within the unit ball and <em>maximizes</em> the difference between the expert feature expectations and the feature expectations of our best policy thus far.
+ 3. If this maximum is small, then go to step 7.
+ 4. Otherwise <script type="math/tex">w</script> is our new weights for <script type="math/tex">R</script>.
+ 5. Calculate optimal policy for this <script type="math/tex">R</script>.
+ 6. Repeat from step 2.
+ 7. Let the agent designer pick a policy from any of those found in step 5 in the different iterations; or find the policy in the convex closure of these policies that is closest to the expert&nbsp;policy.</p>
+<p>The maximization in step 2 allows us to find a policy that is close to the expert&#8217;s, regardless of the choice of a reward function. After all, we are interested in the policy, not the reward function, and so the estimated <script type="math/tex">R</script> is not necessarily&nbsp;correct.</p>
+<p>This algorithm is proved to terminate within <script type="math/tex">O(k \log(k))</script> steps, using at least <script type="math/tex">O(k \log(k))</script> number of samples from the expert&nbsp;policy.</p>
+<p>Experiments are done in a gridworld environment, where <span class="caps">IRL</span> learns the expert policy in approximately 100 times less sample trajectories than simply mimicking the expert. Another experiment is a car driving simulator with 3 lanes viewed from the top, where <span class="caps">IRL</span> is capable of learning multiple driving styles, such as &#8220;prefer the right lane but avoid collisions&#8221;. Video demonstrations of the latter show that the sentiment of the expert policy is indeed followed, although sometimes with unnecessary lane switches (most modern <span class="caps">RL</span> algorithms also exhibit this undesired&nbsp;property).</p>
+<h4>Footnotes</h4>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Or, more accurately, a policy that maximizes the expected utility derived from this reward function and some method of temporal discounting.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

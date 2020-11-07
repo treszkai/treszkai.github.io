@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Laszlo Treszkai - math</title><link href="https://www.treszkai.com/" rel="alternate"></link><link href="https://www.treszkai.com/feeds/math.atom.xml" rel="self"></link><id>https://www.treszkai.com/</id><updated>2019-07-24T00:00:00+02:00</updated><entry><title>Bayesian inference: Approaching certainty through sampling</title><link href="https://www.treszkai.com/2019/07/24/approaching-certainty/" rel="alternate"></link><published>2019-07-24T00:00:00+02:00</published><updated>2019-07-24T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2019-07-24:/2019/07/24/approaching-certainty/</id><summary type="html">&lt;p&gt;Analysis of a slightly incorrect statement from &lt;span class="caps"&gt;BDA3&lt;/span&gt;: if all of the 1000 draws from Bernoulli(p) are 1, what are likely values of&amp;nbsp;p?&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;em&gt;Bayesian Data Analysis&lt;/em&gt; from Gelman et al. (2013), in section 3.7, presents the statistical analysis of a bioassay experiment. The parameters of the model are &lt;script type="math/tex"&gt;(\alpha, \beta)&lt;/script&gt;, and we draw samples from the numerically calculated posterior. Then the authors&amp;nbsp;write:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All of the 1000 simulation draws had positive values of &lt;script type="math/tex"&gt;\beta&lt;/script&gt;, so the posterior probability that &lt;script type="math/tex"&gt;\beta &gt; 0&lt;/script&gt; is roughly estimated to exceed&amp;nbsp;0.999.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I thought this 0.999 figure is an overestimate; I analyze this question in this&amp;nbsp;post.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h2&gt;Analysis&lt;/h2&gt;
+&lt;p&gt;The event “&lt;script type="math/tex"&gt;\beta &gt; 0&lt;/script&gt;” is a Bernoulli-distributed random variable; let&amp;#8217;s denote it with &lt;script type="math/tex"&gt;x \sim \text{Bernoulli}(\theta)&lt;/script&gt;. If we draw &lt;script type="math/tex"&gt;S&lt;/script&gt; samples from &lt;script type="math/tex"&gt;x&lt;/script&gt; (and denote the results with &lt;script type="math/tex"&gt;x_i&lt;/script&gt;), the conditional probability distribution of &lt;script type="math/tex"&gt;p(\theta \given \{x_i\})&lt;/script&gt; is described by the following directed graphical&amp;nbsp;model:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Bayes net for x_i and theta" src="https://www.treszkai.com/2019/07/24/approaching-certainty/dgm-theta.svg"&gt;&lt;/p&gt;
+&lt;p&gt;The node for &lt;script type="math/tex"&gt;x_i&lt;/script&gt; is filled because it&amp;#8217;s observed, and the plate represents &lt;script type="math/tex"&gt;S&lt;/script&gt; copies of this node (with &lt;script type="math/tex"&gt;i&lt;/script&gt; ranging from &lt;script type="math/tex"&gt;1&lt;/script&gt; to &lt;script type="math/tex"&gt;S&lt;/script&gt;).&lt;/p&gt;
+&lt;p&gt;If &lt;script type="math/tex"&gt;n_1&lt;/script&gt; (resp. &lt;script type="math/tex"&gt;n_0&lt;/script&gt;) denote the number of samples where &lt;script type="math/tex"&gt;x_i&lt;/script&gt; is true (resp. false), the likelihood is described&amp;nbsp;by:&lt;/p&gt;
+&lt;p&gt;[p({x_i} \given \theta) = \text{Binomial}(n_1 \given n = S, p =&amp;nbsp;\theta).]&lt;/p&gt;
+&lt;p&gt;We can assume a noninformative uniform prior on the probability &lt;script type="math/tex"&gt;\theta&lt;/script&gt; on the unit interval. A Beta prior is conjugate to the Bernoulli likelihood, and &lt;script type="math/tex"&gt;p(\theta) = \text{Beta}(\theta \given \alpha_0 = 1, \beta_0 = 1) = \text{Uniform}(\theta \given a = 0, b = 1)&lt;/script&gt;, and this results in the following&amp;nbsp;posterior:&lt;/p&gt;
+&lt;p&gt;[p(\theta \given {x_i}) = \text{Beta}(\theta \given \alpha_0 + n_0, \beta_0 +&amp;nbsp;n_1).]&lt;/p&gt;
+&lt;p&gt;With &lt;script type="math/tex"&gt;n_1 = 1000&lt;/script&gt; and &lt;script type="math/tex"&gt;n_0 = 0&lt;/script&gt;, this amounts to a &lt;script type="math/tex"&gt;\text{Beta}(1001, 1)&lt;/script&gt; distribution, whose &lt;a href="https://en.wikipedia.org/wiki/Beta_distribution#Probability_density_function"&gt;pdf&lt;/a&gt; is as&amp;nbsp;such:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Pdf of Beta(1001,1)" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-big.svg"&gt;&lt;/p&gt;
+&lt;p&gt;As expected, most of the probability mass is close to 1.0. But that graph is not very legible, so let&amp;#8217;s zoom in on the right end of the &lt;em&gt;x&lt;/em&gt;&amp;nbsp;axis:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Pdf of Beta(1001,1) in [.99,1.0] interval" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-zoomed.svg"&gt;&lt;/p&gt;
+&lt;p&gt;The red line marks the mean of the distribution, which is approximately &lt;script type="math/tex"&gt;0.999&lt;/script&gt;, but not nearly all of the probability mass is on the right side of &lt;script type="math/tex"&gt;0.999&lt;/script&gt;. Using the &lt;a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"&gt;cdf&lt;/a&gt; of the posterior, we have&amp;nbsp;that&lt;/p&gt;
+&lt;p&gt;[P(\theta &amp;gt; 0.999) =&amp;nbsp;0.63,]&lt;/p&gt;
+&lt;p&gt;meaning there&amp;#8217;s still a 1 in 3 chance that the posterior probability that &lt;script type="math/tex"&gt;\beta &gt; 0&lt;/script&gt; does &lt;em&gt;not&lt;/em&gt; exceed &lt;script type="math/tex"&gt;0.999&lt;/script&gt;. To be fair, &lt;strong&gt;&lt;script type="math/tex"&gt;0.999&lt;/script&gt; is still good for a “rough estimate”&lt;/strong&gt;, unless one has a strong prior for &lt;script type="math/tex"&gt;\beta &lt; 0&lt;/script&gt;. (Given the nature of the experiment and the meaning of the parameter &lt;script type="math/tex"&gt;\beta&lt;/script&gt; -- the toxicity of a compound --, a flat prior on “&lt;script type="math/tex"&gt;\beta &gt; 0&lt;/script&gt;” is&amp;nbsp;reasonable.)&lt;/p&gt;
+&lt;h3&gt;Presidential&amp;nbsp;elections&lt;/h3&gt;
+&lt;p&gt;A similar statement was made for 1988 pre-election polls, on page&amp;nbsp;70:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All of the 1000 simulations &lt;script type="math/tex"&gt;\theta_1 &gt; \theta_2&lt;/script&gt;; thus, the estimated posterior probability that Bush had more support than Dukakis in the survey population is over&amp;nbsp;99.9%.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;When a presidential election is won “by a landslide”, that rarely means more than a 60-40% results; so in this case, I would rather use a prior that puts more mass on results close to 50-50%, for example &lt;script type="math/tex"&gt;\text{Beta}(10,10)&lt;/script&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Pdf of Beta(10,10)" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-10-pdf.svg"&gt;&lt;/p&gt;
+&lt;p&gt;This results in the following&amp;nbsp;posterior:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Pdf of Beta(1010,10)" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1010-pdf.svg"&gt;&lt;/p&gt;
+&lt;p&gt;So in this case, the crude estimate does does not suffice, and we should rather be only 98% certain. (This is a 20-fold difference, &lt;script type="math/tex"&gt;(1-.98)/(1-0.999)&lt;/script&gt;, and a well-calibrated &lt;a href="https://goodjudgment.com/philip-tetlocks-10-commandments-of-superforecasting/"&gt;superforecaster&lt;/a&gt; could tell them apart.) If the stakes are high, then refine your model, and draw more&amp;nbsp;samples.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The meaning of 1000 true + 0 false simulations depends on your prior beliefs: the posterior mean could be 0.999 (with a uniform prior), or anything less than 0.99 (with a prior weighted more towards the center or&amp;nbsp;zero).&lt;/p&gt;
+&lt;p&gt;I love &lt;span class="caps"&gt;BDA3&lt;/span&gt;; I'm nowhere near finished, but even the first chapters have taught me new ideas and proofs (e.g. the Bayesian cookbook in section 3.8, or modeling normal data with unknown mean &lt;em&gt;and&lt;/em&gt; variance). The examples and exercises are a great combination of applications and theory. As you can see from this post, all I can do is nitpick some tiny details. A quick intro to practical Bayesian modeling is a &lt;a href="https://www.youtube.com/watch?v=T1gYvX5c2sM"&gt;presentation from Andrew Gelman&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Did you like this post, did I make a mistake, or do you know a &lt;span class="caps"&gt;BDA3&lt;/span&gt; discussion group? Let me know in the comments&amp;nbsp;below!&lt;/p&gt;
+&lt;h2&gt;Code&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;scipy.stats&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;st&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;IPython.display&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;set_matplotlib_formats&lt;/span&gt;
+
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;matplotlib&lt;/span&gt; &lt;span class="n"&gt;inline&lt;/span&gt;
+&lt;span class="n"&gt;set_matplotlib_formats&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;svg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rv&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;plot_kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pdf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;plot_kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_ylim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;θ&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ylabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Probability density function&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Pdf of Beta(θ | α = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;, β = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_ylim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.01&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;beta-1000-pdf-big.svg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-big.svg"&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;ramanujan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Series that converges to 1/π at an exponential rate,&lt;/span&gt;
+&lt;span class="sd"&gt;    by Srinivasa Ramanujan&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;**.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;9801&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                               &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;
+                               &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;396&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                               &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1103&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;26390&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                              &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1/ramanujan(&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;) - π ≈ &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ramanujan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;.2e&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Easter egg. Thanks for reading!&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;1/ramanujan(1) - π ≈&amp;nbsp;7.64e-08&lt;/p&gt;
+&lt;p&gt;1/ramanujan(2) - π ≈&amp;nbsp;4.44e-16&lt;/p&gt;
+&lt;p&gt;1/ramanujan(3) - π ≈&amp;nbsp;0.00e+00&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.990&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vlines&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_ylim&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mean&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;upper left&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;beta-1000-pdf-zoomed.svg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-zoomed.svg"&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;0.999001996007984&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;P(θ &amp;gt; 0.999) = &lt;/span&gt;&lt;span class="si"&gt;{:d}&lt;/span&gt;&lt;span class="s1"&gt;%&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.999&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;P(θ &amp;gt; 0.999) =&amp;nbsp;63%&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;P(θ &amp;gt; 0.998) = &lt;/span&gt;&lt;span class="si"&gt;{:d}&lt;/span&gt;&lt;span class="s1"&gt;%&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.998&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;P(θ &amp;gt; 0.998) =&amp;nbsp;86%&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;Andrew Gelman, John Carlin, Hal Stern, David Dunson, Aki Vehtari, and Donald Rubin. 2013. &lt;em&gt;Bayesian Data Analysis: Third Edition&lt;/em&gt;. &lt;a href="http://www.stat.columbia.edu/~gelman/book/"&gt;Official&amp;nbsp;webpage&lt;/a&gt;&lt;/p&gt;</content><category term="math"></category><category term="statistics"></category><category term="Bayes"></category><category term="sampling"></category></entry><entry><title>The wise men puzzle</title><link href="https://www.treszkai.com/2018/08/18/wise-men/" rel="alternate"></link><published>2018-08-18T00:00:00+02:00</published><updated>2018-08-18T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2018-08-18:/2018/08/18/wise-men/</id><summary type="html">&lt;p&gt;Analyzing the wise men puzzle of modal&amp;nbsp;logic.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Today I understood the wise men puzzle at a conceptual level, well enough that I could explain it and possibly generalize to similar domains. This post is my attempt at explaining&amp;nbsp;it.&lt;/p&gt;
+&lt;p&gt;The puzzle is described in &lt;!-- {% cite Huth2000-Logic-book %} --&gt; &lt;a class="citation" href="#Huth2000-Logic-book"&gt;(Huth &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; Ryan, 2000)&lt;/a&gt; as&amp;nbsp;follows:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There are three wise men. It&amp;#8217;s common knowledge—known by everyone and known to be known by everyone, etc.—that there are three red hats and two white hats. The king puts a hat on each of the wise men in such a way that they are not able to see their own hat, and asks each one in turn whether they are not able to see their own hat, and asks each one in turn whether they know the color of the hat on their head. Suppose the first man says he does not know; then the second says he does not know either.
+It follows that the third man must be able to say that he knows the colour of his hat. Why is this? What colour has the third man&amp;#8217;s&amp;nbsp;hat?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Let&amp;#8217;s call the people Alpha, Beta, Gamma, in the order they&amp;nbsp;speak.&lt;/p&gt;
+&lt;p&gt;One solution is to think about the puzzle in terms of possible worlds. A world in this problem is described by an assignment of hat colors to people, which is equally an ordered triple of colours &lt;script type="math/tex"&gt;⟨c_1, c_2, c_3⟩&lt;/script&gt;, with &lt;script type="math/tex"&gt;c_i ∈ \{R,W\}&lt;/script&gt;. There are only 2 white hats, so in the beginning, the seven possible worlds&amp;nbsp;are&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+\begin{array}{cc}
+⟨R,R,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨R,R,W⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨R,W,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨R,W,W⟩ \\
+⟨W,R,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨W,R,W⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨W,W,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; \\
+\end{array}. %]]&gt;&lt;/script&gt;
+&lt;p&gt;If Beta and Gamma were both wearing white hats, then Alpha would know that that his hat is red. Therefore, when Alpha says &amp;#8220;no&amp;#8221;, Beta and Gamma both learn that both of them cannot be white, i.e. at least one of them is red. The remaining possible worlds&amp;nbsp;are&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+\begin{array}{cc}
+{⟨R,R,R⟩} &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨R,R,W⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨R,W,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; \crossed{⟨R,W,W⟩} \\
+{⟨W,R,R⟩} &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨W,R,W⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨W,W,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; \\
+\end{array}. %]]&gt;&lt;/script&gt;
+&lt;p&gt;Now, &lt;em&gt;we&lt;/em&gt; know that the world is one of the 6 worlds above, but Beta also sees the hats of Alpha and Gamma. What we think as outsiders only matters for whether &lt;em&gt;we&lt;/em&gt; can tell who&amp;#8217;s wearing what.
+But back to the observations of A,B,C. When Beta says &amp;#8220;no&amp;#8221;, that rules out the worlds where Gamma is white (because then Beta would be&amp;nbsp;red).&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+\begin{array}{cc}
+{⟨R,R,R⟩} &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; \crossed{⟨R,R,W⟩} &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨R,W,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; \crossed{⟨R,W,W⟩} \\
+{⟨W,R,R⟩} &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; \crossed{⟨W,R,W⟩} &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; ⟨W,W,R⟩ &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; \\
+\end{array} %]]&gt;&lt;/script&gt;
+&lt;p&gt;This means that Gamma is red, and he also knows&amp;nbsp;this.&lt;/p&gt;
+&lt;h1&gt;Another&amp;nbsp;way&lt;/h1&gt;
+&lt;p&gt;Our solution is more procedural than is necessary, and it does not show the essence of omniscient agents acting with one another. As this problem is small enough, we could list for every world every statement any agent could make, which is simply their knowledge base of true statements (i.e. whatever they can deduce from their view and from the common knowledge, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;). (Say, with atoms &lt;script type="math/tex"&gt;R_1, R_2, R_3, W_1, W_2, W_3&lt;/script&gt;, meaning &amp;#8220;I think person &lt;script type="math/tex"&gt;i&lt;/script&gt; has color X&amp;#8221;, with a &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt; abbreviating &lt;script type="math/tex"&gt;R_1\wedge W_2 \wedge R_3&lt;/script&gt;.) We can only do this because we are not interested in making statements like &amp;#8220;X knows that Y knows that Z knows that φ&amp;#8221;.
+Besides, in every world, we implicitly include what is common knowledge, and what any agent can see, i.e. the whole problem statement in the opening paragraph.
+The common knowledge at the beginning in any of these worlds is &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩&lt;/script&gt;. That&amp;#8217;s not very much, but at least symmetric, which allows us to write down only three&amp;nbsp;worlds.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,W⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,W,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,W,W⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,W⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;When Alpha says &amp;#8220;no&amp;#8221; in the beginning, that means he is not in a world where from his knowledge base he can conclude his own colour. His statement becomes common knowledge (&lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;), i.e. &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt; is extended with &lt;script type="math/tex"&gt;\lnot(W_2\wedge W_3)&lt;/script&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,W,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨R,W,W⟩}&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;We were able to cross out some worlds! And in the world &lt;script type="math/tex"&gt;⟨R,W,W⟩&lt;/script&gt; we were left with zero possible worlds for Alpha, i.e. Alpha&amp;#8217;s statement would lead to a contradiction: he would have answered &amp;#8220;yes&amp;#8221;. In fact, this was how we eliminated possible-worlds in the previous solution. Next turn: the king asks Beta, who says &amp;#8220;no&amp;#8221;. The common knowledge is extended with &lt;script type="math/tex"&gt;\lnot(W_1 \wedge W_3)&lt;/script&gt;. (Right? At this point I can imagine myself making an incorrect&amp;nbsp;deduction.)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;div id="mistaken1" style="display: block;"&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="fixed1" style="display: none;"&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;\crossed{⟨R,R,W}⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;\crossed{⟨R,R,W}⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;\crossed{⟨R,R,R}⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨R,R,W}⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,R,W⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;\crossed{⟨W,R,W⟩}&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;Another world disappeared. But what about &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;, why is it still there, when last time we argued that it&amp;#8217;s not possible for Gamma to be white? In fact, it is not: in that world Beta would have said yes, as he knew what colour he had.
+Although never explicitly stated, we assumed that if someone&amp;#8217;s not then he&amp;#8217;s white, and vice versa. Use &lt;script type="math/tex"&gt;\star&lt;/script&gt; to denote this&amp;nbsp;fact:&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+\star ≡ \bigwedge_{i=1}^3 (\lnot R_i → W_i) \wedge (\lnot W_i → R_i). %]]&gt;&lt;/script&gt;
+&lt;p&gt;We also know that common knowledge is true: for every formula &lt;script type="math/tex"&gt;φ&lt;/script&gt;, it&amp;#8217;s an axiom that &lt;script type="math/tex"&gt;\mathcal C φ → φ&lt;/script&gt;.
+Then, it&amp;#8217;s simple to show that Alpha is red and Gamma is white, Beta is&amp;nbsp;red.&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+\mathcal C \Big((R_1 \vee R_2 \vee R_3) \wedge (R_2 \vee R_3) \wedge (R_1 \vee R_3) \Big) \wedge \star \vdash
+    (R_1 \wedge W_3) → R_2. %]]&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+function showById(id, btn, displayStyle) {
+    document.getElementById(id).style.display = 'block';
+    btn.style.display = 'none';
+}
+function showInlineById(id, btn, displayStyle) {
+    document.getElementById(id).style.display = 'inline';
+    btn.style.display = 'none';
+}
+function hideById(id, btn) {
+    document.getElementById(id).style.display = 'none';
+    btn.style.display = 'none';
+}
+&lt;/script&gt;
+
+&lt;p&gt;Click this to fix that above: &lt;a href="#" onclick="showById('fixed1', this); hideById('mistaken1', this); return false;"&gt;click me!&lt;/a&gt; (Needs&amp;nbsp;JavaScript.)&lt;/p&gt;
+&lt;p&gt;Now we are left with the following&amp;nbsp;worlds:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;span id="mistaken2" markdown="1"&gt;&lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt;&lt;/span&gt; &lt;span id="fixed2" style="display: none;"&gt;&lt;script type="math/tex"&gt;\crossed{⟨R,R,W⟩}&lt;/script&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;World&lt;/strong&gt; &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;, &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;: &lt;script type="math/tex"&gt;\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)&lt;/script&gt;:
+- Alpha: &lt;script type="math/tex"&gt;⟨R,W,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Beta: &lt;script type="math/tex"&gt;⟨W,R,R⟩&lt;/script&gt;, &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+- Gamma: &lt;script type="math/tex"&gt;⟨W,W,R⟩&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;At first sight, Gamma&amp;#8217;s knowledge base in some worlds (&lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt;) contains a world with &lt;script type="math/tex"&gt;\lnot R_3&lt;/script&gt;. But every four of the above worlds has &lt;script type="math/tex"&gt;R_3&lt;/script&gt;, meaning &lt;script type="math/tex"&gt;R_3&lt;/script&gt; is deducible from &lt;script type="math/tex"&gt;\star&lt;/script&gt; and the &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;, making &lt;script type="math/tex"&gt;⟨R,R,W⟩&lt;/script&gt; in world &lt;script type="math/tex"&gt;⟨R,R,R⟩&lt;/script&gt; impossible. &lt;a href="#" onclick="showInlineById('fixed2', this); hideById('mistaken2', this); return false;"&gt;Click me to fix that.&lt;/a&gt; This means &lt;script type="math/tex"&gt;R_3&lt;/script&gt; is &lt;abbr title="Common knowledge"&gt;&lt;span class="caps"&gt;CK&lt;/span&gt;&lt;/abbr&gt;.&amp;nbsp;Yay!&lt;/p&gt;
+&lt;p&gt;Note: there might be some other true statements that could be deduced, so maybe Alpha knows his colour too in some worlds—I haven&amp;#8217;t solved the problem in full. For example, when Gamma answers &amp;#8220;yes&amp;#8221; in the end, it doesn&amp;#8217;t say anything we didn&amp;#8217;t already know, and nothing that Alpha and Beta didn&amp;#8217;t know already, as &lt;script type="math/tex"&gt;R_3&lt;/script&gt; can be deduced from the common knowledge. Maybe someone else knows theirs&amp;nbsp;too?&lt;/p&gt;
+&lt;h1&gt;Another&amp;nbsp;problem&lt;/h1&gt;
+&lt;p&gt;A slight modification is to map a natural number &lt;script type="math/tex"&gt;k&lt;/script&gt; to worlds where X is able to decide their colour after &lt;script type="math/tex"&gt;k&lt;/script&gt; utterances, if it wasn&amp;#8217;t X who spoke&amp;nbsp;last.&lt;/p&gt;
+&lt;p&gt;Related: it feels like there is a situation with &lt;script type="math/tex"&gt;n&gt;2&lt;/script&gt; people, where two agents can keep on discarding possible worlds just by them speaking in turns. If you know of one such problem, please let me&amp;nbsp;know.&lt;/p&gt;
+&lt;h1&gt;Notes&lt;/h1&gt;
+&lt;p&gt;I hope I didn&amp;#8217;t make a mistake in the calculations, I admit I enumerated the possible worlds by hand instead of with&amp;nbsp;Prolog.&lt;/p&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;Listen to people when they say&amp;nbsp;&amp;#8220;no&amp;#8221;.&lt;/p&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;!&amp;#8212; {% bibliography &amp;#8212;cited %} &amp;#8212;&gt;
+
+&lt;ol class="bibliography"&gt;&lt;li&gt;&lt;span id="Huth2000-Logic-book"&gt;Huth, M., &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; Ryan, &lt;span class="caps"&gt;M. D.&lt;/span&gt;(2000). &lt;i&gt;Logic in Computer Science - modelling and reasoning about systems&lt;/i&gt;. Cambridge University&amp;nbsp;Press.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</content><category term="math"></category><category term="starred"></category><category term="logic"></category></entry><entry><title>International Winter School on Gravity and Light, Tutorial 3: Multilinear Algebra – Solutions for Exercise 1</title><link href="https://www.treszkai.com/2018/06/09/multilinear-tutorial/" rel="alternate"></link><published>2018-06-09T00:00:00+02:00</published><updated>2018-06-09T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2018-06-09:/2018/06/09/multilinear-tutorial/</id><summary type="html">&lt;p&gt;Solutions for exercise 1 of tutorial 3 of the International Winter School on Gravity and&amp;nbsp;Light.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Solutions for exercise 1 of &lt;a href="https://www.youtube.com/watch?v=5oeWX3NUhMA"&gt;tutorial 3&lt;/a&gt; of the &lt;a href="https://gravity-and-light.herokuapp.com"&gt;International Winter School on Gravity and Light&lt;/a&gt;. (&lt;a href="https://www.youtube.com/watch?v=mbv3T15nWq0"&gt;Link to video of lecture 3&lt;/a&gt;.)&lt;/p&gt;
+&lt;h2&gt;Notation&lt;/h2&gt;
+&lt;p&gt;On this solution sheet, I&amp;#8217;ll speak of a vector space &lt;script type="math/tex"&gt;(V,+,\cdot)&lt;/script&gt; over a field &lt;script type="math/tex"&gt;K&lt;/script&gt;, where &lt;script type="math/tex"&gt;+: V\times V \rightarrow V&lt;/script&gt; is the addition and &lt;script type="math/tex"&gt;\cdot: K \times V \rightarrow V&lt;/script&gt; is called (scalar) multiplication or S-multiplication. The field &lt;script type="math/tex"&gt;(K, \textcolor{red}{+}, \textcolor{red}{\cdot})&lt;/script&gt; has &lt;script type="math/tex"&gt;\textcolor{red}{+}:K\times K \rightarrow K&lt;/script&gt; as addition and &lt;script type="math/tex"&gt;\textcolor{red}{\cdot}:K\times K \rightarrow K&lt;/script&gt; as multiplication operations. The dot is often omitted, i.e. &lt;script type="math/tex"&gt;a \mathbf v&lt;/script&gt; is short for &lt;script type="math/tex"&gt;a \cdot \mathbf v&lt;/script&gt;, &lt;script type="math/tex"&gt;a b&lt;/script&gt; is short for &lt;script type="math/tex"&gt;a \textcolor{red}{\cdot} b&lt;/script&gt;. (Note that the lecture dealt with real vector spaces, i.e. the field &lt;script type="math/tex"&gt;K&lt;/script&gt; was always the set of reals &lt;script type="math/tex"&gt;\mathbb R&lt;/script&gt;.)
+The scalars, i.e. the elements of &lt;script type="math/tex"&gt;K&lt;/script&gt;, are denoted with normal letters &lt;script type="math/tex"&gt;a,b&lt;/script&gt;, and the vectors, i.e. the elements of &lt;script type="math/tex"&gt;V&lt;/script&gt;, are denoted with boldface letters &lt;script type="math/tex"&gt;\mathbf u, \mathbf v, \mathbf w&lt;/script&gt;.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+function showById(id, btn) {
+    document.getElementById(id).style.display = 'block';
+    btn.style.display = 'none';
+}
+function showByClass(cls, btn) {
+    for (var x of document.getElementsByClassName(cls))
+        x.style.display = 'block';
+    btn.style.display = 'none';
+}
+function hideByClass(cls) {
+    for (var x of document.getElementsByClassName(cls))
+        x.style.display = 'none';
+}
+&lt;/script&gt;
+
+&lt;h1&gt;Exercise 1: True or&amp;nbsp;false?&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;Tick the correct statements, but not the incorrect ones.&lt;/em&gt; &lt;a href="#" onclick="showByClass('answer', this); hideByClass('show-answer'); return false;"&gt;Show all&amp;nbsp;answers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;a) Which statements on vector spaces are&amp;nbsp;correct?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Commutativity of multiplication is a vector space axiom.&lt;/em&gt; &lt;a href="#" onclick="showById('answer1', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer1" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - The scalar multiplication &lt;script type="math/tex"&gt;\cdot: K \times V \rightarrow V&lt;/script&gt; doesn&amp;#8217;t even have the same sets in its two arguments, i.e. &lt;script type="math/tex"&gt;\mathbf v \cdot a&lt;/script&gt; is not even defined.
+ - The vector space has the commutativity of &lt;em&gt;addition&lt;/em&gt; as an axiom: for any &lt;script type="math/tex"&gt;\mathbf u,\mathbf v \in V&lt;/script&gt;, &lt;script type="math/tex"&gt;{\mathbf u+\mathbf v} = {\mathbf v + \mathbf u}&lt;/script&gt;.
+ - The underlying field &lt;script type="math/tex"&gt;K&lt;/script&gt;
+&lt;em&gt;does&lt;/em&gt; have the commutativity of multiplication as a field axiom: for any &lt;script type="math/tex"&gt;a,b \in K&lt;/script&gt;, &lt;script type="math/tex"&gt;a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a&lt;/script&gt;.
+ - As a consequence, for any &lt;script type="math/tex"&gt;\mathbf v \in V&lt;/script&gt; and &lt;script type="math/tex"&gt;a, b \in K&lt;/script&gt;,&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+ a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v). %]]&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Every vector is a matrix with only one column.&lt;/em&gt; &lt;a href="#" onclick="showById('answer2', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer2" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - By definition, a vector is an element of a vector space. If we fix a basis for the vector space, then any vector can be represented by an ordered set of numbers, which could be treated as a column vector, i.e. a matrix with one column. However, this representation depends on the choice of basis.
+ - The &lt;a href="https://youtu.be/5oeWX3NUhMA?t=1m09s"&gt;official answer&lt;/a&gt; brings up as a counterexample the vector space of polynomials up to some finite degree. However, here again we could represent the vectors as a column vector with any choice of a basis. E.g. using the standard basis, &lt;script type="math/tex"&gt;p(x) = 0x^2 + 4x + 5 &lt;/script&gt; could be represented as &lt;script type="math/tex"&gt;\mathbf p = [0, 4, 5]^T&lt;/script&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Every linear map between vector spaces can be represented by a unique quadratic matrix.&lt;/em&gt; &lt;a href="#" onclick="showById('answer3', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer3" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - As above, a linear map &lt;script type="math/tex"&gt;f: V \rightarrow W &lt;/script&gt; can be represented as a unique matrix only once bases are chosen for its domain &lt;script type="math/tex"&gt;V&lt;/script&gt; and codomain &lt;script type="math/tex"&gt;W&lt;/script&gt;.
+ - This matrix is quadratic only if the dimensions of &lt;script type="math/tex"&gt;V&lt;/script&gt; and &lt;script type="math/tex"&gt;W&lt;/script&gt; are&amp;nbsp;equal.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;Every vector space has a corresponding dual vector space.&lt;/em&gt; &lt;a href="#" onclick="showById('answer4', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer4" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;true.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - The dual space of a vector space &lt;script type="math/tex"&gt;V&lt;/script&gt; is defined as the set of linear maps from &lt;script type="math/tex"&gt;V&lt;/script&gt; to &lt;script type="math/tex"&gt;K&lt;/script&gt;: &lt;script type="math/tex"&gt;V^* \coloneqq Hom(V,K) \coloneqq \{φ\ \vert \ φ: V \linmap K\} &lt;/script&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The set of everywhere positive functions on &lt;script type="math/tex"&gt;\mathbb R&lt;/script&gt; with pointwise addition and S-multiplication is a vector space.&lt;/em&gt; &lt;a href="#" onclick="showById('answer5', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer5" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - This set doesn&amp;#8217;t have a commutative identity element: by the field axioms of &lt;script type="math/tex"&gt;\mathbb R&lt;/script&gt;, it could only be the constant zero function, but that&amp;#8217;s not an element of the set.
+ - This set doesn&amp;#8217;t have a commutative inverse for any element.
+ - For the scalar multiplication we&amp;#8217;d need to know the underlying field. Usually it would be &lt;script type="math/tex"&gt;\mathbb R&lt;/script&gt;, but then S-multiplication with a negative number wouldn&amp;#8217;t result in an everywhere positive function. (Although one can construct a field from &lt;script type="math/tex"&gt;\mathbb R^+&lt;/script&gt;, I wonder how well that would combine with the above attempt at a vector&amp;nbsp;space.)&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;b) What is true about tensors and their&amp;nbsp;components?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The tensor product of two tensors is a tensor.&lt;/em&gt; &lt;a href="#" onclick="showById('answer6', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer6" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;true.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - The lecture didn&amp;#8217;t mention tensor products, so a definition is in order. The product of an &lt;script type="math/tex"&gt; (l,k) &lt;/script&gt;-tensor &lt;script type="math/tex"&gt;S&lt;/script&gt; and an &lt;script type="math/tex"&gt; (n,m) &lt;/script&gt;-tensor &lt;script type="math/tex"&gt;T&lt;/script&gt; is an &lt;script type="math/tex"&gt; (l+n,k+m) &lt;/script&gt;-tensor &lt;script type="math/tex"&gt; S \otimes T &lt;/script&gt;, whose &lt;script type="math/tex"&gt; (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) &lt;/script&gt;-th component is the product of the relevant components of &lt;script type="math/tex"&gt;S&lt;/script&gt; and &lt;script type="math/tex"&gt;T&lt;/script&gt;:&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+ (S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}_ {j_1, \ldots, j_k, j_{k+1}, \ldots, j_{k+m} } =
+   S^{i_1, \ldots, i_l}_ {j_1, \ldots, j_k}
+   T^{i_{1}, \ldots, i_{n}}_ {j_{1}, \ldots, j_{m}}. %]]&gt;&lt;/script&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Tensor#Tensor_product"&gt;Source:&amp;nbsp;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This means that if the arguments of &lt;script type="math/tex"&gt; S \otimes T &lt;/script&gt; are
+ - the &lt;script type="math/tex"&gt;l+n&lt;/script&gt; linear maps &lt;script type="math/tex"&gt;φ^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i&lt;/script&gt; for &lt;script type="math/tex"&gt;1 \le p \le l+n&lt;/script&gt;, and
+ - the &lt;script type="math/tex"&gt;k+m&lt;/script&gt; vectors &lt;script type="math/tex"&gt; \v_{(q)} = \sum^{dim V}_{j=1} v_{(q)}^j \e_j &lt;/script&gt; for &lt;script type="math/tex"&gt;1 \le q \le k+m&lt;/script&gt;
+&lt;/p&gt;
+&lt;p&gt;(with some particular choice of basis vectors &lt;script type="math/tex"&gt;\{\e_i\}_i&lt;/script&gt; and basis covectors &lt;script type="math/tex"&gt;\{\epsilon^i\}_i&lt;/script&gt; ),&amp;nbsp;then&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+\begin{aligned}
+(S\otimes T) &amp;(φ^{(1)}, \ldots, φ^{(l+n)}, \v_{(1)}, \ldots, \v_{(k+m)}) = \\
+  &amp;= S (φ^{(1)}, \ldots, φ^{(l)}, \v_{(1)}, \ldots, \v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, \v_{(k+1)}, \ldots, \v_{(k+m)})\\
+  &amp;= \Bigg(
+      \sum_{i_1}^{\dim V} \cdots \sum_{i_l}^{\dim V}
+      \sum_{j_1}^{\dim V} \cdots \sum_{j_k}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Bigg) \cdot \phantom.\\
+  &amp;\phantom{=} \Bigg(
+      \sum_{i_{l+1}}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      \sum_{j_{k+1}}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Bigg) \\
+  &amp;=  \sum_{i_1}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      \sum_{j_1}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+\end{aligned} %]]&gt;&lt;/script&gt;
+&lt;p&gt;These &lt;script type="math/tex"&gt; (l+n+k+m) &lt;/script&gt; summations are quite a mess, but the above derivation shows that the &lt;a href="http://mathworld.wolfram.com/EinsteinSummation.html"&gt;Einstein summation convention&lt;/a&gt; works for tensor products as&amp;nbsp;well:&lt;/p&gt;
+&lt;script type="math/tex; mode=display"&gt;% &lt;![CDATA[
+\begin{aligned}
+(S\otimes T) &amp;(φ^{(1)}, \ldots, φ^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) =\\
+  &amp;= S (φ^{(1)}, \ldots, φ^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, v_{(k+1)}, \ldots, v_{(k+m)})\\
+  &amp;= \Big(
+      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+  \Big)
+  \Big(
+      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
+  \Big) \\
+ &amp;=  \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
+      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
+\end{aligned} %]]&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;You can always reconstruct a tensor from its components and the corresponding basis.&lt;/em&gt; &lt;a href="#" onclick="showById('answer7', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer7" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;true.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case &lt;script type="math/tex"&gt;V&lt;/script&gt; is not finite&amp;nbsp;dimensional).&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The number of indices of the tensor components depends on dimension.&lt;/em&gt; &lt;a href="#" onclick="showById('answer8', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer8" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - A tensor component usually has one index for each argument, e.g. for a &lt;script type="math/tex"&gt;(2,1)&lt;/script&gt;-tensor &lt;script type="math/tex"&gt;T&lt;/script&gt;, the components are &lt;script type="math/tex"&gt;T^{i_1,i_2}_{j_1}&lt;/script&gt;.
+ - The &lt;em&gt;range&lt;/em&gt; of these indices does depend on the dimension: each index ranges from &lt;script type="math/tex"&gt;1&lt;/script&gt; to &lt;script type="math/tex"&gt;\dim V&lt;/script&gt;. Therefore an &lt;script type="math/tex"&gt; (n,m) &lt;/script&gt;-tensor &lt;script type="math/tex"&gt;T&lt;/script&gt; has &lt;script type="math/tex"&gt; (\dim V)^{n+m} &lt;/script&gt; many&amp;nbsp;components.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;The Einstein summation convention does not apply to tensor components.&lt;/em&gt; &lt;a href="#" onclick="showById('answer9', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer9" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification: see&amp;nbsp;above.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &lt;em&gt;A change of basis does not change the tensor components.&lt;/em&gt; &lt;a href="#" onclick="showById('answer10', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer10" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - the tensor components are defined with respect to a given&amp;nbsp;basis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;c) Given a basis for a &lt;script type="math/tex"&gt;d&lt;/script&gt;-dimensional vector space &lt;script type="math/tex"&gt;V&lt;/script&gt;,&amp;nbsp;&amp;#8230;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &amp;#8230;&lt;em&gt;one can find exactly &lt;script type="math/tex"&gt;d^2&lt;/script&gt;-different dual bases for the corresponding dual vector space &lt;script type="math/tex"&gt; V^* &lt;/script&gt;.&lt;/em&gt; &lt;a href="#" onclick="showById('answer11', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer11" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - Given a basis of &lt;script type="math/tex"&gt;V&lt;/script&gt;, &lt;script type="math/tex"&gt;E = \{\mathbf{e}_i\}_{i=1}^d \subset V&lt;/script&gt;, there is a &lt;em&gt;unique&lt;/em&gt; dual basis of &lt;script type="math/tex"&gt;V^* &lt;/script&gt;, namely &lt;script type="math/tex"&gt;E^* = \{\epsilon_i\}_{i=1}^d&lt;/script&gt;, where &lt;script type="math/tex"&gt;\epsilon_i(\e_i) = 1&lt;/script&gt; and &lt;script type="math/tex"&gt;\epsilon_i(\e_j) = 0&lt;/script&gt; for &lt;script type="math/tex"&gt;i ≠ j&lt;/script&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &amp;#8230;&lt;em&gt;by removing one basis vector of the basis of &lt;script type="math/tex"&gt;V&lt;/script&gt;, a basis for a &lt;script type="math/tex"&gt;(d - 1)&lt;/script&gt;-dimensional vector space &lt;script type="math/tex"&gt;V_1&lt;/script&gt; is obtained.&lt;/em&gt; &lt;a href="#" onclick="showById('answer12', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer12" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;true.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - The resulting set of &lt;script type="math/tex"&gt;(d-1)&lt;/script&gt; vectors are still linearly independent, and their span is a &lt;script type="math/tex"&gt;(d-1)&lt;/script&gt;-dimensional subspace of &lt;script type="math/tex"&gt;V&lt;/script&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &amp;#8230;&lt;em&gt;the continuity of a map &lt;script type="math/tex"&gt;f : V → W&lt;/script&gt; depends on the choice of basis for the vector space &lt;script type="math/tex"&gt;W&lt;/script&gt;.&lt;/em&gt; &lt;a href="#" onclick="showById('answer13', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer13" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;false.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - The continuity of a map is defined for &lt;em&gt;topological spaces&lt;/em&gt;, not for vector spaces.
+ - &lt;script type="math/tex"&gt;f&lt;/script&gt; is continuous &lt;em&gt;iff&lt;/em&gt; the preimage of every open set in &lt;script type="math/tex"&gt;W&lt;/script&gt; is open in &lt;script type="math/tex"&gt;V&lt;/script&gt;. Note that no term in this definition depends on the choice of basis for either &lt;script type="math/tex"&gt;V&lt;/script&gt; or &lt;script type="math/tex"&gt;W&lt;/script&gt;.
+ - Assuming that &lt;script type="math/tex"&gt;V&lt;/script&gt; and &lt;script type="math/tex"&gt;W&lt;/script&gt; are real vector spaces, it is customary to equip them with the standard topology. A set &lt;script type="math/tex"&gt;A&lt;/script&gt; is open in &lt;script type="math/tex"&gt;V&lt;/script&gt;
+&lt;em&gt;iff&lt;/em&gt; either it is the union of open &lt;script type="math/tex"&gt;ε&lt;/script&gt;-balls, or of Cartesian products of open intervals. While these definitions assume a basis for &lt;script type="math/tex"&gt;V&lt;/script&gt;, they all result in the exact same topologies. (Meaning a set can be covered with open balls &lt;em&gt;iff&lt;/em&gt; it can be covered with open cuboids &lt;em&gt;iff&lt;/em&gt; it can be covered with open cubes – an interesting but easy-to-prove result.)
+ - It&amp;#8217;s easy to see that every &lt;em&gt;linear&lt;/em&gt; map between real vector spaces (equipped with the standard topology) is&amp;nbsp;continuous.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &amp;#8230;&lt;em&gt;one can extract the components of the elements of the dual vector space &lt;script type="math/tex"&gt;V^*&lt;/script&gt;.&lt;/em&gt; &lt;a href="#" onclick="showById('answer14', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer14" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;true.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - a basis for &lt;script type="math/tex"&gt;V&lt;/script&gt; uniquely determines a dual basis for &lt;script type="math/tex"&gt;V^* &lt;/script&gt;, which uniquely determines the components of any&amp;nbsp;covector.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;?.&lt;/strong&gt; &amp;#8230;&lt;em&gt;each vector of &lt;script type="math/tex"&gt;V&lt;/script&gt; can be reconstructed from its components.&lt;/em&gt; &lt;a href="#" onclick="showById('answer15', this); return false;" class="show-answer"&gt;Show&amp;nbsp;answer&lt;/a&gt;&lt;/p&gt;
+&lt;div class="answer" id="answer15" style="display: none;"&gt;
+&lt;p&gt;&lt;em&gt;Answer:&lt;/em&gt;&amp;nbsp;true.&lt;/p&gt;
+&lt;p&gt;Clarification:
+ - Given the basis vectors &lt;script type="math/tex"&gt;\mathbf{e}_i&lt;/script&gt; and components &lt;script type="math/tex"&gt;v^i&lt;/script&gt; for &lt;script type="math/tex"&gt;1 \leq i \leq d&lt;/script&gt;, &lt;script type="math/tex"&gt;\mathbf{v} = \sum_{i=1}^d v^i \mathbf{e}_i&lt;/script&gt;.&lt;/p&gt;
+&lt;/div&gt;</content><category term="math"></category><category term="starred"></category></entry><entry><title>Some proofs in first-order logic</title><link href="https://www.treszkai.com/2018/02/27/logic-courseworks/" rel="alternate"></link><published>2018-02-27T00:00:00+01:00</published><updated>2018-02-27T00:00:00+01:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2018-02-27:/2018/02/27/logic-courseworks/</id><summary type="html">&lt;p&gt;This page lists some interesting problems in mathematical logic that I solved during my&amp;nbsp;studies&lt;/p&gt;</summary><content type="html">&lt;p&gt;I had the fortune to study classical logic from &lt;a href="http://www.renyi.hu/~csirmaz/"&gt;László Csirmaz&lt;/a&gt; at the Eötvös Loránd University, Budapest. Although I was not officially enrolled in the course, he was kind enough to mark my weekly homework regardless of my lack of student status. These were originally written in Hungarian, and I translated a few of them into&amp;nbsp;English.&lt;/p&gt;
+&lt;h1&gt;A non-standard model of Robinson&amp;nbsp;arithmetics&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;Give a model that fulfills every axiom of the Robinson arithmetics, and which contains contains two elements that are neither greater than or equal to, nor smaller than or equal to one another; or prove that such a model doesn&amp;#8217;t&amp;nbsp;exist.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.treszkai.com/2018/02/27/logic-courseworks/2017-03-logic-cw4ex4.pdf"&gt;Solution (&lt;span class="caps"&gt;PDF&lt;/span&gt;)&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;A two-formula version of the diagonal&amp;nbsp;lemma&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;Let &lt;script type="math/tex"&gt;\Gamma&lt;/script&gt; be a theorem which can represent every recursive function. Prove that for every pair of formulae &lt;script type="math/tex"&gt;\Phi(x)&lt;/script&gt; and &lt;script type="math/tex"&gt;\Psi(x)&lt;/script&gt; with one free variable, there exist closed formulae &lt;script type="math/tex"&gt;\eta&lt;/script&gt; and &lt;script type="math/tex"&gt;\theta&lt;/script&gt; such that &lt;script type="math/tex"&gt;\Gamma \proves \eta \,\leftrightarrow\, \Phi(\Godel{\theta})&lt;/script&gt; and &lt;script type="math/tex"&gt;\Gamma \proves \theta \,\leftrightarrow\, \Psi(\Godel{\eta})&lt;/script&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.treszkai.com/2018/02/27/logic-courseworks/2017-05-logic-cw9ex1.pdf"&gt;Solution (&lt;span class="caps"&gt;PDF&lt;/span&gt;)&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;Final steps of the proof of Gödel&amp;#8217;s completeness&amp;nbsp;theorem&lt;/h1&gt;
+&lt;p&gt;When proving Gödel&amp;#8217;s completeness theorem during the lectures, I was missing a crucial step from the proof, so I &lt;a href="https://www.treszkai.com/2018/02/27/logic-courseworks/2017-07-logic-henkin.pdf"&gt;proved it myself&lt;/a&gt;.&lt;/p&gt;</content><category term="math"></category><category term="starred"></category></entry></feed>

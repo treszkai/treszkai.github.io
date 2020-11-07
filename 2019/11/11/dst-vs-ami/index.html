@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=58cb4674">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+  <meta name="description" content="Posts and writings by Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta name="keywords" content="">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var macros_dict = { "\\RR": "\\mathbb{R}"  ,  "\\EE": "\\mathbb{E}"  ,  "\\parm": "\\textcolor{grey}{\\bullet}"  ,  "\\indep": "\\perp\\!\\!\\!\\perp"  ,  "\\emptyset": "\\varnothing"  ,  "\\proves": "\\vdash"  ,  "\\Union": "\\bigcup"  ,  "\\Intersect": "\\bigcap"  ,  "\\grad": "\\nabla"  ,  "\\given": "\\,\\vert\\,"  ,  "\\Godel": "\\ulcorner #1 \\urcorner"    };
+  document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: false, macros: macros_dict });
+  });
+  document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: true, macros: macros_dict });
+  });
+});
+</script>
+  <title>
+    Laszlo Treszkai
+&ndash; The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis (original&nbsp;research)  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2019/11/11/dst-vs-ami/">The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis (original&nbsp;research)</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 11 Nov. 2019</p>
+    </p>
+  </div>
+  <div class="article__text">
+    <p><em>Laszlo Treszkai&nbsp;(firstname.lastname@gmail.com)</em></p>
+<p>Version of 11 November,&nbsp;2019.</p>
+<p>This document might be revised in the future; any potential updates will be linked from&nbsp;here.</p>
+<h2>Abstract</h2>
+<h3>Background</h3>
+<p>Multiple observational studies claim that the daylight savings time (<span class="caps">DST</span>) adjustment in spring causes an increase in acute myocardial infarction (<span class="caps">AMI</span>) count during the following days or weeks, attributing this increase to the reduction in sleep or the disturbance in the circadian rhythm. Previous studies used frequentist methods for interval estimation and often showed “statistically significant” differences, although the results were inconsistent and sometimes the effects in the same study were incoherent (such as a significant difference on Tuesday but not on Monday). A recent meta-analysis used frequentist methods and showed an increase in incidence rate after the spring adjustment and could not show a change after the autumn&nbsp;adjustment.</p>
+<h3>Methods</h3>
+<p>This study reanalyzes the data described in the relevant observational studies. We propose a Bayesian model that should capture the alleged phenomenon truthfully, apply this model consistently to every study, and combine the results using a fixed-effects model. Under our model, the risk ratio on Monday is the highest, it is slightly lower on Tuesday, and it decreases linearly to 1 until Saturday. We do the calculations using both analytic methods and Monte Carlo methods with the Stan&nbsp;software.</p>
+<h3>Results</h3>
+<p>In total, 7 observational studies were identified and analyzed, from which one was excluded. The remaining 6 studies included 14,024 <span class="caps">AMI</span> incidences on the week following spring <span class="caps">DST</span> adjustment, and 15,921 incidences on the week following autumn <span class="caps">DST</span> adjustment.
+Together with related trend data obtained from the surrounding weeks, these figures show a risk ratio (<span class="caps">RR</span>) of 107.7% on the Monday following a spring <span class="caps">DST</span> change (95% credible interval: [104.8%, 110.7%]), and a mean <span class="caps">RR</span> of 97.7% (95% CrI: [95.1%, 100.3%]) after the autumn <span class="caps">DST</span> change. The results from analytic and Monte Carlo methods matched precisely. The credible intervals obtained from a non-informative prior yield practically the same results, and so does a slightly more complex model for the time decay of the&nbsp;effect.</p>
+<h3>Conclusion</h3>
+<p>Overall, the spring <span class="caps">DST</span> adjustment has a small but quasi-certain positive effect on <span class="caps">AMI</span> incidences, and the risk ratio in autumn is approximately 1 or slightly less than 1.
+We note that the combined <span class="caps">RR</span> is less than half of what has been suggested by certain smaller but highly cited studies, but our analysis shows larger effects than the recent meta-analysis of the same data by Manfredini et al. (2019).
+Our results give strong support to the hypothesis that the <span class="caps">DST</span> transitions – especially the spring transition when sleep is reduced – have a noticeable effect on our circadian rhythm.
+Nonetheless, we cannot confidently claim that these results are of direct practical importance: there is no evidence that the additional <span class="caps">AMI</span> counts in the days after <span class="caps">DST</span> transition are not merely shifted earlier from the following&nbsp;weeks.</p>
+<hr>
+<h2>Introduction</h2>
+<p>This study has a two-fold purpose. First, it compiles all the published data about the effects of <span class="caps">DST</span> on the risk of <span class="caps">AMI</span>, and presents a meta-analysis where the data from multiple countries and years is analyzed in a unified model. On the other hand, it demonstrates the use of Bayesian methods in an analysis or meta-analysis, explaining the thinking behind model specification and quantifying our prior beliefs about the parameters. The software required for reproducing this paper is freely available at <a href="https://github.com/treszkai/BayesianScience">https://github.com/treszkai/BayesianScience</a>.</p>
+<p>Sipilä et al. (2016) explain the importance of sleep and its effects on the risk of heart&nbsp;disease:</p>
+<blockquote>
+<p>Sleep is essential for well-being and its disturbances
+have been associated with disruption of numerous
+physiological processes and changes in cardiovascular
+risk factors (1,2). Sleep disordered breathing has been
+associated with risk of coronary heart disease (3,4) and
+sleep impairment with prognosis of myocardial infarction
+(<span class="caps">MI</span>)&nbsp;(5).</p>
+<p>Daylight saving time (<span class="caps">DST</span>) is used in many countries
+including the United States and the members of
+the European Union for prolonging of sun-light
+proportion of day. Clock shifts however alter and disrupt
+chronobiological rhythms and impair sleep (7,8) providing
+a ‘‘natural experiment’’ for studying the effects of
+rhythm and sleep disruptions on the incidence of
+vascular events. Although chronobiological factors
+have been shown to affect the incidence of <span class="caps">MI</span> (9,10),
+studies on the association of <span class="caps">DST</span> and the incidence of <span class="caps">MI</span>
+have been partly conflicting. With one exception (11), all
+studies show changes in the temporal distribution of <span class="caps">MI</span>
+in the week following <span class="caps">DST</span> transitions but the patterns of
+change differ (12–15) and there is no agreement about
+the impact of these changes on the overall incidence of
+<span class="caps">MI</span>&nbsp;(11–16).</p>
+</blockquote>
+<p>We will see that there is a simple reason for the disagreement between studies: most of the studies have been critically&nbsp;underpowered.</p>
+<p>Although the majority of medical research uses frequentist methods, this is not the first meta-analysis in medicine that uses Bayesian statistics. The following are some noteworthy examples:
+- Gelman et al. (2013) present an example for estimating mortality ratios after a myocardial infarction between the control group and a group that uses beta-blockers, using data from 22 independent studies.
+- Devin Incerti (2015) provides a Bayesian re-analysis of the effects of mammography on breast cancer-related mortality rates.
+- Yang et al. (2017) analyze 25 randomized controlled trials of prokinetics for the treatment of functional dyspepsia in a Bayesian network&nbsp;meta-analysis.</p>
+<h3>Methodology shared in most&nbsp;papers</h3>
+<p>Following the naming of (Čulić 2013), we refer to the week following the <span class="caps">DST</span> adjustment as “posttransitional&nbsp;week”.</p>
+<p>Every study that was included compares the observed <span class="caps">AMI</span> counts against a trend prediction. The trend prediction for <span class="caps">AMI</span> counts on given days – sometimes called “control group” – was usually defined as the average of the respective days on the two weeks before and after the posttransitional week. The analysis of Sandhu et al. (2014) was the only exception, as they used a regression model that included AMIs from all year except the two weeks following the spring and autumn <span class="caps">DST</span>&nbsp;adjustments.</p>
+<p>Years on which the <span class="caps">DST</span> adjustment coincided with Easter were usually excluded from the studies. If Easter fell on the 2 weeks following (or preceding) the <span class="caps">DST</span> adjustment, the control period was the two out of three weeks that did not include&nbsp;Easter.</p>
+<p>Every paper adjusted the <span class="caps">AMI</span> counts for the shorter (resp. longer) Sunday following a spring (resp. autumn) <span class="caps">DST</span> transition by multiplying the real counts with <script type="math/tex">24/23</script> (resp. <script type="math/tex">24/25</script>). This sometimes resulted in fractional <span class="caps">AMI</span> counts, which we rounded to the nearest integer when treated as an&nbsp;observation.</p>
+<h2>Materials and&nbsp;methods</h2>
+<h3>Study&nbsp;selection</h3>
+<p>We analyzed data from every study that was included in the meta-analysis of Manfredini et al.&nbsp;(2019).</p>
+<p>Performing a PubMed search instead of using the list of publications from (Manfredini et al. 2019) would be a tedious process with little benefit: said meta-analysis retrieved 2633 papers dated up to 31 December 2018 (from which 7 were&nbsp;relevant).</p>
+<h3>Analyzed&nbsp;data</h3>
+<p>From each paper, we extracted the trend predictions and the actual <span class="caps">AMI</span> counts on each day of the spring and autumn posttransitional weeks. When the trend prediction was not available, we divided the total number of <span class="caps">AMI</span> cases by the study length in days. We restricted our analysis to the number of incidences, and ignored all variables that describe incidences, such as age and gender of patient, <span class="caps">STEMI</span> (<span class="caps">ST</span> elevation <span class="caps">MI</span>) or non-<span class="caps">STEMI</span>, or various medications taken prior to the&nbsp;incident.</p>
+<h3>Problems with standard statistical&nbsp;tests</h3>
+<p>The standard statistical practice for deciding whether there is a difference in a particular variable (such as <span class="caps">AMI</span> counts) between two groups is to use a <em>null hypothesis significance test</em> (<span class="caps">NHST</span>).
+Using this method, one defines a <em>null hypothesis</em> as the variable of interest having some predetermined value, which in this case would correspond to zero increase in <span class="caps">AMI</span> counts after a <span class="caps">DST</span> change.
+The <span class="caps">NHST</span> answers the question: assuming the null hypothesis is true, what is the probability that data which is generated according to the sampling and testing intentions has a more extreme test statistic than that of the actual observations (Kruschke, Liddell 2018). If this probability is less than some fixed threshold (typically 0.05), the effect is claimed to exist.
+The <span class="caps">NHST</span> suffers from a multitude of problems, and has received its fair share of criticism from statisticians.
+It encourages black-and-white thinking without allowing uncertainty (claiming that an effect either exists or not, depending on the p-value), it encourages binary classification of effects without quantifying the relationship (<em>statistically</em> significant differences might be of no <em>practical</em> relevance if they are small), and these tests are conducted <em>against</em> a given null hypothesis without any way to gain evidence <em>for</em> the null hypothesis (an inability to refute the null hypothesis is not equal to accepting it).
+Recently, The American Statistician released a special issue titled <em>Moving to a World Beyond “p &lt; 0.05”</em> (Wasserstein 2019), together with commentaries from 94&nbsp;authors.</p>
+<p>We can get a more accurate sense of the value of the parameter if instead of testing a hypothesis, we estimate the value of the parameter. The standard tool for this is stating the 95% confidence interval (<span class="caps">CI</span>) for a parameter, which is the set of parameter values that wouldn’t be rejected at the <script type="math/tex">p<0.05</script> level. This is the approach suggested by Cumming (2014) and Cumming and Calin-Jageman (2016), who call it the <em>New Statistics</em>.</p>
+<p>While reporting intervals is better than a single value from it (i.e. the p-value), confidence intervals still suffer from deep-rooted flaws. It still encourages black-and-white thinking: parameter values inside the <span class="caps">CI</span> are compatible with the null hypothesis, those outside it are not. Confidence intervals do not give distributional information, i.e. a value close to the limits of the <span class="caps">CI</span> is not "less compatible" with the hypothesis then a value in the middle, nor is a study of large sample size "more confident" than a smaller study (although usually the <span class="caps">CI</span> of a large study is narrower). This binary nature makes it hard to aggregate the results of multiple studies and to perform a meta-analysis accurately. In addition, confidence intervals are also frequently misinterpreted: specifically, the true parameter value is <em>not</em> 95% likely to be inside the <span class="caps">CI</span>, although they are often thought to&nbsp;be.</p>
+<p>Kruschke and Liddell (2018) compare approaches to statistical inference along two axes: whether the method uses a frequentist or Bayesian framework, and whether the method compares hypotheses or estimates parameter values. They make a detailed case that Bayesian parameter estimation is superior in most situations to the frequentist methods or Bayesian hypothesis testing, hence the title of the paper, <em>The Bayesian New Statistics</em>.</p>
+<h3>Overview of our model and statistical&nbsp;methods</h3>
+<p>In this meta-analysis we define a (Bayesian) statistical model for the parameter of interest and our observations. For every paper, we have the following observations: the <span class="caps">AMI</span> counts on each day of the posttransitional week, and the <span class="caps">AMI</span> counts predicted by the trend. The unobserved parameter is the risk ratio (<span class="caps">RR</span>), i.e. the multiplier by which mean <span class="caps">AMI</span> counts increase in the posttransitional week, compared to the same day of an ordinary week. Our description of this parameter initially also include some reasonable uncertainty in our beliefs, quantified in the <em>prior distribution</em>. The goal of the analysis is to derive the <em>posterior probability distribution</em> of the <span class="caps">RR</span> (or <em>posterior</em> for short), which is an adjustment of the prior probabilities based on the likelihood of each parameter value, i.e. the probability that a given parameter value would produce the observed data. Although the posterior is influenced by the prior and the statistical model, this influence can be insubstantial in the face of enough data, as will be the case in this analysis. Finally, the posterior is summarized in a 95% credible interval of parameter values, which is either a central credible interval or a highest density posterior&nbsp;interval.</p>
+<h3>Notation</h3>
+<p>For a particular study <script type="math/tex">s</script>, <script type="math/tex">t_i^{(s)}</script> denotes the <span class="caps">AMI</span> counts as predicted by the trend model on day <script type="math/tex">i</script> of the posttransitional week (with <script type="math/tex">d = 1,\,\ldots,\,5</script> for Monday, …, Friday after the <span class="caps">DST</span> change) and <script type="math/tex">y_d^{(s)}</script> denotes the observed count on day <script type="math/tex">i</script>. The (unobserved) mean of the distribution of <script type="math/tex">y_d^{(s)}</script> is denoted by <script type="math/tex">x_d^{(s)}</script> – the meaning of this variable will become clear in the next section.
+The risk ratio for day <script type="math/tex">d</script> is denoted by <script type="math/tex">r_d^{(s)} = x_d^{(s)} / t_d^{(s)}</script>. Finally, <script type="math/tex">\mathcal D^{(s)}</script> denotes the whole dataset, i.e. all of the observations <script type="math/tex">\{y_1^{(s)},\ldots,y_5^{(s)}\}</script>. To avoid cluttered notation, sometimes the superscript is omitted, resulting in e.g. <script type="math/tex">y_1</script>.</p>
+<h3>Poisson&nbsp;distribution</h3>
+<p>The <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a> is a discrete probability distribution that expresses the probability of a given number of events occurring in a fixed interval of time or space if these events occur with a known constant rate and independently of the time since the last event. In our case, the “event” is an <span class="caps">AMI</span>, and the fixed interval of time is a day. Although AMIs don't happen at a constant rate throughout the day, the <a href="https://en.wikipedia.org/wiki/Poisson_distribution#Sums_of_Poisson-distributed_random_variables">sum of Poisson-distributed random variables</a> is also Poisson-distributed, so any day's total will also be&nbsp;Poisson-distributed.</p>
+<p>The distribution has a single parameter, which is a positive real number, and is often denoted <script type="math/tex">λ</script>. The mean (expected value) of <script type="math/tex">\text{Poisson}(λ)</script> is <script type="math/tex">λ</script>, and the standard deviation is <script type="math/tex">\sqrt{λ}</script>. Its probability mass function is shown below for <script type="math/tex">λ=100</script>, along with the 95% highest density interval (<span class="caps">HDI</span>) – the shortest interval that covers 95% of the probability&nbsp;mass.</p>
+<p><img alt="Distribution of Poisson plot with mean 100" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/poisson-dist.svg"></p>
+<p>The analyzed studies reported the sum of AMIs on a given day over the period of the study (e.g. all posttransitional Tuesdays during the years 2010–2013), never the <span class="caps">AMI</span> counts for individual years. This sum is denoted with <script type="math/tex">y_d</script>, where <script type="math/tex">d</script> signifies the day. We note again that the individual counts are each Poisson-distributed, so their sum is Poisson-distributed too. (However, their <em>average</em> would not be Poisson-distributed.) This means that <script type="math/tex">y_d</script> is sampled from a Poisson distribution whose parameter <script type="math/tex">x_d</script> is the sum of the trend on day <script type="math/tex">d</script> over the period of the study (<script type="math/tex">t_d</script>), multiplied with the <span class="caps">RR</span> for the given day (<script type="math/tex">r_d</script>).</p>
+<p>In order for the Poisson assumption to <em>not hold</em> in this analysis, two individuals experiencing an <span class="caps">AMI</span> on a given day need to be statistically dependent <em>conditional on the day’s average</em>. This is not the case during a heat wave or a news broadcast about a major catastrophe, when the AMIs are dependent but not conditionally dependent. The rare scenarios for conditional dependence are when two people partake in a strenuous activity together (such as hiking), or when the <span class="caps">AMI</span> of a person causes an <span class="caps">AMI</span> in&nbsp;another.</p>
+<h3>Model of posttransitional <span class="caps">AMI</span>&nbsp;counts</h3>
+<p>We perform the analysis using a fixed-effects model, which assumes that the <span class="caps">DST</span> adjustment effects an identical increase in <span class="caps">AMI</span> counts in every country, every year. The independence of region is a strong assumption because the leading hypothesis attributes the increase in myocardial infarctions to the disruption of the circadian rhythm, and those beyond their working age do not necessarily experience sleep loss on a posttransitional Monday. Therefore, we hypothesize that the effect is likely to be lower in countries where the average age of retirement is lower – a random-effects model could account for these differences. The independence of year is a weak&nbsp;assumption.</p>
+<p>The model for the <span class="caps">AMI</span> count on a posttransitional Monday is described by the following graph – such a graph is called a Bayes network or a directed graphical&nbsp;model:</p>
+<p><img alt="Bayes network for the Monday counts" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/tikz_bayesnet_Mon.png"></p>
+<p>Loosely speaking, the arrows denote causal or logical dependencies, where the exact formula for the dependency is shown next to the nodes (in a canonical Bayes network, the formulas are described only in the text). The model can be translated into the following sentences:
+ - The observed posttransitional <span class="caps">AMI</span> count on Monday follows a Poisson distribution.
+ - The mean of the posttransitional <span class="caps">AMI</span> count on Monday is equal to the trend count on Monday, multiplied by the <span class="caps">RR</span> on Monday.
+ - Monday's <span class="caps">RR</span> is a random variable, meaning it has an associated prior belief distribution (which we define&nbsp;below).</p>
+<h3>Moving to a multi-day&nbsp;model</h3>
+<p>The reviewed literature performed hypothesis tests for every day of the posttransitional week – including weekends, sometimes noting a significant difference for Tuesday, but not Monday (Sandhu 2014). Such day-by-day tests of “statistical significance” need not concern themselves of <em>consistency</em> – in the everyday sense of the word –, i.e. that prior to observations we expect any effect to be highest on Monday and wear off as time&nbsp;progresses.</p>
+<p>When performing a Bayesian analysis, we <em>must</em> have prior expectations on the expected parameter values – these prior beliefs are then changed according to the model and the observed data, resulting in the posterior distribution. In accordance with the literature, we assume that the effect is constrained to the posttransitional week, and that if there is an effect on Monday, there is some effect on Friday too. We expect no increase on Sunday, the day of the adjustment (after adjusting for the shorter day), because relatively few people wake up at the same time on Sundays (and sleep shorter as a consequence). On Tuesday, Wednesday, Thursday, Friday, we expect the relative increase to be 80%, 60%, 40%, 20% of the increase on Monday (see figure below) – this we call the “linear weekday model”. (This linear assumption will be weakened in a later analysis.) We denote the increase in <span class="caps">RR</span> on Monday with <script type="math/tex">\theta</script> (the only parameter of the model), thus <script type="math/tex">r_\text{Mo} = 1 + \theta</script>, <script type="math/tex">r_\text{Tu} = 1 + 0.8 \cdot \theta</script>, …, <script type="math/tex">r_\text{Fr} = 1 + 0.2 \cdot \theta</script>.</p>
+<p>The infarction counts on neighboring days are conditionally independent given <script type="math/tex">\theta</script> (apart from exceptional cases, such as a mass catastrophe), which means we can model the days separately and simply multiply their likelihoods. (Prior to observing the data, it feels <em>very</em> unlikely to us that there would be any effect on Friday, but one paper attempted to measure effects on the 2 and 4 weeks following <span class="caps">DST</span> adjustment, meaning they didn't think such a long-lasting effect is completely implausible, therefore we consider including Friday as part of the expert&nbsp;opinion.)</p>
+<p><img alt="Risk ratio on given days of the posttransitional week under the linear weekday model, for θ=0.5" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/rr_example.svg"></p>
+<p>This model of all weekdays is described by the following&nbsp;graph:</p>
+<p><img alt="Bayes network for the counts of all weekdays" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/tikz_bayesnet.png"></p>
+<p>Here the rectangle means the nodes inside it should be repeated for <script type="math/tex">d = \text{Mo}..\text{Fr})</script> -- this rectangle is called a “plate”. A common parameter <script type="math/tex">\theta</script> determines <script type="math/tex">r_d</script> for a given day <script type="math/tex">d</script>, which, together with <script type="math/tex">t_d</script>, determines the number of expected AMIs (<script type="math/tex">x_d</script>) and actual AMIs (<script type="math/tex">y_d</script>).</p>
+<h3>Prior beliefs about <span class="caps">RR</span>&nbsp;(spring)</h3>
+<p>We would like to estimate the value of a continuous parameter <script type="math/tex">\theta</script>, where the standard procedure is to conduct a one-sided t-test, with the null hypothesis defined as <script type="math/tex">\theta = 0</script>.</p>
+<p>Gelman et al. (2013) suggest beginning Bayesian data analysis with a noninformative or <em>weakly informative prior</em> – this avoid biasing the results to any particular value, and lets the posterior represent the data more&nbsp;closely.</p>
+<p>I believe <script type="math/tex">\theta</script> is likely to be approximately <script type="math/tex">0.0</script> (i.e., <script type="math/tex">\text{RR} \approx 1</script>, no effect), but it wouldn't be very surprising if <script type="math/tex">\theta</script> were positive. (I find it very unlikely, less than <script type="math/tex">\approx 0.1\%</script>, that the <span class="caps">RR</span> decreases.) So I would like to place substantial probability mass close to 0.0, and spread the rest on values between <script type="math/tex">0.0</script> and <script type="math/tex">1.0</script> (<script type="math/tex">P(\theta > 1.0) \lessapprox 0.1\%</script>).</p>
+<p>We can formalize this description by placing 50-50% of the prior probability mass of either there being zero effect (a Gaussian distribution with standard deviation of 0.01), or there being an increase in <span class="caps">AMI</span> counts, where the increase in <span class="caps">RR</span> has an Exponential(<script type="math/tex">\lambda=0.2^{-1}</script>) prior on it. (An Exponential(<script type="math/tex">\lambda=0.2^{-1}</script>) distribution has a mean of <script type="math/tex">0.2</script>.) This distribution is plotted on the figure&nbsp;below.</p>
+<p><img alt="Prior distribution of Monday RR" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/prior_Monday.svg"></p>
+<h3>Prior beliefs about the <span class="caps">RR</span>&nbsp;(autumn)</h3>
+<p>The <span class="caps">AMI</span> counts on the autumn posttransitional week used the same model as the spring counts, but it assumed an (improper) uniform prior on <script type="math/tex">\theta</script>. (This prior is improper because no distribution exists that is uniformly distributed on the whole linear number line. In practice we would get the same posterior if we assumed a Uniform(−2,+2)&nbsp;prior.)</p>
+<h3>Summary of&nbsp;assumptions</h3>
+<p>Every statistical test makes assumptions about the data, but in most reports using null hypothesis tests significance tests, these assumptions are never mentioned, instead they are implicit in the performed tests.
+Therefore, statistics is often sold as a sort of alchemy that transmutes randomness into certainty, an “uncertainty laundering” that begins with data and concludes with success as measured by statistical significance (Gelman 2016).
+I view it as a <em>strength</em> of Bayesian data analysis that these assumptions must be stated explicitly. To summarize this section, we make the following assumptions in this&nbsp;analysis:</p>
+<ol>
+<li>Every region that use <span class="caps">DST</span> has the same <span class="caps">RR</span> in every&nbsp;year.</li>
+<li>Any effect is limited to the posttransitional weekdays, and the effect is highest on Monday, 20% less on Tuesday, and so on until 0% on&nbsp;Saturday.</li>
+<li>Our prior belief on the spring <span class="caps">RR</span> is split half-half between <script type="math/tex">1.0</script> and all values greater than <script type="math/tex">1</script>, with the probability decaying exponentially at a rate of <script type="math/tex">0.2^{-1}</script>. We make no prior assumptions about the autumn <span class="caps">RR</span>.</li>
+</ol>
+<h3>Posterior calculations&nbsp;analytically</h3>
+<p>We performed our calculations for the fixed-effects model in spring analytically, using custom software written in Python. The result of these calculations was a 95% central credible interval, which is an interval of parameter values containing 95% of the posterior probability, with 2.5% on the negative and positive ends. This is not equal to the <span class="caps">HDI</span> when the distribution is skewed, but is usually a good&nbsp;approximation.</p>
+<h3>Posterior calculations with Monte Carlo&nbsp;methods</h3>
+<p>We also performed our posterior calculations with Monte Carlo methods using the open source statistical modeling software <a href="https://mc-stan.org/">Stan</a>. Models in Stan are written using its own description language (which comes with <a href="https://mc-stan.org/users/documentation/">extensive documentation</a> and a <a href="https://discourse.mc-stan.org/">supportive community</a>), and they need to be first compiled into binary form using an interface in R, Python, or other languages. Then, after providing the observable data to the model, Stan draws samples from the posterior distribution of the parameters, and calculates the 95% highest posterior density interval (<span class="caps">HDI</span>, a.k.a. <span class="caps">HPD</span>) – the interval that covers the most plausible parameter values. For most practical purposes, 1000 independent samples would be enough, but we drew 50,000 samples to accurately assess the equality to the analytic&nbsp;solution.</p>
+<p>The code for the fixed-effects linear weekday Stan model is as&nbsp;follows:</p>
+<div class="highlight"><pre><span></span><span class="kn">data</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">DAYS</span><span class="p">;</span>            <span class="c1">// Number of days</span>
+  <span class="kt">int</span> <span class="n">STUDIES</span><span class="p">;</span>         <span class="c1">// Number of studies</span>
+  <span class="kt">real</span> <span class="n">NORMAL_SIGMA</span><span class="p">;</span>   <span class="c1">// The standard deviation of the normal component of the prior</span>
+  <span class="kt">real</span> <span class="n">EXPON_BETA</span><span class="p">;</span>     <span class="c1">// The beta parameter of the exponential component of the prior</span>
+
+  <span class="c1">// The observed AMI counts and the trend predictions, for each day of each study</span>
+  <span class="kt">int</span><span class="o">&lt;</span><span class="k">lower</span><span class="p">=</span><span class="mf">0</span><span class="o">&gt;</span> <span class="n">ami_obs</span><span class="p">[</span><span class="n">STUDIES</span><span class="p">,</span> <span class="n">DAYS</span><span class="p">];</span>
+  <span class="kt">real</span><span class="o">&lt;</span><span class="k">lower</span><span class="p">=</span><span class="mf">0</span><span class="o">&gt;</span> <span class="n">ami_trend</span><span class="p">[</span><span class="n">STUDIES</span><span class="p">,</span> <span class="n">DAYS</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kn">parameters</span> <span class="p">{</span>
+  <span class="c1">// Monday RR - 1.</span>
+  <span class="c1">// (We cannot model RR_Mon directly because cannot assign a</span>
+  <span class="c1">//   common distribution for that.)</span>
+  <span class="c1">// Its probabilistic value is assigned in the model block below.</span>
+  <span class="kt">real</span> <span class="n">rr_Mon_minus_1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kn">transformed parameters</span> <span class="p">{</span>
+  <span class="c1">// The RR for every day</span>
+  <span class="kt">real</span> <span class="n">rr_day</span><span class="p">[</span><span class="n">DAYS</span><span class="p">];</span>
+  <span class="c1">// The posttransitional AMI counts for every day of every study.</span>
+  <span class="kt">real</span> <span class="n">ami_dst_mean</span><span class="p">[</span><span class="n">STUDIES</span><span class="p">,</span> <span class="n">DAYS</span><span class="p">];</span>
+
+  <span class="c1">// Specifying the RR for every day, using the linear weekday model.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mf">1</span><span class="o">:</span><span class="n">DAYS</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">rr_day</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rr_Mon_minus_1</span> <span class="o">*</span> <span class="p">(</span><span class="n">DAYS</span> <span class="o">+</span> <span class="mf">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="n">DAYS</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">s</span> <span class="k">in</span> <span class="mf">1</span><span class="o">:</span><span class="n">STUDIES</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mf">1</span><span class="o">:</span><span class="n">DAYS</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">ami_dst_mean</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ami_trend</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">rr_day</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kn">model</span> <span class="p">{</span>
+  <span class="c1">// Mixture models are specified using the construct below:</span>
+  <span class="c1">// target += log_sum_exp(c1 * XXX_lpdf(x | p1), c2 * YYY_lpdf(x | p2));</span>
+  <span class="k">target +=</span> <span class="nb">log_sum_exp</span><span class="p">(</span><span class="nb">normal_lpdf</span><span class="p">(</span><span class="n">rr_Mon_minus_1</span> <span class="p">|</span> <span class="mf">0</span><span class="p">,</span> <span class="n">NORMAL_SIGMA</span><span class="p">),</span>
+                        <span class="nb">exponential_lpdf</span><span class="p">(</span><span class="n">rr_Mon_minus_1</span> <span class="p">|</span> <span class="n">EXPON_BETA</span><span class="p">));</span>
+
+  <span class="c1">// Finally, the observations are drawn from a Poisson distribution.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">s</span> <span class="k">in</span> <span class="mf">1</span><span class="o">:</span><span class="n">STUDIES</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mf">1</span><span class="o">:</span><span class="n">DAYS</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">ami_obs</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">~</span><span class="w"> </span><span class="nb">poisson</span><span class="p">(</span><span class="n">ami_dst_mean</span><span class="p">[</span><span class="n">s</span><span class="p">][</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The <code>data</code> and <code>parameters</code> blocks declare the observed quantities and the unobserved parameters, without specifying their&nbsp;distribution.</p>
+<p>The <code>transformed parameters</code> block contains all quantities that can be deterministically derived from the&nbsp;parameters.</p>
+<p>The <code>model</code> block describes both the prior distributions for the parameters and the likelihood&nbsp;functions.</p>
+<h4>Sampling using the Python&nbsp;interface</h4>
+<p>We can compile the Stan model and sample from it in Python using <a href="https://pystan.readthedocs.io/">PyStan</a>. Once the software and its dependencies are installed, we can use the following code to draw 50,000 samples from the posterior and plot the results. On my computer, the model compilation takes about a minute, the sampling a few&nbsp;seconds.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pystan</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># 6-long list of 5-long lists integers (weekday observations)</span>
+<span class="n">all_obs</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1735</span><span class="p">,</span> <span class="mi">1644</span><span class="p">,</span> <span class="mi">1555</span><span class="p">,</span> <span class="mi">1522</span><span class="p">,</span> <span class="mi">1467</span><span class="p">],</span>  <span class="c1"># Janszky and Ljung 2008</span>
+           <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">],</span>            <span class="c1"># Jiddou et al. 2013</span>
+           <span class="o">...</span>
+          <span class="p">]</span>
+
+<span class="c1"># 6-long list of 5-long lists floats</span>
+<span class="n">all_trend</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">stan_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;STUDIES&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s1">&#39;DAYS&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;NORMAL_SIGMA&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="s1">&#39;EXPON_BETA&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="s1">&#39;ami_obs&#39;</span><span class="p">:</span> <span class="n">all_obs</span><span class="p">,</span>
+    <span class="s1">&#39;ami_trend&#39;</span><span class="p">:</span> <span class="n">all_trend</span>
+<span class="p">}</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">pystan</span><span class="o">.</span><span class="n">StanModel</span><span class="p">(</span><span class="n">model_file</span><span class="o">=</span><span class="s1">&#39;dst_model.stan&#39;</span><span class="p">)</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">sampling</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">stan_data</span><span class="p">,</span> <span class="nb">iter</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pystan</span><span class="o">.</span><span class="n">stansummary</span><span class="p">())</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">fit</span><span class="p">[</span><span class="s1">&#39;rr_day[1]&#39;</span><span class="p">]);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+
+<h4>Sampling using the R&nbsp;interface</h4>
+<p>The R interface of Stan is called <a href="https://github.com/stan-dev/rstan/">RStan</a>, and can be used as&nbsp;follows:</p>
+<div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;rstan&quot;</span><span class="p">)</span> <span class="c1"># observe startup messages</span>
+
+<span class="n">stan_data</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="n">STUDIES</span> <span class="o">=</span> <span class="m">6</span><span class="p">,</span>
+                  <span class="n">DAYS</span> <span class="o">=</span> <span class="m">5</span><span class="p">,</span>
+                  <span class="n">NORMAL_SIGMA</span> <span class="o">=</span> <span class="m">0.01</span><span class="p">,</span>
+                  <span class="n">EXPON_BETA</span> <span class="o">=</span> <span class="m">1</span><span class="o">/</span><span class="m">0.2</span><span class="p">,</span>
+                  <span class="n">ami_obs</span> <span class="o">=</span> <span class="n">all_obs</span><span class="p">,</span>
+                  <span class="n">ami_trend</span> <span class="o">=</span> <span class="n">all_trend</span><span class="p">)</span>
+
+<span class="n">fit</span> <span class="o">&lt;-</span> <span class="nf">stan</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="s">&#39;dst_model.stan&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">stan_data</span><span class="p">,</span> <span class="n">iter</span> <span class="o">=</span> <span class="m">50000</span><span class="p">)</span>
+
+<span class="nf">hist</span><span class="p">(</span><span class="nf">extract</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span><span class="o">$$</span><span class="n">rr_day</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
+</pre></div>
+
+
+<h3>Effect of study size in a Bayesian&nbsp;framework</h3>
+<p>For a small study, i.e. if the trend and observed <span class="caps">AMI</span> counts are low, we want to see a very slight change in the prior; for a large study, we want to see a bigger&nbsp;change.</p>
+<p>Two factors should play into this. First, if the trend predicts low counts, then we are likely to observe relatively big fluctuations: observing 12 heart attacks on a day when the long-term average is 10 represents a +20% increase, yet it occurs once every 3 days on average. Second, if the study was small and the trend is estimated from only a few weeks’ data, our <em>estimate</em> of the trend itself has greater variance. This second factor is not yet modeled in our work, but in small studies like that of Čulić (2013), this too could play a&nbsp;role.</p>
+<p>To see the difference between a small and a large study, we visualize the prior and the posterior for the following&nbsp;scenarios:</p>
+<ul>
+<li>Observation higher than trend, small sample size (top&nbsp;left);</li>
+<li>Observation equals trend, large sample size (top&nbsp;right);</li>
+<li>Observation lower than trend, large sample size (bottom&nbsp;left);</li>
+<li>Observation higher than trend, large sample size (bottom&nbsp;right).</li>
+</ul>
+<p><img alt="Posteriors of four example sample counts for trend and observation" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/test-posteriors.svg"></p>
+<p>When the sample size is small, there is only a slight change from prior to posterior. With a large sample size, the prior beliefs barely have an effect on the posterior. (In the lower right plot, the posterior peaks at more than 1.1 because with 1100 <span class="caps">AMI</span> every day, the linear weekday model fits better with a larger <span class="caps">RR</span>.)</p>
+<h2>Results</h2>
+<h3>Relevant&nbsp;studies</h3>
+<p>The list of studies analyzed are identical to those analyzed in (Manfredini et al., 2019):
+- Janszky and Ljung (2008)
+- Janszky et al. (2012)
+- Čulić (2013)
+- Jiddou et al. (2013)
+- Sandhu et al. (2014)
+- Kirchberger et al. (2015)
+- Sipilä et al.&nbsp;(2016)</p>
+<p>We excluded the study of Janszky et al. (2012), as the population is a strict subset of (Janszky and Ljung, 2008), with no additional information that is relevant for our analysis. The meta-analysis of Manfredini et al. (2019) did not exclude this study, which biased their results significantly, as the population size of this study is the second largest of&nbsp;all.</p>
+<p>Key characteristics of the above studies can be found in the table below, with more details in the&nbsp;appendix.</p>
+<table>
+<thead>
+<tr>
+<th>Paper</th>
+<th>Sun</th>
+<th>Mon</th>
+<th>Tue</th>
+<th>Wed</th>
+<th>Thu</th>
+<th>Fri</th>
+<th>Sat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(Janszky and Ljung, 2008)</td>
+<td>(1374)</td>
+<td>(1636)</td>
+<td>(1494)</td>
+<td>(1471)</td>
+<td>(1484)</td>
+<td>(1422)</td>
+<td>(1370)</td>
+</tr>
+<tr>
+<td></td>
+<td>1439</td>
+<td>1735</td>
+<td>1644</td>
+<td>1555</td>
+<td>1522</td>
+<td>1467</td>
+<td>1414</td>
+</tr>
+<tr>
+<td>(Jiddou et al., 2013)</td>
+<td>(13)</td>
+<td>(29)</td>
+<td>(20)</td>
+<td>(23)</td>
+<td>(17)</td>
+<td>(25)</td>
+<td>(16)</td>
+</tr>
+<tr>
+<td></td>
+<td>23</td>
+<td>28</td>
+<td>28</td>
+<td>26</td>
+<td>23</td>
+<td>24</td>
+<td>18</td>
+</tr>
+<tr>
+<td>(Čulić, 2013)</td>
+<td>(6)</td>
+<td>(7)</td>
+<td>(6)</td>
+<td>(7)</td>
+<td>(6)</td>
+<td>(6)</td>
+<td>(5)</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td>14</td>
+<td>6</td>
+<td>9</td>
+<td>6</td>
+<td>5</td>
+<td>8</td>
+</tr>
+<tr>
+<td>(Kirchberger et al., 2015)</td>
+<td>(70)</td>
+<td>(70)</td>
+<td>(70)</td>
+<td>(70)</td>
+<td>(70)</td>
+<td>(70)</td>
+<td>(70)</td>
+</tr>
+<tr>
+<td></td>
+<td>66</td>
+<td>85</td>
+<td>83</td>
+<td>76</td>
+<td>77</td>
+<td>85</td>
+<td>60</td>
+</tr>
+<tr>
+<td>(Sandhu et al., 2014)</td>
+<td>(111)</td>
+<td>(138)</td>
+<td>(127)</td>
+<td>(125)</td>
+<td>(120)</td>
+<td>(120)</td>
+<td>(110)</td>
+</tr>
+<tr>
+<td></td>
+<td>108</td>
+<td>170</td>
+<td>125</td>
+<td>122</td>
+<td>117</td>
+<td>117</td>
+<td>114</td>
+</tr>
+<tr>
+<td>(Sipilä et al., 2016)</td>
+<td>(208)</td>
+<td>(269)</td>
+<td>(243)</td>
+<td>(259)</td>
+<td>(227)</td>
+<td>(227)</td>
+<td>(198)</td>
+</tr>
+<tr>
+<td></td>
+<td>201</td>
+<td>229</td>
+<td>253</td>
+<td>254</td>
+<td>262</td>
+<td>242</td>
+<td>179</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Spring <span class="caps">AMI</span> counts. Trend predictions in parentheses, under them the number of incidences on the posttransitional week. Total count on the posttransitional week:&nbsp;14,024.)</em></p>
+<table>
+<thead>
+<tr>
+<th>Paper</th>
+<th>Sun</th>
+<th>Mon</th>
+<th>Tue</th>
+<th>Wed</th>
+<th>Thu</th>
+<th>Fri</th>
+<th>Sat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(Janszky and Ljung, 2008)</td>
+<td>(1780)</td>
+<td>(2140)</td>
+<td>(1991)</td>
+<td>(1910)</td>
+<td>(1941)</td>
+<td>(1949)</td>
+<td>(1781)</td>
+</tr>
+<tr>
+<td></td>
+<td>1777</td>
+<td>2038</td>
+<td>1958</td>
+<td>1895</td>
+<td>1916</td>
+<td>1977</td>
+<td>1732</td>
+</tr>
+<tr>
+<td>(Jiddou et al., 2013)</td>
+<td>(18)</td>
+<td>(24)</td>
+<td>(21)</td>
+<td>(27)</td>
+<td>(22)</td>
+<td>(24)</td>
+<td>(20)</td>
+</tr>
+<tr>
+<td></td>
+<td>11</td>
+<td>34</td>
+<td>25</td>
+<td>19</td>
+<td>20</td>
+<td>18</td>
+<td>30</td>
+</tr>
+<tr>
+<td>(Kirchberger et al., 2015)</td>
+<td>(67)</td>
+<td>(67)</td>
+<td>(67)</td>
+<td>(67)</td>
+<td>(67)</td>
+<td>(67)</td>
+<td>(67)</td>
+</tr>
+<tr>
+<td></td>
+<td>60</td>
+<td>57</td>
+<td>77</td>
+<td>73</td>
+<td>77</td>
+<td>84</td>
+<td>60</td>
+</tr>
+<tr>
+<td>(Sandhu et al., 2014)</td>
+<td>(86)</td>
+<td>(107)</td>
+<td>(99)</td>
+<td>(97)</td>
+<td>(93)</td>
+<td>(93)</td>
+<td>(85)</td>
+</tr>
+<tr>
+<td></td>
+<td>89</td>
+<td>102</td>
+<td>79</td>
+<td>93</td>
+<td>104</td>
+<td>86</td>
+<td>99</td>
+</tr>
+<tr>
+<td>(Sipilä et al., 2016)</td>
+<td>(159)</td>
+<td>(197)</td>
+<td>(193)</td>
+<td>(170)</td>
+<td>(201)</td>
+<td>(178)</td>
+<td>(157)</td>
+</tr>
+<tr>
+<td></td>
+<td>160</td>
+<td>214</td>
+<td>180</td>
+<td>198</td>
+<td>199</td>
+<td>172</td>
+<td>153</td>
+</tr>
+<tr>
+<td>(Čulić, 2013)</td>
+<td>(6)</td>
+<td>(7)</td>
+<td>(6)</td>
+<td>(7)</td>
+<td>(6)</td>
+<td>(6)</td>
+<td>(5)</td>
+</tr>
+<tr>
+<td></td>
+<td>7</td>
+<td>9</td>
+<td>12</td>
+<td>6</td>
+<td>12</td>
+<td>5</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Autumn <span class="caps">AMI</span> counts. Trend predictions in parentheses, under them the number of incidences on the posttransitional week. Total count on the posttransitional week:&nbsp;15,921.)</em></p>
+<h3><span class="caps">AMI</span> risk after spring&nbsp;transition</h3>
+<p>The posteriors after the individual papers are shown below, along with their 95% central credible interval&nbsp;(CCrI).</p>
+<p><img alt="Forest plot that shows the posterior after the individual papers" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/forest_plot.svg"></p>
+<p>The width of the 95% CCrI is a measure of the precision of the estimate. The 95% CCrI after (Janszky and Ljung, 2008) and (Sipilä et al. 2016) are comparably narrow, but they are centered around 1.085 and 1.001, respectively. In fact, as we can see from the likelihood functions (not shown here), the study of Sipilä et al. (2016) presents a case for a slight <em>decrease</em> in <span class="caps">AMI</span> risk under this&nbsp;model.</p>
+<p>In the fixed effects model the posterior is weighted heavily towards the study with the largest sample size (Janszky and Ljung 2008), and the other studies barely play a role.
+Specifically, the posterior mean of the <span class="caps">RR</span> is 107.7% (95% central credible interval: <script type="math/tex">[104.7\%, 110.7\%]</script>) – the posterior is shown below. We emphasize again that the relative weights of the studies is not arbitrary, but is fully determined by the model and the data through the rules of probability&nbsp;theory.</p>
+<p><img alt="Posterior probability after every paper included in this analysis" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/combined_posterior.svg"></p>
+<p>We arrive at the same posterior when drawing samples from it through a Monte Carlo method with Stan. Furthermore, as the tails of posterior are symmetric, the 95% highest density interval of [104.8%, 110.7%] closely aligns with the 95% central credible interval obtained earlier ([104.7%, 110.7%]). (This fact merely verifies that the two methods compute the model correctly, it does not provide additional evidence about the quality of the&nbsp;data.)</p>
+<p><img alt="Posterior after spring data – with Stan" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/posterior_mc.svg"></p>
+<p>The studies together provide so many data points that the choice of prior does not play an important role. Assuming a uniform prior on the risk ratio, i.e. assuming that we have no more <em>prior</em> evidence for +2% than for +20% or −30% change in risk, we arrive at practically the same posterior, and a 95% <span class="caps">HDI</span> of [104.7%,&nbsp;110.7%].</p>
+<p><img alt="Posterior after spring data, uniform prior" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/posterior_mc_uniform.svg"></p>
+<h4>Exponential weekday&nbsp;model</h4>
+<p>The exponential weekday model relaxes the assumption of linear decrease in <span class="caps">RR</span> throughout the week, and instead models the daily RRs as exponentially decreasing. That is, for a parameter <script type="math/tex">\alpha \in [0,1]</script>, the risk ratios are determined as:
+ - <script type="math/tex">r_\text{Mon} = 1 + \theta</script>,
+ - <script type="math/tex">r_\text{Tue} = 1 + \alpha \cdot \theta</script>,
+ - <script type="math/tex">r_\text{Wed} = 1 + \alpha^2 \cdot \theta</script>,
+ -&nbsp;etc.</p>
+<p>Assuming a uniform prior on both <script type="math/tex">\alpha</script> and <script type="math/tex">\theta</script>, the posterior for this model looks as&nbsp;follows:</p>
+<p><img alt="Posterior of alpha and theta visualized together" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/posterior_mc_exp.svg"></p>
+<p>I expected the posterior on <script type="math/tex">\alpha</script> to be centered much closer to zero (meaning a rapid decrease in risk after Monday), but the posterior shows the opposite: most of the plausible values of <script type="math/tex">\alpha</script> correspond to an <script type="math/tex">r_\text{Fri} / r_\text{Mon}</script> ratio greater than the 0.2 ratio assumed previously (<script type="math/tex">0.7^4 \approx 0.24</script>). The 95% <span class="caps">HDI</span> for <script type="math/tex">\theta</script> is [104.0%, 110.2%] (mean 107.1%), which is close to the linear weekday model, and the 95% <span class="caps">HDI</span> for <script type="math/tex">\alpha</script> is [0.66, 1.0] (mean 0.83). The figure below shows the risk ratios over the week for 20 of the sampled combinations of <script type="math/tex">(\alpha, \theta)</script>.</p>
+<p><img alt="Risk ratios over the week for 20 sampled combinations of alpha-theta" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/risk_ratios_exp.svg"></p>
+<p>Over the five weekdays this posterior corresponds to an average risk ratio of 105.0% (95% <span class="caps">HDI</span>: [103.1%, 107.0%]). Assuming an affected population of 1.6 billion globally, with <span class="caps">AMI</span> rates standard across the <span class="caps">USA</span> <a href="https://www.cdc.gov/heartdisease/heart_attack.htm"><script type="math/tex">^\textsf{[source]}</script></a>, this means that over the whole posttransitional week the an additional 2700 people experience <span class="caps">AMI</span> (95% <span class="caps">HDI</span>: [1600, 3700]), on top of the regular 53,000 per&nbsp;week.</p>
+<h3><span class="caps">AMI</span> risk after autumn&nbsp;transition</h3>
+<p>The posterior for the autumn data, using the linear weekday model with uniform prior on <script type="math/tex">\theta</script> is shown below. The 95% <span class="caps">HDI</span> of [95.1%, 100.3%] suggests a decrease in <span class="caps">AMI</span> risk, but the hypothesis of “no change in risk” (<script type="math/tex">\theta = 100.0\%</script>) is also compatible with the&nbsp;data.</p>
+<p><img alt="Posterior after autumn data" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/posterior_mc_autumn.svg"></p>
+<p>Globally, this translates to a change of <span class="caps">AMI</span> counts over the whole week of −700 (95% <span class="caps">HDI</span> [−1600, +100]), from the original&nbsp;53,000.</p>
+<h2>Visualizing the observations and the posterior predictive&nbsp;distribution</h2>
+<h3>Posterior predictive&nbsp;distribution</h3>
+<p>In the figure below we visualize the posterior predictive distribution (for each day of each paper) on the spring posttransitional week, together with the actual&nbsp;observations.</p>
+<p>These predictive distributions on <script type="math/tex">\tilde y</script> can be calculated by integrating the likelihoods <script type="math/tex">P(\tilde y \given \theta)</script> over the parameter space, weighted by the posterior probability of the parameter values <script type="math/tex">p(\theta \given \mathcal D)</script>, using the following&nbsp;formula:</p>
+<script type="math/tex; mode=display">% <![CDATA[
+P(\tilde y \given \mathcal D) =
+\int P(\tilde y \given \theta, \mathcal D) \,d\theta =
+\int P(\tilde y \given \theta) p(\theta \given \mathcal D) \,d\theta %]]></script>
+<p><img alt="Posterior predictive distribution" src="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/posterior_predictive_95.svg"></p>
+<p><em>(Posterior predictive distribution for&nbsp;spring.)</em></p>
+<p>Only the Monday observation of (Sipilä et al., 2016) falls out of the 95% central credible interval (CCrI), and in addition the Thursday observation of (Sipilä et al., 2016) and the Monday observation of (Čulić, 2013) falls out of the 90% CCrI (shown <a href="https://www.treszkai.com/2019/11/11/dst-vs-ami/figs/posterior_predictive_90.svg">here</a>), indicating a good fit of the&nbsp;model.</p>
+<h2>Further&nbsp;research</h2>
+<p>The importance of this issue depends on whether the increase in AMIs on the posttransitional week is merely a shift from the weeks afterwards. In other words, how many of these additional AMIs would have been asymptomatic, had it not been for the <span class="caps">DST</span>? We suspect that this number is quite low, because effectively the transition shifts the sleep schedule by an hour, which happens relatively often (e.g. when traveling), and single-day sleep deprivations are even more common. One way to approach this question is to collect the <span class="caps">AMI</span> counts in the few weeks following a <span class="caps">DST</span> transition, and compare the results obtained from regions with <span class="caps">DST</span> and regions without <span class="caps">DST</span>.</p>
+<p>The main deficiency of this meta-analysis is the assumption of equal effects regardless of country, while using the fixed effects model. This assumption could be relaxed in a random effects model, although that would introduce a subjective choice of inter-country variance, making the results harder to interpret correctly and simpler to misinterpret.<sup><a href="#fn-misinterpret">[fn-1]</a><a id="fn-src-misinterpret"></a> ↓</sup></p>
+<p>As the absolute effect of <span class="caps">DST</span> transitions on <span class="caps">AMI</span> incidences is not substantial (given the low base rate), even on a global scale, I suggest no further research on this specific topic.<sup><a href="#fn-further">[fn-2]</a><a id="fn-src-further"></a> ↓</sup> There are many research areas around either sleep or cardiovascular health that are more&nbsp;important.</p>
+<h2>Conclusion</h2>
+<p>A standard argument against Bayesian methods is that the subjective choice of prior influences the results arbitrarily. Although this is a philosophical question, we believe meaningful and consistent probabilistic inference cannot be done without describing our initial beliefs and defining how different parameter values would result in different observations. However, in our case the likelihood of the observed data dominated the prior, rendering the choice of prior almost&nbsp;irrelevant.</p>
+<p>Our analysis showed an increase in <span class="caps">AMI</span> risk during spring (relative risk increase 5–11% on Monday, less on later days), which translates to an additional 1600–3700 <span class="caps">AMI</span> incidences over the whole affected period. The data from the autumn transition showed either no change or a slight decrease in <span class="caps">AMI</span> risk (at most 5% relative risk decrease), translating to an estimated change in incidence counts somewhere between −1600 and +100.
+These figures alone do not provide an argument against the institution of <span class="caps">DST</span>, especially without evidence that these changes are not merely the result of future <span class="caps">AMI</span> incidences advanced (in spring) or postponed (in autumn), which is the default position.
+However, the analysis provides strong evidence for the hypothesis that our body can react negatively to a single hour shift in our sleep cycles, which should be a crucial factor in the evaluation of <span class="caps">DST</span>, and shows the importance of a consistent sleep&nbsp;schedule.</p>
+<h2>License</h2>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><i><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis</span></i> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://treszkai.github.io/2019/11/11/dst-vs-ami" property="cc:attributionName" rel="cc:attributionURL">Laszlo Treszkai</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a> (<span class="caps">CC</span>-<span class="caps">BY</span>-4.0).</p>
+<p>The data presented in the <a href="#Relevant-studies">Relevant studies</a> section belong to the original authors and they do not fall under the above <span class="caps">CC</span>-<span class="caps">BY</span>-4.0&nbsp;license.</p>
+<p>The software used for this analysis is distributed under the <span class="caps">MIT</span>&nbsp;license.</p>
+<p>Please cite this work as&nbsp;follows:</p>
+<p>Laszlo Treszkai. 2019. <em>The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis</em>. <a href="http://treszkai.github.io/2019/11/11/dst-vs-ami">http://treszkai.github.io/2019/11/11/dst-vs-ami</a></p>
+<p>BibTeX:</p>
+<div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="err">,</span>
+  <span class="nl">title</span> <span class="err">=</span> <span class="err">{The</span> <span class="err">effects</span> <span class="err">of</span> <span class="err">daylight</span> <span class="err">savings</span> <span class="err">time</span> <span class="err">adjustment</span> <span class="err">on</span> <span class="err">the</span> <span class="err">incidence</span> <span class="err">rate</span> <span class="err">of</span> <span class="err">acute</span> <span class="err">myocardial</span> <span class="err">infarction:</span> <span class="err">a</span> <span class="err">{B</span><span class="p">}</span><span class="c">ayesian meta-analysis},</span>
+  <span class="c">author = {Laszlo Treszkai},</span>
+  <span class="c">howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},</span>
+<span class="c">%  note = {Accessed: yyyy-mm-dd}  % Optional. The document at this URL is not going to change.</span>
+  <span class="c">year = {2019}</span>
+  <span class="c">month = {oct}</span>
+<span class="c">}</span>
+</pre></div>
+
+
+<h1>References</h1>
+<p>Cumming, G. (2014). <em>The new statistics why and how.</em> Psychological Science, 25(1),&nbsp;7–29.</p>
+<p>Andrew Gelman, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. <em>Bayesian Data Analysis.</em> <a href="http://www.stat.columbia.edu/~gelman/book/">link</a></p>
+<p>Ronald L. Wasserstein, Nicole A. Lazar. 2016. <em>The <span class="caps">ASA</span> Statement on p-Values: Context, Process, and Purpose.</em> The American Statistician. Volume 70, Issue 2, pp. 129-133. <a href="https://doi.org/10.1080/00031305.2016.1154108">link (<span class="caps">OA</span>)</a></p>
+<p>Ronald L. Wasserstein, Allen L. Schirm <span class="amp">&amp;</span> Nicole A. Lazar. 2019. <em>Moving to a World Beyond “p &lt; 0.05”.</em> Volume 73, pp. 1–19. <a href="https://doi.org/10.1080/00031305.2019.1583913">link (<span class="caps">OA</span>)</a></p>
+<p>John K. Kruschke, Torrin M. Liddell, 2018. <em>The Bayesian New Statistics.</em>  Psychonomic Bulletin <span class="amp">&amp;</span> Review. Volume 25, Issue 1, pp 178–206. <a href="https://link.springer.com/article/10.3758/s13423-016-1221-4">link (<span class="caps">OA</span>)</a></p>
+<p>Amneet Sandhu, Milan Seth, Hitinder S. Gurm. 2014. <em>Daylight savings time and myocardial infarction.</em> Open Heart. <a href="http://dx.doi.org/10.1136/openhrt-2013-000019">link</a></p>
+<p>Roberto Manfredini, Fabio Fabbian, Rosaria Cappadona, Alfredo De Giorgi, Francesca Bravi, Tiziano Carradori, Maria Elena Flacco, Lamberto Manzoli. 2019.
+<em>Daylight Saving Time and Acute Myocardial Infarction: A Meta-Analysis</em>. Journal of Clinical Medicine. 2019, <em>8</em>, 404; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6463000/">link</a></p>
+<p>Kirchberger et al. 2015. <em>Are daylight saving time transitions associated with changes in myocardial infarction incidence? Results from the German <span class="caps">MONICA</span>/<span class="caps">KORA</span> Myocardial Infarction Registry</em>. <span class="caps">BMC</span> Public Health. 2015; 15: 778. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4535383/">link</a></p>
+<p>Janszky and Ljung. 2008. <em>Shifts to and from Daylight Saving Time and Incidence of Myocardial Infarction</em>. The New England Journal of Medicine.  <span class="caps">BMC</span> Public Health. 359; 18. <a href="https://www.nejm.org/doi/full/10.1056/NEJMc0807104">link</a></p>
+<p>Viktor Čulić. 2013. <em>Daylight saving time transitions and acute myocardial infarction</em>. Chronobiology International. 2013; 30(5): 662–668. <a href="https://www.tandfonline.com/doi/abs/10.3109/07420528.2013.775144">link</a></p>
+<p>Janszky, Ahnve, Ljung, Mukamal, Gautam, Wallentin, Stenestrand. 2012. <em>Daylight saving time shifts and incidence of acute myocardial infarction – Swedish Register of Information and Knowledge About Swedish Heart Intensive Care Admissions (<span class="caps">RIKS</span>-<span class="caps">HIA</span>)</em>. Sleep Medicine 13 (2012) 237–242. <a href="https://www.sciencedirect.com/science/article/abs/pii/S1389945711003832">link</a></p>
+<p>Monica R. Jiddou, <span class="caps">MD</span>, Mark Pica, <span class="caps">BS</span>, Judy Boura, <span class="caps">MS</span>, Lihua Qu, <span class="caps">MS</span>, and Barry A. Franklin, PhD. 2013. <em>Incidence of Myocardial Infarction With Shifts to and From Daylight Savings Time</em>. The American Journal of Cardiology. Volume 111, Issue 5, Pages 631–635. <a href="http://dx.doi.org/10.1016/j.amjcard.2012.11.010">link</a></p>
+<p>Jussi <span class="caps">O.T.</span> Sipilä, Päivi Rautava <span class="amp">&amp;</span> Ville Kytö. 2016. <em>Association of daylight saving time transitions with incidence and in-hospital mortality of myocardial infarction in Finland</em>. Annals of Medicine, 48:1-2, 10-16. <a href="http://dx.doi.org/10.3109/07853890.2015.1119302">link</a></p>
+<p>Young Joo Yang, Chang Seok Bang, Gwang Ho Baik, Tae Young Park, Suk Pyo Shin, Ki Tae Suk, Dong Joon Kim. 2017.
+<em>Prokinetics for the treatment of functional dyspepsia: Bayesian network meta-analysis</em>.
+<span class="caps">BMC</span> Gastroenterology 17:83 <span class="caps">DOI</span> 10.1186/s12876-017-0639-0. <a href="https://bmcgastroenterol.biomedcentral.com/track/pdf/10.1186/s12876-017-0639-0">link (<span class="caps">OA</span>)</a></p>
+<p>Xiaole Su, Xinfang Xie, Lijun Liu, Jicheng Lv, Fujian Song, Vlado Perkovic, Hong Zhang. 2017.
+<em>Comparative Effectiveness of 12 Treatment Strategies for Preventing Contrast-Induced Acute Kidney Injury: A Systematic Review and Bayesian Network Meta-analysis</em>
+Volume 69, Issue 1, pp. 69–77.
+<span class="caps">DOI</span>: 10.1053/j.ajkd.2016.07.033, <a href="https://www.ajkd.org/article/S0272-6386(16)30421-8/fulltext">link</a></p>
+<p>Devin Incerti. 2015. <em>Bayesian Meta-Analysis with R and Stan</em>. Self-published, online. https://devinincerti.com/2015/10/31/bayesian-meta-analysis.html. Retrieved 4 Oct&nbsp;2019.</p>
+<hr>
+<h1>Appendix</h1>
+<h2>Characteristics of&nbsp;studies</h2>
+<h3>Janszky and Ljung&nbsp;(2008)</h3>
+<p><strong>Data</strong>:
+ - source: the Swedish registry of acute myocardial infarction (“which provides high-quality information on all acute myocardial infarctions in the country since 1987”)
+ - years: 1987–2006
+ - observations: the incidence of <span class="caps">AMI</span> during each of the first 7 days after the spring or autumn transition
+ - trend: the mean of the incidences on the corresponding weekdays 2 weeks before and 2 weeks after the day of interest
+ - total <span class="caps">AMI</span> cases on spring posttransitional week:&nbsp;10,776</p>
+<p><strong>Quotes</strong>:</p>
+<blockquote>
+<p>The effects of transitions were consistently more pronounced for people under 65 years of age than for those 65 years of age or&nbsp;older.</p>
+</blockquote>
+<p>The authors properly controlled for the Easter&nbsp;holiday.</p>
+<blockquote>
+<p>Analyses of the data for the spring shift are based on the 15 years between 1987 and
+2006 in which Easter Sunday was not the transition day.
+[&#8230;]
+For years in which Easter
+Sunday was celebrated 2 weeks after the Sunday of the spring shift, we defined the control period for the Sunday of
+the shift as the Sunday 3 weeks before and the Sunday 3 weeks after (thus skipping Easter&nbsp;Sunday).</p>
+</blockquote>
+<p><strong>Overanalysis</strong>:</p>
+<p>The following observations do not have any plausible explanation, and are probably just noise. Question: did later studies confirm these&nbsp;findings?</p>
+<p>1.</p>
+<blockquote>
+<p>When we did not exclude Easter if it coincided with the exposure or control days, we observed an even higher effect size associated with the spring&nbsp;transition.</p>
+</blockquote>
+<p>2.</p>
+<blockquote>
+<p>For the autumn shift, in contrast to the analyses of all acute myocardial infarctions, analyses restricted to fatal cases showed a smaller decrease in the incidence of acute myocardial infarction on Monday, and the risk of fatal acute myocardial infarction increased during the first week after the&nbsp;shift.</p>
+</blockquote>
+<p>3.</p>
+<blockquote>
+<p>The effect of the spring transition to daylight saving time on the incidence of acute myocardial infarction was somewhat more pronounced in women than in men, and the autumn effect was more pronounced in men than in&nbsp;women.</p>
+</blockquote>
+<p><strong>Additional information</strong>:</p>
+<p>The authors were employed by institutions in Stockholm, Sweden, meaning the use of the Swedish registry is <em>no evidence for selection bias</em>. Furthermore, the end of the 30-year period of their study is only a year away from the date of the&nbsp;publication.</p>
+<h3>Janszky et al.&nbsp;(2012)</h3>
+<p><strong>Data</strong>:
+ - those <span class="caps">AMI</span> patients who were admitted to CCUs at participating hospitals
+ - from 1995 to 2007
+ - dataset: Register of Information and Knowledge about Swedish Heart Intensive Care Admissions (<span class="caps">RIKS</span>-<span class="caps">HIA</span>)
+ - total <span class="caps">AMI</span> cases during spring posttransitional week:&nbsp;3235.9</p>
+<p>This study didn&#8217;t publish per-day <span class="caps">AMI</span> counts, only the total during the whole posttransitional&nbsp;week.</p>
+<p>The time period matches exactly that of Janszky and Ljung (2008), and every case included in this study was also included in Janszky and Ljung (2008). As such, this study doesn&#8217;t add new information to the previous work with regards to the variables we consider, and it is <strong>excluded from our meta-analysis</strong> in order to avoid&nbsp;double-counting.</p>
+<p>As the authors put&nbsp;it:</p>
+<blockquote>
+<p>The study populations of the present and our previous study
+overlapped substantially. Our previous analyses included all AMIs
+detected either at a hospital or at an autopsy in Sweden from
+1987 to 2006, a clear strength. In the present work, we investigated
+only those <span class="caps">AMI</span> patients who were admitted to CCUs at participating
+hospitals from 1995 to 2007. Although this limited our power
+substantially, it allowed us to examine clinical factors that might
+modify the risks related to <span class="caps">DST</span>&nbsp;transitions.</p>
+</blockquote>
+<h3>Čulić&nbsp;(2013)</h3>
+<p><strong>Data</strong>:</p>
+<ul>
+<li>patients hospitalized because of <span class="caps">AMI</span></li>
+<li>from 1990 to&nbsp;1996</li>
+<li>40 patients on workdays following <span class="caps">DST</span>&nbsp;change</li>
+<li>at University Hospital Centre Split in Split,&nbsp;Croatia</li>
+</ul>
+<p>It is unclear whether the trend prediction is made from the 2 weeks before and after the posttransitional week, or from all 50 nontransitional&nbsp;weeks:</p>
+<blockquote>
+<p>The incidence ratios of <span class="caps">AMI</span> for the first week after the
+two <span class="caps">DST</span> shifts (posttransitional weeks) and each day of
+that week were estimated by dividing the incidence
+during those periods with the average incidences during
+corresponding days and weeks throughout the year: 2
+wks before and 2 wks after the posttransitional week,
+and the 50 nontransitional weeks of the year&nbsp;altogether.</p>
+</blockquote>
+<p>It is unclear why exactly the data from 1990 to 1996 was analyzed, if the study was conducted in 2013. This is <em>suggestive of selection bias</em>.</p>
+<p><strong>Overanalysis</strong>:</p>
+<p>23 additional variables were analyzed (sex, employment status, use of β-blocker, etc.); some were bound to have low&nbsp;p-values:</p>
+<blockquote>
+<p>The independent predictors for <span class="caps">AMI</span> during
+this period in spring were male sex (p = 0.03) and nonengagement in physical activity (p = 0.02) and there was a trend
+for the lower risk of incident among those taking calcium antagonists (p = 0.07). In autumn, the predictors were
+female sex (p = 0.04), current employment (p = 0.006), not taking b-blocker (p = 0.03), and nonengagement in
+physical activity (p =&nbsp;0.02).</p>
+</blockquote>
+<h3>Jiddou et al.&nbsp;(2013)</h3>
+<p><strong>Data</strong>:
+- a retrospective electronic chart review
+- all patients presenting to the emergency centers at Beaumont Hospitals in Royal Oak and Troy, Michigan, with the primary diagnosis of <span class="caps">AMI</span>
+- age: patients who were aged &gt;18 years, resulting in 70±15 years
+- exclusion conditions: minor, pregnant
+- from October 2006 to April 2012 (7 years)
+- trend: patients admitted with comparable diagnoses on the corresponding weekdays 2 weeks before and 2 weeks after the shifts to and from <span class="caps">DST</span>
+- additional variables: demographic data, medical history, tobacco use, prescribed medications, whether the patient underwent cardiac catheterization; diagnosis of hypertension, hyperlipidemia, and coronary artery&nbsp;disease.</p>
+<p><strong>Quotes</strong>:</p>
+<blockquote>
+<p>2 AMIs occurred on Easter Sunday and were considered potential confounders and&nbsp;excluded.</p>
+</blockquote>
+<p>It is correct to note the incidences on Easter Sunday, but even more important would be the incidences on Easter <em>Monday</em>. But even then, is only correct to exclude the patients entirely if the relevant control incidences are also reduced – it is unclear whether this trend correction&nbsp;happened.</p>
+<h3>Sandhu et al.&nbsp;(2014)</h3>
+<p><strong>Data</strong>:
+ - Time: 1 January 2010 – 15 September 2013 (3 fall and 4 spring <span class="caps">DST</span> changes; 1354 days)
+ - Procedural data for hospital admissions where <span class="caps">PCI</span> was performed in the setting of <span class="caps">AMI</span>
+ - Number of cases: 42,060 hospital admissions for <span class="caps">AMI</span> requiring <span class="caps">PCI</span> occurred during the study period.
+ - The median daily <span class="caps">AMI</span> total was 31, ranging from a minimum of 14 to a maximum of 53&nbsp;admissions.</p>
+<p><strong>Results</strong>:</p>
+<blockquote>
+<p>There was no difference in the total weekly number of PCIs performed for <span class="caps">AMI</span> for either the fall or spring time changes in the time period analysed. After adjustment for trend and seasonal effects, the Monday following spring time changes was associated with a 24% increase in daily <span class="caps">AMI</span> counts (p=0.011), and the Tuesday following fall changes was conversely associated with a 21% reduction (p=0.044). No other weekdays in the weeks following <span class="caps">DST</span> changes demonstrated significant&nbsp;associations.</p>
+</blockquote>
+<p><strong>Analysis</strong>:</p>
+<p>I was unable to obtain the data at <a href="https://bmc2.org">Blue Cross Blue Shield of Michigan</a> and the study did not include the number of <span class="caps">AMI</span> cases numerically, therefore I estimated it from the chart in Figure 3 (which was accurate to 0.4 <span class="caps">AMI</span>).</p>
+<h3>Kirchberger et al.&nbsp;(2015)</h3>
+<p><strong>Data</strong>:
+- <span class="caps">AMI</span> count: 25,499 cases of <span class="caps">AMI</span>
+- data source: <span class="caps">MONICA</span>/<span class="caps">KORA</span> Myocardial Infarction Registry (<a href="https://www.helmholtz-muenchen.de/herzschlag-info/">link</a>; public data should be published yearly according to <a href="http://www.gbe-bund.de/gbe10/abrechnung.prc_abr_test_logon?p_uid=gast&amp;p_aid=0&amp;p_knoten=FID&amp;p_sprache=E&amp;p_suchstring=7014">this website</a>, but I did not find a link to download the dataset)
+- time period: 1 January 1985 and 31 October 2010 (26 spring and 25 fall <span class="caps">DST</span> changes – 2010 fall adjustment was on 31 October)
+- ages: 25–74
+- includes: coronary death and <span class="caps">AMI</span>
+- location: city of Augsburg (Germany) and the two adjacent counties (about 600,000 inhabitants)
+- additional variables: information on re-infarction, various medication prior to <span class="caps">AMI</span>, current occupation, history of hypertension, hyperlipidemia, diabetes, smoking, and obesity.
+- confounders accounted for: global time trend, temperature, relative humidity, barometric pressure, and indicators for month of the year, weekday and&nbsp;holiday</p>
+<p><strong>Quotes</strong>:</p>
+<blockquote>
+<p>The final model included the following covariates: time trend and previous two day mean relative humidity as regression splines with four and two degrees of freedom, respectively, previous two day mean temperature as a linear term and day of the week as categorical&nbsp;variable.</p>
+<p>The optimized spring model [of the data from March and April, excluding the week in question] included time trend and same day mean relative humidity as regression splines with six and three degrees of&nbsp;freedom.</p>
+</blockquote>
+<p>Six d.o.f. for 2 months is probably overfitting the data, even though it was the sum of 26 years. However, it shouldn’t make a predictible effect, and its overall effect is probably&nbsp;negligible.</p>
+<blockquote>
+<p>The incidence rate ratio was assessed as observed over expected events per day and the mean per weekday and corresponding 95% confidence intervals were&nbsp;calculated.</p>
+</blockquote>
+<p>However, it is not stated how the confidence intervals were calculated: most importantly, which statistical test was&nbsp;used?</p>
+<p><strong>Analysis</strong>:</p>
+<p>The paper stated only the calculated RRs for the spring and autumn prediction models (for all seven days), not the actual <span class="caps">AMI</span> counts.
+Assuming the researchers analyzed the data in an honest manner (i.e. not picking model parameters for lower trend prediction and thus more significant observed increase), and that the model didn&#8217;t predict large deviations from the 2.7 <span class="caps">AMI</span>/day average, we can calculate a close approximation of the observations as <script type="math/tex">\mathrm{RR}_d \cdot \mathrm{trend}</script>.</p>
+<h3>Sipilä et al.&nbsp;(2016)</h3>
+<p><strong>Data</strong>:
+ - years: 2001–2009, except 2002 and 2005 (due to Easter). 7 years.
+ - Exclusion criterion: age &lt; 18.
+ - Age: mean age 71.2, <span class="caps">SD</span> 12.6 years
+ - 2 weeks prior and 3 weeks after <span class="caps">DST</span> transition
+ - all 22 Finnish hospitals with coronary catheterization laboratory that treat emergency cardiac patients
+ - database: Finnish Care Register for Health Care (<span class="caps">CRHC</span>), a nationwide, obligatory and automatically collected hospital discharge&nbsp;database.</p>
+<ul>
+<li>Study group: posttransitional&nbsp;week</li>
+<li>Control group: 2 weeks before/after posttransitional&nbsp;week</li>
+<li>Easter in study group: 2002, 2005. “Years with <span class="caps">DST</span> spring transition on Easter Sunday were excluded from the analysis (2002 and 2005) to increase international comparability and avoid&nbsp;confounding”</li>
+<li>Easter in control group: “When Easter Sunday was celebrated within 2 weeks after <span class="caps">DST</span> transition, post-<span class="caps">DST</span> control weeks after Easter were&nbsp;selected.”</li>
+<li>Spring study+control group size: 1269+5029 =&nbsp;6298</li>
+<li>Standardized incidence of <span class="caps">MI</span> admissions in participating hospitals during spring study period was 259/100,000&nbsp;person-years.</li>
+</ul>
+<p><strong>Quotes</strong>:</p>
+<blockquote>
+<p>Incidence of <span class="caps">MI</span> admissions was similar to control
+weeks for Sunday–Tuesday after <span class="caps">DST</span> transition
+(Figure 1). However, on fourth day after transition
+(Wednesday), there was a significant increase in <span class="caps">MI</span>
+incidence compared to control weeks (<span class="caps">IR</span> 1.16; <span class="caps">CI</span> 1.01–&nbsp;1.34).</p>
+</blockquote>
+<p>Is there anything special about the <em>Wednesday</em> that follows a <span class="caps">DST</span> transition? One should not be surprised if a value falls outside of a 95% confidence/credible interval – after all, it happens <em>at least</em> 5% of the time even in the absence of any &#8220;interesting&#8221;&nbsp;effect.</p>
+<blockquote>
+<p>Patients admitted
+during the week after <span class="caps">DST</span> transition were less likely to
+have diagnosed diabetes or ventricular arrhythmias
+compared to patients admitted during control weeks,
+but had diagnosed renal failure more&nbsp;often.</p>
+</blockquote>
+<p>There is no simple and plausible explanation for this, therefore it is more probable that this is a result of finding patterns in&nbsp;noise.</p>
+<blockquote>
+<p>Population-based incidence
+of <span class="caps">MI</span> admissions to participating hospitals during
+spring and autumn periods were calculated using
+corresponding population data of mainland Finland
+obtained from Statistics Finland and standardized to
+European standard population 2013 by using the direct&nbsp;method.</p>
+</blockquote>
+<p>The meaning of the above statement is&nbsp;unclear.</p>
+<h2>Footnotes</h2>
+<h4>Footnote&nbsp;1</h4>
+<p>“Sleep researchers show a 20% increase in risk of heart attacks in Michigan but a 10% decrease in Finland, so it is advised to travel to Europe for this&nbsp;week.”</p>
+<p><a href="#fn-src-misinterpret">[back to source]</a>&nbsp;↑</p>
+<h4>Footnote&nbsp;2</h4>
+<p>Originally, I wrote the&nbsp;following:</p>
+<blockquote>
+<p>Further research could analyze the publication bias (if you know how to do that in a Bayesian framework, please mention it in the comments below), or analyze more data, preferably from multiple countries. Maybe the <span class="caps">DST</span> transition has a smaller effect on the Finnish population than on the Swedish population, which could easily be analyzed using Bayesian&nbsp;statistics.</p>
+</blockquote>
+<p>But then I calculated the absolute global effect, which is quite small, therefore the updated&nbsp;recommendation.</p>
+<p><a href="#fn-src-further">[back to source]</a>&nbsp;↑</p>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

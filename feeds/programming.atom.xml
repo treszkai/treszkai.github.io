@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Laszlo Treszkai - programming</title><link href="https://www.treszkai.com/" rel="alternate"></link><link href="https://www.treszkai.com/feeds/programming.atom.xml" rel="self"></link><id>https://www.treszkai.com/</id><updated>2019-07-13T00:00:00+02:00</updated><entry><title>Evaluation of function calls in Haskell</title><link href="https://www.treszkai.com/2019/07/13/haskell-eval/" rel="alternate"></link><published>2019-07-13T00:00:00+02:00</published><updated>2019-07-13T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2019-07-13:/2019/07/13/haskell-eval/</id><summary type="html">&lt;p&gt;Analyzing why point-free definitions in Haskell allow sharing the result of an inner function application, whereas pointful definitions do&amp;nbsp;not.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Chapter 27 of &lt;a href="http://haskellbook.com/"&gt;&lt;em&gt;Haskell Programming from first principles&lt;/em&gt;&lt;/a&gt; (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section &lt;em&gt;Preventing sharing on purpose&lt;/em&gt;, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of &lt;code&gt;g _&lt;/code&gt; is not shared but calculated&amp;nbsp;twice:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;Prelude&amp;gt; f x = (x 3) + (x 10)&lt;/span&gt;
+&lt;span class="err"&gt;Prelude&amp;gt; g&amp;#39; = \_ -&amp;gt; trace &amp;quot;hi g&amp;#39;&amp;quot; 2&lt;/span&gt;
+&lt;span class="err"&gt;Prelude&amp;gt; f g&amp;#39;&lt;/span&gt;
+&lt;span class="err"&gt;hi g&amp;#39;&lt;/span&gt;
+&lt;span class="err"&gt;hi g&amp;#39;&lt;/span&gt;
+&lt;span class="err"&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In the second, the result of &lt;code&gt;g _&lt;/code&gt; &lt;em&gt;is&lt;/em&gt; shared, i.e. calculated only once and the result is&amp;nbsp;stored:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;
+&lt;span class="n"&gt;hi&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;
+&lt;span class="mi"&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(Edited to add:) In practice, sharing is usually achieved with a &lt;code&gt;let&lt;/code&gt; expression or a &lt;code&gt;where&lt;/code&gt; construct.&lt;/p&gt;
+&lt;p&gt;(Note that this latter is called a &lt;a href="https://wiki.haskell.org/Pointfree"&gt;“point-free” definition&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;The authors conclude&amp;nbsp;that&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;functions aren’t shared when there are named arguments but are when the arguments are elided, as in pointfree. So, one way to prevent sharing is adding named&amp;nbsp;arguments.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;(Quoted from version 1.&lt;span class="caps"&gt;0RC4&lt;/span&gt; of the&amp;nbsp;book.)&lt;/p&gt;
+&lt;p&gt;In this post I analyze the runtime differences between point-free and pointful&amp;nbsp;definitions.&lt;/p&gt;
+&lt;h2&gt;Behind the&amp;nbsp;scenes&lt;/h2&gt;
+&lt;p&gt;As &lt;a href="#Further-resources"&gt;Tom Ellis describes&lt;/a&gt;, the definitions of &lt;code&gt;g&lt;/code&gt; and &lt;code&gt;f&lt;/code&gt; translate to the following (in a close approximation to the “Core” language used during&amp;nbsp;compilation):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;f&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
+&lt;span class="nf"&gt;g&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+&lt;span class="nf"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(Calling &lt;code&gt;f g&lt;/code&gt; with these definitions does &lt;em&gt;not&lt;/em&gt; result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like &lt;a href="#Sharing"&gt;that below&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;Two things to point out here. First, every function definition is a lambda. Second, &lt;code&gt;g&lt;/code&gt; was turned into a &lt;em&gt;let&lt;/em&gt; expression because we can only apply functions to variables or literals (in Core), not to function calls. &lt;em&gt;Edited to add:&lt;/em&gt; It would be reasonable to ask why &lt;code&gt;g = const (trace "hi g" 2)&lt;/code&gt;  doesn&amp;#8217;t translate to &lt;code&gt;\y -&amp;gt; let {tg = trace "hi g" 2} in const tg y&lt;/code&gt; (similar to &lt;code&gt;f&lt;/code&gt;), to which the pragmatic answer is that &lt;em&gt;apparently&lt;/em&gt; the order is the following:
+ 1. not-fully-applied functions are turned into lambdas,
+ 2. parameters that are function calls are turned into named variables, and
+ 3. named function arguments from the left-hand side of &lt;code&gt;=&lt;/code&gt; are moved to the right as a&amp;nbsp;lambda.&lt;/p&gt;
+&lt;h2&gt;Evaluation with&amp;nbsp;sharing&lt;/h2&gt;
+&lt;p&gt;This is what happens during the evaluation of &lt;code&gt;f g&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;ans&lt;/code&gt; is a function call, so its evaluation proceeds with substituting &lt;code&gt;g&lt;/code&gt; for the argument of &lt;code&gt;f&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;ans&lt;/code&gt; is a &lt;em&gt;let&lt;/em&gt; expression, so we put the following &lt;em&gt;thunks&lt;/em&gt; for &lt;code&gt;x3&lt;/code&gt; and &lt;code&gt;x10&lt;/code&gt; on the heap under some unique&amp;nbsp;name:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&amp;#8230;and then proceed with evaluating the &lt;em&gt;in&lt;/em&gt;&amp;nbsp;part:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ans_x3&lt;/span&gt; &lt;span class="n"&gt;ans_x10&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;During the evaluation of this function call, &lt;code&gt;ans_x3&lt;/code&gt; will be evaluated (or potentially &lt;code&gt;ans_x10&lt;/code&gt; first, or both in parallel). &lt;code&gt;ans_x3&lt;/code&gt; is a function call, so first we evaluate &lt;code&gt;g&lt;/code&gt; to a lambda. As &lt;code&gt;g&lt;/code&gt; is a &lt;em&gt;let&lt;/em&gt; expression, we create a closure for &lt;code&gt;trace "hi g" 2&lt;/code&gt; on the heap, and then continue with the &lt;em&gt;in&lt;/em&gt; part of &lt;code&gt;g&lt;/code&gt; (&lt;code&gt;\y -&amp;gt; const tg y&lt;/code&gt;). This is a lambda now, meaning it&amp;#8217;s in weak head normal form, so the heap contents for &lt;code&gt;g&lt;/code&gt; is overwritten with&amp;nbsp;that:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;span class="nf"&gt;g_tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="nf"&gt;g&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Back to &lt;code&gt;ans_x3&lt;/code&gt;, now the argument &lt;code&gt;3&lt;/code&gt; is substituted in the definition of &lt;code&gt;g&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans_x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is a function call, with &lt;code&gt;const&lt;/code&gt; already a lambda &lt;code&gt;\x _ -&amp;gt; x&lt;/code&gt;, so the arguments can now be substituted in the body, leaving us&amp;nbsp;with&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt;  &lt;span class="c1"&gt;-- (Pointer to the same address as g_tg.)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;During the evaluation of &lt;code&gt;g_tg&lt;/code&gt;, the magic printout happens (&lt;code&gt;hi g&lt;/code&gt; on stdout), and its value is resolved to be &lt;code&gt;2&lt;/code&gt;, so the heap is updated as&amp;nbsp;such:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;span class="nf"&gt;g_tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And &lt;code&gt;ans_x3&lt;/code&gt; is a pointer to the same memory content &lt;code&gt;2&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Analogously, the evaluation of &lt;code&gt;ans_x10&lt;/code&gt; proceeds as&amp;nbsp;such:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt;
+&lt;span class="c1"&gt;-- let ans_x10 points to the memory location of g_tg:&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, &lt;code&gt;ans = (+) ans_x3 ans_x10&lt;/code&gt;, which evaluates to &lt;code&gt;ans = 4&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Evaluation without&amp;nbsp;sharing&lt;/h2&gt;
+&lt;p&gt;In contrast, the evaluation of &lt;code&gt;f g'&lt;/code&gt; proceeds as&amp;nbsp;follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt;
+&lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x3&amp;#39;&lt;/span&gt;  &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x10&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ans_x3&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;ans_x10&amp;#39;&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x3&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now &lt;code&gt;hi g'&lt;/code&gt; is printed, and the heap is&amp;nbsp;updated:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x3&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When evaluating &lt;code&gt;ans_x10'&lt;/code&gt;, we &lt;strong&gt;again print&lt;/strong&gt; &lt;code&gt;hi g'&lt;/code&gt;, and store the result of the trace under a different&amp;nbsp;thunk:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;span class="nf"&gt;ans_x10&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now &lt;code&gt;ans'&lt;/code&gt; evaluates to &lt;code&gt;(+) 2 2&lt;/code&gt;, i.e. &lt;code&gt;4&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Attempt at verifying my translated&amp;nbsp;definitions&lt;/h2&gt;
+&lt;p&gt;I attempted to verify what I was saying above about the definitions of &lt;code&gt;f&lt;/code&gt;, &lt;code&gt;g&lt;/code&gt;, &lt;code&gt;g'&lt;/code&gt; in Core, using the &lt;code&gt;-ddump-simpl&lt;/code&gt; compiler flag of GHCi, but it didn&amp;#8217;t fulfil my&amp;nbsp;expectations.&lt;/p&gt;
+&lt;p&gt;&lt;a name="Sharing"&gt;&lt;/a&gt;Sharing.hs:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;module&lt;/span&gt; &lt;span class="nn"&gt;Sharing&lt;/span&gt; &lt;span class="kr"&gt;where&lt;/span&gt;
+
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Debug.Trace&lt;/span&gt;
+
+&lt;span class="nf"&gt;f&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;::&lt;/span&gt; &lt;span class="kt"&gt;Int&lt;/span&gt;
+&lt;span class="nf"&gt;g&lt;/span&gt;   &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;  &lt;span class="c1"&gt;-- share&lt;/span&gt;
+&lt;span class="nf"&gt;g&amp;#39;&lt;/span&gt;  &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;   &lt;span class="c1"&gt;-- don&amp;#39;t share&lt;/span&gt;
+&lt;span class="nf"&gt;g&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;  &lt;span class="c1"&gt;-- share (equivalent to g)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In&amp;nbsp;GHCi:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ddump&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;simpl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dsuppress&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Wno&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;missing&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;signatures&lt;/span&gt;
+&lt;span class="n"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;Compiling&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;          &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;interpreted&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="o"&gt;====================&lt;/span&gt; &lt;span class="n"&gt;Tidy&lt;/span&gt; &lt;span class="n"&gt;Core&lt;/span&gt; &lt;span class="o"&gt;====================&lt;/span&gt;
+&lt;span class="n"&gt;Result&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Tidy&lt;/span&gt; &lt;span class="n"&gt;Core&lt;/span&gt;
+  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;terms&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;52&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;coercions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;joins&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; \ &lt;span class="n"&gt;x_a1Fl&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;fNumInt&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x_a1Fl&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="c1"&gt;# 3#)) (x_a1Fl (I# 10#))&lt;/span&gt;
+&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; \ &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;b_a1Gi&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unpackCString&lt;/span&gt;&lt;span class="c1"&gt;# &amp;quot;hi g&amp;quot;#) (I# 2#))&lt;/span&gt;
+&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39; = \ @ p_a1G6 -&amp;gt; \ _ -&amp;gt; trace (unpackCString# &amp;quot;hi g&amp;#39;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;#) (I# 2#)&lt;/span&gt;
+&lt;span class="n"&gt;tg_r1F4&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unpackCString&lt;/span&gt;&lt;span class="c1"&gt;# &amp;quot;hi g&amp;quot;#) (I# 2#)&lt;/span&gt;
+&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; \ &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;b_a1FJ&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; \ &lt;span class="n"&gt;y_a1Fn&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;tg_r1F4&lt;/span&gt; &lt;span class="n"&gt;y_a1Fn&lt;/span&gt;
+
+&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;stuff&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Nonetheless, as &lt;a href="https://stackoverflow.com/a/6121495/8424390"&gt;a &lt;span class="caps"&gt;SO&lt;/span&gt; answer describes&lt;/a&gt;, we can see that a function application in Core is defined as &lt;code&gt;Expr Atom&lt;/code&gt;, where &lt;em&gt;Atom&lt;/em&gt; is &lt;code&gt;var | Literal&lt;/code&gt;. I attempted to install &lt;a href="http://hackage.haskell.org/package/ghc-core"&gt;ghc-core&lt;/a&gt; but the build failed, so further analysis is put on the&amp;nbsp;shelf.&lt;/p&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;So, what&amp;#8217;s the essential difference between &lt;code&gt;g&lt;/code&gt; and &lt;code&gt;g'&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;g = const (trace "hi g" 2)&lt;/code&gt; is a function application where the argument is a function application, which is treated as a &lt;em&gt;let&lt;/em&gt; expression. When you evaluate &lt;code&gt;g ()&lt;/code&gt;, the auxiliary variable introduced by the &lt;em&gt;let&lt;/em&gt; – i.e.,&lt;code&gt;tg = trace "hi g" 2&lt;/code&gt; – is evaluated to a literal and its value is stored on the heap. On subsequent calls, some other argument can be applied to the &lt;code&gt;const tg&lt;/code&gt; function, but its first argument &lt;code&gt;tg&lt;/code&gt; is already&amp;nbsp;evaluated.&lt;/p&gt;
+&lt;p&gt;In contrast, &lt;code&gt;g' = \_ -&amp;gt; trace "hi g'" 2&lt;/code&gt; is a lambda, so it is already fully evaluated, and nothing in it can be simplified further. If we apply &lt;code&gt;g'&lt;/code&gt; first to the argument &lt;code&gt;()&lt;/code&gt;, the expression &lt;code&gt;g' ()&lt;/code&gt; will evaluate to the body of &lt;code&gt;g'&lt;/code&gt; with the unused parameter discarded, i.e. &lt;code&gt;trace "hi g'" 2&lt;/code&gt;. If we later evaluate &lt;code&gt;g' []&lt;/code&gt;, then it again results in the (same) body after the (dummy) function application. Nowhere during this process did we store the value of &lt;code&gt;trace "hi g'" 2&lt;/code&gt;: in particular, we didn&amp;#8217;t update the definition of &lt;code&gt;g'&lt;/code&gt; to &lt;code&gt;\_ -&amp;gt; 2&lt;/code&gt;, simply because that is not the definition of &lt;code&gt;g'&lt;/code&gt;. (But could we have updated it? Even though functions are always pure, I think the answer is generally &lt;em&gt;no&lt;/em&gt;: sometimes the result of a function is bigger than the definition, and the result is not needed often enough to warrant this speed–memory&amp;nbsp;tradeoff.)&lt;/p&gt;
+&lt;p&gt;Recall the original&amp;nbsp;wording:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;functions aren’t shared when there are named arguments but are when the arguments are elided, as in&amp;nbsp;pointfree.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;As we saw, &lt;em&gt;functions&lt;/em&gt; themselves are never shared. Rather, if &lt;code&gt;g&lt;/code&gt; is a partially applied function whose argument is a function application &lt;code&gt;fun arg&lt;/code&gt;, then &lt;code&gt;g&lt;/code&gt; is equivalent to a &lt;em&gt;let&lt;/em&gt; expression, and after its first evaluation &lt;code&gt;g&lt;/code&gt; will &lt;em&gt;change&lt;/em&gt; to a lambda with &lt;code&gt;fun arg&lt;/code&gt; already&amp;nbsp;evaluated.&lt;/p&gt;
+&lt;p&gt;As a generally-okay heuristic, point-free definitions allow sharing inner function calls, whereas nothing in a lambda (or a function with all arguments on the left-hand side) is&amp;nbsp;shared.&lt;/p&gt;
+&lt;h2&gt;Further&amp;nbsp;resources&lt;/h2&gt;
+&lt;p&gt;More details on similar behavior are given by Tom Ellis in his talk &lt;a href="https://skillsmatter.com/skillscasts/8726-haskell-programs-how-do-they-run"&gt;&lt;em&gt;Haskell programs: how do they run?&lt;/em&gt;&lt;/a&gt; (free registration required to watch the&amp;nbsp;talk).&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://skillsmatter.com/skillscasts/8800-functional-and-low-level-watching-the-stg-execute"&gt;talk of David Luposchainsky (a.k.a. &lt;code&gt;quchen&lt;/code&gt;)&lt;/a&gt; goes into more depth – down to the Core –, in which he uses his own implementation of the spineless tagless graph reduction machine (&lt;span class="caps"&gt;STG&lt;/span&gt;), to visualize the evaluation of any given Haskell code (&lt;a href="https://github.com/quchen/stgi"&gt;link to repo&lt;/a&gt;).&lt;/p&gt;</content><category term="programming"></category><category term="Haskell"></category></entry></feed>

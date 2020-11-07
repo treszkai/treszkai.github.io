@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head><meta charset="utf-8" />
 
 <title>Power analysis</title>
@@ -12944,7 +12944,6 @@ ul.typeahead-list  > li > a.pull-right {
 .terminal-app #terminado-container {
   margin-top: 20px;
 }
-/*# sourceMappingURL=style.min.css.map */
     </style>
 <style type="text/css">
     .highlight .hll { background-color: #ffffcc }
@@ -13147,7 +13146,7 @@ than $5^\circ$.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>Figure 6</em> of Kruschke2013:</p>
-<p><img src="kruschke2013-fig6.png" alt=""></p>
+<p><img src="kruschke2013-fig6.png" alt="Figure 6 of Kruschke 2013, depicting the procedure for power analysis"></p>
 <blockquote><p>Flowchart for estimating Bayesian power. At the left, a hypothetical distribution of parameter values
 is used to repeatedly generate representative credible parameter values. For each set of parameter values, a
 simulated sample of data is generated from the model. Then Bayes’ rule is applied to derive the posterior
@@ -13178,7 +13177,7 @@ arbitrarily high accuracy.</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-statistical-model">The statistical model<a class="anchor-link" href="#The-statistical-model">&#182;</a></h2><p>Instead of directly modeling the angles returned by the doctors and the software, I first model the distribution of the three points A, B, C, then the output of both the doctors ($A_{doc}$) and the software ($A_{sw}$) as the true point ± some error ($\sigma_{doc}$ and $\sigma_{sw}$), and from these I calculate the angles and the error of the software ($\Delta\alpha = \alpha_{doc} - \alpha_{sw}$). (It would make perfect sense to model $\Delta\alpha$ as $\alpha_{true} - \alpha_{sw}$ instead of $\alpha_{doc} - \alpha_{sw}$, but that would take some arguing.) This allows me to estimate the angle error much more precisely, instead of just blindly assuming e.g. a normal distribution on $\Delta\alpha$.</p>
-<p><img src="model.png" alt=""></p>
+<p><img src="model.png" alt="Visualized Bayesian network of the model"></p>
 
 </div>
 </div>

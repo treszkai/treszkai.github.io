@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=58cb4674">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+  <meta name="description" content="Posts and writings by Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta name="keywords" content="statistics, Bayes, sampling">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var macros_dict = { "\\RR": "\\mathbb{R}"  ,  "\\EE": "\\mathbb{E}"  ,  "\\parm": "\\textcolor{grey}{\\bullet}"  ,  "\\indep": "\\perp\\!\\!\\!\\perp"  ,  "\\emptyset": "\\varnothing"  ,  "\\proves": "\\vdash"  ,  "\\Union": "\\bigcup"  ,  "\\Intersect": "\\bigcap"  ,  "\\grad": "\\nabla"  ,  "\\given": "\\,\\vert\\,"  ,  "\\Godel": "\\ulcorner #1 \\urcorner"    };
+  document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: false, macros: macros_dict });
+  });
+  document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+    el.outerHTML = katex.renderToString(el.innerHTML, { displayMode: true, macros: macros_dict });
+  });
+});
+</script>
+  <title>
+    Laszlo Treszkai
+&ndash; Bayesian inference: Approaching certainty through&nbsp;sampling  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2019/07/24/approaching-certainty/">Bayesian inference: Approaching certainty through&nbsp;sampling</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 24 Jul. 2019</p>
+ Tags:
+      <a href="https://www.treszkai.com/tag/statistics.html">#statistics</a>,      <a href="https://www.treszkai.com/tag/bayes.html">#Bayes</a>,      <a href="https://www.treszkai.com/tag/sampling.html">#sampling</a>    </p>
+  </div>
+  <div class="article__text">
+    <p><em>Bayesian Data Analysis</em> from Gelman et al. (2013), in section 3.7, presents the statistical analysis of a bioassay experiment. The parameters of the model are <script type="math/tex">(\alpha, \beta)</script>, and we draw samples from the numerically calculated posterior. Then the authors&nbsp;write:</p>
+<blockquote>
+<p>All of the 1000 simulation draws had positive values of <script type="math/tex">\beta</script>, so the posterior probability that <script type="math/tex">\beta > 0</script> is roughly estimated to exceed&nbsp;0.999.</p>
+</blockquote>
+<p>I thought this 0.999 figure is an overestimate; I analyze this question in this&nbsp;post.</p>
+<!--more-->
+
+<h2>Analysis</h2>
+<p>The event “<script type="math/tex">\beta > 0</script>” is a Bernoulli-distributed random variable; let&#8217;s denote it with <script type="math/tex">x \sim \text{Bernoulli}(\theta)</script>. If we draw <script type="math/tex">S</script> samples from <script type="math/tex">x</script> (and denote the results with <script type="math/tex">x_i</script>), the conditional probability distribution of <script type="math/tex">p(\theta \given \{x_i\})</script> is described by the following directed graphical&nbsp;model:</p>
+<p><img alt="Bayes net for x_i and theta" src="https://www.treszkai.com/2019/07/24/approaching-certainty/dgm-theta.svg"></p>
+<p>The node for <script type="math/tex">x_i</script> is filled because it&#8217;s observed, and the plate represents <script type="math/tex">S</script> copies of this node (with <script type="math/tex">i</script> ranging from <script type="math/tex">1</script> to <script type="math/tex">S</script>).</p>
+<p>If <script type="math/tex">n_1</script> (resp. <script type="math/tex">n_0</script>) denote the number of samples where <script type="math/tex">x_i</script> is true (resp. false), the likelihood is described&nbsp;by:</p>
+<p>[p({x_i} \given \theta) = \text{Binomial}(n_1 \given n = S, p =&nbsp;\theta).]</p>
+<p>We can assume a noninformative uniform prior on the probability <script type="math/tex">\theta</script> on the unit interval. A Beta prior is conjugate to the Bernoulli likelihood, and <script type="math/tex">p(\theta) = \text{Beta}(\theta \given \alpha_0 = 1, \beta_0 = 1) = \text{Uniform}(\theta \given a = 0, b = 1)</script>, and this results in the following&nbsp;posterior:</p>
+<p>[p(\theta \given {x_i}) = \text{Beta}(\theta \given \alpha_0 + n_0, \beta_0 +&nbsp;n_1).]</p>
+<p>With <script type="math/tex">n_1 = 1000</script> and <script type="math/tex">n_0 = 0</script>, this amounts to a <script type="math/tex">\text{Beta}(1001, 1)</script> distribution, whose <a href="https://en.wikipedia.org/wiki/Beta_distribution#Probability_density_function">pdf</a> is as&nbsp;such:</p>
+<p><img alt="Pdf of Beta(1001,1)" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-big.svg"></p>
+<p>As expected, most of the probability mass is close to 1.0. But that graph is not very legible, so let&#8217;s zoom in on the right end of the <em>x</em>&nbsp;axis:</p>
+<p><img alt="Pdf of Beta(1001,1) in [.99,1.0] interval" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-zoomed.svg"></p>
+<p>The red line marks the mean of the distribution, which is approximately <script type="math/tex">0.999</script>, but not nearly all of the probability mass is on the right side of <script type="math/tex">0.999</script>. Using the <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function">cdf</a> of the posterior, we have&nbsp;that</p>
+<p>[P(\theta &gt; 0.999) =&nbsp;0.63,]</p>
+<p>meaning there&#8217;s still a 1 in 3 chance that the posterior probability that <script type="math/tex">\beta > 0</script> does <em>not</em> exceed <script type="math/tex">0.999</script>. To be fair, <strong><script type="math/tex">0.999</script> is still good for a “rough estimate”</strong>, unless one has a strong prior for <script type="math/tex">\beta < 0</script>. (Given the nature of the experiment and the meaning of the parameter <script type="math/tex">\beta</script> -- the toxicity of a compound --, a flat prior on “<script type="math/tex">\beta > 0</script>” is&nbsp;reasonable.)</p>
+<h3>Presidential&nbsp;elections</h3>
+<p>A similar statement was made for 1988 pre-election polls, on page&nbsp;70:</p>
+<blockquote>
+<p>All of the 1000 simulations <script type="math/tex">\theta_1 > \theta_2</script>; thus, the estimated posterior probability that Bush had more support than Dukakis in the survey population is over&nbsp;99.9%.</p>
+</blockquote>
+<p>When a presidential election is won “by a landslide”, that rarely means more than a 60-40% results; so in this case, I would rather use a prior that puts more mass on results close to 50-50%, for example <script type="math/tex">\text{Beta}(10,10)</script>:</p>
+<p><img alt="Pdf of Beta(10,10)" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-10-pdf.svg"></p>
+<p>This results in the following&nbsp;posterior:</p>
+<p><img alt="Pdf of Beta(1010,10)" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1010-pdf.svg"></p>
+<p>So in this case, the crude estimate does does not suffice, and we should rather be only 98% certain. (This is a 20-fold difference, <script type="math/tex">(1-.98)/(1-0.999)</script>, and a well-calibrated <a href="https://goodjudgment.com/philip-tetlocks-10-commandments-of-superforecasting/">superforecaster</a> could tell them apart.) If the stakes are high, then refine your model, and draw more&nbsp;samples.</p>
+<h2>Conclusion</h2>
+<p>The meaning of 1000 true + 0 false simulations depends on your prior beliefs: the posterior mean could be 0.999 (with a uniform prior), or anything less than 0.99 (with a prior weighted more towards the center or&nbsp;zero).</p>
+<p>I love <span class="caps">BDA3</span>; I'm nowhere near finished, but even the first chapters have taught me new ideas and proofs (e.g. the Bayesian cookbook in section 3.8, or modeling normal data with unknown mean <em>and</em> variance). The examples and exercises are a great combination of applications and theory. As you can see from this post, all I can do is nitpick some tiny details. A quick intro to practical Bayesian modeling is a <a href="https://www.youtube.com/watch?v=T1gYvX5c2sM">presentation from Andrew Gelman</a>.</p>
+<p>Did you like this post, did I make a mistake, or do you know a <span class="caps">BDA3</span> discussion group? Let me know in the comments&nbsp;below!</p>
+<h2>Code</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">set_matplotlib_formats</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">posterior</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_beta</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">rv</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1001</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xs</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;θ&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability density function&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pdf of Beta(θ | α = </span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">, β = </span><span class="si">{</span><span class="n">beta</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">plot_beta</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">),</span> <span class="n">posterior</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;beta-1000-pdf-big.svg&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+
+<p><img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-big.svg"></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ramanujan</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Series that converges to 1/π at an exponential rate,</span>
+<span class="sd">    by Srinivasa Ramanujan&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">8</span><span class="o">**.</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">9801</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+                               <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+                               <span class="o">/</span> <span class="mi">396</span><span class="o">**</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+                               <span class="o">*</span> <span class="p">(</span><span class="mi">1103</span> <span class="o">+</span> <span class="mi">26390</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+                              <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1/ramanujan(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) - π ≈ </span><span class="si">{</span><span class="mi">1</span><span class="o">/</span><span class="n">ramanujan</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Easter egg. Thanks for reading!</span>
+</pre></div>
+
+
+<blockquote>
+<p>1/ramanujan(1) - π ≈&nbsp;7.64e-08</p>
+<p>1/ramanujan(2) - π ≈&nbsp;4.44e-16</p>
+<p>1/ramanujan(3) - π ≈&nbsp;0.00e+00</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="n">plot_beta</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.990</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">1000</span><span class="p">),</span> <span class="n">posterior</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">posterior</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;beta-1000-pdf-zoomed.svg&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+
+<p><img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-zoomed.svg"></p>
+<div class="highlight"><pre><span></span><span class="n">posterior</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+
+<blockquote>
+<p>0.999001996007984</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P(θ &gt; 0.999) = </span><span class="si">{:d}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">posterior</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">)))))</span>
+</pre></div>
+
+
+<blockquote>
+<p>P(θ &gt; 0.999) =&nbsp;63%</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P(θ &gt; 0.998) = </span><span class="si">{:d}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">posterior</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">0.998</span><span class="p">)))))</span>
+</pre></div>
+
+
+<blockquote>
+<p>P(θ &gt; 0.998) =&nbsp;86%</p>
+</blockquote>
+<h2>References</h2>
+<p>Andrew Gelman, John Carlin, Hal Stern, David Dunson, Aki Vehtari, and Donald Rubin. 2013. <em>Bayesian Data Analysis: Third Edition</em>. <a href="http://www.stat.columbia.edu/~gelman/book/">Official&nbsp;webpage</a></p>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

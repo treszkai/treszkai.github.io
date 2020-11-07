@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Laszlo Treszkai - misc</title><link href="https://www.treszkai.com/" rel="alternate"></link><link href="https://www.treszkai.com/feeds/misc.atom.xml" rel="self"></link><id>https://www.treszkai.com/</id><updated>2018-05-23T00:00:00+02:00</updated><entry><title>Change YouTube speed from your favorites bar</title><link href="https://www.treszkai.com/2018/05/23/youtube-speed/" rel="alternate"></link><published>2018-05-23T00:00:00+02:00</published><updated>2018-05-23T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2018-05-23:/2018/05/23/youtube-speed/</id><summary type="html">&lt;p&gt;While the &lt;span class="caps"&gt;UI&lt;/span&gt; of YouTube only shows only limited set of high-speed options, it is possible to set the speed to any floating point value. Even better, one can do so from their favorites bar with&amp;nbsp;bookmarklets.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="I feel the need... the need for speed!" src="https://www.treszkai.com/2018/05/23/youtube-speed/need-for-speed.gif"&gt;&lt;/p&gt;
+&lt;h1&gt;Premise&lt;/h1&gt;
+&lt;p&gt;While the &lt;span class="caps"&gt;UI&lt;/span&gt; of YouTube only shows only limited set of high-speed options, it is possible to set the speed to any floating point value. Even better, one can do so from their favorites bar with&amp;nbsp;bookmarklets.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Youtube dialog to set speed" src="https://www.treszkai.com/2018/05/23/youtube-speed/youtube.png"&gt; &amp;nbsp;&amp;nbsp;⇒&amp;nbsp;&amp;nbsp; &lt;img alt="Bookmarks to set youtube speed" src="https://www.treszkai.com/2018/05/23/youtube-speed/bookmarklets.png"&gt;&lt;/p&gt;
+&lt;h1&gt;Method&lt;/h1&gt;
+&lt;p&gt;Simply add any of the following code snippets as&amp;nbsp;bookmarks.&lt;/p&gt;
+&lt;p&gt;If you have a fixed speed in mind, e.g.&amp;nbsp;2.5:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;javascript:document.getElementsByTagName("video")[0].playbackRate=2.5;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Or save this line to show a prompt that asks for a floating-point&amp;nbsp;input:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;javascript:var%20speed=prompt("Speed:","1.");document.getElementsByTagName("video")[0].playbackRate=parseFloat(speed);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Which results in the following&amp;nbsp;prompt:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="A prompt that asks for speed" src="https://www.treszkai.com/2018/05/23/youtube-speed/custom.png"&gt;&lt;/p&gt;
+&lt;h1&gt;Caveats&lt;/h1&gt;
+&lt;p&gt;Works with YouTube and&amp;nbsp;Vimeo.&lt;/p&gt;
+&lt;p&gt;The speed display in the video player will remain to show the last&amp;nbsp;setting.&lt;/p&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="caps"&gt;GIF&lt;/span&gt;: &lt;a href="https://www.youtube.com/watch?v=fR2hajcuFEM"&gt;Top&amp;nbsp;Gun&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Script: &lt;a href="https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12"&gt;Quora answer of John&amp;nbsp;Vuong&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="misc"></category></entry><entry><title>Some versatile tools for bash</title><link href="https://www.treszkai.com/2018/05/16/bash-versatile/" rel="alternate"></link><published>2018-05-16T00:00:00+02:00</published><updated>2018-05-16T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2018-05-16:/2018/05/16/bash-versatile/</id><summary type="html">&lt;p&gt;A 7-line bash script that includes 90% of what an average user&amp;nbsp;needs.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I rarely use bash besides the basics: I could use a &lt;code&gt;for&lt;/code&gt; loop even if woken up at night, but my knowledge of the language doesn&amp;#8217;t go much further. Hence instead of trying to memorize all the &lt;code&gt;{}%$&lt;/code&gt; magic, having a few versatile commands in my toolbox comes&amp;nbsp;handy.&lt;/p&gt;
+&lt;p&gt;Recently I faced the task of renaming a set of files {&lt;code&gt;foo 02.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 74.jpg&lt;/code&gt;} to {&lt;code&gt;foo 06.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 78.jpg&lt;/code&gt;}, while keeping the order. My approach contained nothing&amp;nbsp;extraordinary:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="sb"&gt;`&lt;/span&gt;seq &lt;span class="m"&gt;74&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="nb"&gt;printf&lt;/span&gt; -v oldname &lt;span class="s2"&gt;&amp;quot;foo %02d.jpg&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt;
+    &lt;span class="nb"&gt;printf&lt;/span&gt; -v newname &lt;span class="s2"&gt;&amp;quot;foo %02d.jpg&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="s2"&gt;+4&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; bc&lt;span class="k"&gt;)&lt;/span&gt;
+
+    mv &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$oldname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$newname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Yet there were some educational points in it:
+ - One loops a variable &lt;code&gt;x&lt;/code&gt; over the lines of a string &lt;code&gt;values&lt;/code&gt; by &lt;code&gt;for x in values; do something; something_else; done&lt;/code&gt;.
+ - &lt;code&gt;seq a b&lt;/code&gt; simply prints out the integers from &lt;code&gt;a&lt;/code&gt; to &lt;code&gt;b&lt;/code&gt;, inclusive, regardless of which is larger.
+ - Variable &lt;code&gt;x&lt;/code&gt; is assigned a value by &lt;code&gt;x=foobar&lt;/code&gt;, where there must be &lt;em&gt;no spaces around the equation sign&lt;/em&gt;.The value of &lt;code&gt;x&lt;/code&gt; can then be referred to by &lt;code&gt;$x&lt;/code&gt;.
+ - Renaming a set of files to a similar name but later in the alphabet must be done in reverse order.
+ - Bash has a built-in &lt;code&gt;printf&lt;/code&gt; that seems to work as in C: first the string to be printed with format specifiers like &lt;code&gt;%02d&lt;/code&gt;, followed by the arguments whose values are used according to the format specifiers.
+ - With the &lt;code&gt;-v&lt;/code&gt; option of &lt;code&gt;printf&lt;/code&gt;, you can save the output into a variable.
+ - One can use &lt;code&gt;$(  )&lt;/code&gt; for executing a command and having bash treat the output as the source code. (It&amp;#8217;s the same as using backticks, as around &lt;code&gt;seq 74 2&lt;/code&gt;, but allows nesting and is clearer. Kinda like &lt;code&gt;eval&lt;/code&gt; in other languages, like JavaScript.) Not shown here, but it even works in quotation marks, e.g. &lt;code&gt;"$(echo hey yo)"&lt;/code&gt; is like writing &lt;code&gt;"hey yo"&lt;/code&gt;. Note that the trailing newline is deleted.
+ - &lt;code&gt;bc&lt;/code&gt; is a calculator that reads from the input and outputs nothing but the result on a single line.
+ - Don’t forget the quotes around arguments with spaces, like with &lt;code&gt;mv&lt;/code&gt; above.&lt;/p&gt;
+&lt;p&gt;One minute of further bash tips are provided by Julia Evans &lt;a href="https://drawings.jvns.ca/bashtips/"&gt;[here]&lt;/a&gt;.&lt;/p&gt;</content><category term="misc"></category></entry></feed>

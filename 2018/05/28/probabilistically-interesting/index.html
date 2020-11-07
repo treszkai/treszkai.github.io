@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=58cb4674">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+  <meta name="description" content="Posts and writings by Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta name="keywords" content="">
+
+  <title>
+    Laszlo Treszkai
+&ndash; Probabilistically interesting planning&nbsp;problems  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2018/05/28/probabilistically-interesting/">Probabilistically interesting planning&nbsp;problems</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 28 May. 2018</p>
+    </p>
+  </div>
+  <div class="article__text">
+    <p>This post briefly describes the problem of <em>probabilistic planning</em>, and explains in informal terms what makes a planning problem <em>probabilistically interesting</em>, along with some&nbsp;examples.</p>
+<h1>Primer on probabilistic&nbsp;planning</h1>
+<p>In a nutshell, planning is about <em>finding a way to win</em>, and as such, the field of research on planners is vast. However, there is no single textbook definition of “planning”, so in this post I&#8217;ll try to be as general as possible. One description of a planning problem could be: given a description of an environment, find a sequence of actions that brings the environment from the initial state of the environment to a goal state. There are multiple ways to describe the environment: for example in formal logic with the <a href="https://en.wikipedia.org/wiki/Situation_calculus">situation calculus</a>, or more commonly as a <a href="https://en.wikipedia.org/wiki/Markov_decision_process">Markov decision process (<span class="caps">MDP</span>)</a>. In probabilistic planning problems, the functions describing the <span class="caps">MDP</span> are not necessarily deterministic: executing action <script type="math/tex">a</script> in state <script type="math/tex">s</script> will bring the environment to state <script type="math/tex">s'</script> with a probability of <script type="math/tex">T(s,a,s')</script>. In contrast with the <em>control problem</em> of reinforcement learning, where the goal is to find an optimal <em>policy</em> (i.e. a mapping from states to actions), in planning one is interested only in a partial policy that brings the agent closer to a goal state, or frequently only a single action that brings the agent closer to a goal state from the current state. An example planning problem is thus: “Siri, show me a way to the library.” Then Siri responds either with a plan that I can follow from the first step to the last (i.e. a route from start to finish), or only an action that I can take right now (“go forward 100&nbsp;meters”).</p>
+<p>Graphical representation of an example <span class="caps">MDP</span>:</p>
+<p><img alt="Graphical representation of an example MDP" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/MDP-env.jpg"></p>
+<p>An example policy for the same <span class="caps">MDP</span>:</p>
+<p><img alt="An example policy for the same MDP" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/MDP-policy.jpg"></p>
+<p>An example plan for the same <span class="caps">MDP</span>:</p>
+<p><img alt="An example plan for the same MDP" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/MDP-plan.jpg"></p>
+<p>The approach taken by a planner differs based on the discounting factor \<script type="math/tex"> \gamma \</script> and the distribution of rewards. In a <em>shortest path problem</em> the future rewards are discounted (\<script type="math/tex"> 0 < \gamma < 1 \</script>), and there might be a constant negative reward for every step taken. Together with a positive reward in goal states, an agent with the goal of maximizing return – i.e. the sum of discounted expected future rewards – has incentives to minimize the length of the path to the goal. However, if there is no discounting (\<script type="math/tex">\gamma = 1 \</script>) and there's a positive reward only in the goal states, it is sufficient for the agent to find <em>any</em> way to the goal. (Some call these <em>goal-based problems</em> <a href="#Yoon2008-probabilistic-planning">(Yoon, Fern, Givan, <span class="amp">&amp;</span> Kambhampati, 2008)</a>.) In the next section we'll see that not all plans are created equal, so even in the non-discounted case we want one that ends up in a goal state with the highest&nbsp;probability.</p>
+<p>In an <em>offline</em> approach to deterministic planning problems, a planner is given an environment, initial state and goal state, and it needs to return a sequence of actions that brings the environment to the goal state. However, this offline approach does not work for probabilistic problems, where the outcome of an action is not always in our control. Hence a probabilistic planner is usually executed <em>online</em>: it makes an observation (e.g. the current state of the environment, in the fully observable case), does some magic, and outputs a single action that brings the agent closer to a goal state. Nature brings the agent to a new state, not necessarily the one you desired, and these steps are repeated, until you run out of time or end up at a&nbsp;goal.</p>
+<p>Since the fourth <a href="http://icaps-conference.org/index.php/Main/Competitions">International Planning Competition</a> in 2004 hosted by the <span class="caps">ICAPS</span> (International Conference on Automated Planning and Scheduling), this event featured a probabilistic track. The winner of <span class="caps">IPPC</span> 2004 was <span class="caps">FF</span>-Replan, a planner that simplifies the probabilistic planning problem into a deterministic one by not considering the multiple potential effects of an action <a href="#Yoon2007-FF-replan">(Yoon, Fern, <span class="amp">&amp;</span> Givan, 2007)</a> – hence the title of the paper, “<span class="caps">FF</span>-Replan: A Baseline for Probabilistic&nbsp;Planning.”</p>
+<h1>Probabilistically interesting planning&nbsp;problems</h1>
+<p>Iain Little and Sylvie Thiébaux analyzed the common characteristics of planning problems that can and cannot be optimally solved by a planner like <span class="caps">FF</span>-Replan <a href="#Little2007-probabilistic-planning">(Little <span class="amp">&amp;</span> Thiébaux, 2007)</a>. They gave necessary and sufficient conditions for a probabilistic planning problem to be <em>probabilistically interesting</em>: on a problem fulfilling these conditions, a planner that determinizes the problem will lose crucial information, and will do worse than a probabilistic planner. In this section I'll summarize these conditions using natural language, slightly diverging from the vocabulary of the paper. For formal definitions and more examples, see the <a href="http://users.cecs.anu.edu.au/~iain/icaps07.pdf">original paper</a>; it is an interesting&nbsp;read.</p>
+<p><em>Criterion 1:</em> there are multiple paths from the start to the goal. If there is only a single path, then any planner that finds <em>a</em> path will do equally good, as this will be the only&nbsp;one.</p>
+<p>Counterexample:</p>
+<p><img alt="Graphical description of an MDP with a single goal trajectory" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/counter-1.png"></p>
+<p><em>Criterion 2:</em> where the above two paths diverge, there is a choice about which way to go, i.e. a state \<script type="math/tex">s_{crossroads}\</script> from which action \<script type="math/tex">a_1\</script> leads to one road with a different probability than action \<script type="math/tex">a_2\</script> does. (Yes, this is a sufficient condition for the first criterion.) If it's only luck that separates the two paths, then the agent doesn't have much of a choice to do&nbsp;better.</p>
+<p>Counterexample:</p>
+<p><img alt="MDP with skill doesn't help" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/counter-2.png"></p>
+<p><em>Criterion 3:</em> there must be a non-trivially avoidable dead end in the environment. A <em>dead end</em> is an absorbing state that is not a goal state, i.e. a state from which there is no path to any goal state. For a dead end to be <em>avoidable</em>, there must be a state \<script type="math/tex">s_{crossroads}\</script> with at least two possible actions \<script type="math/tex">a_{deadly}\</script> and \<script type="math/tex">a_{winning}\</script>, such that executing \<script type="math/tex">a_{deadly}\</script> brings the agent to the dead end with a higher probability than executing \<script type="math/tex">a_{winning}\</script>. A dead end is <em>non-trivially avoidable</em> if \<script type="math/tex">s_{crossroads}\</script> is on a path from the initial state to a goal state, and there is a non-zero chance of reaching a goal state after executing either \<script type="math/tex">a_{winning}\</script> or \<script type="math/tex">a_{deadly}\</script>.</p>
+<p>Counterexample: the probabilistic version of Blocksworld, where the worst case scenario is that a block is dropped accidentally, does not contain dead ends; the environment is irreducible. (This was an actual problem of <span class="caps">IPPC</span>&nbsp;2004.)</p>
+<p><img alt="Probabilistic Blocks world" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/blocksworld.png"></p>
+<p>Counterexample: all dead ends are&nbsp;unavoidable.</p>
+<p><img alt="MDP with no avoidable dead end" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/counter-3b.png"></p>
+<p>Counterexample: all dead ends are trivially&nbsp;avoidable.</p>
+<p><img alt="MDP with only trivially avoidable dead ends" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/counter-3c.png"></p>
+<h1>A simple yet “interesting” planning&nbsp;problem</h1>
+<p>A very simple problem that is probabilistically interesting is what the authors call <code>climber</code>, described by the following&nbsp;story:</p>
+<blockquote>
+<p>You are stuck on a roof because the ladder you climbed up on fell down. There are plenty of people around; if you call out for help someone will certainly lift the ladder up again. Or you can try to climb down without it. You aren’t a very good climber though, so there is a 40% chance that you will fall and break your neck if you do it alone. What do you&nbsp;do?</p>
+</blockquote>
+<p>Graphical representation of the <code>climber</code> problem:
+<img alt="Graphical representation of the climber problem" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/climber-orig.jpg"></p>
+<p>Despite the simplicity of this problem, most methods to turn it into a deterministic problem fail. Little and Thiébaux described 3 ways to determinize a problem, and they called a resulting deteministic problem a&nbsp;“compilation”.</p>
+<p>The <em><span class="caps">REPLAN1</span></em> approach simply drops all but the most likely outcome of every action, and finds the shortest goal trajectory. (This was the approach used by <span class="caps">FF</span>-Replan.) Compilation of the climber problem according to <span class="caps">REPLAN1</span>:</p>
+<p><img alt="Compilation of the climber problem according to REPLAN1" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/climber-det1.jpg"></p>
+<p><em><span class="caps">REPLAN2</span>(shortest)</em> turns every possible probabilistic outcome of an action into the outcome of a deterministic action, each with a cost of 1. Optimizing for smallest cost thus finds the <em>shortest</em> goal trajectory, but this might not be the one with the highest success probability. Compilation of the climber problem according to <span class="caps">REPLAN2</span>(shortest):</p>
+<p><img alt="Compilation of the climber problem according to REPLAN2(shortest)" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/climber-det2.jpg"></p>
+<p><em><span class="caps">REPLAN2</span>(most-likely)</em> also turns every outcome into a separate deterministic action, but the new action costs are the negative log probability of the relevant outcome. This is the only compilation of the problem that finds the optimal path for <code>climber</code>, but for many other problems even this one will be suboptimal. The resulting compilation is as&nbsp;follows:</p>
+<p><img alt="Compilation of the climber problem according to REPLAN2(most-likely)" src="https://www.treszkai.com/2018/05/28/probabilistically-interesting/climber-det3.jpg"></p>
+<h1>Summary</h1>
+<p>Finding the optimal goal trajectory in a probabilistic planning problem is computationally expensive, so most planners use some heuristics. One way to plan in a stochastic environment is to change the probabilistic planning problem into a deterministic shortest path problem and replan after (almost) every step, which is computationally efficient, but in many cases suboptimal. This article outlined the attributes of probabilistically interesting problems, where the deterministic replanning approach often fails. As such, recent probabilistic planners use more complicated methods (or often a portfolio of probabilistic planners), but replanners remain a good baseline to compare&nbsp;against.</p>
+<h1>References</h1>
+<ol class="bibliography"><li><span id="Little2007-probabilistic-planning">Little, I., <span class="amp">&amp;</span> Thiébaux, S. (2007). Probabilistic planning vs. replanning. <i>Workshop, <span class="caps">ICAPS</span> 2007</i>. Retrieved from http://users.cecs.anu.edu.au/&nbsp;iain/icaps07.pdf</span></li>
+<li><span id="Yoon2007-FF-replan">Yoon, S. W., Fern, A., <span class="amp">&amp;</span> Givan, R. (2007). <span class="caps">FF</span>-Replan: A Baseline for Probabilistic Planning. In <span class="caps">M. S.</span> Boddy, M. Fox, <span class="amp">&amp;</span> S. Thiébaux (Eds.), <i>Proceedings of the Seventeenth International Conference on Automated
+               Planning and Scheduling, <span class="caps">ICAPS</span> 2007, Providence, Rhode Island, <span class="caps">USA</span>,
+               September 22-26, 2007</i> (p. 352). <span class="caps">AAAI</span>. Retrieved from http://www.aaai.org/Library/<span class="caps">ICAPS</span>/2007/icaps07-045.php</span></li>
+<li><span id="Yoon2008-probabilistic-planning">Yoon, S. W., Fern, A., Givan, R., <span class="amp">&amp;</span> Kambhampati, S. (2008). Probabilistic Planning via Determinization in Hindsight. In D. Fox <span class="amp">&amp;</span> <span class="caps">C. P.</span> Gomes (Eds.), <i>Proceedings of the Twenty-Third <span class="caps">AAAI</span> Conference on Artificial Intelligence,
+               <span class="caps">AAAI</span> 2008, Chicago, Illinois, <span class="caps">USA</span>, July 13-17, 2008</i> (pp. 1010–1016). <span class="caps">AAAI</span> Press. Retrieved from http://www.aaai.org/Library/<span class="caps">AAAI</span>/2008/aaai08-160.php</span></li></ol>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

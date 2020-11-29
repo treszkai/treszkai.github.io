@@ -3,9 +3,15 @@ files: "^content/"
 repos:
   - repo: local
     hooks:
-      - id: markdown-check-list
-        name: check that lists are preceded by empty line
+      - id: unordered-list
+        name: lists are preceded by empty line
         files: "\\.md$"
         language: pygrep
         entry: "^(?! ?-)(?-s:.+)\n ?-(?!-)"
         args: [--multiline]
+      - id: markdown-ordered-list
+        name: numbered lists are preceded by empty line
+        files: "\\.md$"
+        language: pygrep
+        entry: "^(?-s:.+)\n ?1\\."
+        args: [ --multiline ]

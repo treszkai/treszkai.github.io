@@ -49,20 +49,21 @@
       <a href="https://www.treszkai.com/tag/haskell.html">#Haskell</a>    </p>
   </div>
   <div class="article__text">
-    <p>Chapter 27 of <a href="http://haskellbook.com/"><em>Haskell Programming from first principles</em></a> (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section <em>Preventing sharing on purpose</em>, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of <code>g _</code> is not shared but calculated&nbsp;twice:</p>
-<div class="highlight"><pre><span></span><span class="err">Prelude&gt; f x = (x 3) + (x 10)</span>
-<span class="err">Prelude&gt; g&#39; = \_ -&gt; trace &quot;hi g&#39;&quot; 2</span>
-<span class="err">Prelude&gt; f g&#39;</span>
-<span class="err">hi g&#39;</span>
-<span class="err">hi g&#39;</span>
-<span class="err">4</span>
+    <p><em>(This post is discussed in <a href="https://haskellweekly.news/episode/15.html">episode 15</a> of the</em> Haskell Weekly Podcast.<em>)</em></p>
+<p>Chapter 27 of <a href="http://haskellbook.com/"><em>Haskell Programming from first principles</em></a> (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section <em>Preventing sharing on purpose</em>, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of <code>g _</code> is not shared but calculated&nbsp;twice:</p>
+<div class="highlight"><pre><span></span><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="ow">=</span> <span class="p">(</span><span class="n">x</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="mi">10</span><span class="p">)</span>
+<span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">g&#39;</span> <span class="ow">=</span> <span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">trace</span> <span class="s">&quot;hi g&#39;&quot;</span> <span class="mi">2</span>
+<span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">f</span> <span class="n">g&#39;</span>
+<span class="nf">hi</span> <span class="n">g&#39;</span>
+<span class="nf">hi</span> <span class="n">g&#39;</span>
+<span class="mi">4</span>
 </pre></div>
 
 
 <p>In the second, the result of <code>g _</code> <em>is</em> shared, i.e. calculated only once and the result is&nbsp;stored:</p>
-<div class="highlight"><pre><span></span><span class="n">Prelude</span><span class="o">&gt;</span> <span class="n">g</span> <span class="o">=</span> <span class="k">const</span> <span class="p">(</span><span class="n">trace</span> <span class="s2">&quot;hi g&quot;</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">Prelude</span><span class="o">&gt;</span> <span class="n">f</span> <span class="n">g</span>
-<span class="n">hi</span> <span class="n">g</span>
+<div class="highlight"><pre><span></span><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">g</span> <span class="ow">=</span> <span class="n">const</span> <span class="p">(</span><span class="n">trace</span> <span class="s">&quot;hi g&quot;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">f</span> <span class="n">g</span>
+<span class="nf">hi</span> <span class="n">g</span>
 <span class="mi">4</span>
 </pre></div>
 

@@ -9,6 +9,7 @@ SITEURL = ''
 
 THEME = 'theme'
 TYPOGRIFY = True
+TYPOGRIFY_IGNORE_TAGS = ['script']
 
 PATH_METADATA = r'posts/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<slug>.*).md'
 

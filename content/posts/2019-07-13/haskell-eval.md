@@ -5,9 +5,11 @@ tags: Haskell
 category: programming
 ---
 
+_(This post is discussed in [episode 15](https://haskellweekly.news/episode/15.html) of the_ Haskell Weekly Podcast._)_
+
 Chapter 27 of [_Haskell Programming from first principles_](http://haskellbook.com/) (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section _Preventing sharing on purpose_, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of `g _` is not shared but calculated twice:
 
-```
+```haskell
 Prelude> f x = (x 3) + (x 10)
 Prelude> g' = \_ -> trace "hi g'" 2
 Prelude> f g'
@@ -18,7 +20,7 @@ hi g'
 
 In the second, the result of `g _` _is_ shared, i.e. calculated only once and the result is stored:
 
-```
+```haskell
 Prelude> g = const (trace "hi g" 2)
 Prelude> f g
 hi g

@@ -58,6 +58,7 @@ We replicate the findings of <!-- {% cite Guo2017-calibration %} --> <a class="c
 ## Things I would do differently
 
 With a little more experience behind my back now, I would make the following changes in experiment design and writing the report:
+
  - _Use a validation set._ We only used a training set because we trained for minimum error, and we expected _calibration_ to be independent from _accuracy_, but that is a strong assumption (and likely incorrect, seeing our results in the interim report).
  - _Use better biblography sources._ Instead of Google Scholar, I would search [DBLP](https://dblp.uni-trier.de/), where the information is more correct and consistent.
  - _Use pastel colors._ I let my collaborator have it his way, but ever since this submission I’m having nightmares in purple and glowing green :D

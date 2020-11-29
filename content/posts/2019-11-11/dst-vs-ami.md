@@ -69,6 +69,7 @@ MI (11–16).
 We will see that there is a simple reason for the disagreement between studies: most of the studies have been critically underpowered.
 
 Although the majority of medical research uses frequentist methods, this is not the first meta-analysis in medicine that uses Bayesian statistics. The following are some noteworthy examples:
+
 - Gelman et al. (2013) present an example for estimating mortality ratios after a myocardial infarction between the control group and a group that uses beta-blockers, using data from 22 independent studies.
 - Devin Incerti (2015) provides a Bayesian re-analysis of the effects of mammography on breast cancer-related mortality rates.
 - Yang et al. (2017) analyze 25 randomized controlled trials of prokinetics for the treatment of functional dyspepsia in a Bayesian network meta-analysis.
@@ -140,6 +141,7 @@ The model for the AMI count on a posttransitional Monday is described by the fol
 ![Bayes network for the Monday counts]({attach}figs/tikz_bayesnet_Mon.png)
 
 Loosely speaking, the arrows denote causal or logical dependencies, where the exact formula for the dependency is shown next to the nodes (in a canonical Bayes network, the formulas are described only in the text). The model can be translated into the following sentences:
+
  - The observed posttransitional AMI count on Monday follows a Poisson distribution.
  - The mean of the posttransitional AMI count on Monday is equal to the trend count on Monday, multiplied by the RR on Monday.
  - Monday's RR is a random variable, meaning it has an associated prior belief distribution (which we define below).
@@ -331,6 +333,7 @@ When the sample size is small, there is only a slight change from prior to poste
 ### Relevant studies
 
 The list of studies analyzed are identical to those analyzed in (Manfredini et al., 2019):
+
 - Janszky and Ljung (2008)
 - Janszky et al. (2012)
 - Čulić (2013)
@@ -401,6 +404,7 @@ The studies together provide so many data points that the choice of prior does n
 #### Exponential weekday model
 
 The exponential weekday model relaxes the assumption of linear decrease in RR throughout the week, and instead models the daily RRs as exponentially decreasing. That is, for a parameter \(\alpha \in [0,1]\), the risk ratios are determined as:
+
  - \(r_\text{Mon} = 1 + \theta\),
  - \(r_\text{Tue} = 1 + \alpha \cdot \theta\),
  - \(r_\text{Wed} = 1 + \alpha^2 \cdot \theta\),
@@ -533,6 +537,7 @@ Devin Incerti. 2015. _Bayesian Meta-Analysis with R and Stan_. Self-published, o
 ### Janszky and Ljung (2008)
 
 **Data**:
+
  - source: the Swedish registry of acute myocardial infarction (“which provides high-quality information on all acute myocardial infarctions in the country since 1987”)
  - years: 1987–2006
  - observations: the incidence of AMI during each of the first 7 days after the spring or autumn transition
@@ -572,6 +577,7 @@ The authors were employed by institutions in Stockholm, Sweden, meaning the use 
 ### Janszky et al. (2012)
 
 **Data**:
+
  - those AMI patients who were admitted to CCUs at participating hospitals
  - from 1995 to 2007
  - dataset: Register of Information and Knowledge about Swedish Heart Intensive Care Admissions (RIKS-HIA)
@@ -626,6 +632,7 @@ physical activity (p = 0.02).
 ### Jiddou et al. (2013)
 
 **Data**:
+
 - a retrospective electronic chart review
 - all patients presenting to the emergency centers at Beaumont Hospitals in Royal Oak and Troy, Michigan, with the primary diagnosis of AMI
 - age: patients who were aged >18 years, resulting in 70±15 years
@@ -643,6 +650,7 @@ It is correct to note the incidences on Easter Sunday, but even more important w
 ### Sandhu et al. (2014)
 
 **Data**:
+
  - Time: 1 January 2010 – 15 September 2013 (3 fall and 4 spring DST changes; 1354 days)
  - Procedural data for hospital admissions where PCI was performed in the setting of AMI
  - Number of cases: 42,060 hospital admissions for AMI requiring PCI occurred during the study period.
@@ -659,6 +667,7 @@ I was unable to obtain the data at [Blue Cross Blue Shield of Michigan](https://
 ### Kirchberger et al. (2015)
 
 **Data**:
+
 - AMI count: 25,499 cases of AMI
 - data source: MONICA/KORA Myocardial Infarction Registry ([link](https://www.helmholtz-muenchen.de/herzschlag-info/); public data should be published yearly according to [this website](http://www.gbe-bund.de/gbe10/abrechnung.prc_abr_test_logon?p_uid=gast&p_aid=0&p_knoten=FID&p_sprache=E&p_suchstring=7014), but I did not find a link to download the dataset)
 - time period: 1 January 1985 and 31 October 2010 (26 spring and 25 fall DST changes – 2010 fall adjustment was on 31 October)
@@ -688,6 +697,7 @@ Assuming the researchers analyzed the data in an honest manner (i.e. not picking
 ### Sipilä et al. (2016)
 
 **Data**:
+
  - years: 2001–2009, except 2002 and 2005 (due to Easter). 7 years.
  - Exclusion criterion: age < 18.
  - Age: mean age 71.2, SD 12.6 years

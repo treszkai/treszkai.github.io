@@ -21,9 +21,11 @@ Given the prior \(p(θ)\) and the likelihood \(p(\D\given θ)\), we want samples
 Just like the other MC methods, the Metropolis algorithm starts with a seed value for \(θ\) – let's call it \(θ_0\). (I assume in practice \(θ_0\) is sampled from the prior.) Then, once you have a seed value \(θ_i\), repeat the following two steps for a prespecified number of iterations, or until an effective sample size is achieved.
 
 1. Sample \(θ'_{i+1}\) from a proposal distribution around \(\theta_i\), which could be a Gaussian: \(\theta'_{i+1} \sim \N (θ_i, Σ)\).
-2.  
-    - If \(p(θ_{i},\D) \le p(θ'_{i+1},\D)\) – i.e. if \(p(θ_{i} \given \D) \le p(θ'_{i+1} \given \D)\) – then _accept_ the proposed parameter value: \(θ_{i+1} := θ'_{i+1}\).
-    - Otherwise, the probability of accepting the proposed parameter is the ratio of the posterior at the proposed value and at the current value; otherwise, reject it:
+
+2.
+
+ - If \(p(θ_{i},\D) \le p(θ'_{i+1},\D)\) – i.e. if \(p(θ_{i} \given \D) \le p(θ'_{i+1} \given \D)\) – then _accept_ the proposed parameter value: \(θ_{i+1} := θ'_{i+1}\).
+ - Otherwise, the probability of accepting the proposed parameter is the ratio of the posterior at the proposed value and at the current value; otherwise, reject it:
 
 \[\begin{gathered}
 p = \frac{p(θ'_{i+1}, \D)}{p(θ_{i}, \D)} = \frac{p(θ'_{i+1} \given \D)}{p(θ_{i} \given \D)}, \\

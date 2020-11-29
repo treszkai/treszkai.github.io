@@ -18,6 +18,7 @@ done
 ```
 
 Yet there were some educational points in it:
+
  - One loops a variable `x` over the lines of a string `values` by `for x in values; do something; something_else; done`.
  - `seq a b` simply prints out the integers from `a` to `b`, inclusive, regardless of which is larger.
  - Variable `x` is assigned a value by `x=foobar`, where there must be _no spaces around the equation sign_.The value of `x` can then be referred to by `$x`.

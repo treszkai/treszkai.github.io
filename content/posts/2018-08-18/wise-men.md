@@ -56,16 +56,19 @@ The common knowledge at the beginning in any of these worlds is \(\lnot⟨W,W,W�
 *[CK]: Common knowledge
 
 **World** \(⟨R,R,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,R,R⟩\), \(⟨W,R,R⟩\)
 - Beta: \(⟨R,R,R⟩\), \(⟨R,W,R⟩\)
 - Gamma: \(⟨R,R,R⟩\), \(⟨R,R,W⟩\).
 
 **World** \(⟨R,R,W⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,R,W⟩\), \(⟨W,R,W⟩\)
 - Beta: \(⟨R,R,W⟩\), \(⟨R,W,W⟩\)
 - Gamma: \(⟨R,R,R⟩\), \(⟨R,R,W⟩\)
 
 **World** \(⟨R,W,W⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,W,W⟩\)
 - Beta: \(⟨R,R,W⟩\), \(⟨R,W,W⟩\)
 - Gamma: \(⟨R,W,R⟩\), \(⟨R,W,W⟩\)
@@ -73,36 +76,43 @@ The common knowledge at the beginning in any of these worlds is \(\lnot⟨W,W,W�
 When Alpha says "no" in the beginning, that means he is not in a world where from his knowledge base he can conclude his own colour. His statement becomes common knowledge (CK), i.e. CK is extended with \(\lnot(W_2\wedge W_3)\).
 
 **World** \(⟨R,R,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,R,R⟩\), \(⟨W,R,R⟩\)
 - Beta: \(⟨R,R,R⟩\), \(⟨R,W,R⟩\)
 - Gamma: \(⟨R,R,R⟩\), \(⟨R,R,W⟩\)
 
 **World** \(⟨R,R,W⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,R,W⟩\), \(⟨W,R,W⟩\)
 - Beta: \(⟨R,R,W⟩\), \(\crossed{⟨R,W,W⟩}\)
 - Gamma: \(⟨R,R,R⟩\), \(⟨R,R,W⟩\)
 
 **World** \(⟨R,W,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,W,R⟩\), \(⟨W,W,R⟩\)
 - Beta: \(⟨R,R,R⟩\), \(⟨R,W,R⟩\)
 - Gamma: \(⟨R,W,R⟩\), \(\crossed{⟨R,W,W⟩}\)
 
 **World** \(⟨R,W,W⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(\crossed{⟨R,W,W⟩}\)
 - Beta: \(⟨R,R,W⟩\), \(\crossed{⟨R,W,W⟩}\)
 - Gamma: \(⟨R,W,R⟩\), \(\crossed{⟨R,W,W⟩}\)
 
 **World** \(⟨W,R,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,R,R⟩\), \(⟨W,R,R⟩\)
 - Beta: \(⟨W,R,R⟩\), \(⟨W,W,R⟩\)
 - Gamma: \(⟨W,R,R⟩\), \(⟨W,R,W⟩\)
 
 **World** \(⟨W,R,W⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,R,W⟩\), \(⟨W,R,W⟩\)
 - Beta: \(⟨W,R,W⟩\)
 - Gamma: \(⟨W,R,R⟩\), \(⟨W,R,W⟩\)
 
 **World** \(⟨W,W,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3)\):
+
 - Alpha: \(⟨R,W,R⟩\), \(⟨W,W,R⟩\)
 - Beta: \(⟨W,R,R⟩\), \(⟨W,W,R⟩\)
 - Gamma: \(⟨W,W,R⟩\)
@@ -110,38 +120,45 @@ When Alpha says "no" in the beginning, that means he is not in a world where fro
 We were able to cross out some worlds! And in the world \(⟨R,W,W⟩\) we were left with zero possible worlds for Alpha, i.e. Alpha's statement would lead to a contradiction: he would have answered "yes". In fact, this was how we eliminated possible-worlds in the previous solution. Next turn: the king asks Beta, who says "no". The common knowledge is extended with \(\lnot(W_1 \wedge W_3)\). (Right? At this point I can imagine myself making an incorrect deduction.)
 
 **World** \(⟨R,R,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,R,R⟩\), \(⟨W,R,R⟩\)
 - Beta: \(⟨R,R,R⟩\), \(⟨R,W,R⟩\)
 - Gamma: \(⟨R,R,R⟩\), \(⟨R,R,W⟩\)
 
 <div id="mistaken1" style="display: block;" markdown="1">
 **World** \(⟨R,R,W⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,R,W⟩\), \(\crossed{⟨W,R,W⟩}\)
 - Beta: \(⟨R,R,W⟩\)
 - Gamma: \(⟨R,R,R⟩\), \(⟨R,R,W⟩\)
 </div><div id="fixed1" style="display: none;" markdown="1">
 **World** \(⟨R,R,W⟩\), CK: \(\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(\crossed{⟨R,R,W}⟩\), \(\crossed{⟨W,R,W⟩}\)
 - Beta: \(\crossed{⟨R,R,W}⟩\)
 - Gamma: \(\crossed{⟨R,R,R}⟩\), \(\crossed{⟨R,R,W}⟩\)
 </div>
 
 **World** \(⟨R,W,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,W,R⟩\), \(⟨W,W,R⟩\)
 - Beta: \(⟨R,R,R⟩\), \(⟨R,W,R⟩\)
 - Gamma: \(⟨R,W,R⟩\)
 
 **World** \(⟨W,R,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,R,R⟩\), \(⟨W,R,R⟩\)
 - Beta: \(⟨W,R,R⟩\), \(⟨W,W,R⟩\)
 - Gamma: \(⟨W,R,R⟩\), \(\crossed{⟨W,R,W⟩}\)
 
 **World** \(⟨W,R,W⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,R,W⟩\), \(\crossed{⟨W,R,W⟩}\)
 - Beta: \(\crossed{⟨W,R,W⟩}\)
 - Gamma: \(⟨W,R,R⟩\), \(\crossed{⟨W,R,W⟩}\)
 
 **World** \(⟨W,W,R⟩\), CK: \(\lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,W,R⟩\), \(⟨W,W,R⟩\)
 - Beta: \(⟨W,R,R⟩\), \(⟨W,W,R⟩\)
 - Gamma: \(⟨W,W,R⟩\)
@@ -181,21 +198,25 @@ Click this to fix that above: <a href="#" onclick="showById('fixed1', this); hid
 Now we are left with the following worlds:
 
 **World** \(⟨R,R,R⟩\), CK: \(\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,R,R⟩\), \(⟨W,R,R⟩\)
 - Beta: \(⟨R,R,R⟩\), \(⟨R,W,R⟩\)
 - Gamma: \(⟨R,R,R⟩\), <span id="mistaken2" markdown="1">\(⟨R,R,W⟩\)</span> <span id="fixed2" style="display: none;">\(\crossed{⟨R,R,W⟩}\)</span>
 
 **World** \(⟨R,W,R⟩\), CK: \(\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,W,R⟩\), \(⟨W,W,R⟩\)
 - Beta: \(⟨R,R,R⟩\), \(⟨R,W,R⟩\)
 - Gamma: \(⟨R,W,R⟩\)
 
 **World** \(⟨W,R,R⟩\), CK: \(\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,R,R⟩\), \(⟨W,R,R⟩\)
 - Beta: \(⟨W,R,R⟩\), \(⟨W,W,R⟩\)
 - Gamma: \(⟨W,R,R⟩\)
 
 **World** \(⟨W,W,R⟩\), CK: \(\star \wedge \lnot⟨W,W,W⟩\ \wedge \lnot(W_2\wedge W_3) \wedge \lnot(W_1\wedge W_3)\):
+
 - Alpha: \(⟨R,W,R⟩\), \(⟨W,W,R⟩\)
 - Beta: \(⟨W,R,R⟩\), \(⟨W,W,R⟩\)
 - Gamma: \(⟨W,W,R⟩\)

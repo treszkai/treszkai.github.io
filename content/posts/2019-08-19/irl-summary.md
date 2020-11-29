@@ -22,6 +22,7 @@ IRL assumes knowledge of an expert policy \(π_E\), or at least samples from it.
 The goal is then to find a policy whose performance is close to that of the expert's on the unknown reward function \(R_{\star} = w^T_{\star} φ\). This is done by finding a policy whose feature vector is close to the expert's feature vector, which assures that the value of these policies is close too.
 
 The algorithm for IRL is the following:
+
  1. Pick a random initial policy, and calculate its \(μ\).
  2. Find the vector of weights w that lies within the unit ball and _maximizes_ the difference between the expert feature expectations and the feature expectations of our best policy thus far.
  3. If this maximum is small, then go to step 7.

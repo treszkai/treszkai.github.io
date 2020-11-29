@@ -51,6 +51,7 @@ g' = \_ -> trace "hi g'" 2
 (Calling `f g` with these definitions does _not_ result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like [that below](#Sharing).)
 
 Two things to point out here. First, every function definition is a lambda. Second, `g` was turned into a _let_ expression because we can only apply functions to variables or literals (in Core), not to function calls. _Edited to add:_ It would be reasonable to ask why `g = const (trace "hi g" 2)`  doesn't translate to `\y -> let {tg = trace "hi g" 2} in const tg y` (similar to `f`), to which the pragmatic answer is that _apparently_ the order is the following:
+
  1. not-fully-applied functions are turned into lambdas,
  2. parameters that are function calls are turned into named variables, and
  3. named function arguments from the left-hand side of `=` are moved to the right as a lambda.

@@ -1,6 +1,3 @@
-theme + cite in README.md
-cite Pelican in about-me
-
 merge CSS files
 citations
 

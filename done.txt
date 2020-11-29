@@ -1,1 +1,2 @@
 remove link to about.html at bottom of page
+theme + cite in README

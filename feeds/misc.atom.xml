@@ -32,14 +32,16 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Yet there were some educational points in it:
- - One loops a variable &lt;code&gt;x&lt;/code&gt; over the lines of a string &lt;code&gt;values&lt;/code&gt; by &lt;code&gt;for x in values; do something; something_else; done&lt;/code&gt;.
- - &lt;code&gt;seq a b&lt;/code&gt; simply prints out the integers from &lt;code&gt;a&lt;/code&gt; to &lt;code&gt;b&lt;/code&gt;, inclusive, regardless of which is larger.
- - Variable &lt;code&gt;x&lt;/code&gt; is assigned a value by &lt;code&gt;x=foobar&lt;/code&gt;, where there must be &lt;em&gt;no spaces around the equation sign&lt;/em&gt;.The value of &lt;code&gt;x&lt;/code&gt; can then be referred to by &lt;code&gt;$x&lt;/code&gt;.
- - Renaming a set of files to a similar name but later in the alphabet must be done in reverse order.
- - Bash has a built-in &lt;code&gt;printf&lt;/code&gt; that seems to work as in C: first the string to be printed with format specifiers like &lt;code&gt;%02d&lt;/code&gt;, followed by the arguments whose values are used according to the format specifiers.
- - With the &lt;code&gt;-v&lt;/code&gt; option of &lt;code&gt;printf&lt;/code&gt;, you can save the output into a variable.
- - One can use &lt;code&gt;$(  )&lt;/code&gt; for executing a command and having bash treat the output as the source code. (It&amp;#8217;s the same as using backticks, as around &lt;code&gt;seq 74 2&lt;/code&gt;, but allows nesting and is clearer. Kinda like &lt;code&gt;eval&lt;/code&gt; in other languages, like JavaScript.) Not shown here, but it even works in quotation marks, e.g. &lt;code&gt;"$(echo hey yo)"&lt;/code&gt; is like writing &lt;code&gt;"hey yo"&lt;/code&gt;. Note that the trailing newline is deleted.
- - &lt;code&gt;bc&lt;/code&gt; is a calculator that reads from the input and outputs nothing but the result on a single line.
- - Don’t forget the quotes around arguments with spaces, like with &lt;code&gt;mv&lt;/code&gt; above.&lt;/p&gt;
+&lt;p&gt;Yet there were some educational points in&amp;nbsp;it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;One loops a variable &lt;code&gt;x&lt;/code&gt; over the lines of a string &lt;code&gt;values&lt;/code&gt; by &lt;code&gt;for x in values; do something; something_else; done&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;seq a b&lt;/code&gt; simply prints out the integers from &lt;code&gt;a&lt;/code&gt; to &lt;code&gt;b&lt;/code&gt;, inclusive, regardless of which is&amp;nbsp;larger.&lt;/li&gt;
+&lt;li&gt;Variable &lt;code&gt;x&lt;/code&gt; is assigned a value by &lt;code&gt;x=foobar&lt;/code&gt;, where there must be &lt;em&gt;no spaces around the equation sign&lt;/em&gt;.The value of &lt;code&gt;x&lt;/code&gt; can then be referred to by &lt;code&gt;$x&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Renaming a set of files to a similar name but later in the alphabet must be done in reverse&amp;nbsp;order.&lt;/li&gt;
+&lt;li&gt;Bash has a built-in &lt;code&gt;printf&lt;/code&gt; that seems to work as in C: first the string to be printed with format specifiers like &lt;code&gt;%02d&lt;/code&gt;, followed by the arguments whose values are used according to the format&amp;nbsp;specifiers.&lt;/li&gt;
+&lt;li&gt;With the &lt;code&gt;-v&lt;/code&gt; option of &lt;code&gt;printf&lt;/code&gt;, you can save the output into a&amp;nbsp;variable.&lt;/li&gt;
+&lt;li&gt;One can use &lt;code&gt;$(  )&lt;/code&gt; for executing a command and having bash treat the output as the source code. (It&amp;#8217;s the same as using backticks, as around &lt;code&gt;seq 74 2&lt;/code&gt;, but allows nesting and is clearer. Kinda like &lt;code&gt;eval&lt;/code&gt; in other languages, like JavaScript.) Not shown here, but it even works in quotation marks, e.g. &lt;code&gt;"$(echo hey yo)"&lt;/code&gt; is like writing &lt;code&gt;"hey yo"&lt;/code&gt;. Note that the trailing newline is&amp;nbsp;deleted.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bc&lt;/code&gt; is a calculator that reads from the input and outputs nothing but the result on a single&amp;nbsp;line.&lt;/li&gt;
+&lt;li&gt;Don’t forget the quotes around arguments with spaces, like with &lt;code&gt;mv&lt;/code&gt; above.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;One minute of further bash tips are provided by Julia Evans &lt;a href="https://drawings.jvns.ca/bashtips/"&gt;[here]&lt;/a&gt;.&lt;/p&gt;</content><category term="misc"></category></entry></feed>

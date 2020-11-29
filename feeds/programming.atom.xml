@@ -35,10 +35,12 @@
 
 
 &lt;p&gt;(Calling &lt;code&gt;f g&lt;/code&gt; with these definitions does &lt;em&gt;not&lt;/em&gt; result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like &lt;a href="#Sharing"&gt;that below&lt;/a&gt;.)&lt;/p&gt;
-&lt;p&gt;Two things to point out here. First, every function definition is a lambda. Second, &lt;code&gt;g&lt;/code&gt; was turned into a &lt;em&gt;let&lt;/em&gt; expression because we can only apply functions to variables or literals (in Core), not to function calls. &lt;em&gt;Edited to add:&lt;/em&gt; It would be reasonable to ask why &lt;code&gt;g = const (trace "hi g" 2)&lt;/code&gt;  doesn&amp;#8217;t translate to &lt;code&gt;\y -&amp;gt; let {tg = trace "hi g" 2} in const tg y&lt;/code&gt; (similar to &lt;code&gt;f&lt;/code&gt;), to which the pragmatic answer is that &lt;em&gt;apparently&lt;/em&gt; the order is the following:
- 1. not-fully-applied functions are turned into lambdas,
- 2. parameters that are function calls are turned into named variables, and
- 3. named function arguments from the left-hand side of &lt;code&gt;=&lt;/code&gt; are moved to the right as a&amp;nbsp;lambda.&lt;/p&gt;
+&lt;p&gt;Two things to point out here. First, every function definition is a lambda. Second, &lt;code&gt;g&lt;/code&gt; was turned into a &lt;em&gt;let&lt;/em&gt; expression because we can only apply functions to variables or literals (in Core), not to function calls. &lt;em&gt;Edited to add:&lt;/em&gt; It would be reasonable to ask why &lt;code&gt;g = const (trace "hi g" 2)&lt;/code&gt;  doesn&amp;#8217;t translate to &lt;code&gt;\y -&amp;gt; let {tg = trace "hi g" 2} in const tg y&lt;/code&gt; (similar to &lt;code&gt;f&lt;/code&gt;), to which the pragmatic answer is that &lt;em&gt;apparently&lt;/em&gt; the order is the&amp;nbsp;following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;not-fully-applied functions are turned into&amp;nbsp;lambdas,&lt;/li&gt;
+&lt;li&gt;parameters that are function calls are turned into named variables,&amp;nbsp;and&lt;/li&gt;
+&lt;li&gt;named function arguments from the left-hand side of &lt;code&gt;=&lt;/code&gt; are moved to the right as a&amp;nbsp;lambda.&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h2&gt;Evaluation with&amp;nbsp;sharing&lt;/h2&gt;
 &lt;p&gt;This is what happens during the evaluation of &lt;code&gt;f g&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;

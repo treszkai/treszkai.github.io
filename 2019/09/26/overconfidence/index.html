@@ -77,10 +77,12 @@ One of our main findings is that cross-entropy error is not a good indicator of 
 <p><img alt="Confidence and calibration plots for BigNet. (Figure 2 of our report)" src="https://www.treszkai.com/2019/09/26/overconfidence/mlp-cw4-fig2.png"></p>
 <p>(<em>Top row:</em> confidence plots for a deep neural net. The more skewed to the right, the better. <em>Bottom row:</em> corresponding calibration plots. The more close to the diagonal, the&nbsp;better.)</p>
 <h2>Things I would do&nbsp;differently</h2>
-<p>With a little more experience behind my back now, I would make the following changes in experiment design and writing the report:
- - <em>Use a validation set.</em> We only used a training set because we trained for minimum error, and we expected <em>calibration</em> to be independent from <em>accuracy</em>, but that is a strong assumption (and likely incorrect, seeing our results in the interim report).
- - <em>Use better biblography sources.</em> Instead of Google Scholar, I would search <a href="https://dblp.uni-trier.de/"><span class="caps">DBLP</span></a>, where the information is more correct and consistent.
- - <em>Use pastel colors.</em> I let my collaborator have it his way, but ever since this submission I’m having nightmares in purple and glowing green&nbsp;:D</p>
+<p>With a little more experience behind my back now, I would make the following changes in experiment design and writing the&nbsp;report:</p>
+<ul>
+<li><em>Use a validation set.</em> We only used a training set because we trained for minimum error, and we expected <em>calibration</em> to be independent from <em>accuracy</em>, but that is a strong assumption (and likely incorrect, seeing our results in the interim&nbsp;report).</li>
+<li><em>Use better biblography sources.</em> Instead of Google Scholar, I would search <a href="https://dblp.uni-trier.de/"><span class="caps">DBLP</span></a>, where the information is more correct and&nbsp;consistent.</li>
+<li><em>Use pastel colors.</em> I let my collaborator have it his way, but ever since this submission I’m having nightmares in purple and glowing green&nbsp;:D</li>
+</ul>
 <p>In future work, I would like to test the calibration of a Bayesian neural network, where the weights of the network have a probability distribution instead of a point&nbsp;estimate.</p>
 <h2>References</h2>
 <!&#8212; {% bibliography &#8212;cited %} &#8212;>

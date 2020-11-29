@@ -69,21 +69,20 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>Just like the other <span class="caps">MC</span> methods, the Metropolis algorithm starts with a seed value for <script type="math/tex">θ</script> – let&#8217;s call it <script type="math/tex">θ_0</script>. (I assume in practice <script type="math/tex">θ_0</script> is sampled from the prior.) Then, once you have a seed value <script type="math/tex">θ_i</script>, repeat the following two steps for a prespecified number of iterations, or until an effective sample size is&nbsp;achieved.</p>
 <ol>
 <li>Sample <script type="math/tex">θ'_{i+1}</script> from a proposal distribution around <script type="math/tex">\theta_i</script>, which could be a Gaussian: <script type="math/tex">\theta'_{i+1} \sim \N (θ_i, Σ)</script>.</li>
-<li>
+</ol>
+<p>2.</p>
 <ul>
 <li>If <script type="math/tex">p(θ_{i},\D) \le p(θ'_{i+1},\D)</script> – i.e. if <script type="math/tex">p(θ_{i} \given \D) \le p(θ'_{i+1} \given \D)</script> – then <em>accept</em> the proposed parameter value: <script type="math/tex">θ_{i+1} := θ'_{i+1}</script>.</li>
 <li>Otherwise, the probability of accepting the proposed parameter is the ratio of the posterior at the proposed value and at the current value; otherwise, reject&nbsp;it:</li>
 </ul>
-</li>
-</ol>
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{gathered}
 p = \frac{p(θ'_{i+1}, \D)}{p(θ_{i}, \D)} = \frac{p(θ'_{i+1} \given \D)}{p(θ_{i} \given \D)}, \\
 b \sim Bernoulli(p), \\
 θ_{i+1} =
 \begin{cases}
-    θ_{i+1}' <span class="amp">&amp;</span> \text{if } b=1,\\
-    θ_i <span class="amp">&amp;</span> \text{if } b=0.
+    θ_{i+1}' & \text{if } b=1,\\
+    θ_i & \text{if } b=0.
 \end{cases}
 \end{gathered} %]]></script>
 <p>It can be proven that after a so-called “burn-in” period, the probability of any <script type="math/tex">θ_{n}</script> value will be the posterior probability: <script type="math/tex">θ_n \sim p(\theta_n\given \D)</script> if <script type="math/tex">n \gg 1</script>, therefore if you do the procedure long enough, you&#8217;ll end up with many samples from the posterior. Note that the <em>effective sample size</em> will be much lower than <script type="math/tex">N</script>, because neighboring samples are strongly correlated, so we have to drop most of the <script type="math/tex">θ_i</script> values so&nbsp;obtained.</p>

@@ -85,10 +85,12 @@
 
 
 <p>(Calling <code>f g</code> with these definitions does <em>not</em> result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like <a href="#Sharing">that below</a>.)</p>
-<p>Two things to point out here. First, every function definition is a lambda. Second, <code>g</code> was turned into a <em>let</em> expression because we can only apply functions to variables or literals (in Core), not to function calls. <em>Edited to add:</em> It would be reasonable to ask why <code>g = const (trace "hi g" 2)</code>  doesn&#8217;t translate to <code>\y -&gt; let {tg = trace "hi g" 2} in const tg y</code> (similar to <code>f</code>), to which the pragmatic answer is that <em>apparently</em> the order is the following:
- 1. not-fully-applied functions are turned into lambdas,
- 2. parameters that are function calls are turned into named variables, and
- 3. named function arguments from the left-hand side of <code>=</code> are moved to the right as a&nbsp;lambda.</p>
+<p>Two things to point out here. First, every function definition is a lambda. Second, <code>g</code> was turned into a <em>let</em> expression because we can only apply functions to variables or literals (in Core), not to function calls. <em>Edited to add:</em> It would be reasonable to ask why <code>g = const (trace "hi g" 2)</code>  doesn&#8217;t translate to <code>\y -&gt; let {tg = trace "hi g" 2} in const tg y</code> (similar to <code>f</code>), to which the pragmatic answer is that <em>apparently</em> the order is the&nbsp;following:</p>
+<ol>
+<li>not-fully-applied functions are turned into&nbsp;lambdas,</li>
+<li>parameters that are function calls are turned into named variables,&nbsp;and</li>
+<li>named function arguments from the left-hand side of <code>=</code> are moved to the right as a&nbsp;lambda.</li>
+</ol>
 <h2>Evaluation with&nbsp;sharing</h2>
 <p>This is what happens during the evaluation of <code>f g</code>:</p>
 <div class="highlight"><pre><span></span><span class="nf">ans</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">g</span>

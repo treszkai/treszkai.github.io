@@ -87,58 +87,72 @@ function hideByClass(cls) {
 <p><strong>?.</strong> <em>Commutativity of multiplication is a vector space axiom.</em> <a href="#" onclick="showById('answer1', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer1" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - The scalar multiplication <script type="math/tex">\cdot: K \times V \rightarrow V</script> doesn&#8217;t even have the same sets in its two arguments, i.e. <script type="math/tex">\mathbf v \cdot a</script> is not even defined.
- - The vector space has the commutativity of <em>addition</em> as an axiom: for any <script type="math/tex">\mathbf u,\mathbf v \in V</script>, <script type="math/tex">{\mathbf u+\mathbf v} = {\mathbf v + \mathbf u}</script>.
- - The underlying field <script type="math/tex">K</script>
-<em>does</em> have the commutativity of multiplication as a field axiom: for any <script type="math/tex">a,b \in K</script>, <script type="math/tex">a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a</script>.
- - As a consequence, for any <script type="math/tex">\mathbf v \in V</script> and <script type="math/tex">a, b \in K</script>,</p>
+<p>Clarification:</p>
+<ul>
+<li>The scalar multiplication <script type="math/tex">\cdot: K \times V \rightarrow V</script> doesn&#8217;t even have the same sets in its two arguments, i.e. <script type="math/tex">\mathbf v \cdot a</script> is not even&nbsp;defined.</li>
+<li>The vector space has the commutativity of <em>addition</em> as an axiom: for any <script type="math/tex">\mathbf u,\mathbf v \in V</script>, <script type="math/tex">{\mathbf u+\mathbf v} = {\mathbf v + \mathbf u}</script>.</li>
+<li>The underlying field <script type="math/tex">K</script>
+<em>does</em> have the commutativity of multiplication as a field axiom: for any <script type="math/tex">a,b \in K</script>, <script type="math/tex">a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a</script>.</li>
+<li>As a consequence, for any <script type="math/tex">\mathbf v \in V</script> and <script type="math/tex">a, b \in K</script>,</li>
+</ul>
 <script type="math/tex; mode=display">% <![CDATA[
  a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v). %]]></script>
 </div>
 <p><strong>?.</strong> <em>Every vector is a matrix with only one column.</em> <a href="#" onclick="showById('answer2', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer2" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - By definition, a vector is an element of a vector space. If we fix a basis for the vector space, then any vector can be represented by an ordered set of numbers, which could be treated as a column vector, i.e. a matrix with one column. However, this representation depends on the choice of basis.
- - The <a href="https://youtu.be/5oeWX3NUhMA?t=1m09s">official answer</a> brings up as a counterexample the vector space of polynomials up to some finite degree. However, here again we could represent the vectors as a column vector with any choice of a basis. E.g. using the standard basis, <script type="math/tex">p(x) = 0x^2 + 4x + 5 </script> could be represented as <script type="math/tex">\mathbf p = [0, 4, 5]^T</script>.</p>
+<p>Clarification:</p>
+<ul>
+<li>By definition, a vector is an element of a vector space. If we fix a basis for the vector space, then any vector can be represented by an ordered set of numbers, which could be treated as a column vector, i.e. a matrix with one column. However, this representation depends on the choice of&nbsp;basis.</li>
+<li>The <a href="https://youtu.be/5oeWX3NUhMA?t=1m09s">official answer</a> brings up as a counterexample the vector space of polynomials up to some finite degree. However, here again we could represent the vectors as a column vector with any choice of a basis. E.g. using the standard basis, <script type="math/tex">p(x) = 0x^2 + 4x + 5 </script> could be represented as <script type="math/tex">\mathbf p = [0, 4, 5]^T</script>.</li>
+</ul>
 </div>
 <p><strong>?.</strong> <em>Every linear map between vector spaces can be represented by a unique quadratic matrix.</em> <a href="#" onclick="showById('answer3', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer3" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - As above, a linear map <script type="math/tex">f: V \rightarrow W </script> can be represented as a unique matrix only once bases are chosen for its domain <script type="math/tex">V</script> and codomain <script type="math/tex">W</script>.
- - This matrix is quadratic only if the dimensions of <script type="math/tex">V</script> and <script type="math/tex">W</script> are&nbsp;equal.</p>
+<p>Clarification:</p>
+<ul>
+<li>As above, a linear map <script type="math/tex">f: V \rightarrow W </script> can be represented as a unique matrix only once bases are chosen for its domain <script type="math/tex">V</script> and codomain <script type="math/tex">W</script>.</li>
+<li>This matrix is quadratic only if the dimensions of <script type="math/tex">V</script> and <script type="math/tex">W</script> are&nbsp;equal.</li>
+</ul>
 </div>
 <p><strong>?.</strong> <em>Every vector space has a corresponding dual vector space.</em> <a href="#" onclick="showById('answer4', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer4" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
-<p>Clarification:
- - The dual space of a vector space <script type="math/tex">V</script> is defined as the set of linear maps from <script type="math/tex">V</script> to <script type="math/tex">K</script>: <script type="math/tex">V^* \coloneqq Hom(V,K) \coloneqq \{φ\ \vert \ φ: V \linmap K\} </script>.</p>
+<p>Clarification:</p>
+<ul>
+<li>The dual space of a vector space <script type="math/tex">V</script> is defined as the set of linear maps from <script type="math/tex">V</script> to <script type="math/tex">K</script>: <script type="math/tex">V^* \coloneqq Hom(V,K) \coloneqq \{φ\ \vert \ φ: V \linmap K\} </script>.</li>
+</ul>
 </div>
 <p><strong>?.</strong> <em>The set of everywhere positive functions on <script type="math/tex">\mathbb R</script> with pointwise addition and S-multiplication is a vector space.</em> <a href="#" onclick="showById('answer5', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer5" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - This set doesn&#8217;t have a commutative identity element: by the field axioms of <script type="math/tex">\mathbb R</script>, it could only be the constant zero function, but that&#8217;s not an element of the set.
- - This set doesn&#8217;t have a commutative inverse for any element.
- - For the scalar multiplication we&#8217;d need to know the underlying field. Usually it would be <script type="math/tex">\mathbb R</script>, but then S-multiplication with a negative number wouldn&#8217;t result in an everywhere positive function. (Although one can construct a field from <script type="math/tex">\mathbb R^+</script>, I wonder how well that would combine with the above attempt at a vector&nbsp;space.)</p>
+<p>Clarification:</p>
+<ul>
+<li>This set doesn&#8217;t have a commutative identity element: by the field axioms of <script type="math/tex">\mathbb R</script>, it could only be the constant zero function, but that&#8217;s not an element of the&nbsp;set.</li>
+<li>This set doesn&#8217;t have a commutative inverse for any&nbsp;element.</li>
+<li>For the scalar multiplication we&#8217;d need to know the underlying field. Usually it would be <script type="math/tex">\mathbb R</script>, but then S-multiplication with a negative number wouldn&#8217;t result in an everywhere positive function. (Although one can construct a field from <script type="math/tex">\mathbb R^+</script>, I wonder how well that would combine with the above attempt at a vector&nbsp;space.)</li>
+</ul>
 </div>
 <p>b) What is true about tensors and their&nbsp;components?</p>
 <p><strong>?.</strong> <em>The tensor product of two tensors is a tensor.</em> <a href="#" onclick="showById('answer6', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer6" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
-<p>Clarification:
- - The lecture didn&#8217;t mention tensor products, so a definition is in order. The product of an <script type="math/tex"> (l,k) </script>-tensor <script type="math/tex">S</script> and an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> is an <script type="math/tex"> (l+n,k+m) </script>-tensor <script type="math/tex"> S \otimes T </script>, whose <script type="math/tex"> (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) </script>-th component is the product of the relevant components of <script type="math/tex">S</script> and <script type="math/tex">T</script>:</p>
+<p>Clarification:</p>
+<ul>
+<li>The lecture didn&#8217;t mention tensor products, so a definition is in order. The product of an <script type="math/tex"> (l,k) </script>-tensor <script type="math/tex">S</script> and an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> is an <script type="math/tex"> (l+n,k+m) </script>-tensor <script type="math/tex"> S \otimes T </script>, whose <script type="math/tex"> (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) </script>-th component is the product of the relevant components of <script type="math/tex">S</script> and <script type="math/tex">T</script>:</li>
+</ul>
 <script type="math/tex; mode=display">% <![CDATA[
  (S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}_ {j_1, \ldots, j_k, j_{k+1}, \ldots, j_{k+m} } =
    S^{i_1, \ldots, i_l}_ {j_1, \ldots, j_k}
    T^{i_{1}, \ldots, i_{n}}_ {j_{1}, \ldots, j_{m}}. %]]></script>
 <p><a href="https://en.wikipedia.org/wiki/Tensor#Tensor_product">Source:&nbsp;Wikipedia</a></p>
-<p>This means that if the arguments of <script type="math/tex"> S \otimes T </script> are
- - the <script type="math/tex">l+n</script> linear maps <script type="math/tex">φ^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i</script> for <script type="math/tex">1 \le p \le l+n</script>, and
- - the <script type="math/tex">k+m</script> vectors <script type="math/tex"> \v_{(q)} = \sum^{dim V}_{j=1} v_{(q)}^j \e_j </script> for <script type="math/tex">1 \le q \le k+m</script>
-</p>
+<p>This means that if the arguments of <script type="math/tex"> S \otimes T </script> are</p>
+<ul>
+<li>the <script type="math/tex">l+n</script> linear maps <script type="math/tex">φ^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i</script> for <script type="math/tex">1 \le p \le l+n</script>,&nbsp;and</li>
+<li>the <script type="math/tex">k+m</script> vectors <script type="math/tex"> \v_{(q)} = \sum^{dim V}_{j=1} v_{(q)}^j \e_j </script> for <script type="math/tex">1 \le q \le k+m</script>
+</li>
+</ul>
 <p>(with some particular choice of basis vectors <script type="math/tex">\{\e_i\}_i</script> and basis covectors <script type="math/tex">\{\epsilon^i\}_i</script> ),&nbsp;then</p>
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{aligned}
@@ -191,15 +205,19 @@ function hideByClass(cls) {
 <p><strong>?.</strong> <em>You can always reconstruct a tensor from its components and the corresponding basis.</em> <a href="#" onclick="showById('answer7', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer7" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
-<p>Clarification:
- - If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case <script type="math/tex">V</script> is not finite&nbsp;dimensional).</p>
+<p>Clarification:</p>
+<ul>
+<li>If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case <script type="math/tex">V</script> is not finite&nbsp;dimensional).</li>
+</ul>
 </div>
 <p><strong>?.</strong> <em>The number of indices of the tensor components depends on dimension.</em> <a href="#" onclick="showById('answer8', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer8" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - A tensor component usually has one index for each argument, e.g. for a <script type="math/tex">(2,1)</script>-tensor <script type="math/tex">T</script>, the components are <script type="math/tex">T^{i_1,i_2}_{j_1}</script>.
- - The <em>range</em> of these indices does depend on the dimension: each index ranges from <script type="math/tex">1</script> to <script type="math/tex">\dim V</script>. Therefore an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> has <script type="math/tex"> (\dim V)^{n+m} </script> many&nbsp;components.</p>
+<p>Clarification:</p>
+<ul>
+<li>A tensor component usually has one index for each argument, e.g. for a <script type="math/tex">(2,1)</script>-tensor <script type="math/tex">T</script>, the components are <script type="math/tex">T^{i_1,i_2}_{j_1}</script>.</li>
+<li>The <em>range</em> of these indices does depend on the dimension: each index ranges from <script type="math/tex">1</script> to <script type="math/tex">\dim V</script>. Therefore an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> has <script type="math/tex"> (\dim V)^{n+m} </script> many&nbsp;components.</li>
+</ul>
 </div>
 <p><strong>?.</strong> <em>The Einstein summation convention does not apply to tensor components.</em> <a href="#" onclick="showById('answer9', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer9" style="display: none;">
@@ -209,43 +227,56 @@ function hideByClass(cls) {
 <p><strong>?.</strong> <em>A change of basis does not change the tensor components.</em> <a href="#" onclick="showById('answer10', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer10" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - the tensor components are defined with respect to a given&nbsp;basis.</p>
+<p>Clarification:</p>
+<ul>
+<li>the tensor components are defined with respect to a given&nbsp;basis.</li>
+</ul>
 </div>
 <p>c) Given a basis for a <script type="math/tex">d</script>-dimensional vector space <script type="math/tex">V</script>,&nbsp;&#8230;</p>
 <p><strong>?.</strong> &#8230;<em>one can find exactly <script type="math/tex">d^2</script>-different dual bases for the corresponding dual vector space <script type="math/tex"> V^* </script>.</em> <a href="#" onclick="showById('answer11', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer11" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - Given a basis of <script type="math/tex">V</script>, <script type="math/tex">E = \{\mathbf{e}_i\}_{i=1}^d \subset V</script>, there is a <em>unique</em> dual basis of <script type="math/tex">V^* </script>, namely <script type="math/tex">E^* = \{\epsilon_i\}_{i=1}^d</script>, where <script type="math/tex">\epsilon_i(\e_i) = 1</script> and <script type="math/tex">\epsilon_i(\e_j) = 0</script> for <script type="math/tex">i ≠ j</script>.</p>
+<p>Clarification:</p>
+<ul>
+<li>Given a basis of <script type="math/tex">V</script>, <script type="math/tex">E = \{\mathbf{e}_i\}_{i=1}^d \subset V</script>, there is a <em>unique</em> dual basis of <script type="math/tex">V^* </script>, namely <script type="math/tex">E^* = \{\epsilon_i\}_{i=1}^d</script>, where <script type="math/tex">\epsilon_i(\e_i) = 1</script> and <script type="math/tex">\epsilon_i(\e_j) = 0</script> for <script type="math/tex">i ≠ j</script>.</li>
+</ul>
 </div>
 <p><strong>?.</strong> &#8230;<em>by removing one basis vector of the basis of <script type="math/tex">V</script>, a basis for a <script type="math/tex">(d - 1)</script>-dimensional vector space <script type="math/tex">V_1</script> is obtained.</em> <a href="#" onclick="showById('answer12', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer12" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
-<p>Clarification:
- - The resulting set of <script type="math/tex">(d-1)</script> vectors are still linearly independent, and their span is a <script type="math/tex">(d-1)</script>-dimensional subspace of <script type="math/tex">V</script>.</p>
+<p>Clarification:</p>
+<ul>
+<li>The resulting set of <script type="math/tex">(d-1)</script> vectors are still linearly independent, and their span is a <script type="math/tex">(d-1)</script>-dimensional subspace of <script type="math/tex">V</script>.</li>
+</ul>
 </div>
 <p><strong>?.</strong> &#8230;<em>the continuity of a map <script type="math/tex">f : V → W</script> depends on the choice of basis for the vector space <script type="math/tex">W</script>.</em> <a href="#" onclick="showById('answer13', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer13" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
-<p>Clarification:
- - The continuity of a map is defined for <em>topological spaces</em>, not for vector spaces.
- - <script type="math/tex">f</script> is continuous <em>iff</em> the preimage of every open set in <script type="math/tex">W</script> is open in <script type="math/tex">V</script>. Note that no term in this definition depends on the choice of basis for either <script type="math/tex">V</script> or <script type="math/tex">W</script>.
- - Assuming that <script type="math/tex">V</script> and <script type="math/tex">W</script> are real vector spaces, it is customary to equip them with the standard topology. A set <script type="math/tex">A</script> is open in <script type="math/tex">V</script>
-<em>iff</em> either it is the union of open <script type="math/tex">ε</script>-balls, or of Cartesian products of open intervals. While these definitions assume a basis for <script type="math/tex">V</script>, they all result in the exact same topologies. (Meaning a set can be covered with open balls <em>iff</em> it can be covered with open cuboids <em>iff</em> it can be covered with open cubes – an interesting but easy-to-prove result.)
- - It&#8217;s easy to see that every <em>linear</em> map between real vector spaces (equipped with the standard topology) is&nbsp;continuous.</p>
+<p>Clarification:</p>
+<ul>
+<li>The continuity of a map is defined for <em>topological spaces</em>, not for vector&nbsp;spaces.</li>
+<li>
+<script type="math/tex">f</script> is continuous <em>iff</em> the preimage of every open set in <script type="math/tex">W</script> is open in <script type="math/tex">V</script>. Note that no term in this definition depends on the choice of basis for either <script type="math/tex">V</script> or <script type="math/tex">W</script>.</li>
+<li>Assuming that <script type="math/tex">V</script> and <script type="math/tex">W</script> are real vector spaces, it is customary to equip them with the standard topology. A set <script type="math/tex">A</script> is open in <script type="math/tex">V</script>
+<em>iff</em> either it is the union of open <script type="math/tex">ε</script>-balls, or of Cartesian products of open intervals. While these definitions assume a basis for <script type="math/tex">V</script>, they all result in the exact same topologies. (Meaning a set can be covered with open balls <em>iff</em> it can be covered with open cuboids <em>iff</em> it can be covered with open cubes – an interesting but easy-to-prove&nbsp;result.)</li>
+<li>It&#8217;s easy to see that every <em>linear</em> map between real vector spaces (equipped with the standard topology) is&nbsp;continuous.</li>
+</ul>
 </div>
 <p><strong>?.</strong> &#8230;<em>one can extract the components of the elements of the dual vector space <script type="math/tex">V^*</script>.</em> <a href="#" onclick="showById('answer14', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer14" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
-<p>Clarification:
- - a basis for <script type="math/tex">V</script> uniquely determines a dual basis for <script type="math/tex">V^* </script>, which uniquely determines the components of any&nbsp;covector.</p>
+<p>Clarification:</p>
+<ul>
+<li>a basis for <script type="math/tex">V</script> uniquely determines a dual basis for <script type="math/tex">V^* </script>, which uniquely determines the components of any&nbsp;covector.</li>
+</ul>
 </div>
 <p><strong>?.</strong> &#8230;<em>each vector of <script type="math/tex">V</script> can be reconstructed from its components.</em> <a href="#" onclick="showById('answer15', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer15" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
-<p>Clarification:
- - Given the basis vectors <script type="math/tex">\mathbf{e}_i</script> and components <script type="math/tex">v^i</script> for <script type="math/tex">1 \leq i \leq d</script>, <script type="math/tex">\mathbf{v} = \sum_{i=1}^d v^i \mathbf{e}_i</script>.</p>
+<p>Clarification:</p>
+<ul>
+<li>Given the basis vectors <script type="math/tex">\mathbf{e}_i</script> and components <script type="math/tex">v^i</script> for <script type="math/tex">1 \leq i \leq d</script>, <script type="math/tex">\mathbf{v} = \sum_{i=1}^d v^i \mathbf{e}_i</script>.</li>
+</ul>
 </div>
   </div>
 

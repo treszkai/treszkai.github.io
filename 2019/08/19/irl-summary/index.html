@@ -68,14 +68,16 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>In contrast with previous attempts at apprenticeship learning (i.e. learning from an expert), which tried to mimic the expert demonstrations directly, <span class="caps">IRL</span> assumes that the expert follows a reward function that is a linear combination of the feature vectors (<script type="math/tex">R = w^T φ(s)</script>), and finds a reward function that maximizes the received reward under the set of demonstrations. The hand-specified function <script type="math/tex">φ: S→ℝ^k</script> maps a state of the Markov decision process (<span class="caps">MDP</span>) to a feature vector, which vector includes parameters for the different desiderata of the task, such as the distances to objects surrounding the car, the speed of the car, or the current&nbsp;lane.</p>
 <p><span class="caps">IRL</span> assumes knowledge of an expert policy <script type="math/tex">π_E</script>, or at least samples from it. Using these, we only care about the estimated &#8220;accumulated feature values&#8221;, <script type="math/tex">μ(π_E) ∈ ℝ^k</script>, which is the expected discounted sum of the feature vectors if sampled from the policy, because then the value of a policy (parametrised by <script type="math/tex">w</script>) can be calculated from it directly: <script type="math/tex">R = w^T μ(π_E)</script>.</p>
 <p>The goal is then to find a policy whose performance is close to that of the expert&#8217;s on the unknown reward function <script type="math/tex">R_{\star} = w^T_{\star} φ</script>. This is done by finding a policy whose feature vector is close to the expert&#8217;s feature vector, which assures that the value of these policies is close&nbsp;too.</p>
-<p>The algorithm for <span class="caps">IRL</span> is the following:
- 1. Pick a random initial policy, and calculate its <script type="math/tex">μ</script>.
- 2. Find the vector of weights w that lies within the unit ball and <em>maximizes</em> the difference between the expert feature expectations and the feature expectations of our best policy thus far.
- 3. If this maximum is small, then go to step 7.
- 4. Otherwise <script type="math/tex">w</script> is our new weights for <script type="math/tex">R</script>.
- 5. Calculate optimal policy for this <script type="math/tex">R</script>.
- 6. Repeat from step 2.
- 7. Let the agent designer pick a policy from any of those found in step 5 in the different iterations; or find the policy in the convex closure of these policies that is closest to the expert&nbsp;policy.</p>
+<p>The algorithm for <span class="caps">IRL</span> is the&nbsp;following:</p>
+<ol>
+<li>Pick a random initial policy, and calculate its <script type="math/tex">μ</script>.</li>
+<li>Find the vector of weights w that lies within the unit ball and <em>maximizes</em> the difference between the expert feature expectations and the feature expectations of our best policy thus&nbsp;far.</li>
+<li>If this maximum is small, then go to step&nbsp;7.</li>
+<li>Otherwise <script type="math/tex">w</script> is our new weights for <script type="math/tex">R</script>.</li>
+<li>Calculate optimal policy for this <script type="math/tex">R</script>.</li>
+<li>Repeat from step&nbsp;2.</li>
+<li>Let the agent designer pick a policy from any of those found in step 5 in the different iterations; or find the policy in the convex closure of these policies that is closest to the expert&nbsp;policy.</li>
+</ol>
 <p>The maximization in step 2 allows us to find a policy that is close to the expert&#8217;s, regardless of the choice of a reward function. After all, we are interested in the policy, not the reward function, and so the estimated <script type="math/tex">R</script> is not necessarily&nbsp;correct.</p>
 <p>This algorithm is proved to terminate within <script type="math/tex">O(k \log(k))</script> steps, using at least <script type="math/tex">O(k \log(k))</script> number of samples from the expert&nbsp;policy.</p>
 <p>Experiments are done in a gridworld environment, where <span class="caps">IRL</span> learns the expert policy in approximately 100 times less sample trajectories than simply mimicking the expert. Another experiment is a car driving simulator with 3 lanes viewed from the top, where <span class="caps">IRL</span> is capable of learning multiple driving styles, such as &#8220;prefer the right lane but avoid collisions&#8221;. Video demonstrations of the latter show that the sentiment of the expert policy is indeed followed, although sometimes with unnecessary lane switches (most modern <span class="caps">RL</span> algorithms also exhibit this undesired&nbsp;property).</p>

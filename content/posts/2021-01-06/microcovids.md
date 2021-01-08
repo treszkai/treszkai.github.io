@@ -1,5 +1,5 @@
 ---
-title: Estimating the personal risk of COVID-19 from population-level data
+title: Estimating personal COVID risk from population-level data
 summary: If N people get infected per day in a country with susceptible population size S, then doing "average" activities has approximately an N/S risk of contracting it daily.
 ---
 
@@ -62,17 +62,15 @@ Obviously, changing the settings will move the risk away from 200 μCOVID/day. G
 The super easy method for pandemic risk assessment:
 
 1. Calculate the risk for the Average Citizen, by simply dividing the daily case increase[^avg] with the population size (whether that's a city or a country). Adjust this upwards if you think your country has insufficient testing practices.
-2. Adjust this with some factors for how you think your behavior compares with the average. Working from home? Divide by 5. Doing grocery shopping online? Divide by 2. Meeting a dozen people at the office every day? Multiply by five[^finn]. I'm just making these numbers up, but so can you. You should do this step _at the beginning_, to minimize fooling yourself.
+2. Adjust this with some factors for how you think your behavior compares with the average. Working from home? Divide by 5. Doing grocery shopping online? Divide by 2. Meeting a dozen people at the office every day? Multiply by five. I'm just making these numbers up, but so can you. You should do this step _at the beginning_, to minimize fooling yourself.
 3. Multiply this by 365 to get the risk of contracting the virus in a year[^year]. If you want to go fancy, use lower figures for the summer, higher ones while the graphs are skyrocketing. (Again, decide beforehand how to calculate this step.)
 
 [^avg]: Preferably averaged over the last 7 days.
 
-[^finn]: Unless you're a Finn. Then multiply by 50 because you're a massive outlier.
-
-[^year]: Technically, you should calculate 1 - (1-p)<sup>365</sup>, but that's practically 365 * p. The overall calculation has much bigger errors anyway.
+[^year]: Technically, you should calculate 1 − (1−p)<sup>365</sup>, but that's practically 365 × p. The overall calculation has much bigger errors anyway.
 
 Finally, smash a generous error bar on the result: say, plus or minus an order of magnitude.
 
-Can you live with 6% a chance of COVID-19 in the coming year? If not, then maybe you should scale back your activities. If your country's average risk is too low (for example, because you're young and live in New Zealand and are more likely to die in a car accident), then consider saying hello to the neighbors from a friendly distance.
+Can you live with 6% a chance of COVID-19 in the coming year? If not, then maybe you should scale back your activities. If your country's average risk is too low for you (for example, because you're young and live in New Zealand and are more likely to die in a car accident), then consider saying hello to the neighbors from a friendly distance.
 
 Stay safe.

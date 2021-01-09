@@ -17,11 +17,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Laszlo Treszkai">
-  <meta name="description" content="Posts and writings by Laszlo Treszkai">
 
   <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
 
-<meta name="keywords" content="">
+<meta property="og:title" content="Paper summary: Abbeel, Ng: Inverse Reinforcement Learning (2004)">
+<meta property="og:image" content="2019/08/19/irl-summary/">
+<meta property="og:description" content="Summary of the seminal paper on inverse reinforcement learning.">
+<meta name="description" content="Summary of the seminal paper on inverse reinforcement learning."><meta name="keywords" content="">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
 <script>
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <main>
     <header>
       <div class="site-name">
-        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+        <a href="https://www.treszkai.com/">Laszlo Treszkai</a>
       </div>
       <p>
       <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
@@ -81,7 +83,6 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>The maximization in step 2 allows us to find a policy that is close to the expert&#8217;s, regardless of the choice of a reward function. After all, we are interested in the policy, not the reward function, and so the estimated <script type="math/tex">R</script> is not necessarily&nbsp;correct.</p>
 <p>This algorithm is proved to terminate within <script type="math/tex">O(k \log(k))</script> steps, using at least <script type="math/tex">O(k \log(k))</script> number of samples from the expert&nbsp;policy.</p>
 <p>Experiments are done in a gridworld environment, where <span class="caps">IRL</span> learns the expert policy in approximately 100 times less sample trajectories than simply mimicking the expert. Another experiment is a car driving simulator with 3 lanes viewed from the top, where <span class="caps">IRL</span> is capable of learning multiple driving styles, such as &#8220;prefer the right lane but avoid collisions&#8221;. Video demonstrations of the latter show that the sentiment of the expert policy is indeed followed, although sometimes with unnecessary lane switches (most modern <span class="caps">RL</span> algorithms also exhibit this undesired&nbsp;property).</p>
-<h4>Footnotes</h4>
 <div class="footnote">
 <hr>
 <ol>

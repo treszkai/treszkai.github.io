@@ -17,11 +17,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Laszlo Treszkai">
-  <meta name="description" content="Posts and writings by Laszlo Treszkai">
 
   <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
 
-<meta name="keywords" content="">
+<meta property="og:title" content="The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis (original research)">
+<meta property="og:image" content="2019/11/11/dst-vs-ami/">
+<meta property="og:description" content="A Bayesian meta-analysis to evaluate whether one is more likely to get a heart attack after losing an hour of sleep. They are, a little.">
+<meta name="description" content="A Bayesian meta-analysis to evaluate whether one is more likely to get a heart attack after losing an hour of sleep. They are, a little."><meta name="keywords" content="">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
 <script>
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <main>
     <header>
       <div class="site-name">
-        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+        <a href="https://www.treszkai.com/">Laszlo Treszkai</a>
       </div>
       <p>
       <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
@@ -184,7 +186,7 @@ I view it as a <em>strength</em> of Bayesian data analysis that these assumption
 <h3>Posterior calculations with Monte Carlo&nbsp;methods</h3>
 <p>We also performed our posterior calculations with Monte Carlo methods using the open source statistical modeling software <a href="https://mc-stan.org/">Stan</a>. Models in Stan are written using its own description language (which comes with <a href="https://mc-stan.org/users/documentation/">extensive documentation</a> and a <a href="https://discourse.mc-stan.org/">supportive community</a>), and they need to be first compiled into binary form using an interface in R, Python, or other languages. Then, after providing the observable data to the model, Stan draws samples from the posterior distribution of the parameters, and calculates the 95% highest posterior density interval (<span class="caps">HDI</span>, a.k.a. <span class="caps">HPD</span>) – the interval that covers the most plausible parameter values. For most practical purposes, 1000 independent samples would be enough, but we drew 50,000 samples to accurately assess the equality to the analytic&nbsp;solution.</p>
 <p>The code for the fixed-effects linear weekday Stan model is as&nbsp;follows:</p>
-<div class="highlight"><pre><span></span><span class="kn">data</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kn">data</span> <span class="p">{</span>
   <span class="kt">int</span> <span class="n">DAYS</span><span class="p">;</span>            <span class="c1">// Number of days</span>
   <span class="kt">int</span> <span class="n">STUDIES</span><span class="p">;</span>         <span class="c1">// Number of studies</span>
   <span class="kt">real</span> <span class="n">NORMAL_SIGMA</span><span class="p">;</span>   <span class="c1">// The standard deviation of the normal component of the prior</span>
@@ -234,7 +236,7 @@ I view it as a <em>strength</em> of Bayesian data analysis that these assumption
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>The <code>data</code> and <code>parameters</code> blocks declare the observed quantities and the unobserved parameters, without specifying their&nbsp;distribution.</p>
@@ -242,7 +244,7 @@ I view it as a <em>strength</em> of Bayesian data analysis that these assumption
 <p>The <code>model</code> block describes both the prior distributions for the parameters and the likelihood&nbsp;functions.</p>
 <h4>Sampling using the Python&nbsp;interface</h4>
 <p>We can compile the Stan model and sample from it in Python using <a href="https://pystan.readthedocs.io/">PyStan</a>. Once the software and its dependencies are installed, we can use the following code to draw 50,000 samples from the posterior and plot the results. On my computer, the model compilation takes about a minute, the sampling a few&nbsp;seconds.</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pystan</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pystan</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># 6-long list of 5-long lists integers (weekday observations)</span>
@@ -270,12 +272,12 @@ I view it as a <em>strength</em> of Bayesian data analysis that these assumption
 <span class="nb">print</span><span class="p">(</span><span class="n">pystan</span><span class="o">.</span><span class="n">stansummary</span><span class="p">())</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">fit</span><span class="p">[</span><span class="s1">&#39;rr_day[1]&#39;</span><span class="p">]);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 
 
 <h4>Sampling using the R&nbsp;interface</h4>
 <p>The R interface of Stan is called <a href="https://github.com/stan-dev/rstan/">RStan</a>, and can be used as&nbsp;follows:</p>
-<div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&quot;rstan&quot;</span><span class="p">)</span> <span class="c1"># observe startup messages</span>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="s">&quot;rstan&quot;</span><span class="p">)</span> <span class="c1"># observe startup messages</span>
 
 <span class="n">stan_data</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="n">STUDIES</span> <span class="o">=</span> <span class="m">6</span><span class="p">,</span>
                   <span class="n">DAYS</span> <span class="o">=</span> <span class="m">5</span><span class="p">,</span>
@@ -287,7 +289,7 @@ I view it as a <em>strength</em> of Bayesian data analysis that these assumption
 <span class="n">fit</span> <span class="o">&lt;-</span> <span class="nf">stan</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="s">&#39;dst_model.stan&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">stan_data</span><span class="p">,</span> <span class="n">iter</span> <span class="o">=</span> <span class="m">50000</span><span class="p">)</span>
 
 <span class="nf">hist</span><span class="p">(</span><span class="nf">extract</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span><span class="o">$$</span><span class="n">rr_day</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
-</pre></div>
+</code></pre></div>
 
 
 <h3>Effect of study size in a Bayesian&nbsp;framework</h3>
@@ -648,7 +650,7 @@ However, the analysis provides strong evidence for the hypothesis that our body 
 <p>Please cite this work as&nbsp;follows:</p>
 <p>Laszlo Treszkai. 2019. <em>The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis</em>. <a href="http://treszkai.github.io/2019/11/11/dst-vs-ami">http://treszkai.github.io/2019/11/11/dst-vs-ami</a></p>
 <p>BibTeX:</p>
-<div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="err">,</span>
+<div class="highlight"><pre><span></span><code><span class="nc">@misc</span><span class="p">{</span><span class="err">,</span>
   <span class="nl">title</span> <span class="err">=</span> <span class="err">{The</span> <span class="err">effects</span> <span class="err">of</span> <span class="err">daylight</span> <span class="err">savings</span> <span class="err">time</span> <span class="err">adjustment</span> <span class="err">on</span> <span class="err">the</span> <span class="err">incidence</span> <span class="err">rate</span> <span class="err">of</span> <span class="err">acute</span> <span class="err">myocardial</span> <span class="err">infarction:</span> <span class="err">a</span> <span class="err">{B</span><span class="p">}</span><span class="c">ayesian meta-analysis},</span>
   <span class="c">author = {Laszlo Treszkai},</span>
   <span class="c">howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},</span>
@@ -656,7 +658,7 @@ However, the analysis provides strong evidence for the hypothesis that our body 
   <span class="c">year = {2019}</span>
   <span class="c">month = {oct}</span>
 <span class="c">}</span>
-</pre></div>
+</code></pre></div>
 
 
 <h1>References</h1>

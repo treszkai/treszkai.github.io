@@ -20,7 +20,7 @@
 &lt;li&gt;Script: &lt;a href="https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12"&gt;Quora answer of John&amp;nbsp;Vuong&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="misc"></category></entry><entry><title>Some versatile tools for bash</title><link href="https://www.treszkai.com/2018/05/16/bash-versatile/" rel="alternate"></link><published>2018-05-16T00:00:00+02:00</published><updated>2018-05-16T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2018-05-16:/2018/05/16/bash-versatile/</id><summary type="html">&lt;p&gt;A 7-line bash script that includes 90% of what an average user&amp;nbsp;needs.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I rarely use bash besides the basics: I could use a &lt;code&gt;for&lt;/code&gt; loop even if woken up at night, but my knowledge of the language doesn&amp;#8217;t go much further. Hence instead of trying to memorize all the &lt;code&gt;{}%$&lt;/code&gt; magic, having a few versatile commands in my toolbox comes&amp;nbsp;handy.&lt;/p&gt;
 &lt;p&gt;Recently I faced the task of renaming a set of files {&lt;code&gt;foo 02.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 74.jpg&lt;/code&gt;} to {&lt;code&gt;foo 06.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 78.jpg&lt;/code&gt;}, while keeping the order. My approach contained nothing&amp;nbsp;extraordinary:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="sb"&gt;`&lt;/span&gt;seq &lt;span class="m"&gt;74&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
@@ -29,7 +29,7 @@
 
     mv &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$oldname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$newname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;done&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Yet there were some educational points in&amp;nbsp;it:&lt;/p&gt;

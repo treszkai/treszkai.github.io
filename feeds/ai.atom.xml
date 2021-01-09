@@ -100,7 +100,6 @@ One of our main findings is that cross-entropy error is not a good indicator of 
 &lt;p&gt;The maximization in step 2 allows us to find a policy that is close to the expert&amp;#8217;s, regardless of the choice of a reward function. After all, we are interested in the policy, not the reward function, and so the estimated &lt;script type="math/tex"&gt;R&lt;/script&gt; is not necessarily&amp;nbsp;correct.&lt;/p&gt;
 &lt;p&gt;This algorithm is proved to terminate within &lt;script type="math/tex"&gt;O(k \log(k))&lt;/script&gt; steps, using at least &lt;script type="math/tex"&gt;O(k \log(k))&lt;/script&gt; number of samples from the expert&amp;nbsp;policy.&lt;/p&gt;
 &lt;p&gt;Experiments are done in a gridworld environment, where &lt;span class="caps"&gt;IRL&lt;/span&gt; learns the expert policy in approximately 100 times less sample trajectories than simply mimicking the expert. Another experiment is a car driving simulator with 3 lanes viewed from the top, where &lt;span class="caps"&gt;IRL&lt;/span&gt; is capable of learning multiple driving styles, such as &amp;#8220;prefer the right lane but avoid collisions&amp;#8221;. Video demonstrations of the latter show that the sentiment of the expert policy is indeed followed, although sometimes with unnecessary lane switches (most modern &lt;span class="caps"&gt;RL&lt;/span&gt; algorithms also exhibit this undesired&amp;nbsp;property).&lt;/p&gt;
-&lt;h4&gt;Footnotes&lt;/h4&gt;
 &lt;div class="footnote"&gt;
 &lt;hr&gt;
 &lt;ol&gt;

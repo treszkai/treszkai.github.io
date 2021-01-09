@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="https://www.treszkai.com/theme/css/style.less">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="https://www.treszkai.com/">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/style.css?md5=c06cfd86">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:regular,i,b|Fira+Code">
+  <link rel="stylesheet" type="text/css" href="https://www.treszkai.com/theme/css/fontawesome-all.min.css">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Laszlo Treszkai">
+
+  <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
+
+<meta property="og:title" content="Estimating personal COVID risk from population-level data">
+<meta property="og:image" content="2021/01/06/microcovids/">
+<meta property="og:description" content="If N people get infected per day in a country with susceptible population size S, then doing “average” activities has approximately an N/S risk of contracting it daily.">
+<meta name="description" content="If N people get infected per day in a country with susceptible population size S, then doing “average” activities has approximately an N/S risk of contracting it daily."><meta name="keywords" content="">
+
+  <title>
+    Laszlo Treszkai
+&ndash; Estimating personal <span class="caps">COVID</span> risk from population-level&nbsp;data  </title>
+
+</head>
+
+<body>
+  <main>
+    <header>
+      <div class="site-name">
+        <a href="https://www.treszkai.com/">Laszlo Treszkai</a>
+      </div>
+      <p>
+      <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
+    </header>
+
+<article>
+  <div class="article__title">
+    <h1><a href="https://www.treszkai.com/2021/01/06/microcovids/">Estimating personal <span class="caps">COVID</span> risk from population-level&nbsp;data</a></h1>
+  </div>
+  <div class="article__meta">
+    <p class="article__meta__post-date">Posted on: 6 Jän. 2021</p>
+    </p>
+  </div>
+  <div class="article__text">
+    <p><strong>In a nutshell:</strong> If <em>N</em> people get infected per day in a country with susceptible population size <em>S</em>, then doing &#8220;average&#8221; activities has approximately an <em>N/S</em> risk of contracting it on that&nbsp;day.</p>
+<h2>Introduction</h2>
+<p>The <a href="https://www.microcovid.org">microCOVID tool</a> is great for estimating the chances of contracting <span class="caps">COVID</span>-19 during a given activity.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> It does so by estimating the risk of transmission of various activities from literature data, combining this with an estimate of a met person being <span class="caps">COVID</span>-positive.</p>
+<p>In this post, I&#8217;m building a model which assumes that every citizen of the country acts exactly the same on a given day, which leads to the current infection rate. This means that if you do the same activities as &#8220;everyone else&#8221;, you&#8217;ll have the same chance of getting infected as &#8220;everyone&nbsp;else&#8221;.</p>
+<p>Caveat: these are all back-of-the-envelope calculations of an <em>extremely</em> simplistic&nbsp;model.</p>
+<h2>The&nbsp;numbers</h2>
+<p>Let&#8217;s run the numbers of this model <a href="https://en.wikipedia.org/w/index.php?title=COVID-19_pandemic_in_Hungary&amp;oldid=998710968">on Hungary, on January 6, 2021</a>.</p>
+<ul>
+<li>New cases (average of 7 days):&nbsp;1746/day</li>
+<li>Recovered:&nbsp;180,000</li>
+<li>Population (<sup id="fnref:kids"><a class="footnote-ref" href="#fn:kids">2</a></sup>):&nbsp;9,770,000</li>
+<li>Susceptible (<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">3</a></sup>): population - recovered =&nbsp;9,590,000</li>
+</ul>
+<p>One might argue<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">4</a></sup> that the actual case count is higher than those tested positive, but I assume cases which do not make the books are not severe enough to warrant a test. However, if your country doesn&#8217;t seem to do enough tests (e.g. because the ratio of positive results per test is absurdly high), then the actual case count is surely&nbsp;higher.</p>
+<p>That means that for the &#8220;average&#8221; person, the chance of becoming infected is 1,746 / 9,590,000 / day ≈ 180 microCOVIDs /&nbsp;day.</p>
+<p>Note that this &#8220;average&#8221; person does not refer to the most common person (the <em>mode</em>) or the median; but literally, this Average Joe makes up the entire 10 million population of the country. In this model, everyone is equal. (And nobody more equal than the&nbsp;others.)</p>
+<p>Act like this average person for an entire year (assume January 6 conditions all year long), and you have 6% chance of contracting the disease. (Because of course, every day of the year is&nbsp;equal.)</p>
+<h2>Comparing with&nbsp;microCOVID</h2>
+<p>I <a href="https://www.microcovid.org/?distance=sixFt&amp;duration=480&amp;interaction=oneTime&amp;personCount=1&amp;riskProfile=average&amp;setting=indoor&amp;theirMask=basic&amp;topLocation=Hungary&amp;voice=normal&amp;yourMask=basic">tried to simulate</a> the working day of the &#8220;average&#8221; citizen with the microCOVID tool. I did this using a one-time interaction&nbsp;(daily):</p>
+<ul>
+<li>for 8&nbsp;hours</li>
+<li>with 1&nbsp;person</li>
+<li>at 6+ feet / 2+&nbsp;meters</li>
+<li>indoors</li>
+<li>cotton mask or bandana on me<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> and on them<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></li>
+<li>having normal&nbsp;conversation.</li>
+</ul>
+<p>This adds up to about 200 microCOVIDs each day. That&#8217;s surprisingly close to my figure! I pinky-swear that I first picked these settings based on a gut feeling, and didn&#8217;t adjust them to approximate 180&nbsp;microCOVID.</p>
+<p>Obviously, changing the settings will move the risk away from 200 μCOVID/day. Grocery shopping and spouses/kids/relatives should also be added to the list. But the fact that these two models are in the same ballpark is good&nbsp;validation.</p>
+<h2>Conclusion</h2>
+<p>The super easy method for pandemic risk&nbsp;assessment:</p>
+<ol>
+<li>Calculate the risk for the Average Citizen, by simply dividing the daily case increase<sup id="fnref:avg"><a class="footnote-ref" href="#fn:avg">7</a></sup> with the population size (whether that&#8217;s a city or a country). Adjust this upwards if you think your country has insufficient testing&nbsp;practices.</li>
+<li>Adjust this with some factors for how you think your behavior compares with the average. Working from home? Divide by 5. Doing grocery shopping online? Divide by 2. Meeting a dozen people at the office every day? Multiply by five. I&#8217;m just making these numbers up, but so can you. You should do this step <em>at the beginning</em>, to minimize fooling&nbsp;yourself.</li>
+<li>Multiply this by 365 to get the risk of contracting the virus in a year<sup id="fnref:year"><a class="footnote-ref" href="#fn:year">8</a></sup>. If you want to go fancy, use lower figures for the summer, higher ones while the graphs are skyrocketing. (Again, decide beforehand how to calculate this&nbsp;step.)</li>
+</ol>
+<p>Finally, smash a generous error bar on the result: say, plus or minus an order of&nbsp;magnitude.</p>
+<p>Can you live with 6% a chance of <span class="caps">COVID</span>-19 in the coming year? If not, then maybe you should scale back your activities. If your country&#8217;s average risk is too low for you (for example, because you&#8217;re young and live in New Zealand and are more likely to die in a car accident), then consider saying hello to the neighbors from a friendly&nbsp;distance.</p>
+<p>Stay safe. Wear a mask, wear a helmet, wear a safety&nbsp;belt.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>It also introduces a <span class="caps">COVID</span> budget that you can allocate as you wish: if you target a 1% chance of contracting <span class="caps">COVID</span> in a year, then you have 200 microCOVIDs allocated for each week. (0.01 / 50 = 0.0002.) Spend it wisely.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:kids">
+<p>Until recently, kids did not play a significant role in the transmission and hospitalization, therefore minors could be (or could have been) deducted from the susceptible population.&#160;<a class="footnote-backref" href="#fnref:kids" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>microCOVID seems to compare the case count against the entire population. I count a recovered person as not immune to the virus.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>In Hungary, the reported prevalence is 0.12%, but microCOVID uses an adjusted prevalence of 0.39%. This correction of 3x my model should use too.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>You should totally buy an <span class="caps">FFP</span>-2 mask and fit it snugly to your face. If you wear it for long periods then buy a handful and rotate them daily. Dispose after one month. Adjust numbers as budget allows, but <em>buy one good mask</em>. This does not constitute medical advice.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Convince your employer to buy every employee an <span class="caps">FFP</span>-2 mask. The less time you spend on sick leave, the better it is for them.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:avg">
+<p>Preferably averaged over the last 7 days.&#160;<a class="footnote-backref" href="#fnref:avg" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:year">
+<p>Technically, you should calculate 1 − (1−p)<sup>365</sup>, but that&#8217;s practically 365 × p. The overall calculation has much bigger errors anyway.&#160;<a class="footnote-backref" href="#fnref:year" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+  </div>
+
+</article>
+
+
+  </main>
+    <footer>
+      <section class="author">
+        <div class="author__name">
+          <a href="https://www.treszkai.com/pages/about.html">Laszlo Treszkai</a>
+          <p></p>
+        </div>
+        <div class="author__link">
+          <ul>
+            <li>
+              <a href="https://github.com/treszkai" target="_blank" title="github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/ltreszkai" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.treszkai.com/feeds/all.atom.xml" target="_blank" title="Feed">
+                <i class="fas fa-rss-square"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="ending-message">
+        <p>&copy; Laszlo Treszkai. Powered by <a href="http://getpelican.com" target="_blank">Pelican</a>, with theme based on <a href="https://github.com/laughk/pelican-hss" target="_blank">HSS</a> and <a href="https://tonsky.me">Tonsky’s</a>.</p>
+      </div>
+    </footer>
+</body>
+</html>

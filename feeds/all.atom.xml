@@ -1,5 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Laszlo Treszkai</title><link href="https://www.treszkai.com/" rel="alternate"></link><link href="https://www.treszkai.com/feeds/all.atom.xml" rel="self"></link><id>https://www.treszkai.com/</id><updated>2019-11-11T00:00:00+01:00</updated><entry><title>The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis (original research)</title><link href="https://www.treszkai.com/2019/11/11/dst-vs-ami/" rel="alternate"></link><published>2019-11-11T00:00:00+01:00</published><updated>2019-11-11T00:00:00+01:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2019-11-11:/2019/11/11/dst-vs-ami/</id><summary type="html">&lt;p&gt;A Bayesian meta-analysis to evaluate whether one is more likely to get a heart attack after losing an hour of sleep. They are, a&amp;nbsp;little.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;em&gt;Laszlo Treszkai&amp;nbsp;(firstname.lastname@gmail.com)&lt;/em&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Laszlo Treszkai</title><link href="https://www.treszkai.com/" rel="alternate"></link><link href="https://www.treszkai.com/feeds/all.atom.xml" rel="self"></link><id>https://www.treszkai.com/</id><updated>2021-01-06T00:00:00+01:00</updated><entry><title>Estimating personal COVID risk from population-level data</title><link href="https://www.treszkai.com/2021/01/06/microcovids/" rel="alternate"></link><published>2021-01-06T00:00:00+01:00</published><updated>2021-01-06T00:00:00+01:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2021-01-06:/2021/01/06/microcovids/</id><summary type="html">&lt;p&gt;If N people get infected per day in a country with susceptible population size S, then doing &amp;#8220;average&amp;#8221; activities has approximately an N/S risk of contracting it&amp;nbsp;daily.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;strong&gt;In a nutshell:&lt;/strong&gt; If &lt;em&gt;N&lt;/em&gt; people get infected per day in a country with susceptible population size &lt;em&gt;S&lt;/em&gt;, then doing &amp;#8220;average&amp;#8221; activities has approximately an &lt;em&gt;N/S&lt;/em&gt; risk of contracting it on that&amp;nbsp;day.&lt;/p&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;The &lt;a href="https://www.microcovid.org"&gt;microCOVID tool&lt;/a&gt; is great for estimating the chances of contracting &lt;span class="caps"&gt;COVID&lt;/span&gt;-19 during a given activity.&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt; It does so by estimating the risk of transmission of various activities from literature data, combining this with an estimate of a met person being &lt;span class="caps"&gt;COVID&lt;/span&gt;-positive.&lt;/p&gt;
+&lt;p&gt;In this post, I&amp;#8217;m building a model which assumes that every citizen of the country acts exactly the same on a given day, which leads to the current infection rate. This means that if you do the same activities as &amp;#8220;everyone else&amp;#8221;, you&amp;#8217;ll have the same chance of getting infected as &amp;#8220;everyone&amp;nbsp;else&amp;#8221;.&lt;/p&gt;
+&lt;p&gt;Caveat: these are all back-of-the-envelope calculations of an &lt;em&gt;extremely&lt;/em&gt; simplistic&amp;nbsp;model.&lt;/p&gt;
+&lt;h2&gt;The&amp;nbsp;numbers&lt;/h2&gt;
+&lt;p&gt;Let&amp;#8217;s run the numbers of this model &lt;a href="https://en.wikipedia.org/w/index.php?title=COVID-19_pandemic_in_Hungary&amp;amp;oldid=998710968"&gt;on Hungary, on January 6, 2021&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;New cases (average of 7 days):&amp;nbsp;1746/day&lt;/li&gt;
+&lt;li&gt;Recovered:&amp;nbsp;180,000&lt;/li&gt;
+&lt;li&gt;Population (&lt;sup id="fnref:kids"&gt;&lt;a class="footnote-ref" href="#fn:kids"&gt;2&lt;/a&gt;&lt;/sup&gt;):&amp;nbsp;9,770,000&lt;/li&gt;
+&lt;li&gt;Susceptible (&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;3&lt;/a&gt;&lt;/sup&gt;): population - recovered =&amp;nbsp;9,590,000&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One might argue&lt;sup id="fnref:3"&gt;&lt;a class="footnote-ref" href="#fn:3"&gt;4&lt;/a&gt;&lt;/sup&gt; that the actual case count is higher than those tested positive, but I assume cases which do not make the books are not severe enough to warrant a test. However, if your country doesn&amp;#8217;t seem to do enough tests (e.g. because the ratio of positive results per test is absurdly high), then the actual case count is surely&amp;nbsp;higher.&lt;/p&gt;
+&lt;p&gt;That means that for the &amp;#8220;average&amp;#8221; person, the chance of becoming infected is 1,746 / 9,590,000 / day ≈ 180 microCOVIDs /&amp;nbsp;day.&lt;/p&gt;
+&lt;p&gt;Note that this &amp;#8220;average&amp;#8221; person does not refer to the most common person (the &lt;em&gt;mode&lt;/em&gt;) or the median; but literally, this Average Joe makes up the entire 10 million population of the country. In this model, everyone is equal. (And nobody more equal than the&amp;nbsp;others.)&lt;/p&gt;
+&lt;p&gt;Act like this average person for an entire year (assume January 6 conditions all year long), and you have 6% chance of contracting the disease. (Because of course, every day of the year is&amp;nbsp;equal.)&lt;/p&gt;
+&lt;h2&gt;Comparing with&amp;nbsp;microCOVID&lt;/h2&gt;
+&lt;p&gt;I &lt;a href="https://www.microcovid.org/?distance=sixFt&amp;amp;duration=480&amp;amp;interaction=oneTime&amp;amp;personCount=1&amp;amp;riskProfile=average&amp;amp;setting=indoor&amp;amp;theirMask=basic&amp;amp;topLocation=Hungary&amp;amp;voice=normal&amp;amp;yourMask=basic"&gt;tried to simulate&lt;/a&gt; the working day of the &amp;#8220;average&amp;#8221; citizen with the microCOVID tool. I did this using a one-time interaction&amp;nbsp;(daily):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;for 8&amp;nbsp;hours&lt;/li&gt;
+&lt;li&gt;with 1&amp;nbsp;person&lt;/li&gt;
+&lt;li&gt;at 6+ feet / 2+&amp;nbsp;meters&lt;/li&gt;
+&lt;li&gt;indoors&lt;/li&gt;
+&lt;li&gt;cotton mask or bandana on me&lt;sup id="fnref:5"&gt;&lt;a class="footnote-ref" href="#fn:5"&gt;5&lt;/a&gt;&lt;/sup&gt; and on them&lt;sup id="fnref:6"&gt;&lt;a class="footnote-ref" href="#fn:6"&gt;6&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;having normal&amp;nbsp;conversation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This adds up to about 200 microCOVIDs each day. That&amp;#8217;s surprisingly close to my figure! I pinky-swear that I first picked these settings based on a gut feeling, and didn&amp;#8217;t adjust them to approximate 180&amp;nbsp;microCOVID.&lt;/p&gt;
+&lt;p&gt;Obviously, changing the settings will move the risk away from 200 μCOVID/day. Grocery shopping and spouses/kids/relatives should also be added to the list. But the fact that these two models are in the same ballpark is good&amp;nbsp;validation.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The super easy method for pandemic risk&amp;nbsp;assessment:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Calculate the risk for the Average Citizen, by simply dividing the daily case increase&lt;sup id="fnref:avg"&gt;&lt;a class="footnote-ref" href="#fn:avg"&gt;7&lt;/a&gt;&lt;/sup&gt; with the population size (whether that&amp;#8217;s a city or a country). Adjust this upwards if you think your country has insufficient testing&amp;nbsp;practices.&lt;/li&gt;
+&lt;li&gt;Adjust this with some factors for how you think your behavior compares with the average. Working from home? Divide by 5. Doing grocery shopping online? Divide by 2. Meeting a dozen people at the office every day? Multiply by five. I&amp;#8217;m just making these numbers up, but so can you. You should do this step &lt;em&gt;at the beginning&lt;/em&gt;, to minimize fooling&amp;nbsp;yourself.&lt;/li&gt;
+&lt;li&gt;Multiply this by 365 to get the risk of contracting the virus in a year&lt;sup id="fnref:year"&gt;&lt;a class="footnote-ref" href="#fn:year"&gt;8&lt;/a&gt;&lt;/sup&gt;. If you want to go fancy, use lower figures for the summer, higher ones while the graphs are skyrocketing. (Again, decide beforehand how to calculate this&amp;nbsp;step.)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Finally, smash a generous error bar on the result: say, plus or minus an order of&amp;nbsp;magnitude.&lt;/p&gt;
+&lt;p&gt;Can you live with 6% a chance of &lt;span class="caps"&gt;COVID&lt;/span&gt;-19 in the coming year? If not, then maybe you should scale back your activities. If your country&amp;#8217;s average risk is too low for you (for example, because you&amp;#8217;re young and live in New Zealand and are more likely to die in a car accident), then consider saying hello to the neighbors from a friendly&amp;nbsp;distance.&lt;/p&gt;
+&lt;p&gt;Stay safe. Wear a mask, wear a helmet, wear a safety&amp;nbsp;belt.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;It also introduces a &lt;span class="caps"&gt;COVID&lt;/span&gt; budget that you can allocate as you wish: if you target a 1% chance of contracting &lt;span class="caps"&gt;COVID&lt;/span&gt; in a year, then you have 200 microCOVIDs allocated for each week. (0.01 / 50 = 0.0002.) Spend it wisely.&amp;#160;&lt;a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:kids"&gt;
+&lt;p&gt;Until recently, kids did not play a significant role in the transmission and hospitalization, therefore minors could be (or could have been) deducted from the susceptible population.&amp;#160;&lt;a class="footnote-backref" href="#fnref:kids" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;microCOVID seems to compare the case count against the entire population. I count a recovered person as not immune to the virus.&amp;#160;&lt;a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 3 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;In Hungary, the reported prevalence is 0.12%, but microCOVID uses an adjusted prevalence of 0.39%. This correction of 3x my model should use too.&amp;#160;&lt;a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 4 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:5"&gt;
+&lt;p&gt;You should totally buy an &lt;span class="caps"&gt;FFP&lt;/span&gt;-2 mask and fit it snugly to your face. If you wear it for long periods then buy a handful and rotate them daily. Dispose after one month. Adjust numbers as budget allows, but &lt;em&gt;buy one good mask&lt;/em&gt;. This does not constitute medical advice.&amp;#160;&lt;a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:6"&gt;
+&lt;p&gt;Convince your employer to buy every employee an &lt;span class="caps"&gt;FFP&lt;/span&gt;-2 mask. The less time you spend on sick leave, the better it is for them.&amp;#160;&lt;a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:avg"&gt;
+&lt;p&gt;Preferably averaged over the last 7 days.&amp;#160;&lt;a class="footnote-backref" href="#fnref:avg" title="Jump back to footnote 7 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:year"&gt;
+&lt;p&gt;Technically, you should calculate 1 − (1−p)&lt;sup&gt;365&lt;/sup&gt;, but that&amp;#8217;s practically 365 × p. The overall calculation has much bigger errors anyway.&amp;#160;&lt;a class="footnote-backref" href="#fnref:year" title="Jump back to footnote 8 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content><category term="2021-01-06"></category></entry><entry><title>The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis (original research)</title><link href="https://www.treszkai.com/2019/11/11/dst-vs-ami/" rel="alternate"></link><published>2019-11-11T00:00:00+01:00</published><updated>2019-11-11T00:00:00+01:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2019-11-11:/2019/11/11/dst-vs-ami/</id><summary type="html">&lt;p&gt;A Bayesian meta-analysis to evaluate whether one is more likely to get a heart attack after losing an hour of sleep. They are, a&amp;nbsp;little.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;em&gt;Laszlo Treszkai&amp;nbsp;(firstname.lastname@gmail.com)&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Version of 11 November,&amp;nbsp;2019.&lt;/p&gt;
 &lt;p&gt;This document might be revised in the future; any potential updates will be linked from&amp;nbsp;here.&lt;/p&gt;
 &lt;h2&gt;Abstract&lt;/h2&gt;
@@ -123,7 +190,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;h3&gt;Posterior calculations with Monte Carlo&amp;nbsp;methods&lt;/h3&gt;
 &lt;p&gt;We also performed our posterior calculations with Monte Carlo methods using the open source statistical modeling software &lt;a href="https://mc-stan.org/"&gt;Stan&lt;/a&gt;. Models in Stan are written using its own description language (which comes with &lt;a href="https://mc-stan.org/users/documentation/"&gt;extensive documentation&lt;/a&gt; and a &lt;a href="https://discourse.mc-stan.org/"&gt;supportive community&lt;/a&gt;), and they need to be first compiled into binary form using an interface in R, Python, or other languages. Then, after providing the observable data to the model, Stan draws samples from the posterior distribution of the parameters, and calculates the 95% highest posterior density interval (&lt;span class="caps"&gt;HDI&lt;/span&gt;, a.k.a. &lt;span class="caps"&gt;HPD&lt;/span&gt;) – the interval that covers the most plausible parameter values. For most practical purposes, 1000 independent samples would be enough, but we drew 50,000 samples to accurately assess the equality to the analytic&amp;nbsp;solution.&lt;/p&gt;
 &lt;p&gt;The code for the fixed-effects linear weekday Stan model is as&amp;nbsp;follows:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;data&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;data&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;DAYS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;            &lt;span class="c1"&gt;// Number of days&lt;/span&gt;
   &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;STUDIES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;         &lt;span class="c1"&gt;// Number of studies&lt;/span&gt;
   &lt;span class="kt"&gt;real&lt;/span&gt; &lt;span class="n"&gt;NORMAL_SIGMA&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c1"&gt;// The standard deviation of the normal component of the prior&lt;/span&gt;
@@ -173,7 +240,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
     &lt;span class="p"&gt;}&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;The &lt;code&gt;data&lt;/code&gt; and &lt;code&gt;parameters&lt;/code&gt; blocks declare the observed quantities and the unobserved parameters, without specifying their&amp;nbsp;distribution.&lt;/p&gt;
@@ -181,7 +248,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;p&gt;The &lt;code&gt;model&lt;/code&gt; block describes both the prior distributions for the parameters and the likelihood&amp;nbsp;functions.&lt;/p&gt;
 &lt;h4&gt;Sampling using the Python&amp;nbsp;interface&lt;/h4&gt;
 &lt;p&gt;We can compile the Stan model and sample from it in Python using &lt;a href="https://pystan.readthedocs.io/"&gt;PyStan&lt;/a&gt;. Once the software and its dependencies are installed, we can use the following code to draw 50,000 samples from the posterior and plot the results. On my computer, the model compilation takes about a minute, the sampling a few&amp;nbsp;seconds.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pystan&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pystan&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
 
 &lt;span class="c1"&gt;# 6-long list of 5-long lists integers (weekday observations)&lt;/span&gt;
@@ -209,12 +276,12 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pystan&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stansummary&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rr_day[1]&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h4&gt;Sampling using the R&amp;nbsp;interface&lt;/h4&gt;
 &lt;p&gt;The R interface of Stan is called &lt;a href="https://github.com/stan-dev/rstan/"&gt;RStan&lt;/a&gt;, and can be used as&amp;nbsp;follows:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rstan&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# observe startup messages&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rstan&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# observe startup messages&lt;/span&gt;
 
 &lt;span class="n"&gt;stan_data&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nf"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;STUDIES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                   &lt;span class="n"&gt;DAYS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -226,7 +293,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;span class="n"&gt;fit&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nf"&gt;stan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;dst_model.stan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;stan_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;iter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;50000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="nf"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;extract&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;$$&lt;/span&gt;&lt;span class="n"&gt;rr_day&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Effect of study size in a Bayesian&amp;nbsp;framework&lt;/h3&gt;
@@ -587,7 +654,7 @@ However, the analysis provides strong evidence for the hypothesis that our body 
 &lt;p&gt;Please cite this work as&amp;nbsp;follows:&lt;/p&gt;
 &lt;p&gt;Laszlo Treszkai. 2019. &lt;em&gt;The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis&lt;/em&gt;. &lt;a href="http://treszkai.github.io/2019/11/11/dst-vs-ami"&gt;http://treszkai.github.io/2019/11/11/dst-vs-ami&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;BibTeX:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nc"&gt;@misc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nc"&gt;@misc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt;
   &lt;span class="nl"&gt;title&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;{The&lt;/span&gt; &lt;span class="err"&gt;effects&lt;/span&gt; &lt;span class="err"&gt;of&lt;/span&gt; &lt;span class="err"&gt;daylight&lt;/span&gt; &lt;span class="err"&gt;savings&lt;/span&gt; &lt;span class="err"&gt;time&lt;/span&gt; &lt;span class="err"&gt;adjustment&lt;/span&gt; &lt;span class="err"&gt;on&lt;/span&gt; &lt;span class="err"&gt;the&lt;/span&gt; &lt;span class="err"&gt;incidence&lt;/span&gt; &lt;span class="err"&gt;rate&lt;/span&gt; &lt;span class="err"&gt;of&lt;/span&gt; &lt;span class="err"&gt;acute&lt;/span&gt; &lt;span class="err"&gt;myocardial&lt;/span&gt; &lt;span class="err"&gt;infarction:&lt;/span&gt; &lt;span class="err"&gt;a&lt;/span&gt; &lt;span class="err"&gt;{B&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="c"&gt;ayesian meta-analysis},&lt;/span&gt;
   &lt;span class="c"&gt;author = {Laszlo Treszkai},&lt;/span&gt;
   &lt;span class="c"&gt;howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},&lt;/span&gt;
@@ -595,7 +662,7 @@ However, the analysis provides strong evidence for the hypothesis that our body 
   &lt;span class="c"&gt;year = {2019}&lt;/span&gt;
   &lt;span class="c"&gt;month = {oct}&lt;/span&gt;
 &lt;span class="c"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;References&lt;/h1&gt;
@@ -923,7 +990,6 @@ One of our main findings is that cross-entropy error is not a good indicator of 
 &lt;p&gt;The maximization in step 2 allows us to find a policy that is close to the expert&amp;#8217;s, regardless of the choice of a reward function. After all, we are interested in the policy, not the reward function, and so the estimated &lt;script type="math/tex"&gt;R&lt;/script&gt; is not necessarily&amp;nbsp;correct.&lt;/p&gt;
 &lt;p&gt;This algorithm is proved to terminate within &lt;script type="math/tex"&gt;O(k \log(k))&lt;/script&gt; steps, using at least &lt;script type="math/tex"&gt;O(k \log(k))&lt;/script&gt; number of samples from the expert&amp;nbsp;policy.&lt;/p&gt;
 &lt;p&gt;Experiments are done in a gridworld environment, where &lt;span class="caps"&gt;IRL&lt;/span&gt; learns the expert policy in approximately 100 times less sample trajectories than simply mimicking the expert. Another experiment is a car driving simulator with 3 lanes viewed from the top, where &lt;span class="caps"&gt;IRL&lt;/span&gt; is capable of learning multiple driving styles, such as &amp;#8220;prefer the right lane but avoid collisions&amp;#8221;. Video demonstrations of the latter show that the sentiment of the expert policy is indeed followed, although sometimes with unnecessary lane switches (most modern &lt;span class="caps"&gt;RL&lt;/span&gt; algorithms also exhibit this undesired&amp;nbsp;property).&lt;/p&gt;
-&lt;h4&gt;Footnotes&lt;/h4&gt;
 &lt;div class="footnote"&gt;
 &lt;hr&gt;
 &lt;ol&gt;
@@ -1001,7 +1067,7 @@ b \sim Bernoulli(p), \\
 &lt;p&gt;I love &lt;span class="caps"&gt;BDA3&lt;/span&gt;; I&amp;#8217;m nowhere near finished, but even the first chapters have taught me new ideas and proofs (e.g. the Bayesian cookbook in section 3.8, or modeling normal data with unknown mean &lt;em&gt;and&lt;/em&gt; variance). The examples and exercises are a great combination of applications and theory. As you can see from this post, all I can do is nitpick some tiny details. A quick intro to practical Bayesian modeling is a &lt;a href="https://www.youtube.com/watch?v=T1gYvX5c2sM"&gt;presentation from Andrew Gelman&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Did you like this post, did I make a mistake, or do you know a &lt;span class="caps"&gt;BDA3&lt;/span&gt; discussion group? Let me know in the comments&amp;nbsp;below!&lt;/p&gt;
 &lt;h2&gt;Code&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;scipy.stats&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;st&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
@@ -1009,14 +1075,14 @@ b \sim Bernoulli(p), \\
 
 &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;matplotlib&lt;/span&gt; &lt;span class="n"&gt;inline&lt;/span&gt;
 &lt;span class="n"&gt;set_matplotlib_formats&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;svg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;posterior&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rv&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;plot_kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rv&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;plot_kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pdf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;plot_kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
     &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_ylim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -1024,19 +1090,19 @@ b \sim Bernoulli(p), \\
     &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ylabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Probability density function&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Pdf of Beta(θ | α = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;, β = &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;beta&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_ylim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_xlim&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1.01&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;beta-1000-pdf-big.svg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-big.svg"&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;ramanujan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;ramanujan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Series that converges to 1/π at an exponential rate,&lt;/span&gt;
 &lt;span class="sd"&gt;    by Srinivasa Ramanujan&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;**.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;9801&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -1049,7 +1115,7 @@ b \sim Bernoulli(p), \\
     &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1/ramanujan(&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;) - π ≈ &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ramanujan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pi&lt;/span&gt;&lt;span class="si"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;.2e&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Easter egg. Thanks for reading!&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;blockquote&gt;
@@ -1057,31 +1123,31 @@ b \sim Bernoulli(p), \\
 &lt;p&gt;1/ramanujan(2) - π ≈&amp;nbsp;4.44e-16&lt;/p&gt;
 &lt;p&gt;1/ramanujan(3) - π ≈&amp;nbsp;0.00e+00&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.990&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;plot_beta&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;linspace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.990&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mf"&gt;1.0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vlines&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_ylim&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lw&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mean&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gca&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loc&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;upper left&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;beta-1000-pdf-zoomed.svg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-zoomed.svg"&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;blockquote&gt;
 &lt;p&gt;0.999001996007984&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;P(θ &amp;gt; 0.999) = &lt;/span&gt;&lt;span class="si"&gt;{:d}&lt;/span&gt;&lt;span class="s1"&gt;%&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.999&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;P(θ &amp;gt; 0.999) = &lt;/span&gt;&lt;span class="si"&gt;{:d}&lt;/span&gt;&lt;span class="s1"&gt;%&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.999&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;blockquote&gt;
 &lt;p&gt;P(θ &amp;gt; 0.999) =&amp;nbsp;63%&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;P(θ &amp;gt; 0.998) = &lt;/span&gt;&lt;span class="si"&gt;{:d}&lt;/span&gt;&lt;span class="s1"&gt;%&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.998&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;P(θ &amp;gt; 0.998) = &lt;/span&gt;&lt;span class="si"&gt;{:d}&lt;/span&gt;&lt;span class="s1"&gt;%&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;posterior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.998&lt;/span&gt;&lt;span class="p"&gt;)))))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;blockquote&gt;
@@ -1090,21 +1156,21 @@ b \sim Bernoulli(p), \\
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;p&gt;Andrew Gelman, John Carlin, Hal Stern, David Dunson, Aki Vehtari, and Donald Rubin. 2013. &lt;em&gt;Bayesian Data Analysis: Third Edition&lt;/em&gt;. &lt;a href="http://www.stat.columbia.edu/~gelman/book/"&gt;Official&amp;nbsp;webpage&lt;/a&gt;&lt;/p&gt;</content><category term="math"></category><category term="statistics"></category><category term="Bayes"></category><category term="sampling"></category></entry><entry><title>Evaluation of function calls in Haskell</title><link href="https://www.treszkai.com/2019/07/13/haskell-eval/" rel="alternate"></link><published>2019-07-13T00:00:00+02:00</published><updated>2019-07-13T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2019-07-13:/2019/07/13/haskell-eval/</id><summary type="html">&lt;p&gt;Analyzing why point-free definitions in Haskell allow sharing the result of an inner function application, whereas pointful definitions do&amp;nbsp;not.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;em&gt;(This post is discussed in &lt;a href="https://haskellweekly.news/episode/15.html"&gt;episode 15&lt;/a&gt; of the&lt;/em&gt; Haskell Weekly Podcast.&lt;em&gt;)&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Chapter 27 of &lt;a href="http://haskellbook.com/"&gt;&lt;em&gt;Haskell Programming from first principles&lt;/em&gt;&lt;/a&gt; (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section &lt;em&gt;Preventing sharing on purpose&lt;/em&gt;, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of &lt;code&gt;g _&lt;/code&gt; is not shared but calculated&amp;nbsp;twice:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="kt"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
 &lt;span class="kt"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt;
 &lt;span class="nf"&gt;hi&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt;
 &lt;span class="nf"&gt;hi&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt;
 &lt;span class="mi"&gt;4&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;In the second, the result of &lt;code&gt;g _&lt;/code&gt; &lt;em&gt;is&lt;/em&gt; shared, i.e. calculated only once and the result is&amp;nbsp;stored:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="kt"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;
 &lt;span class="nf"&gt;hi&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;
 &lt;span class="mi"&gt;4&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;(Edited to add:) In practice, sharing is usually achieved with a &lt;code&gt;let&lt;/code&gt; expression or a &lt;code&gt;where&lt;/code&gt; construct.&lt;/p&gt;
@@ -1117,10 +1183,10 @@ b \sim Bernoulli(p), \\
 &lt;p&gt;In this post I analyze the runtime differences between point-free and pointful&amp;nbsp;definitions.&lt;/p&gt;
 &lt;h2&gt;Behind the&amp;nbsp;scenes&lt;/h2&gt;
 &lt;p&gt;As &lt;a href="#Further-resources"&gt;Tom Ellis describes&lt;/a&gt;, the definitions of &lt;code&gt;g&lt;/code&gt; and &lt;code&gt;f&lt;/code&gt; translate to the following (in a close approximation to the “Core” language used during&amp;nbsp;compilation):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;f&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;f&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
 &lt;span class="nf"&gt;g&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
 &lt;span class="nf"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;(Calling &lt;code&gt;f g&lt;/code&gt; with these definitions does &lt;em&gt;not&lt;/em&gt; result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like &lt;a href="#Sharing"&gt;that below&lt;/a&gt;.)&lt;/p&gt;
@@ -1132,96 +1198,96 @@ b \sim Bernoulli(p), \\
 &lt;/ol&gt;
 &lt;h2&gt;Evaluation with&amp;nbsp;sharing&lt;/h2&gt;
 &lt;p&gt;This is what happens during the evaluation of &lt;code&gt;f g&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;code&gt;ans&lt;/code&gt; is a function call, so its evaluation proceeds with substituting &lt;code&gt;g&lt;/code&gt; for the argument of &lt;code&gt;f&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;code&gt;ans&lt;/code&gt; is a &lt;em&gt;let&lt;/em&gt; expression, so we put the following &lt;em&gt;thunks&lt;/em&gt; for &lt;code&gt;x3&lt;/code&gt; and &lt;code&gt;x10&lt;/code&gt; on the heap under some unique&amp;nbsp;name:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&amp;#8230;and then proceed with evaluating the &lt;em&gt;in&lt;/em&gt;&amp;nbsp;part:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ans_x3&lt;/span&gt; &lt;span class="n"&gt;ans_x10&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;ans&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ans_x3&lt;/span&gt; &lt;span class="n"&gt;ans_x10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;During the evaluation of this function call, &lt;code&gt;ans_x3&lt;/code&gt; will be evaluated (or potentially &lt;code&gt;ans_x10&lt;/code&gt; first, or both in parallel). &lt;code&gt;ans_x3&lt;/code&gt; is a function call, so first we evaluate &lt;code&gt;g&lt;/code&gt; to a lambda. As &lt;code&gt;g&lt;/code&gt; is a &lt;em&gt;let&lt;/em&gt; expression, we create a closure for &lt;code&gt;trace "hi g" 2&lt;/code&gt; on the heap, and then continue with the &lt;em&gt;in&lt;/em&gt; part of &lt;code&gt;g&lt;/code&gt; (&lt;code&gt;\y -&amp;gt; const tg y&lt;/code&gt;). This is a lambda now, meaning it&amp;#8217;s in weak head normal form, so the heap contents for &lt;code&gt;g&lt;/code&gt; is overwritten with&amp;nbsp;that:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
 &lt;span class="nf"&gt;g_tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
 &lt;span class="nf"&gt;g&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Back to &lt;code&gt;ans_x3&lt;/code&gt;, now the argument &lt;code&gt;3&lt;/code&gt; is substituted in the definition of &lt;code&gt;g&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans_x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;ans_x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;This is a function call, with &lt;code&gt;const&lt;/code&gt; already a lambda &lt;code&gt;\x _ -&amp;gt; x&lt;/code&gt;, so the arguments can now be substituted in the body, leaving us&amp;nbsp;with&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt;  &lt;span class="c1"&gt;-- (Pointer to the same address as g_tg.)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;During the evaluation of &lt;code&gt;g_tg&lt;/code&gt;, the magic printout happens (&lt;code&gt;hi g&lt;/code&gt; on stdout), and its value is resolved to be &lt;code&gt;2&lt;/code&gt;, so the heap is updated as&amp;nbsp;such:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
 &lt;span class="nf"&gt;g_tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And &lt;code&gt;ans_x3&lt;/code&gt; is a pointer to the same memory content &lt;code&gt;2&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Analogously, the evaluation of &lt;code&gt;ans_x10&lt;/code&gt; proceeds as&amp;nbsp;such:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g_tg&lt;/span&gt;
 &lt;span class="c1"&gt;-- let ans_x10 points to the memory location of g_tg:&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Finally, &lt;code&gt;ans = (+) ans_x3 ans_x10&lt;/code&gt;, which evaluates to &lt;code&gt;ans = 4&lt;/code&gt;.&lt;/p&gt;
 &lt;h2&gt;Evaluation without&amp;nbsp;sharing&lt;/h2&gt;
 &lt;p&gt;In contrast, the evaluation of &lt;code&gt;f g'&lt;/code&gt; proceeds as&amp;nbsp;follows:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt;
 &lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;x3&lt;/span&gt; &lt;span class="n"&gt;x10&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x3&amp;#39;&lt;/span&gt;  &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x10&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;g&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ans_x3&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;ans_x10&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;ans&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ans_x3&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;ans_x10&amp;#39;&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x3&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now &lt;code&gt;hi g'&lt;/code&gt; is printed, and the heap is&amp;nbsp;updated:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x3&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;When evaluating &lt;code&gt;ans_x10'&lt;/code&gt;, we &lt;strong&gt;again print&lt;/strong&gt; &lt;code&gt;hi g'&lt;/code&gt;, and store the result of the trace under a different&amp;nbsp;thunk:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-- Heap:&lt;/span&gt;
 &lt;span class="nf"&gt;ans_x10&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now &lt;code&gt;ans'&lt;/code&gt; evaluates to &lt;code&gt;(+) 2 2&lt;/code&gt;, i.e. &lt;code&gt;4&lt;/code&gt;.&lt;/p&gt;
 &lt;h2&gt;Attempt at verifying my translated&amp;nbsp;definitions&lt;/h2&gt;
 &lt;p&gt;I attempted to verify what I was saying above about the definitions of &lt;code&gt;f&lt;/code&gt;, &lt;code&gt;g&lt;/code&gt;, &lt;code&gt;g'&lt;/code&gt; in Core, using the &lt;code&gt;-ddump-simpl&lt;/code&gt; compiler flag of GHCi, but it didn&amp;#8217;t fulfil my&amp;nbsp;expectations.&lt;/p&gt;
 &lt;p&gt;&lt;a name="Sharing"&gt;&lt;/a&gt;Sharing.hs:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;module&lt;/span&gt; &lt;span class="nn"&gt;Sharing&lt;/span&gt; &lt;span class="kr"&gt;where&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;module&lt;/span&gt; &lt;span class="nn"&gt;Sharing&lt;/span&gt; &lt;span class="kr"&gt;where&lt;/span&gt;
 
 &lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Debug.Trace&lt;/span&gt;
 
@@ -1229,26 +1295,26 @@ b \sim Bernoulli(p), \\
 &lt;span class="nf"&gt;g&lt;/span&gt;   &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;  &lt;span class="c1"&gt;-- share&lt;/span&gt;
 &lt;span class="nf"&gt;g&amp;#39;&lt;/span&gt;  &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="kr"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;   &lt;span class="c1"&gt;-- don&amp;#39;t share&lt;/span&gt;
 &lt;span class="nf"&gt;g&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="kr"&gt;let&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="ow"&gt;::&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt; &lt;span class="kr"&gt;in&lt;/span&gt; &lt;span class="nf"&gt;\&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;tg&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;  &lt;span class="c1"&gt;-- share (equivalent to g)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;In&amp;nbsp;GHCi:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ddump&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;simpl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dsuppress&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Wno&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;missing&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;signatures&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ddump&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;simpl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dsuppress&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;all&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Wno&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;missing&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;signatures&lt;/span&gt;
 &lt;span class="n"&gt;Prelude&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;
-&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;Compiling&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;          &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;interpreted&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;Compiling&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;          &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;Sharing&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;interpreted&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="o"&gt;====================&lt;/span&gt; &lt;span class="n"&gt;Tidy&lt;/span&gt; &lt;span class="n"&gt;Core&lt;/span&gt; &lt;span class="o"&gt;====================&lt;/span&gt;
-&lt;span class="n"&gt;Result&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Tidy&lt;/span&gt; &lt;span class="n"&gt;Core&lt;/span&gt;
-  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;terms&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;52&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;coercions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;joins&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;Result&lt;/span&gt; &lt;span class="k"&gt;size&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Tidy&lt;/span&gt; &lt;span class="n"&gt;Core&lt;/span&gt;
+  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="n"&gt;terms&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;52&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;coercions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;joins&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;
 
-&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; \ &lt;span class="n"&gt;x_a1Fl&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;fNumInt&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x_a1Fl&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="c1"&gt;# 3#)) (x_a1Fl (I# 10#))&lt;/span&gt;
-&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; \ &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;b_a1Gi&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unpackCString&lt;/span&gt;&lt;span class="c1"&gt;# &amp;quot;hi g&amp;quot;#) (I# 2#))&lt;/span&gt;
-&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39; = \ @ p_a1G6 -&amp;gt; \ _ -&amp;gt; trace (unpackCString# &amp;quot;hi g&amp;#39;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;#) (I# 2#)&lt;/span&gt;
-&lt;span class="n"&gt;tg_r1F4&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unpackCString&lt;/span&gt;&lt;span class="c1"&gt;# &amp;quot;hi g&amp;quot;#) (I# 2#)&lt;/span&gt;
-&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; \ &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;b_a1FJ&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; \ &lt;span class="n"&gt;y_a1Fn&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;tg_r1F4&lt;/span&gt; &lt;span class="n"&gt;y_a1Fn&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="n"&gt;x_a1Fl&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;fNumInt&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x_a1Fl&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x_a1Fl&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;g&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt; &lt;span class="n"&gt;b_a1Gi&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unpackCString&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="ss"&gt;&amp;quot;hi g&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;g&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39; = \ @ p_a1G6 -&amp;gt; \ _ -&amp;gt; trace (unpackCString# &amp;quot;hi g&amp;#39;&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;#) (I# 2#)&lt;/span&gt;
+&lt;span class="ss"&gt;tg_r1F4 = trace (unpackCString# &amp;quot;&lt;/span&gt;&lt;span class="n"&gt;hi&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;g&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt; &lt;span class="n"&gt;b_a1FJ&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="n"&gt;y_a1Fn&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="n"&gt;tg_r1F4&lt;/span&gt; &lt;span class="n"&gt;y_a1Fn&lt;/span&gt;
 
-&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;stuff&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="k"&gt;and&lt;/span&gt; &lt;span class="k"&gt;some&lt;/span&gt; &lt;span class="k"&gt;more&lt;/span&gt; &lt;span class="n"&gt;stuff&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Nonetheless, as &lt;a href="https://stackoverflow.com/a/6121495/8424390"&gt;a &lt;span class="caps"&gt;SO&lt;/span&gt; answer describes&lt;/a&gt;, we can see that a function application in Core is defined as &lt;code&gt;Expr Atom&lt;/code&gt;, where &lt;em&gt;Atom&lt;/em&gt; is &lt;code&gt;var | Literal&lt;/code&gt;. I attempted to install &lt;a href="http://hackage.haskell.org/package/ghc-core"&gt;ghc-core&lt;/a&gt; but the build failed, so further analysis is put on the&amp;nbsp;shelf.&lt;/p&gt;
@@ -1838,7 +1904,7 @@ function hideByClass(cls) {
 &lt;li&gt;Script: &lt;a href="https://www.quora.com/Is-there-a-way-of-watching-YouTube-videos-at-higher-than-2x-speed/answer/John-Vuong-12"&gt;Quora answer of John&amp;nbsp;Vuong&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="misc"></category></entry><entry><title>Some versatile tools for bash</title><link href="https://www.treszkai.com/2018/05/16/bash-versatile/" rel="alternate"></link><published>2018-05-16T00:00:00+02:00</published><updated>2018-05-16T00:00:00+02:00</updated><author><name>Laszlo Treszkai</name></author><id>tag:www.treszkai.com,2018-05-16:/2018/05/16/bash-versatile/</id><summary type="html">&lt;p&gt;A 7-line bash script that includes 90% of what an average user&amp;nbsp;needs.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I rarely use bash besides the basics: I could use a &lt;code&gt;for&lt;/code&gt; loop even if woken up at night, but my knowledge of the language doesn&amp;#8217;t go much further. Hence instead of trying to memorize all the &lt;code&gt;{}%$&lt;/code&gt; magic, having a few versatile commands in my toolbox comes&amp;nbsp;handy.&lt;/p&gt;
 &lt;p&gt;Recently I faced the task of renaming a set of files {&lt;code&gt;foo 02.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 74.jpg&lt;/code&gt;} to {&lt;code&gt;foo 06.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 78.jpg&lt;/code&gt;}, while keeping the order. My approach contained nothing&amp;nbsp;extraordinary:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="sb"&gt;`&lt;/span&gt;seq &lt;span class="m"&gt;74&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
@@ -1847,7 +1913,7 @@ function hideByClass(cls) {
 
     mv &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$oldname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$newname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;done&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Yet there were some educational points in&amp;nbsp;it:&lt;/p&gt;

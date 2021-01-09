@@ -17,11 +17,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Laszlo Treszkai">
-  <meta name="description" content="Posts and writings by Laszlo Treszkai">
 
   <link href="https://www.treszkai.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Laszlo Treszkai Atom" />
 
-<meta name="keywords" content="">
+<meta property="og:title" content="Some versatile tools for bash">
+<meta property="og:image" content="2018/05/16/bash-versatile/">
+<meta property="og:description" content="A 7-line bash script that includes 90% of what an average user needs.">
+<meta name="description" content="A 7-line bash script that includes 90% of what an average user needs."><meta name="keywords" content="">
 
   <title>
     Laszlo Treszkai
@@ -33,7 +35,7 @@
   <main>
     <header>
       <div class="site-name">
-        <a href="https://www.treszkai.com">Laszlo Treszkai</a>
+        <a href="https://www.treszkai.com/">Laszlo Treszkai</a>
       </div>
       <p>
       <a href="https://www.treszkai.com/index.html">Posts</a><span class="separator"></span><a href="https://www.treszkai.com/pages/about-me.html" title="About&nbsp;me">About&nbsp;me</a>      </p>
@@ -44,13 +46,13 @@
     <h1><a href="https://www.treszkai.com/2018/05/16/bash-versatile/">Some versatile tools for&nbsp;bash</a></h1>
   </div>
   <div class="article__meta">
-    <p class="article__meta__post-date">Posted on: 16 May. 2018</p>
+    <p class="article__meta__post-date">Posted on: 16 Mai. 2018</p>
     </p>
   </div>
   <div class="article__text">
     <p>I rarely use bash besides the basics: I could use a <code>for</code> loop even if woken up at night, but my knowledge of the language doesn&#8217;t go much further. Hence instead of trying to memorize all the <code>{}%$</code> magic, having a few versatile commands in my toolbox comes&nbsp;handy.</p>
 <p>Recently I faced the task of renaming a set of files {<code>foo 02.jpg</code>, &#8230;, <code>foo 74.jpg</code>} to {<code>foo 06.jpg</code>, &#8230;, <code>foo 78.jpg</code>}, while keeping the order. My approach contained nothing&nbsp;extraordinary:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="k">for</span> i in <span class="sb">`</span>seq <span class="m">74</span> <span class="m">2</span><span class="sb">`</span>
 <span class="k">do</span>
@@ -59,7 +61,7 @@
 
     mv <span class="s2">&quot;</span><span class="nv">$oldname</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="nv">$newname</span><span class="s2">&quot;</span>
 <span class="k">done</span>
-</pre></div>
+</code></pre></div>
 
 
 <p>Yet there were some educational points in&nbsp;it:</p>

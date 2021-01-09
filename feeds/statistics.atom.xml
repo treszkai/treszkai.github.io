@@ -123,7 +123,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;h3&gt;Posterior calculations with Monte Carlo&amp;nbsp;methods&lt;/h3&gt;
 &lt;p&gt;We also performed our posterior calculations with Monte Carlo methods using the open source statistical modeling software &lt;a href="https://mc-stan.org/"&gt;Stan&lt;/a&gt;. Models in Stan are written using its own description language (which comes with &lt;a href="https://mc-stan.org/users/documentation/"&gt;extensive documentation&lt;/a&gt; and a &lt;a href="https://discourse.mc-stan.org/"&gt;supportive community&lt;/a&gt;), and they need to be first compiled into binary form using an interface in R, Python, or other languages. Then, after providing the observable data to the model, Stan draws samples from the posterior distribution of the parameters, and calculates the 95% highest posterior density interval (&lt;span class="caps"&gt;HDI&lt;/span&gt;, a.k.a. &lt;span class="caps"&gt;HPD&lt;/span&gt;) – the interval that covers the most plausible parameter values. For most practical purposes, 1000 independent samples would be enough, but we drew 50,000 samples to accurately assess the equality to the analytic&amp;nbsp;solution.&lt;/p&gt;
 &lt;p&gt;The code for the fixed-effects linear weekday Stan model is as&amp;nbsp;follows:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;data&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;data&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;DAYS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;            &lt;span class="c1"&gt;// Number of days&lt;/span&gt;
   &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;STUDIES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;         &lt;span class="c1"&gt;// Number of studies&lt;/span&gt;
   &lt;span class="kt"&gt;real&lt;/span&gt; &lt;span class="n"&gt;NORMAL_SIGMA&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c1"&gt;// The standard deviation of the normal component of the prior&lt;/span&gt;
@@ -173,7 +173,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
     &lt;span class="p"&gt;}&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;The &lt;code&gt;data&lt;/code&gt; and &lt;code&gt;parameters&lt;/code&gt; blocks declare the observed quantities and the unobserved parameters, without specifying their&amp;nbsp;distribution.&lt;/p&gt;
@@ -181,7 +181,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;p&gt;The &lt;code&gt;model&lt;/code&gt; block describes both the prior distributions for the parameters and the likelihood&amp;nbsp;functions.&lt;/p&gt;
 &lt;h4&gt;Sampling using the Python&amp;nbsp;interface&lt;/h4&gt;
 &lt;p&gt;We can compile the Stan model and sample from it in Python using &lt;a href="https://pystan.readthedocs.io/"&gt;PyStan&lt;/a&gt;. Once the software and its dependencies are installed, we can use the following code to draw 50,000 samples from the posterior and plot the results. On my computer, the model compilation takes about a minute, the sampling a few&amp;nbsp;seconds.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pystan&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pystan&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
 
 &lt;span class="c1"&gt;# 6-long list of 5-long lists integers (weekday observations)&lt;/span&gt;
@@ -209,12 +209,12 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pystan&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stansummary&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rr_day[1]&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h4&gt;Sampling using the R&amp;nbsp;interface&lt;/h4&gt;
 &lt;p&gt;The R interface of Stan is called &lt;a href="https://github.com/stan-dev/rstan/"&gt;RStan&lt;/a&gt;, and can be used as&amp;nbsp;follows:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rstan&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# observe startup messages&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rstan&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# observe startup messages&lt;/span&gt;
 
 &lt;span class="n"&gt;stan_data&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nf"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;STUDIES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                   &lt;span class="n"&gt;DAYS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -226,7 +226,7 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;span class="n"&gt;fit&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nf"&gt;stan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;dst_model.stan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;stan_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;iter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;50000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="nf"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;extract&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;$$&lt;/span&gt;&lt;span class="n"&gt;rr_day&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Effect of study size in a Bayesian&amp;nbsp;framework&lt;/h3&gt;
@@ -587,7 +587,7 @@ However, the analysis provides strong evidence for the hypothesis that our body 
 &lt;p&gt;Please cite this work as&amp;nbsp;follows:&lt;/p&gt;
 &lt;p&gt;Laszlo Treszkai. 2019. &lt;em&gt;The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis&lt;/em&gt;. &lt;a href="http://treszkai.github.io/2019/11/11/dst-vs-ami"&gt;http://treszkai.github.io/2019/11/11/dst-vs-ami&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;BibTeX:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nc"&gt;@misc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nc"&gt;@misc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt;
   &lt;span class="nl"&gt;title&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;{The&lt;/span&gt; &lt;span class="err"&gt;effects&lt;/span&gt; &lt;span class="err"&gt;of&lt;/span&gt; &lt;span class="err"&gt;daylight&lt;/span&gt; &lt;span class="err"&gt;savings&lt;/span&gt; &lt;span class="err"&gt;time&lt;/span&gt; &lt;span class="err"&gt;adjustment&lt;/span&gt; &lt;span class="err"&gt;on&lt;/span&gt; &lt;span class="err"&gt;the&lt;/span&gt; &lt;span class="err"&gt;incidence&lt;/span&gt; &lt;span class="err"&gt;rate&lt;/span&gt; &lt;span class="err"&gt;of&lt;/span&gt; &lt;span class="err"&gt;acute&lt;/span&gt; &lt;span class="err"&gt;myocardial&lt;/span&gt; &lt;span class="err"&gt;infarction:&lt;/span&gt; &lt;span class="err"&gt;a&lt;/span&gt; &lt;span class="err"&gt;{B&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="c"&gt;ayesian meta-analysis},&lt;/span&gt;
   &lt;span class="c"&gt;author = {Laszlo Treszkai},&lt;/span&gt;
   &lt;span class="c"&gt;howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},&lt;/span&gt;
@@ -595,7 +595,7 @@ However, the analysis provides strong evidence for the hypothesis that our body 
   &lt;span class="c"&gt;year = {2019}&lt;/span&gt;
   &lt;span class="c"&gt;month = {oct}&lt;/span&gt;
 &lt;span class="c"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;References&lt;/h1&gt;

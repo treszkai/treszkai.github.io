@@ -26,15 +26,15 @@ Let's run the numbers of this model [on Hungary, on January 6, 2021](https://en.
 
 [^kids]: Until recently, kids did not play a significant role in the transmission and hospitalization, therefore minors could be (or could have been) deducted from the susceptible population.
 
-One might argue[^3] that the actual case count is higher than those tested positive, but I assume cases which do not make the books are not severe enough to warrant a test. If your country doesn't seem to do enough tests (e.g. because the ratio of positive results per test is absurdly high), then the actual case count is surely higher. Older people seem to contract the disease more easily than kids, the prevalence could be adjusted for age.
+One might argue[^3] that the actual case count is higher than those tested positive, but I assume cases which do not make the books are not severe enough to warrant a test. However, if your country doesn't seem to do enough tests (e.g. because the ratio of positive results per test is absurdly high), then the actual case count is surely higher.
 
 [^2]: microCOVID seems to compare the case count against the entire population. I count a recovered person as not immune to the virus.
 
 [^3]: In Hungary, the reported prevalence is 0.12%, but microCOVID uses an adjusted prevalence of 0.39%. This correction of 3x my model should use too.
 
-That means that for the "average" person, the chance of becoming infected is 1,746 / 9,590,000 / day = 180 microCOVID / day.
+That means that for the "average" person, the chance of becoming infected is 1,746 / 9,590,000 / day ≈ 180 microCOVIDs / day.
 
-Note that this "average" person does not refer to the most common person (the mode) or the median; but literally this Average Joe making up the entire 10 million population of the country. In this model, everyone is equal. (And nobody more equal than the others.)
+Note that this "average" person does not refer to the most common person (the _mode_) or the median; but literally, this Average Joe makes up the entire 10 million population of the country. In this model, everyone is equal. (And nobody more equal than the others.)
 
 Act like this average person for an entire year (assume January 6 conditions all year long), and you have 6% chance of contracting the disease. (Because of course, every day of the year is equal.)
 
@@ -73,4 +73,4 @@ Finally, smash a generous error bar on the result: say, plus or minus an order o
 
 Can you live with 6% a chance of COVID-19 in the coming year? If not, then maybe you should scale back your activities. If your country's average risk is too low for you (for example, because you're young and live in New Zealand and are more likely to die in a car accident), then consider saying hello to the neighbors from a friendly distance.
 
-Stay safe.
+Stay safe. Wear a mask, wear a helmet, wear a safety belt.

@@ -2,4 +2,4 @@ ghp-import
 invoke
 pelican[markdown]
 typogrify
-git+https://github.com/treszkai/pelican-md-math
+pelican-md-math

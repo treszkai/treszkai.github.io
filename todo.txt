@@ -1,4 +1,3 @@
-merge CSS files
 citations - references.bib was faulty
 
 How to check all internal links?

@@ -1,0 +1,13 @@
+{% extends "!simple/article.html" %}
+
+{% block head %}
+{{ super() }}{# this  is actually needed #}
+<meta property="og:title" content="{{article.title|striptags}}">
+<meta property="og:image" content="{{article.url}}">
+{% if article.summary is defined -%}
+<meta property="og:description" content="{{article.summary|striptags}}">
+<meta name="description" content="{{article.summary|striptags}}">
+{%- endif %}
+<meta name="keywords" content="{{ article.tags|join(', ')  }}">
+{% if (article.latex is defined and article.latex) or article.latex_macros is defined %}{% include 'katex.html' %}{% endif %}
+{% endblock %}

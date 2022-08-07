@@ -30,7 +30,7 @@ One might argue[^3] that the actual case count is higher than those tested posit
 
 [^2]: microCOVID seems to compare the case count against the entire population. I count a recovered person as not immune to the virus.
 
-[^3]: In Hungary, the reported prevalence is 0.12%, but microCOVID uses an adjusted prevalence of 0.39%. This correction of 3x my model should use too.
+[^3]: In Hungary, the reported prevalence is 0.12%, but microCOVID uses an adjusted prevalence of 0.39%. My model should also use this correction of 3x.
 
 That means that for the "average" person, the chance of becoming infected is 1,746 / 9,590,000 / day ≈ 180 microCOVIDs / day.
 

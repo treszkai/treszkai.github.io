@@ -1,6 +1,6 @@
 merge CSS files
-citations
+citations - references.bib was faulty
 
 How to check all internal links?
-Check all JS executes without errors
+Check most JS executes without errors
 include style.css hash in the filename, such that it can be cached

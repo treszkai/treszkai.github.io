@@ -14,6 +14,5 @@ The `source` branch contains the source files, and the `master` branch contains 
 
 ## Thanks goes to
 
- - GitHub, for hosting it for free;
- - [Pelican](https://github.com/getpelican/pelican) developers, for the static site generator;
- - the Pelican theme developer.
+ - GitHub, for the free hosting;
+ - [Pelican](https://github.com/getpelican/pelican) developers, for the static site generator.

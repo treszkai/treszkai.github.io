@@ -83,7 +83,11 @@ LATEX_MACROS = {
     r'\Godel': r'\ulcorner #1 \urcorner',
 }
 
+MENUITEMS = [
+    ('Posts', f'{SITEURL}/index.html')
+]
 DISPLAY_PAGES_ON_MENU = True
+DISPLAY_CATEGORIES_ON_MENU = False
 
 LOCALE = ['en_US.utf-8', 'en_US']
 

@@ -36,22 +36,22 @@
 <body id="index" class="home">
 <header id="banner" class="body">
   <h1><a href="{{ SITEURL }}/">{{ SITENAME }}{% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>
+  <nav id="menu"><ul>
+    {% for title, link in MENUITEMS -%}
+    <li><a href="{{ link }}">{{ title }}</a></li>
+    {% endfor %}
+    {% if DISPLAY_PAGES_ON_MENU %}
+    {% for p in pages %}
+    <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
+    {% endfor %}
+    {% endif %}
+    {% if DISPLAY_CATEGORIES_ON_MENU %}
+    {% for cat, null in categories %}
+    <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+    {% endfor %}
+    {% endif %}
+  </ul></nav><!-- /#menu -->
 </header><!-- /#banner -->
-<nav id="menu"><ul>
-  {% for title, link in MENUITEMS %}
-  <li><a href="{{ link }}">{{ title }}</a></li>
-  {% endfor %}
-  {% if DISPLAY_PAGES_ON_MENU %}
-  {% for p in pages %}
-  <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
-  {% endfor %}
-  {% endif %}
-  {% if DISPLAY_CATEGORIES_ON_MENU %}
-  {% for cat, null in categories %}
-  <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
-  {% endfor %}
-  {% endif %}
-</ul></nav><!-- /#menu -->
 {% block content %}
 {% endblock %}
 <footer id="contentinfo" class="body">

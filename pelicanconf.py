@@ -23,7 +23,11 @@ PAGE_PATHS = ['pages', 'legacy_redirects']
 READERS = {'html': None}
 
 style_css = Path(THEME) / 'static' / 'css' / 'style.css'
+# hard link style.css to style-{md5}.css, and delete the old one
+for p in style_css.parent.glob('style-????????.css'):
+    p.unlink()
 STYLE_CSS_MD5 = md5(style_css.read_bytes()).hexdigest()[:8]
+style_css.link_to(style_css.with_name(f'{style_css.stem}-{STYLE_CSS_MD5}.css'))
 
 EXTRA_PATHS = ['extra']
 
@@ -40,7 +44,7 @@ TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = 'en'
 DEFAULT_CATEGORY = 'misc'
 DEFAULT_PAGINATION = False
-DEFAULT_DATE_FORMAT = '%-d %b. %Y'
+DEFAULT_DATE_FORMAT = '%-d %B %Y'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -80,3 +84,6 @@ LATEX_MACROS = {
 }
 
 DISPLAY_PAGES_ON_MENU = True
+
+LOCALE = ['en_US.utf-8', 'en_US']
+

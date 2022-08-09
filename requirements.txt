@@ -3,3 +3,4 @@ invoke
 pelican[markdown]
 typogrify
 pelican-md-math
+pyscss

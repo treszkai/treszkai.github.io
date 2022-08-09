@@ -33,6 +33,6 @@ The algorithm for IRL is the following:
 
 The maximization in step 2 allows us to find a policy that is close to the expert's, regardless of the choice of a reward function. After all, we are interested in the policy, not the reward function, and so the estimated \(R\) is not necessarily correct.
 
-This algorithm is proved to terminate within \(O(k \log(k))\) steps, using at least \(O(k \log(k))\) number of samples from the expert policy.
+This algorithm is proven to terminate within \(O(k \log(k))\) steps, using at least \(O(k \log(k))\) number of samples from the expert policy.
 
 Experiments are done in a gridworld environment, where IRL learns the expert policy in approximately 100 times less sample trajectories than simply mimicking the expert. Another experiment is a car driving simulator with 3 lanes viewed from the top, where IRL is capable of learning multiple driving styles, such as "prefer the right lane but avoid collisions". Video demonstrations of the latter show that the sentiment of the expert policy is indeed followed, although sometimes with unnecessary lane switches (most modern RL algorithms also exhibit this undesired property).

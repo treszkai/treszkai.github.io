@@ -156,3 +156,5 @@ dmypy.json
 
 /output
 /drafts
+# pygments.scss is imported in style.scss
+/theme/static/css/pygments.css

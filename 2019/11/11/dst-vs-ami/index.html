@@ -238,7 +238,6 @@ I view it as a <em>strength</em> of Bayesian data analysis that these assumption
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>The <code>data</code> and <code>parameters</code> blocks declare the observed quantities and the unobserved parameters, without specifying their&nbsp;distribution.</p>
 <p>The <code>transformed parameters</code> block contains all quantities that can be deterministically derived from the&nbsp;parameters.</p>
 <p>The <code>model</code> block describes both the prior distributions for the parameters and the likelihood&nbsp;functions.</p>
@@ -274,23 +273,21 @@ I view it as a <em>strength</em> of Bayesian data analysis that these assumption
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">fit</span><span class="p">[</span><span class="s1">&#39;rr_day[1]&#39;</span><span class="p">]);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 
-
 <h4>Sampling using the R&nbsp;interface</h4>
 <p>The R interface of Stan is called <a href="https://github.com/stan-dev/rstan/">RStan</a>, and can be used as&nbsp;follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="s">&quot;rstan&quot;</span><span class="p">)</span> <span class="c1"># observe startup messages</span>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="s">&quot;rstan&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># observe startup messages</span>
 
-<span class="n">stan_data</span> <span class="o">&lt;-</span> <span class="nf">list</span><span class="p">(</span><span class="n">STUDIES</span> <span class="o">=</span> <span class="m">6</span><span class="p">,</span>
-                  <span class="n">DAYS</span> <span class="o">=</span> <span class="m">5</span><span class="p">,</span>
-                  <span class="n">NORMAL_SIGMA</span> <span class="o">=</span> <span class="m">0.01</span><span class="p">,</span>
-                  <span class="n">EXPON_BETA</span> <span class="o">=</span> <span class="m">1</span><span class="o">/</span><span class="m">0.2</span><span class="p">,</span>
-                  <span class="n">ami_obs</span> <span class="o">=</span> <span class="n">all_obs</span><span class="p">,</span>
-                  <span class="n">ami_trend</span> <span class="o">=</span> <span class="n">all_trend</span><span class="p">)</span>
+<span class="n">stan_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">STUDIES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">DAYS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">NORMAL_SIGMA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">EXPON_BETA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">/</span><span class="m">0.2</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">ami_obs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">all_obs</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">ami_trend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">all_trend</span><span class="p">)</span>
 
-<span class="n">fit</span> <span class="o">&lt;-</span> <span class="nf">stan</span><span class="p">(</span><span class="n">file</span> <span class="o">=</span> <span class="s">&#39;dst_model.stan&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">stan_data</span><span class="p">,</span> <span class="n">iter</span> <span class="o">=</span> <span class="m">50000</span><span class="p">)</span>
+<span class="n">fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">stan</span><span class="p">(</span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;dst_model.stan&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stan_data</span><span class="p">,</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50000</span><span class="p">)</span>
 
 <span class="nf">hist</span><span class="p">(</span><span class="nf">extract</span><span class="p">(</span><span class="n">fit</span><span class="p">)</span><span class="o">$$</span><span class="n">rr_day</span><span class="p">[</span><span class="m">1</span><span class="p">]</span>
 </code></pre></div>
-
 
 <h3>Effect of study size in a Bayesian&nbsp;framework</h3>
 <p>For a small study, i.e. if the trend and observed <span class="caps">AMI</span> counts are low, we want to see a very slight change in the prior; for a large study, we want to see a bigger&nbsp;change.</p>
@@ -651,15 +648,14 @@ However, the analysis provides strong evidence for the hypothesis that our body 
 <p>Laszlo Treszkai. 2019. <em>The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis</em>. <a href="http://treszkai.github.io/2019/11/11/dst-vs-ami">http://treszkai.github.io/2019/11/11/dst-vs-ami</a></p>
 <p>BibTeX:</p>
 <div class="highlight"><pre><span></span><code><span class="nc">@misc</span><span class="p">{</span><span class="err">,</span>
-  <span class="nl">title</span> <span class="err">=</span> <span class="err">{The</span> <span class="err">effects</span> <span class="err">of</span> <span class="err">daylight</span> <span class="err">savings</span> <span class="err">time</span> <span class="err">adjustment</span> <span class="err">on</span> <span class="err">the</span> <span class="err">incidence</span> <span class="err">rate</span> <span class="err">of</span> <span class="err">acute</span> <span class="err">myocardial</span> <span class="err">infarction:</span> <span class="err">a</span> <span class="err">{B</span><span class="p">}</span><span class="c">ayesian meta-analysis},</span>
-  <span class="c">author = {Laszlo Treszkai},</span>
-  <span class="c">howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},</span>
+<span class="w">  </span><span class="nl">title</span><span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="err">{The</span><span class="w"> </span><span class="err">effects</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">daylight</span><span class="w"> </span><span class="err">savings</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">adjustment</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">incidence</span><span class="w"> </span><span class="err">rate</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">acute</span><span class="w"> </span><span class="err">myocardial</span><span class="w"> </span><span class="err">infarction:</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">{B</span><span class="p">}</span><span class="c">ayesian meta-analysis},</span>
+<span class="w">  </span><span class="c">author = {Laszlo Treszkai},</span>
+<span class="w">  </span><span class="c">howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},</span>
 <span class="c">%  note = {Accessed: yyyy-mm-dd}  % Optional. The document at this URL is not going to change.</span>
-  <span class="c">year = {2019}</span>
-  <span class="c">month = {oct}</span>
+<span class="w">  </span><span class="c">year = {2019}</span>
+<span class="w">  </span><span class="c">month = {oct}</span>
 <span class="c">}</span>
 </code></pre></div>
-
 
 <h1>References</h1>
 <p>Cumming, G. (2014). <em>The new statistics why and how.</em> Psychological Science, 25(1),&nbsp;7–29.</p>

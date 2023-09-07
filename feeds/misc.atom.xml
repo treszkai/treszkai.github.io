@@ -22,15 +22,14 @@
 &lt;p&gt;Recently I faced the task of renaming a set of files {&lt;code&gt;foo 02.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 74.jpg&lt;/code&gt;} to {&lt;code&gt;foo 06.jpg&lt;/code&gt;, &amp;#8230;, &lt;code&gt;foo 78.jpg&lt;/code&gt;}, while keeping the order. My approach contained nothing&amp;nbsp;extraordinary:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="k"&gt;for&lt;/span&gt; i in &lt;span class="sb"&gt;`&lt;/span&gt;seq &lt;span class="m"&gt;74&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;i&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;seq&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;74&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="nb"&gt;printf&lt;/span&gt; -v oldname &lt;span class="s2"&gt;&amp;quot;foo %02d.jpg&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt;
-    &lt;span class="nb"&gt;printf&lt;/span&gt; -v newname &lt;span class="s2"&gt;&amp;quot;foo %02d.jpg&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="s2"&gt;+4&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; bc&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-v&lt;span class="w"&gt; &lt;/span&gt;oldname&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;foo %02d.jpg&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-v&lt;span class="w"&gt; &lt;/span&gt;newname&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;foo %02d.jpg&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;&lt;span class="s2"&gt;+4&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;bc&lt;span class="k"&gt;)&lt;/span&gt;
 
-    mv &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$oldname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$newname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;mv&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$oldname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$newname&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Yet there were some educational points in&amp;nbsp;it:&lt;/p&gt;
 &lt;ul&gt;

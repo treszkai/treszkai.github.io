@@ -175,7 +175,6 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The &lt;code&gt;data&lt;/code&gt; and &lt;code&gt;parameters&lt;/code&gt; blocks declare the observed quantities and the unobserved parameters, without specifying their&amp;nbsp;distribution.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;transformed parameters&lt;/code&gt; block contains all quantities that can be deterministically derived from the&amp;nbsp;parameters.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;model&lt;/code&gt; block describes both the prior distributions for the parameters and the likelihood&amp;nbsp;functions.&lt;/p&gt;
@@ -211,23 +210,21 @@ I view it as a &lt;em&gt;strength&lt;/em&gt; of Bayesian data analysis that thes
 &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rr_day[1]&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;h4&gt;Sampling using the R&amp;nbsp;interface&lt;/h4&gt;
 &lt;p&gt;The R interface of Stan is called &lt;a href="https://github.com/stan-dev/rstan/"&gt;RStan&lt;/a&gt;, and can be used as&amp;nbsp;follows:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rstan&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# observe startup messages&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;rstan&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# observe startup messages&lt;/span&gt;
 
-&lt;span class="n"&gt;stan_data&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nf"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;STUDIES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                  &lt;span class="n"&gt;DAYS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                  &lt;span class="n"&gt;NORMAL_SIGMA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                  &lt;span class="n"&gt;EXPON_BETA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;0.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                  &lt;span class="n"&gt;ami_obs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;all_obs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                  &lt;span class="n"&gt;ami_trend&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;all_trend&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;stan_data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;STUDIES&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="n"&gt;DAYS&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="n"&gt;NORMAL_SIGMA&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0.01&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="n"&gt;EXPON_BETA&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;0.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="n"&gt;ami_obs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;all_obs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="n"&gt;ami_trend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;all_trend&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="n"&gt;fit&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="nf"&gt;stan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;dst_model.stan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;stan_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;iter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;50000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;stan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dst_model.stan&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stan_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;50000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="nf"&gt;hist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;extract&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;$$&lt;/span&gt;&lt;span class="n"&gt;rr_day&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h3&gt;Effect of study size in a Bayesian&amp;nbsp;framework&lt;/h3&gt;
 &lt;p&gt;For a small study, i.e. if the trend and observed &lt;span class="caps"&gt;AMI&lt;/span&gt; counts are low, we want to see a very slight change in the prior; for a large study, we want to see a bigger&amp;nbsp;change.&lt;/p&gt;
@@ -588,15 +585,14 @@ However, the analysis provides strong evidence for the hypothesis that our body 
 &lt;p&gt;Laszlo Treszkai. 2019. &lt;em&gt;The effects of daylight savings time adjustment on the incidence rate of acute myocardial infarction: a Bayesian meta-analysis&lt;/em&gt;. &lt;a href="http://treszkai.github.io/2019/11/11/dst-vs-ami"&gt;http://treszkai.github.io/2019/11/11/dst-vs-ami&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;BibTeX:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nc"&gt;@misc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;,&lt;/span&gt;
-  &lt;span class="nl"&gt;title&lt;/span&gt; &lt;span class="err"&gt;=&lt;/span&gt; &lt;span class="err"&gt;{The&lt;/span&gt; &lt;span class="err"&gt;effects&lt;/span&gt; &lt;span class="err"&gt;of&lt;/span&gt; &lt;span class="err"&gt;daylight&lt;/span&gt; &lt;span class="err"&gt;savings&lt;/span&gt; &lt;span class="err"&gt;time&lt;/span&gt; &lt;span class="err"&gt;adjustment&lt;/span&gt; &lt;span class="err"&gt;on&lt;/span&gt; &lt;span class="err"&gt;the&lt;/span&gt; &lt;span class="err"&gt;incidence&lt;/span&gt; &lt;span class="err"&gt;rate&lt;/span&gt; &lt;span class="err"&gt;of&lt;/span&gt; &lt;span class="err"&gt;acute&lt;/span&gt; &lt;span class="err"&gt;myocardial&lt;/span&gt; &lt;span class="err"&gt;infarction:&lt;/span&gt; &lt;span class="err"&gt;a&lt;/span&gt; &lt;span class="err"&gt;{B&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="c"&gt;ayesian meta-analysis},&lt;/span&gt;
-  &lt;span class="c"&gt;author = {Laszlo Treszkai},&lt;/span&gt;
-  &lt;span class="c"&gt;howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nl"&gt;title&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{The&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;effects&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;daylight&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;savings&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;time&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;adjustment&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;on&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;incidence&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;rate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;acute&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;myocardial&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;infarction:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{B&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="c"&gt;ayesian meta-analysis},&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c"&gt;author = {Laszlo Treszkai},&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c"&gt;howpublished = {\url{http://treszkai.github.io/2019/11/11/dst-vs-ami}},&lt;/span&gt;
 &lt;span class="c"&gt;%  note = {Accessed: yyyy-mm-dd}  % Optional. The document at this URL is not going to change.&lt;/span&gt;
-  &lt;span class="c"&gt;year = {2019}&lt;/span&gt;
-  &lt;span class="c"&gt;month = {oct}&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c"&gt;year = {2019}&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c"&gt;month = {oct}&lt;/span&gt;
 &lt;span class="c"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;p&gt;Cumming, G. (2014). &lt;em&gt;The new statistics why and how.&lt;/em&gt; Psychological Science, 25(1),&amp;nbsp;7–29.&lt;/p&gt;

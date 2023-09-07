@@ -53,22 +53,20 @@
   <div class="article__text">
     <p><em>(This post is discussed in <a href="https://haskellweekly.news/episode/15.html">episode 15</a> of the</em> Haskell Weekly Podcast.<em>)</em></p>
 <p>Chapter 27 of <a href="http://haskellbook.com/"><em>Haskell Programming from first principles</em></a> (by Christopher Allen and Julie Moronuki) is about the evaluation system of Haskell, with a focus on non-strictness. In the section <em>Preventing sharing on purpose</em>, they write you want to prevent sharing the result of a function call when it would mean storing some big data just to calculate a small result. Two examples are provided to demonstrate the alternatives. In the first, the result of <code>g _</code> is not shared but calculated&nbsp;twice:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">f</span> <span class="n">x</span> <span class="ow">=</span> <span class="p">(</span><span class="n">x</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="mi">10</span><span class="p">)</span>
-<span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">g&#39;</span> <span class="ow">=</span> <span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">trace</span> <span class="s">&quot;hi g&#39;&quot;</span> <span class="mi">2</span>
-<span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">f</span> <span class="n">g&#39;</span>
-<span class="nf">hi</span> <span class="n">g&#39;</span>
-<span class="nf">hi</span> <span class="n">g&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="kt">Prelude</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="kt">Prelude</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&#39;&quot;</span><span class="w"> </span><span class="mi">2</span>
+<span class="kt">Prelude</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">g&#39;</span>
+<span class="nf">hi</span><span class="w"> </span><span class="n">g&#39;</span>
+<span class="nf">hi</span><span class="w"> </span><span class="n">g&#39;</span>
 <span class="mi">4</span>
 </code></pre></div>
-
 
 <p>In the second, the result of <code>g _</code> <em>is</em> shared, i.e. calculated only once and the result is&nbsp;stored:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">g</span> <span class="ow">=</span> <span class="n">const</span> <span class="p">(</span><span class="n">trace</span> <span class="s">&quot;hi g&quot;</span> <span class="mi">2</span><span class="p">)</span>
-<span class="kt">Prelude</span><span class="o">&gt;</span> <span class="n">f</span> <span class="n">g</span>
-<span class="nf">hi</span> <span class="n">g</span>
+<div class="highlight"><pre><span></span><code><span class="kt">Prelude</span><span class="o">&gt;</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="p">(</span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&quot;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="kt">Prelude</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">g</span>
+<span class="nf">hi</span><span class="w"> </span><span class="n">g</span>
 <span class="mi">4</span>
 </code></pre></div>
-
 
 <p>(Edited to add:) In practice, sharing is usually achieved with a <code>let</code> expression or a <code>where</code> construct.</p>
 <p>(Note that this latter is called a <a href="https://wiki.haskell.org/Pointfree">“point-free” definition</a>.)</p>
@@ -80,11 +78,10 @@
 <p>In this post I analyze the runtime differences between point-free and pointful&nbsp;definitions.</p>
 <h2>Behind the&nbsp;scenes</h2>
 <p>As <a href="#Further-resources">Tom Ellis describes</a>, the definitions of <code>g</code> and <code>f</code> translate to the following (in a close approximation to the “Core” language used during&nbsp;compilation):</p>
-<div class="highlight"><pre><span></span><code><span class="nf">f</span> <span class="ow">=</span> <span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="kr">let</span> <span class="p">{</span><span class="n">x3</span> <span class="ow">=</span> <span class="n">x</span> <span class="mi">3</span><span class="p">;</span> <span class="n">x10</span> <span class="ow">=</span> <span class="n">x</span> <span class="mi">10</span><span class="p">}</span> <span class="kr">in</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">x3</span> <span class="n">x10</span>
-<span class="nf">g</span> <span class="ow">=</span> <span class="kr">let</span> <span class="p">{</span><span class="n">tg</span> <span class="ow">=</span> <span class="n">trace</span> <span class="s">&quot;hi g&quot;</span> <span class="mi">2</span><span class="p">}</span> <span class="kr">in</span> <span class="nf">\</span><span class="n">y</span> <span class="ow">-&gt;</span> <span class="n">const</span> <span class="n">tg</span> <span class="n">y</span>
-<span class="nf">g&#39;</span> <span class="ow">=</span> <span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">trace</span> <span class="s">&quot;hi g&#39;&quot;</span> <span class="mi">2</span>
+<div class="highlight"><pre><span></span><code><span class="nf">f</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="n">x</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span><span class="p">{</span><span class="n">x3</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">x10</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">10</span><span class="p">}</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="n">x10</span>
+<span class="nf">g</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span><span class="p">{</span><span class="n">tg</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&quot;</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">\</span><span class="n">y</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">tg</span><span class="w"> </span><span class="n">y</span>
+<span class="nf">g&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&#39;&quot;</span><span class="w"> </span><span class="mi">2</span>
 </code></pre></div>
-
 
 <p>(Calling <code>f g</code> with these definitions does <em>not</em> result in the same trace in GHCi 8.6.5 as with the original definitions. However, the code has the expected behavior if loaded into GHCi from a source file like <a href="#Sharing">that below</a>.)</p>
 <p>Two things to point out here. First, every function definition is a lambda. Second, <code>g</code> was turned into a <em>let</em> expression because we can only apply functions to variables or literals (in Core), not to function calls. <em>Edited to add:</em> It would be reasonable to ask why <code>g = const (trace "hi g" 2)</code>  doesn&#8217;t translate to <code>\y -&gt; let {tg = trace "hi g" 2} in const tg y</code> (similar to <code>f</code>), to which the pragmatic answer is that <em>apparently</em> the order is the&nbsp;following:</p>
@@ -95,124 +92,108 @@
 </ol>
 <h2>Evaluation with&nbsp;sharing</h2>
 <p>This is what happens during the evaluation of <code>f g</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nf">ans</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">g</span>
+<div class="highlight"><pre><span></span><code><span class="nf">ans</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">g</span>
 </code></pre></div>
-
 
 <p><code>ans</code> is a function call, so its evaluation proceeds with substituting <code>g</code> for the argument of <code>f</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nf">ans</span> <span class="ow">=</span> <span class="kr">let</span> <span class="p">{</span><span class="n">x3</span> <span class="ow">=</span> <span class="n">g</span> <span class="mi">3</span><span class="p">;</span> <span class="n">x10</span> <span class="ow">=</span> <span class="n">g</span> <span class="mi">10</span><span class="p">}</span> <span class="kr">in</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">x3</span> <span class="n">x10</span>
+<div class="highlight"><pre><span></span><code><span class="nf">ans</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span><span class="p">{</span><span class="n">x3</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">x10</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="mi">10</span><span class="p">}</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="n">x10</span>
 </code></pre></div>
-
 
 <p><code>ans</code> is a <em>let</em> expression, so we put the following <em>thunks</em> for <code>x3</code> and <code>x10</code> on the heap under some unique&nbsp;name:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Heap:</span>
-<span class="nf">ans_x3</span> <span class="ow">=</span> <span class="n">g</span> <span class="mi">3</span>
-<span class="nf">ans_x10</span> <span class="ow">=</span> <span class="n">g</span> <span class="mi">10</span>
+<span class="nf">ans_x3</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="mi">3</span>
+<span class="nf">ans_x10</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
-
 
 <p>&#8230;and then proceed with evaluating the <em>in</em>&nbsp;part:</p>
-<div class="highlight"><pre><span></span><code><span class="nf">ans</span> <span class="ow">=</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">ans_x3</span> <span class="n">ans_x10</span>
+<div class="highlight"><pre><span></span><code><span class="nf">ans</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="n">ans_x3</span><span class="w"> </span><span class="n">ans_x10</span>
 </code></pre></div>
-
 
 <p>During the evaluation of this function call, <code>ans_x3</code> will be evaluated (or potentially <code>ans_x10</code> first, or both in parallel). <code>ans_x3</code> is a function call, so first we evaluate <code>g</code> to a lambda. As <code>g</code> is a <em>let</em> expression, we create a closure for <code>trace "hi g" 2</code> on the heap, and then continue with the <em>in</em> part of <code>g</code> (<code>\y -&gt; const tg y</code>). This is a lambda now, meaning it&#8217;s in weak head normal form, so the heap contents for <code>g</code> is overwritten with&nbsp;that:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Heap:</span>
-<span class="nf">g_tg</span> <span class="ow">=</span> <span class="n">trace</span> <span class="s">&quot;hi g&quot;</span> <span class="mi">2</span>
-<span class="nf">g</span> <span class="ow">=</span> <span class="nf">\</span><span class="n">y</span> <span class="ow">-&gt;</span> <span class="n">const</span> <span class="n">g_tg</span> <span class="n">y</span>
+<span class="nf">g_tg</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&quot;</span><span class="w"> </span><span class="mi">2</span>
+<span class="nf">g</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="n">y</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">g_tg</span><span class="w"> </span><span class="n">y</span>
 </code></pre></div>
-
 
 <p>Back to <code>ans_x3</code>, now the argument <code>3</code> is substituted in the definition of <code>g</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nf">ans_x3</span> <span class="ow">=</span> <span class="n">const</span> <span class="n">g_tg</span> <span class="mi">3</span>
+<div class="highlight"><pre><span></span><code><span class="nf">ans_x3</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">g_tg</span><span class="w"> </span><span class="mi">3</span>
 </code></pre></div>
-
 
 <p>This is a function call, with <code>const</code> already a lambda <code>\x _ -&gt; x</code>, so the arguments can now be substituted in the body, leaving us&nbsp;with</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Heap:</span>
-<span class="nf">ans_x3</span> <span class="ow">=</span> <span class="n">g_tg</span>  <span class="c1">-- (Pointer to the same address as g_tg.)</span>
+<span class="nf">ans_x3</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g_tg</span><span class="w">  </span><span class="c1">-- (Pointer to the same address as g_tg.)</span>
 </code></pre></div>
-
 
 <p>During the evaluation of <code>g_tg</code>, the magic printout happens (<code>hi g</code> on stdout), and its value is resolved to be <code>2</code>, so the heap is updated as&nbsp;such:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Heap:</span>
-<span class="nf">g_tg</span> <span class="ow">=</span> <span class="mi">2</span>
+<span class="nf">g_tg</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">2</span>
 </code></pre></div>
-
 
 <p>And <code>ans_x3</code> is a pointer to the same memory content <code>2</code>.</p>
 <p>Analogously, the evaluation of <code>ans_x10</code> proceeds as&nbsp;such:</p>
-<div class="highlight"><pre><span></span><code><span class="nf">ans_x10</span> <span class="ow">=</span> <span class="n">const</span> <span class="n">g_tg</span> <span class="mi">10</span>
-<span class="nf">ans_x10</span> <span class="ow">=</span> <span class="n">g_tg</span>
+<div class="highlight"><pre><span></span><code><span class="nf">ans_x10</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">g_tg</span><span class="w"> </span><span class="mi">10</span>
+<span class="nf">ans_x10</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g_tg</span>
 <span class="c1">-- let ans_x10 points to the memory location of g_tg:</span>
-<span class="nf">ans_x10</span> <span class="ow">=</span> <span class="mi">2</span>
+<span class="nf">ans_x10</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">2</span>
 </code></pre></div>
-
 
 <p>Finally, <code>ans = (+) ans_x3 ans_x10</code>, which evaluates to <code>ans = 4</code>.</p>
 <h2>Evaluation without&nbsp;sharing</h2>
 <p>In contrast, the evaluation of <code>f g'</code> proceeds as&nbsp;follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nf">ans&#39;</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">g&#39;</span>
-<span class="nf">ans&#39;</span> <span class="ow">=</span> <span class="kr">let</span> <span class="p">{</span><span class="n">x3</span> <span class="ow">=</span> <span class="n">g&#39;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">x10</span> <span class="ow">=</span> <span class="n">g&#39;</span> <span class="mi">10</span><span class="p">}</span> <span class="kr">in</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">x3</span> <span class="n">x10</span>
+<div class="highlight"><pre><span></span><code><span class="nf">ans&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">g&#39;</span>
+<span class="nf">ans&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span><span class="p">{</span><span class="n">x3</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g&#39;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">x10</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g&#39;</span><span class="w"> </span><span class="mi">10</span><span class="p">}</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="n">x10</span>
 </code></pre></div>
-
 
 <div class="highlight"><pre><span></span><code><span class="c1">-- Heap:</span>
-<span class="nf">ans_x3&#39;</span>  <span class="ow">=</span> <span class="n">g&#39;</span> <span class="mi">3</span>
-<span class="nf">ans_x10&#39;</span> <span class="ow">=</span> <span class="n">g&#39;</span> <span class="mi">10</span>
+<span class="nf">ans_x3&#39;</span><span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="n">g&#39;</span><span class="w"> </span><span class="mi">3</span>
+<span class="nf">ans_x10&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">g&#39;</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
 
-
-<div class="highlight"><pre><span></span><code><span class="nf">ans&#39;</span> <span class="ow">=</span> <span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="n">ans_x3&#39;</span> <span class="n">ans_x10&#39;</span>
-<span class="nf">ans_x3&#39;</span> <span class="ow">=</span> <span class="n">trace</span> <span class="s">&quot;hi g&#39;&quot;</span> <span class="mi">2</span>
+<div class="highlight"><pre><span></span><code><span class="nf">ans&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="n">ans_x3&#39;</span><span class="w"> </span><span class="n">ans_x10&#39;</span>
+<span class="nf">ans_x3&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&#39;&quot;</span><span class="w"> </span><span class="mi">2</span>
 </code></pre></div>
-
 
 <p>Now <code>hi g'</code> is printed, and the heap is&nbsp;updated:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Heap:</span>
-<span class="nf">ans_x3&#39;</span> <span class="ow">=</span> <span class="mi">2</span>
+<span class="nf">ans_x3&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">2</span>
 </code></pre></div>
-
 
 <p>When evaluating <code>ans_x10'</code>, we <strong>again print</strong> <code>hi g'</code>, and store the result of the trace under a different&nbsp;thunk:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">-- Heap:</span>
-<span class="nf">ans_x10&#39;</span> <span class="ow">=</span> <span class="mi">2</span>
+<span class="nf">ans_x10&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="mi">2</span>
 </code></pre></div>
-
 
 <p>Now <code>ans'</code> evaluates to <code>(+) 2 2</code>, i.e. <code>4</code>.</p>
 <h2>Attempt at verifying my translated&nbsp;definitions</h2>
 <p>I attempted to verify what I was saying above about the definitions of <code>f</code>, <code>g</code>, <code>g'</code> in Core, using the <code>-ddump-simpl</code> compiler flag of GHCi, but it didn&#8217;t fulfil my&nbsp;expectations.</p>
 <p><a name="Sharing"></a>Sharing.hs:</p>
-<div class="highlight"><pre><span></span><code><span class="kr">module</span> <span class="nn">Sharing</span> <span class="kr">where</span>
+<div class="highlight"><pre><span></span><code><span class="kr">module</span><span class="w"> </span><span class="nn">Sharing</span><span class="w"> </span><span class="kr">where</span>
 
-<span class="kr">import</span> <span class="nn">Debug.Trace</span>
+<span class="kr">import</span><span class="w"> </span><span class="nn">Debug.Trace</span>
 
-<span class="nf">f</span> <span class="n">x</span> <span class="ow">=</span> <span class="p">(</span><span class="n">x</span> <span class="p">(</span><span class="mi">3</span><span class="ow">::</span><span class="kt">Int</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">::</span> <span class="kt">Int</span>
-<span class="nf">g</span>   <span class="ow">=</span> <span class="n">const</span> <span class="p">(</span><span class="n">trace</span> <span class="s">&quot;hi g&quot;</span> <span class="p">(</span><span class="mi">2</span><span class="ow">::</span><span class="kt">Int</span><span class="p">))</span>  <span class="c1">-- share</span>
-<span class="nf">g&#39;</span>  <span class="ow">=</span> <span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">trace</span> <span class="s">&quot;hi g&#39;&quot;</span> <span class="p">(</span><span class="mi">2</span><span class="ow">::</span><span class="kt">Int</span><span class="p">)</span>   <span class="c1">-- don&#39;t share</span>
-<span class="nf">g&#39;&#39;</span> <span class="ow">=</span> <span class="kr">let</span> <span class="p">{</span><span class="n">tg</span> <span class="ow">=</span> <span class="n">trace</span> <span class="s">&quot;hi g&quot;</span> <span class="p">(</span><span class="mi">2</span><span class="ow">::</span><span class="kt">Int</span><span class="p">)}</span> <span class="kr">in</span> <span class="nf">\</span><span class="n">y</span> <span class="ow">-&gt;</span> <span class="n">const</span> <span class="n">tg</span> <span class="n">y</span>  <span class="c1">-- share (equivalent to g)</span>
+<span class="nf">f</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="ow">::</span><span class="kt">Int</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Int</span>
+<span class="nf">g</span><span class="w">   </span><span class="ow">=</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="p">(</span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&quot;</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="ow">::</span><span class="kt">Int</span><span class="p">))</span><span class="w">  </span><span class="c1">-- share</span>
+<span class="nf">g&#39;</span><span class="w">  </span><span class="ow">=</span><span class="w"> </span><span class="nf">\</span><span class="kr">_</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&#39;&quot;</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="ow">::</span><span class="kt">Int</span><span class="p">)</span><span class="w">   </span><span class="c1">-- don&#39;t share</span>
+<span class="nf">g&#39;&#39;</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span><span class="p">{</span><span class="n">tg</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="s">&quot;hi g&quot;</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="ow">::</span><span class="kt">Int</span><span class="p">)}</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">\</span><span class="n">y</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="n">const</span><span class="w"> </span><span class="n">tg</span><span class="w"> </span><span class="n">y</span><span class="w">  </span><span class="c1">-- share (equivalent to g)</span>
 </code></pre></div>
-
 
 <p>In&nbsp;GHCi:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Prelude</span><span class="o">&gt;</span> <span class="p">:</span><span class="k">set</span> <span class="o">-</span><span class="n">ddump</span><span class="o">-</span><span class="n">simpl</span> <span class="o">-</span><span class="n">dsuppress</span><span class="o">-</span><span class="k">all</span> <span class="o">-</span><span class="n">Wno</span><span class="o">-</span><span class="n">missing</span><span class="o">-</span><span class="n">signatures</span>
-<span class="n">Prelude</span><span class="o">&gt;</span> <span class="p">:</span><span class="n">l</span> <span class="n">Sharing</span>
-<span class="p">[</span><span class="mi">1</span> <span class="k">of</span> <span class="mi">1</span><span class="p">]</span> <span class="n">Compiling</span> <span class="n">Sharing</span>          <span class="p">(</span> <span class="n">Sharing</span><span class="p">.</span><span class="n">hs</span><span class="p">,</span> <span class="n">interpreted</span> <span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nx">Prelude</span><span class="p">&gt;</span><span class="w"> </span><span class="p">:</span><span class="nx">set</span><span class="w"> </span><span class="o">-</span><span class="nx">ddump</span><span class="o">-</span><span class="nx">simpl</span><span class="w"> </span><span class="o">-</span><span class="nx">dsuppress</span><span class="o">-</span><span class="nx">all</span><span class="w"> </span><span class="o">-</span><span class="nx">Wno</span><span class="o">-</span><span class="nx">missing</span><span class="o">-</span><span class="nx">signatures</span>
+<span class="nx">Prelude</span><span class="p">&gt;</span><span class="w"> </span><span class="p">:</span><span class="nx">l</span><span class="w"> </span><span class="nx">Sharing</span>
+<span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="nx">Compiling</span><span class="w"> </span><span class="nx">Sharing</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="nx">Sharing</span><span class="p">.</span><span class="nx">hs</span><span class="p">,</span><span class="w"> </span><span class="nx">interpreted</span><span class="w"> </span><span class="p">)</span>
 
-<span class="o">====================</span> <span class="n">Tidy</span> <span class="n">Core</span> <span class="o">====================</span>
-<span class="k">Result</span> <span class="k">size</span> <span class="k">of</span> <span class="n">Tidy</span> <span class="n">Core</span>
-  <span class="o">=</span> <span class="err">{</span><span class="n">terms</span><span class="p">:</span> <span class="mi">52</span><span class="p">,</span> <span class="n">types</span><span class="p">:</span> <span class="mi">39</span><span class="p">,</span> <span class="n">coercions</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">joins</span><span class="p">:</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="err">}</span>
+<span class="o">====================</span><span class="w"> </span><span class="nx">Tidy</span><span class="w"> </span><span class="nx">Core</span><span class="w"> </span><span class="o">====================</span>
+<span class="nx">Result</span><span class="w"> </span><span class="nx">size</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">Tidy</span><span class="w"> </span><span class="nx">Core</span>
+<span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="nx">terms</span><span class="p">:</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="nx">types</span><span class="p">:</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="nx">coercions</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nx">joins</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">}</span>
 
-<span class="n">f</span> <span class="o">=</span> <span class="err">\</span> <span class="n">x_a1Fl</span> <span class="o">-&gt;</span> <span class="o">+</span> <span class="err">$</span><span class="n">fNumInt</span> <span class="p">(</span><span class="n">x_a1Fl</span> <span class="p">(</span><span class="n">I</span><span class="o">#</span> <span class="mi">3</span><span class="o">#</span><span class="p">))</span> <span class="p">(</span><span class="n">x_a1Fl</span> <span class="p">(</span><span class="n">I</span><span class="o">#</span> <span class="mi">10</span><span class="o">#</span><span class="p">))</span>
-<span class="k">g</span> <span class="o">=</span> <span class="err">\</span> <span class="o">@</span> <span class="n">b_a1Gi</span> <span class="o">-&gt;</span> <span class="n">const</span> <span class="p">(</span><span class="n">trace</span> <span class="p">(</span><span class="n">unpackCString</span><span class="o">#</span> <span class="ss">&quot;hi g&quot;</span><span class="o">#</span><span class="p">)</span> <span class="p">(</span><span class="n">I</span><span class="o">#</span> <span class="mi">2</span><span class="o">#</span><span class="p">))</span>
-<span class="k">g</span><span class="s1">&#39; = \ @ p_a1G6 -&gt; \ _ -&gt; trace (unpackCString# &quot;hi g&#39;</span><span class="ss">&quot;#) (I# 2#)</span>
-<span class="ss">tg_r1F4 = trace (unpackCString# &quot;</span><span class="n">hi</span> <span class="k">g</span><span class="err">&quot;</span><span class="o">#</span><span class="p">)</span> <span class="p">(</span><span class="n">I</span><span class="o">#</span> <span class="mi">2</span><span class="o">#</span><span class="p">)</span>
-<span class="k">g</span><span class="s1">&#39;&#39;</span> <span class="o">=</span> <span class="err">\</span> <span class="o">@</span> <span class="n">b_a1FJ</span> <span class="o">-&gt;</span> <span class="err">\</span> <span class="n">y_a1Fn</span> <span class="o">-&gt;</span> <span class="n">const</span> <span class="n">tg_r1F4</span> <span class="n">y_a1Fn</span>
+<span class="nx">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="nx">x_a1Fl</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">$</span><span class="nx">fNumInt</span><span class="w"> </span><span class="p">(</span><span class="nx">x_a1Fl</span><span class="w"> </span><span class="p">(</span><span class="nx">I</span><span class="err">#</span><span class="w"> </span><span class="mi">3</span><span class="err">#</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nx">x_a1Fl</span><span class="w"> </span><span class="p">(</span><span class="nx">I</span><span class="err">#</span><span class="w"> </span><span class="mi">10</span><span class="err">#</span><span class="p">))</span>
+<span class="nx">g</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="nx">b_a1Gi</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">const</span><span class="w"> </span><span class="p">(</span><span class="nx">trace</span><span class="w"> </span><span class="p">(</span><span class="nx">unpackCString</span><span class="err">#</span><span class="w"> </span><span class="s">&quot;hi g&quot;</span><span class="err">#</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">I</span><span class="err">#</span><span class="w"> </span><span class="mi">2</span><span class="err">#</span><span class="p">))</span>
+<span class="nx">g</span><span class="err">&#39;</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="nx">p_a1G6</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">trace</span><span class="w"> </span><span class="p">(</span><span class="nx">unpackCString</span><span class="err">#</span><span class="w"> </span><span class="s">&quot;hi g&#39;&quot;</span><span class="err">#</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">I</span><span class="err">#</span><span class="w"> </span><span class="mi">2</span><span class="err">#</span><span class="p">)</span>
+<span class="nx">tg_r1F4</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">trace</span><span class="w"> </span><span class="p">(</span><span class="nx">unpackCString</span><span class="err">#</span><span class="w"> </span><span class="s">&quot;hi g&quot;</span><span class="err">#</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">I</span><span class="err">#</span><span class="w"> </span><span class="mi">2</span><span class="err">#</span><span class="p">)</span>
+<span class="nx">g</span><span class="err">&#39;&#39;</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="nx">b_a1FJ</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">\</span><span class="w"> </span><span class="nx">y_a1Fn</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">const</span><span class="w"> </span><span class="nx">tg_r1F4</span><span class="w"> </span><span class="nx">y_a1Fn</span>
 
-<span class="p">...</span> <span class="k">and</span> <span class="k">some</span> <span class="k">more</span> <span class="n">stuff</span>
+<span class="o">...</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">some</span><span class="w"> </span><span class="nx">more</span><span class="w"> </span><span class="nx">stuff</span>
 </code></pre></div>
-
 
 <p>Nonetheless, as <a href="https://stackoverflow.com/a/6121495/8424390">a <span class="caps">SO</span> answer describes</a>, we can see that a function application in Core is defined as <code>Expr Atom</code>, where <em>Atom</em> is <code>var | Literal</code>. I attempted to install <a href="http://hackage.haskell.org/package/ghc-core">ghc-core</a> but the build failed, so further analysis is put on the&nbsp;shelf.</p>
 <h2>Conclusions</h2>

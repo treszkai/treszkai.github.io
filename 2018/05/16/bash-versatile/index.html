@@ -46,7 +46,7 @@
     <h1><a href="https://www.treszkai.com/2018/05/16/bash-versatile/">Some versatile tools for&nbsp;bash</a></h1>
   </div>
   <div class="article__meta">
-    <p class="article__meta__post-date">Posted on: 16 Mai. 2018</p>
+    <p class="article__meta__post-date">Posted on: 16 May. 2018</p>
     </p>
   </div>
   <div class="article__text">
@@ -54,15 +54,14 @@
 <p>Recently I faced the task of renaming a set of files {<code>foo 02.jpg</code>, &#8230;, <code>foo 74.jpg</code>} to {<code>foo 06.jpg</code>, &#8230;, <code>foo 78.jpg</code>}, while keeping the order. My approach contained nothing&nbsp;extraordinary:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
-<span class="k">for</span> i in <span class="sb">`</span>seq <span class="m">74</span> <span class="m">2</span><span class="sb">`</span>
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>seq<span class="w"> </span><span class="m">74</span><span class="w"> </span><span class="m">2</span><span class="sb">`</span>
 <span class="k">do</span>
-    <span class="nb">printf</span> -v oldname <span class="s2">&quot;foo %02d.jpg&quot;</span> <span class="nv">$i</span>
-    <span class="nb">printf</span> -v newname <span class="s2">&quot;foo %02d.jpg&quot;</span> <span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$i</span><span class="s2">+4&quot;</span> <span class="p">|</span> bc<span class="k">)</span>
+<span class="w">    </span><span class="nb">printf</span><span class="w"> </span>-v<span class="w"> </span>oldname<span class="w"> </span><span class="s2">&quot;foo %02d.jpg&quot;</span><span class="w"> </span><span class="nv">$i</span>
+<span class="w">    </span><span class="nb">printf</span><span class="w"> </span>-v<span class="w"> </span>newname<span class="w"> </span><span class="s2">&quot;foo %02d.jpg&quot;</span><span class="w"> </span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$i</span><span class="s2">+4&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bc<span class="k">)</span>
 
-    mv <span class="s2">&quot;</span><span class="nv">$oldname</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="nv">$newname</span><span class="s2">&quot;</span>
+<span class="w">    </span>mv<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$oldname</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$newname</span><span class="s2">&quot;</span>
 <span class="k">done</span>
 </code></pre></div>
-
 
 <p>Yet there were some educational points in&nbsp;it:</p>
 <ul>

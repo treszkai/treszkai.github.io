@@ -110,10 +110,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <div class="highlight"><pre><span></span><code><span class="n">posterior</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
-
 
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">plot_beta</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">rv</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1001</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">rv</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_kwargs</span><span class="p">)</span>
@@ -125,7 +123,6 @@ document.addEventListener("DOMContentLoaded", function() {
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </code></pre></div>
 
-
 <div class="highlight"><pre><span></span><code><span class="n">plot_beta</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">),</span> <span class="n">posterior</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">)</span>
@@ -133,23 +130,21 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 
-
 <p><img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-big.svg"></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">ramanujan</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Series that converges to 1/π at an exponential rate,</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Series that converges to 1/π at an exponential rate,</span>
 <span class="sd">    by Srinivasa Ramanujan&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="mi">8</span><span class="o">**.</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">9801</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">8</span><span class="o">**</span><span class="mf">.5</span> <span class="o">/</span> <span class="mi">9801</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
                                <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
                                <span class="o">/</span> <span class="mi">396</span><span class="o">**</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
                                <span class="o">*</span> <span class="p">(</span><span class="mi">1103</span> <span class="o">+</span> <span class="mi">26390</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
                               <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1/ramanujan(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) - π ≈ </span><span class="si">{</span><span class="mi">1</span><span class="o">/</span><span class="n">ramanujan</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1/ramanujan(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) - π ≈ </span><span class="si">{</span><span class="mi">1</span><span class="o">/</span><span class="n">ramanujan</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># Easter egg. Thanks for reading!</span>
 </code></pre></div>
-
 
 <blockquote>
 <p>1/ramanujan(1) - π ≈&nbsp;7.64e-08</p>
@@ -163,11 +158,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 
-
 <p><img alt="svg" src="https://www.treszkai.com/2019/07/24/approaching-certainty/beta-1000-pdf-zoomed.svg"></p>
 <div class="highlight"><pre><span></span><code><span class="n">posterior</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </code></pre></div>
-
 
 <blockquote>
 <p>0.999001996007984</p>
@@ -175,13 +168,11 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P(θ &gt; 0.999) = </span><span class="si">{:d}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">posterior</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">0.999</span><span class="p">)))))</span>
 </code></pre></div>
 
-
 <blockquote>
 <p>P(θ &gt; 0.999) =&nbsp;63%</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P(θ &gt; 0.998) = </span><span class="si">{:d}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">posterior</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">0.998</span><span class="p">)))))</span>
 </code></pre></div>
-
 
 <blockquote>
 <p>P(θ &gt; 0.998) =&nbsp;86%</p>

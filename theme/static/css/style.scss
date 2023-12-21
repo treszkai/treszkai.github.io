@@ -22,6 +22,8 @@ a:link    { text-decoration: underline ;      }
 a:hover   { text-decoration: none ; }
 // a:visited {  color: #9404ee; }
 
+time { font-style: italic; }
+
 @media (prefers-color-scheme: dark) {
   body {
     color:#c9d1d9;

@@ -1,7 +1,10 @@
+footer: clicking name leads to 404
+
 pygments - light background
 better style for header line
 remove my name from article.html
 citations - references.bib was faulty
+add width and height to img elements to prevent layout reflow
 
 How to check all internal links?
 Check most JS executes without errors

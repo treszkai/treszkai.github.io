@@ -3,6 +3,9 @@
 from hashlib import md5
 from pathlib import Path
 
+import scss
+
+
 AUTHOR = 'Laszlo Treszkai'
 SITENAME = 'Laszlo Treszkai'
 SITEURL = ''
@@ -22,11 +25,15 @@ PAGE_PATHS = ['pages', 'legacy_redirects']
 # don't process html files
 READERS = {'html': None}
 
+# generate style.css
+style_scss = Path(THEME) / 'static' / 'css' / 'style.scss'
 style_css = Path(THEME) / 'static' / 'css' / 'style.css'
+css_contents = scss.Compiler(search_path=[style_scss.parent], output_style='compressed').compile_string(style_scss.read_text())
+style_css.write_text(css_contents)
 # hard link style.css to style-{md5}.css, and delete the old one
 for p in style_css.parent.glob('style-????????.css'):
     p.unlink()
-STYLE_CSS_MD5 = md5(style_css.read_bytes()).hexdigest()[:8]
+STYLE_CSS_MD5 = md5(css_contents.encode()).hexdigest()[:8]
 style_css.with_name(f'{style_css.stem}-{STYLE_CSS_MD5}.css').hardlink_to(style_css)
 
 EXTRA_PATHS = ['extra']

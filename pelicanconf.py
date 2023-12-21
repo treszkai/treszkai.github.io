@@ -27,7 +27,7 @@ style_css = Path(THEME) / 'static' / 'css' / 'style.css'
 for p in style_css.parent.glob('style-????????.css'):
     p.unlink()
 STYLE_CSS_MD5 = md5(style_css.read_bytes()).hexdigest()[:8]
-style_css.link_to(style_css.with_name(f'{style_css.stem}-{STYLE_CSS_MD5}.css'))
+style_css.with_name(f'{style_css.stem}-{STYLE_CSS_MD5}.css').hardlink_to(style_css)
 
 EXTRA_PATHS = ['extra']
 

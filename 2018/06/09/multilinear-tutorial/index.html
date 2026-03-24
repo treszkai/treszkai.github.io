@@ -65,8 +65,8 @@ document.addEventListener("DOMContentLoaded", function() {
   <div class="article__text">
     <p>Solutions for exercise 1 of <a href="https://www.youtube.com/watch?v=5oeWX3NUhMA">tutorial 3</a> of the <a href="https://gravity-and-light.herokuapp.com">International Winter School on Gravity and Light</a>. (<a href="https://www.youtube.com/watch?v=mbv3T15nWq0">Link to video of lecture 3</a>.)</p>
 <h2>Notation</h2>
-<p>On this solution sheet, I&#8217;ll speak of a vector space <script type="math/tex">(V,+,\cdot)</script> over a field <script type="math/tex">K</script>, where <script type="math/tex">+: V\times V \rightarrow V</script> is the addition and <script type="math/tex">\cdot: K \times V \rightarrow V</script> is called (scalar) multiplication or S-multiplication. The field <script type="math/tex">(K, \textcolor{red}{+}, \textcolor{red}{\cdot})</script> has <script type="math/tex">\textcolor{red}{+}:K\times K \rightarrow K</script> as addition and <script type="math/tex">\textcolor{red}{\cdot}:K\times K \rightarrow K</script> as multiplication operations. The dot is often omitted, i.e. <script type="math/tex">a \mathbf v</script> is short for <script type="math/tex">a \cdot \mathbf v</script>, <script type="math/tex">a b</script> is short for <script type="math/tex">a \textcolor{red}{\cdot} b</script>. (Note that the lecture dealt with real vector spaces, i.e. the field <script type="math/tex">K</script> was always the set of reals <script type="math/tex">\mathbb R</script>.)
-The scalars, i.e. the elements of <script type="math/tex">K</script>, are denoted with normal letters <script type="math/tex">a,b</script>, and the vectors, i.e. the elements of <script type="math/tex">V</script>, are denoted with boldface letters <script type="math/tex">\mathbf u, \mathbf v, \mathbf w</script>.</p>
+<p>On this solution sheet, I&#8217;ll speak of a vector space ((V,+,\cdot)) over a field (K), where (+: V\times V \rightarrow V) is the addition and (\cdot: K \times V \rightarrow V) is called (scalar) multiplication or S-multiplication. The field ((K, \textcolor{red}{+}, \textcolor{red}{\cdot})) has (\textcolor{red}{+}:K\times K \rightarrow K) as addition and (\textcolor{red}{\cdot}:K\times K \rightarrow K) as multiplication operations. The dot is often omitted, i.e. (a \mathbf v) is short for (a \cdot \mathbf v), (a b) is short for (a \textcolor{red}{\cdot} b). (Note that the lecture dealt with real vector spaces, i.e. the field (K) was always the set of reals (\mathbb R).)
+The scalars, i.e. the elements of (K), are denoted with normal letters (a,b), and the vectors, i.e. the elements of (V), are denoted with boldface letters (\mathbf u, \mathbf v, \mathbf&nbsp;w).</p>
 <script type="text/javascript">
 function showById(id, btn) {
     document.getElementById(id).style.display = 'block';
@@ -91,14 +91,13 @@ function hideByClass(cls) {
 <p><em>Answer:</em>&nbsp;false.</p>
 <p>Clarification:</p>
 <ul>
-<li>The scalar multiplication <script type="math/tex">\cdot: K \times V \rightarrow V</script> doesn&#8217;t even have the same sets in its two arguments, i.e. <script type="math/tex">\mathbf v \cdot a</script> is not even&nbsp;defined.</li>
-<li>The vector space has the commutativity of <em>addition</em> as an axiom: for any <script type="math/tex">\mathbf u,\mathbf v \in V</script>, <script type="math/tex">{\mathbf u+\mathbf v} = {\mathbf v + \mathbf u}</script>.</li>
-<li>The underlying field <script type="math/tex">K</script>
-<em>does</em> have the commutativity of multiplication as a field axiom: for any <script type="math/tex">a,b \in K</script>, <script type="math/tex">a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot} a</script>.</li>
-<li>As a consequence, for any <script type="math/tex">\mathbf v \in V</script> and <script type="math/tex">a, b \in K</script>,</li>
+<li>The scalar multiplication (\cdot: K \times V \rightarrow V) doesn&#8217;t even have the same sets in its two arguments, i.e. (\mathbf v \cdot a) is not even&nbsp;defined.</li>
+<li>The vector space has the commutativity of <em>addition</em> as an axiom: for any (\mathbf u,\mathbf v \in V), ({\mathbf u+\mathbf v} = {\mathbf v + \mathbf&nbsp;u}).</li>
+<li>The underlying field (K) <em>does</em> have the commutativity of multiplication as a field axiom: for any (a,b \in K), (a \textcolor{red}{\cdot} b = b \textcolor{red}{\cdot}&nbsp;a).</li>
+<li>As a consequence, for any (\mathbf v \in V) and (a, b \in&nbsp;K),</li>
 </ul>
-<script type="math/tex; mode=display">% <![CDATA[
- a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v). %]]></script>
+<p>[
+ a (b \mathbf v) = (a\textcolor{red}{\cdot} b)\mathbf v = (b \textcolor{red}{\cdot} a)\mathbf v = b(a \mathbf v).&nbsp;]</p>
 </div>
 <p><strong>?.</strong> <em>Every vector is a matrix with only one column.</em> <a href="#" onclick="showById('answer2', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer2" style="display: none;">
@@ -106,7 +105,7 @@ function hideByClass(cls) {
 <p>Clarification:</p>
 <ul>
 <li>By definition, a vector is an element of a vector space. If we fix a basis for the vector space, then any vector can be represented by an ordered set of numbers, which could be treated as a column vector, i.e. a matrix with one column. However, this representation depends on the choice of&nbsp;basis.</li>
-<li>The <a href="https://youtu.be/5oeWX3NUhMA?t=1m09s">official answer</a> brings up as a counterexample the vector space of polynomials up to some finite degree. However, here again we could represent the vectors as a column vector with any choice of a basis. E.g. using the standard basis, <script type="math/tex">p(x) = 0x^2 + 4x + 5 </script> could be represented as <script type="math/tex">\mathbf p = [0, 4, 5]^T</script>.</li>
+<li>The <a href="https://youtu.be/5oeWX3NUhMA?t=1m09s">official answer</a> brings up as a counterexample the vector space of polynomials up to some finite degree. However, here again we could represent the vectors as a column vector with any choice of a basis. E.g. using the standard basis, (p(x) = 0x^2 + 4x + 5 ) could be represented as (\mathbf p = [0, 4,&nbsp;5]^T).</li>
 </ul>
 </div>
 <p><strong>?.</strong> <em>Every linear map between vector spaces can be represented by a unique quadratic matrix.</em> <a href="#" onclick="showById('answer3', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
@@ -114,8 +113,8 @@ function hideByClass(cls) {
 <p><em>Answer:</em>&nbsp;false.</p>
 <p>Clarification:</p>
 <ul>
-<li>As above, a linear map <script type="math/tex">f: V \rightarrow W </script> can be represented as a unique matrix only once bases are chosen for its domain <script type="math/tex">V</script> and codomain <script type="math/tex">W</script>.</li>
-<li>This matrix is quadratic only if the dimensions of <script type="math/tex">V</script> and <script type="math/tex">W</script> are&nbsp;equal.</li>
+<li>As above, a linear map (f: V \rightarrow W ) can be represented as a unique matrix only once bases are chosen for its domain (V) and codomain&nbsp;(W).</li>
+<li>This matrix is quadratic only if the dimensions of (V) and (W) are&nbsp;equal.</li>
 </ul>
 </div>
 <p><strong>?.</strong> <em>Every vector space has a corresponding dual vector space.</em> <a href="#" onclick="showById('answer4', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
@@ -123,17 +122,17 @@ function hideByClass(cls) {
 <p><em>Answer:</em>&nbsp;true.</p>
 <p>Clarification:</p>
 <ul>
-<li>The dual space of a vector space <script type="math/tex">V</script> is defined as the set of linear maps from <script type="math/tex">V</script> to <script type="math/tex">K</script>: <script type="math/tex">V^* \coloneqq Hom(V,K) \coloneqq \{φ\ \vert \ φ: V \linmap K\} </script>.</li>
+<li>The dual space of a vector space (V) is defined as the set of linear maps from (V) to (K): (V^* \coloneqq Hom(V,K) \coloneqq {φ\ \vert \ φ: V \linmap K}&nbsp;).</li>
 </ul>
 </div>
-<p><strong>?.</strong> <em>The set of everywhere positive functions on <script type="math/tex">\mathbb R</script> with pointwise addition and S-multiplication is a vector space.</em> <a href="#" onclick="showById('answer5', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<p><strong>?.</strong> <em>The set of everywhere positive functions on (\mathbb R) with pointwise addition and S-multiplication is a vector space.</em> <a href="#" onclick="showById('answer5', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer5" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
 <p>Clarification:</p>
 <ul>
-<li>This set doesn&#8217;t have a commutative identity element: by the field axioms of <script type="math/tex">\mathbb R</script>, it could only be the constant zero function, but that&#8217;s not an element of the&nbsp;set.</li>
+<li>This set doesn&#8217;t have a commutative identity element: by the field axioms of (\mathbb R), it could only be the constant zero function, but that&#8217;s not an element of the&nbsp;set.</li>
 <li>This set doesn&#8217;t have a commutative inverse for any&nbsp;element.</li>
-<li>For the scalar multiplication we&#8217;d need to know the underlying field. Usually it would be <script type="math/tex">\mathbb R</script>, but then S-multiplication with a negative number wouldn&#8217;t result in an everywhere positive function. (Although one can construct a field from <script type="math/tex">\mathbb R^+</script>, I wonder how well that would combine with the above attempt at a vector&nbsp;space.)</li>
+<li>For the scalar multiplication we&#8217;d need to know the underlying field. Usually it would be (\mathbb R), but then S-multiplication with a negative number wouldn&#8217;t result in an everywhere positive function. (Although one can construct a field from (\mathbb R^+), I wonder how well that would combine with the above attempt at a vector&nbsp;space.)</li>
 </ul>
 </div>
 <p>b) What is true about tensors and their&nbsp;components?</p>
@@ -142,74 +141,76 @@ function hideByClass(cls) {
 <p><em>Answer:</em>&nbsp;true.</p>
 <p>Clarification:</p>
 <ul>
-<li>The lecture didn&#8217;t mention tensor products, so a definition is in order. The product of an <script type="math/tex"> (l,k) </script>-tensor <script type="math/tex">S</script> and an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> is an <script type="math/tex"> (l+n,k+m) </script>-tensor <script type="math/tex"> S \otimes T </script>, whose <script type="math/tex"> (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) </script>-th component is the product of the relevant components of <script type="math/tex">S</script> and <script type="math/tex">T</script>:</li>
+<li>The lecture didn&#8217;t mention tensor products, so a definition is in order. The product of an ( (l,k) )-tensor (S) and an ( (n,m) )-tensor (T) is an ( (l+n,k+m) )-tensor ( S \otimes T ), whose ( (i_1, \ldots, i_{l+n}, j_1, \ldots, j_{k+m}) )-th component is the product of the relevant components of (S) and&nbsp;(T):</li>
 </ul>
-<script type="math/tex; mode=display">% <![CDATA[
- (S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}_ {j_1, \ldots, j_k, j_{k+1}, \ldots, j_{k+m} } =
-   S^{i_1, \ldots, i_l}_ {j_1, \ldots, j_k}
-   T^{i_{1}, \ldots, i_{n}}_ {j_{1}, \ldots, j_{m}}. %]]></script>
+<p>[
+ (S \otimes T)^{i_1, \ldots, i_l, i_{l+1}, \ldots, i_{l+n}}<em k_1="k+1"> {j_1, \ldots, j_k, j</em> =
+   S^{i_1, \ldots, i_l}}, \ldots, j_{k+m} <em 1> {j_1, \ldots, j_k}
+   T^{i</em>}, \ldots, i_{n}<em 1> {j</em>.
+]}, \ldots,&nbsp;j_{m}</p>
 <p><a href="https://en.wikipedia.org/wiki/Tensor#Tensor_product">Source:&nbsp;Wikipedia</a></p>
-<p>This means that if the arguments of <script type="math/tex"> S \otimes T </script> are</p>
+<p>This means that if the arguments of ( S \otimes T )&nbsp;are</p>
 <ul>
-<li>the <script type="math/tex">l+n</script> linear maps <script type="math/tex">φ^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i</script> for <script type="math/tex">1 \le p \le l+n</script>,&nbsp;and</li>
-<li>the <script type="math/tex">k+m</script> vectors <script type="math/tex"> \v_{(q)} = \sum^{dim V}_{j=1} v_{(q)}^j \e_j </script> for <script type="math/tex">1 \le q \le k+m</script>
-</li>
+<li>the (l+n) linear maps (φ^{(p)} = \sum^{dim V}_{i=1} \varphi^{(p)}_i \epsilon^i) for (1 \le p \le l+n),&nbsp;and</li>
+<li>the (k+m) vectors ( \v_{(q)} = \sum^{dim V}<em _q_="(q)">{j=1} v</em>^j \e_j ) for (1 \le q \le&nbsp;k+m)</li>
 </ul>
-<p>(with some particular choice of basis vectors <script type="math/tex">\{\e_i\}_i</script> and basis covectors <script type="math/tex">\{\epsilon^i\}_i</script> ),&nbsp;then</p>
-<script type="math/tex; mode=display">% <![CDATA[
+<p>(with some particular choice of basis vectors ({\e_i}_i) and basis covectors ({\epsilon^i}_i) ),&nbsp;then</p>
+<p>[
 \begin{aligned}
-(S\otimes T) &(φ^{(1)}, \ldots, φ^{(l+n)}, \v_{(1)}, \ldots, \v_{(k+m)}) = \\
-  &= S (φ^{(1)}, \ldots, φ^{(l)}, \v_{(1)}, \ldots, \v_{(k)})\,\cdot\,
-  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, \v_{(k+1)}, \ldots, \v_{(k+m)})\\
-  &= \Bigg(
+(S\otimes T) &amp;(φ^{(1)}, \ldots, φ^{(l+n)}, \v_{(1)}, \ldots, \v_{(k+m)}) = \
+  &amp;= S (φ^{(1)}, \ldots, φ^{(l)}, \v_{(1)}, \ldots, \v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, \v_{(k+1)}, \ldots, \v_{(k+m)})\
+  &amp;= \Bigg(
       \sum_{i_1}^{\dim V} \cdots \sum_{i_l}^{\dim V}
       \sum_{j_1}^{\dim V} \cdots \sum_{j_k}^{\dim V}
-      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+      \varphi^{(1)}<em i_l>{i_1} \ldots \varphi^{(l)}</em>
       v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
-      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
-  \Bigg) \cdot \phantom.\\
-  &\phantom{=} \Bigg(
-      \sum_{i_{l+1}}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      S^{i_1, \ldots, i_l}<em i__l_1="i_{l+1">{j_1, \ldots, j_k}
+  \Bigg) \cdot \phantom.\
+  &amp;\phantom{=} \Bigg(
+      \sum</em>
       \sum_{j_{k+1}}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
-      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      \varphi^{(l+1)}}}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V<em l_1="l+1">{i</em>}} \ldots \varphi^{(l+n)<em l_n="l+n">{i</em>
       v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
-      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
-  \Bigg) \\
-  &=  \sum_{i_1}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
+      T^{i_{l+1}, \ldots, i_{l+n}}}<em k_1="k+1">{j</em>
+  \Bigg) \
+  &amp;=  \sum_{i_1}^{\dim V} \cdots \sum_{i_{l+n}}^{\dim V}
       \sum_{j_1}^{\dim V} \cdots \sum_{j_{k+m}}^{\dim V}
-      \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      \varphi^{(1)}}, \ldots, j_{k+n}<em i__l_n="i_{l+n">{i_1} \ldots \varphi^{(l+n)}</em>
       v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
-      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
-      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
-\end{aligned} %]]></script>
-<p>These <script type="math/tex"> (l+n+k+m) </script> summations are quite a mess, but the above derivation shows that the <a href="http://mathworld.wolfram.com/EinsteinSummation.html">Einstein summation convention</a> works for tensor products as&nbsp;well:</p>
-<script type="math/tex; mode=display">% <![CDATA[
+      S^{i_1, \ldots, i_l}}<em l_1="l+1">{j_1, \ldots, j_k}
+      T^{i</em>}, \ldots, i_{l+n}<em k_1="k+1">{j</em>.
+\end{aligned}
+]}, \ldots,&nbsp;j_{k+n}</p>
+<p>These ( (l+n+k+m) ) summations are quite a mess, but the above derivation shows that the <a href="http://mathworld.wolfram.com/EinsteinSummation.html">Einstein summation convention</a> works for tensor products as&nbsp;well:</p>
+<p>[
 \begin{aligned}
-(S\otimes T) &(φ^{(1)}, \ldots, φ^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) =\\
-  &= S (φ^{(1)}, \ldots, φ^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
-  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, v_{(k+1)}, \ldots, v_{(k+m)})\\
-  &= \Big(
-      \varphi^{(1)}_{i_1} \ldots \varphi^{(l)}_{i_l}
+(S\otimes T) &amp;(φ^{(1)}, \ldots, φ^{(l+n)}, v_{(1)}, \ldots, v_{(k+m)}) =\
+  &amp;= S (φ^{(1)}, \ldots, φ^{(l)}, v_{(1)}, \ldots, v_{(k)})\,\cdot\,
+  T (φ^{(l+1)}, \ldots, φ^{(l+n)}, v_{(k+1)}, \ldots, v_{(k+m)})\
+  &amp;= \Big(
+      \varphi^{(1)}<em i_l>{i_1} \ldots \varphi^{(l)}</em>
       v_{(1)}^{j_1} \ldots v_{(k)}^{j_k}
-      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
+      S^{i_1, \ldots, i_l}<em i__l_1="i_{l+1">{j_1, \ldots, j_k}
   \Big)
   \Big(
-      \varphi^{(l+1)}_{i_{l+1}} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      \varphi^{(l+1)}</em>}} \ldots \varphi^{(l+n)<em l_n="l+n">{i</em>
       v_{(k+1)}^{j_{k+1}} \ldots v_{(k+m)}^{j_{k+m}}
-      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}
-  \Big) \\
- &=  \varphi^{(1)}_{i_1} \ldots \varphi^{(l+n)}_{i_{l+n}}
+      T^{i_{l+1}, \ldots, i_{l+n}}}<em k_1="k+1">{j</em>
+  \Big) \
+ &amp;=  \varphi^{(1)}}, \ldots, j_{k+n}<em i__l_n="i_{l+n">{i_1} \ldots \varphi^{(l+n)}</em>
       v_{(1)}^{j_1} \ldots v_{(k+m)}^{j_{k+m}}
-      S^{i_1, \ldots, i_l}_{j_1, \ldots, j_k}
-      T^{i_{l+1}, \ldots, i_{l+n}}_{j_{k+1}, \ldots, j_{k+n}}.
-\end{aligned} %]]></script>
+      S^{i_1, \ldots, i_l}}<em l_1="l+1">{j_1, \ldots, j_k}
+      T^{i</em>}, \ldots, i_{l+n}<em k_1="k+1">{j</em>.
+\end{aligned}
+]}, \ldots,&nbsp;j_{k+n}</p>
 </div>
 <p><strong>?.</strong> <em>You can always reconstruct a tensor from its components and the corresponding basis.</em> <a href="#" onclick="showById('answer7', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer7" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
 <p>Clarification:</p>
 <ul>
-<li>If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case <script type="math/tex">V</script> is not finite&nbsp;dimensional).</li>
+<li>If we know the basis vectors for the vector space and the dual vector space, then the components of the vector and covector arguments are uniquely determined, and we can apply the tensor to the arguments using the components of the tensor (or some relevant finite subset in case (V) is not finite&nbsp;dimensional).</li>
 </ul>
 </div>
 <p><strong>?.</strong> <em>The number of indices of the tensor components depends on dimension.</em> <a href="#" onclick="showById('answer8', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
@@ -217,8 +218,8 @@ function hideByClass(cls) {
 <p><em>Answer:</em>&nbsp;false.</p>
 <p>Clarification:</p>
 <ul>
-<li>A tensor component usually has one index for each argument, e.g. for a <script type="math/tex">(2,1)</script>-tensor <script type="math/tex">T</script>, the components are <script type="math/tex">T^{i_1,i_2}_{j_1}</script>.</li>
-<li>The <em>range</em> of these indices does depend on the dimension: each index ranges from <script type="math/tex">1</script> to <script type="math/tex">\dim V</script>. Therefore an <script type="math/tex"> (n,m) </script>-tensor <script type="math/tex">T</script> has <script type="math/tex"> (\dim V)^{n+m} </script> many&nbsp;components.</li>
+<li>A tensor component usually has one index for each argument, e.g. for a ((2,1))-tensor (T), the components are&nbsp;(T^{i_1,i_2}_{j_1}).</li>
+<li>The <em>range</em> of these indices does depend on the dimension: each index ranges from (1) to (\dim V). Therefore an ( (n,m) )-tensor (T) has ( (\dim V)^{n+m} ) many&nbsp;components.</li>
 </ul>
 </div>
 <p><strong>?.</strong> <em>The Einstein summation convention does not apply to tensor components.</em> <a href="#" onclick="showById('answer9', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
@@ -234,50 +235,48 @@ function hideByClass(cls) {
 <li>the tensor components are defined with respect to a given&nbsp;basis.</li>
 </ul>
 </div>
-<p>c) Given a basis for a <script type="math/tex">d</script>-dimensional vector space <script type="math/tex">V</script>,&nbsp;&#8230;</p>
-<p><strong>?.</strong> &#8230;<em>one can find exactly <script type="math/tex">d^2</script>-different dual bases for the corresponding dual vector space <script type="math/tex"> V^* </script>.</em> <a href="#" onclick="showById('answer11', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<p>c) Given a basis for a (d)-dimensional vector space (V),&nbsp;&#8230;</p>
+<p><strong>?.</strong> &#8230;<em>one can find exactly (d^2)-different dual bases for the corresponding dual vector space ( V^* ).</em> <a href="#" onclick="showById('answer11', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer11" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
 <p>Clarification:</p>
 <ul>
-<li>Given a basis of <script type="math/tex">V</script>, <script type="math/tex">E = \{\mathbf{e}_i\}_{i=1}^d \subset V</script>, there is a <em>unique</em> dual basis of <script type="math/tex">V^* </script>, namely <script type="math/tex">E^* = \{\epsilon_i\}_{i=1}^d</script>, where <script type="math/tex">\epsilon_i(\e_i) = 1</script> and <script type="math/tex">\epsilon_i(\e_j) = 0</script> for <script type="math/tex">i ≠ j</script>.</li>
+<li>Given a basis of (V), (E = {\mathbf{e}<em i="1">i}</em>^d \subset V), there is a <em>unique</em> dual basis of (V^<em> ), namely (E^</em> = {\epsilon_i}_{i=1}^d), where (\epsilon_i(\e_i) = 1) and (\epsilon_i(\e_j) = 0) for (i ≠&nbsp;j).</li>
 </ul>
 </div>
-<p><strong>?.</strong> &#8230;<em>by removing one basis vector of the basis of <script type="math/tex">V</script>, a basis for a <script type="math/tex">(d - 1)</script>-dimensional vector space <script type="math/tex">V_1</script> is obtained.</em> <a href="#" onclick="showById('answer12', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<p><strong>?.</strong> &#8230;<em>by removing one basis vector of the basis of (V), a basis for a ((d - 1))-dimensional vector space (V_1) is obtained.</em> <a href="#" onclick="showById('answer12', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer12" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
 <p>Clarification:</p>
 <ul>
-<li>The resulting set of <script type="math/tex">(d-1)</script> vectors are still linearly independent, and their span is a <script type="math/tex">(d-1)</script>-dimensional subspace of <script type="math/tex">V</script>.</li>
+<li>The resulting set of ((d-1)) vectors are still linearly independent, and their span is a ((d-1))-dimensional subspace of&nbsp;(V).</li>
 </ul>
 </div>
-<p><strong>?.</strong> &#8230;<em>the continuity of a map <script type="math/tex">f : V → W</script> depends on the choice of basis for the vector space <script type="math/tex">W</script>.</em> <a href="#" onclick="showById('answer13', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<p><strong>?.</strong> &#8230;<em>the continuity of a map (f : V → W) depends on the choice of basis for the vector space (W).</em> <a href="#" onclick="showById('answer13', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer13" style="display: none;">
 <p><em>Answer:</em>&nbsp;false.</p>
 <p>Clarification:</p>
 <ul>
 <li>The continuity of a map is defined for <em>topological spaces</em>, not for vector&nbsp;spaces.</li>
-<li>
-<script type="math/tex">f</script> is continuous <em>iff</em> the preimage of every open set in <script type="math/tex">W</script> is open in <script type="math/tex">V</script>. Note that no term in this definition depends on the choice of basis for either <script type="math/tex">V</script> or <script type="math/tex">W</script>.</li>
-<li>Assuming that <script type="math/tex">V</script> and <script type="math/tex">W</script> are real vector spaces, it is customary to equip them with the standard topology. A set <script type="math/tex">A</script> is open in <script type="math/tex">V</script>
-<em>iff</em> either it is the union of open <script type="math/tex">ε</script>-balls, or of Cartesian products of open intervals. While these definitions assume a basis for <script type="math/tex">V</script>, they all result in the exact same topologies. (Meaning a set can be covered with open balls <em>iff</em> it can be covered with open cuboids <em>iff</em> it can be covered with open cubes – an interesting but easy-to-prove&nbsp;result.)</li>
+<li>(f) is continuous <em>iff</em> the preimage of every open set in (W) is open in (V). Note that no term in this definition depends on the choice of basis for either (V) or&nbsp;(W).</li>
+<li>Assuming that (V) and (W) are real vector spaces, it is customary to equip them with the standard topology. A set (A) is open in (V) <em>iff</em> either it is the union of open (ε)-balls, or of Cartesian products of open intervals. While these definitions assume a basis for (V), they all result in the exact same topologies. (Meaning a set can be covered with open balls <em>iff</em> it can be covered with open cuboids <em>iff</em> it can be covered with open cubes – an interesting but easy-to-prove&nbsp;result.)</li>
 <li>It&#8217;s easy to see that every <em>linear</em> map between real vector spaces (equipped with the standard topology) is&nbsp;continuous.</li>
 </ul>
 </div>
-<p><strong>?.</strong> &#8230;<em>one can extract the components of the elements of the dual vector space <script type="math/tex">V^*</script>.</em> <a href="#" onclick="showById('answer14', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<p><strong>?.</strong> &#8230;<em>one can extract the components of the elements of the dual vector space (V^*).</em> <a href="#" onclick="showById('answer14', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer14" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
 <p>Clarification:</p>
 <ul>
-<li>a basis for <script type="math/tex">V</script> uniquely determines a dual basis for <script type="math/tex">V^* </script>, which uniquely determines the components of any&nbsp;covector.</li>
+<li>a basis for (V) uniquely determines a dual basis for (V^* ), which uniquely determines the components of any&nbsp;covector.</li>
 </ul>
 </div>
-<p><strong>?.</strong> &#8230;<em>each vector of <script type="math/tex">V</script> can be reconstructed from its components.</em> <a href="#" onclick="showById('answer15', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
+<p><strong>?.</strong> &#8230;<em>each vector of (V) can be reconstructed from its components.</em> <a href="#" onclick="showById('answer15', this); return false;" class="show-answer">Show&nbsp;answer</a></p>
 <div class="answer" id="answer15" style="display: none;">
 <p><em>Answer:</em>&nbsp;true.</p>
 <p>Clarification:</p>
 <ul>
-<li>Given the basis vectors <script type="math/tex">\mathbf{e}_i</script> and components <script type="math/tex">v^i</script> for <script type="math/tex">1 \leq i \leq d</script>, <script type="math/tex">\mathbf{v} = \sum_{i=1}^d v^i \mathbf{e}_i</script>.</li>
+<li>Given the basis vectors (\mathbf{e}<em i="1">i) and components (v^i) for (1 \leq i \leq d), (\mathbf{v} = \sum</em>_i).}^d v^i&nbsp;\mathbf{e</li>
 </ul>
 </div>
   </div>

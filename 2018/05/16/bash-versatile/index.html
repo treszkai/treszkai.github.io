@@ -50,8 +50,8 @@
     </p>
   </div>
   <div class="article__text">
-    <p>I rarely use bash besides the basics: I could use a <code>for</code> loop even if woken up at night, but my knowledge of the language doesn&#8217;t go much further. Hence instead of trying to memorize all the <code>{}%$</code> magic, having a few versatile commands in my toolbox comes&nbsp;handy.</p>
-<p>Recently I faced the task of renaming a set of files {<code>foo 02.jpg</code>, &#8230;, <code>foo 74.jpg</code>} to {<code>foo 06.jpg</code>, &#8230;, <code>foo 78.jpg</code>}, while keeping the order. My approach contained nothing&nbsp;extraordinary:</p>
+    <p>I rarely use bash besides the basics: I could use&nbsp;a <code>for</code> loop even if woken up at night, but my knowledge of the language doesn&#8217;t go much further. Hence instead of trying to memorize all&nbsp;the <code>{}%$</code> magic, having a few versatile commands in my toolbox comes&nbsp;handy.</p>
+<p>Recently I faced the task of renaming a set of files&nbsp;{<code>foo 02.jpg</code>,&nbsp;&#8230;, <code>foo 74.jpg</code>} to&nbsp;{<code>foo 06.jpg</code>,&nbsp;&#8230;, <code>foo 78.jpg</code>}, while keeping the order. My approach contained nothing&nbsp;extraordinary:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>seq<span class="w"> </span><span class="m">74</span><span class="w"> </span><span class="m">2</span><span class="sb">`</span>
@@ -65,15 +65,15 @@
 
 <p>Yet there were some educational points in&nbsp;it:</p>
 <ul>
-<li>One loops a variable <code>x</code> over the lines of a string <code>values</code> by <code>for x in values; do something; something_else; done</code>.</li>
-<li><code>seq a b</code> simply prints out the integers from <code>a</code> to <code>b</code>, inclusive, regardless of which is&nbsp;larger.</li>
-<li>Variable <code>x</code> is assigned a value by <code>x=foobar</code>, where there must be <em>no spaces around the equation sign</em>.The value of <code>x</code> can then be referred to by <code>$x</code>.</li>
+<li>One loops a&nbsp;variable <code>x</code> over the lines of a&nbsp;string <code>values</code> by <code>for x in values; do something; something_else; done</code>.</li>
+<li><code>seq a b</code> simply prints out the integers&nbsp;from <code>a</code> to <code>b</code>, inclusive, regardless of which is&nbsp;larger.</li>
+<li>Variable <code>x</code> is assigned a value&nbsp;by <code>x=foobar</code>, where there must be <em>no spaces around the equation sign</em>.The value&nbsp;of <code>x</code> can then be referred to&nbsp;by <code>$x</code>.</li>
 <li>Renaming a set of files to a similar name but later in the alphabet must be done in reverse&nbsp;order.</li>
-<li>Bash has a built-in <code>printf</code> that seems to work as in C: first the string to be printed with format specifiers like <code>%02d</code>, followed by the arguments whose values are used according to the format&nbsp;specifiers.</li>
-<li>With the <code>-v</code> option of <code>printf</code>, you can save the output into a&nbsp;variable.</li>
-<li>One can use <code>$(  )</code> for executing a command and having bash treat the output as the source code. (It&#8217;s the same as using backticks, as around <code>seq 74 2</code>, but allows nesting and is clearer. Kinda like <code>eval</code> in other languages, like JavaScript.) Not shown here, but it even works in quotation marks, e.g. <code>"$(echo hey yo)"</code> is like writing <code>"hey yo"</code>. Note that the trailing newline is&nbsp;deleted.</li>
+<li>Bash has a&nbsp;built-in <code>printf</code> that seems to work as in C: first the string to be printed with format specifiers&nbsp;like <code>%02d</code>, followed by the arguments whose values are used according to the format&nbsp;specifiers.</li>
+<li>With&nbsp;the <code>-v</code> option&nbsp;of <code>printf</code>, you can save the output into a&nbsp;variable.</li>
+<li>One can&nbsp;use <code>$(  )</code> for executing a command and having bash treat the output as the source code. (It&#8217;s the same as using backticks, as&nbsp;around <code>seq 74 2</code>, but allows nesting and is clearer. Kinda&nbsp;like <code>eval</code> in other languages, like JavaScript.) Not shown here, but it even works in quotation marks,&nbsp;e.g. <code>"$(echo hey yo)"</code> is like&nbsp;writing <code>"hey yo"</code>. Note that the trailing newline is&nbsp;deleted.</li>
 <li><code>bc</code> is a calculator that reads from the input and outputs nothing but the result on a single&nbsp;line.</li>
-<li>Don’t forget the quotes around arguments with spaces, like with <code>mv</code> above.</li>
+<li>Don’t forget the quotes around arguments with spaces, like&nbsp;with <code>mv</code> above.</li>
 </ul>
 <p>One minute of further bash tips are provided by Julia Evans <a href="https://drawings.jvns.ca/bashtips/">[here]</a>.</p>
   </div>
